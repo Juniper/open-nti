@@ -94,7 +94,7 @@ You need to provide at least one credential profile for your devices
 jdi_lab:
     username: *login*
     password: *password*
-    tags: /tag1/ /tag2/
+    tags: tag1 tag2
 ```
 
 **data/commands.yaml**
@@ -107,7 +107,7 @@ generic_commands:  <--- You can name the group as best fits you
       show system buffers
       show system statistics icmp | display xml
       show route summary | display xml
-   tags: /tag1/ /tag2/
+   tags: tag1 tag2
 ```
 
 ### Execution periodic
@@ -123,6 +123,11 @@ Scripts provided:
 To start cron job to execute commands specified above for specific tag every minute:
 ```
 ./open-nti-start-cron.sh 1m '--tag tag1'
+```
+
+To start cron job for more than one tag at the same time:
+```
+./open-nti-start-cron.sh 1m '--tag tag1 tag2'
 ```
 
 To start cron job to execute commands specified above for specific tag every 5 minutes:
