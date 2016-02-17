@@ -94,7 +94,6 @@ You need to provide at least one credential profile for your devices
 jdi_lab:
     username: *login*
     password: *password*
-    community: *snmp community*
     tags: /tag1/ /tag2/
 ```
 

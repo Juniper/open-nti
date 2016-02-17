@@ -135,7 +135,7 @@ def get_credentials(my_host):
         for my_host_tag in my_host_tags.strip().split():
             for credential_tag in credentials[credential]["tags"].split():
                 if re.search(my_host_tag, credential_tag, re.IGNORECASE):
-                    return credentials[credential]["username"], credentials[credential]["password"], credentials[credential]["community"] 
+                    return credentials[credential]["username"], credentials[credential]["password"] 
         
 def execute_command(jdevice,command):
     format = "text"
@@ -506,7 +506,7 @@ def collector(**kwargs):
             timestamp_tracking={}
             timestamp_tracking['collector_start'] = int(datetime.today().strftime('%s'))
             # Establish connection to hosts
-            user, passwd, community = get_credentials(host)
+            user, passwd = get_credentials(host)
             jdev = Device(user=user, host=host, password=passwd, gather_facts=False, auto_probe=True, port=22)
             for i in range(1, max_connection_retries+1):
                 try:
