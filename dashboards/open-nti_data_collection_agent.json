@@ -9201,10 +9201,10 @@
             "selected": false
           }
         ],
-        "query": "SHOW MEASUREMENTS WITH MEASUREMENT =~ /.*/",
+        "query": "SHOW TAG VALUES WITH KEY = \"device\"",
         "refresh": true,
         "refresh_on_load": false,
-        "regex": "/(.*?)\\./",
+        "regex": "",
         "type": "query"
       }
     ]

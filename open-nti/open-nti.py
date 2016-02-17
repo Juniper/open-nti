@@ -559,7 +559,7 @@ def collector(**kwargs):
                         logger.info('[%s]: Host will be referenced as : %s', host, host)
 
 
-                    kpi_tags['host']=host
+                    kpi_tags['device']=host
                     kpi_tags['kpi']="base-info"
                     match={}
                     match["variable-name"]="base-info"
