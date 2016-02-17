@@ -1,0 +1,16 @@
+parser:
+    regex-command: show\s+services\s+rpm\s+probe-results
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //probe-results/probe-test-results
+        loop:
+            key: ./test-name
+            sub-matches:
+            -
+                xpath: ./probe-test-current-results/probe-test-generic-results/probe-test-rtt/probe-summary-results/min-delay
+                variable-name:  $host.rpm.$key.min-delay
+            -
+                xpath: ./probe-test-current-results/probe-test-generic-results/probe-test-rtt/probe-summary-results/max-delay
+                variable-name:  $host.rpm.$key.max-delay

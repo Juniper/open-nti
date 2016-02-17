@@ -1,0 +1,18 @@
+parser:
+    regex-command: show\s+bgp\s+neighbor\s+10.255.0.206\s+\|\s+display\s+xml
+    matches:
+    -
+        type: single-value
+        method: xpath
+        xpath: //*[local-name() = 'bgp-peer']/bgp-rib/received-prefix-count
+        variable-name:  $host.protocols.bgp.summary.10.255.0.206.received-prefix-count
+    -
+        type: single-value
+        method: xpath
+        xpath: //*[local-name() = 'bgp-peer']/input-messages
+        variable-name:  $host.protocols.bgp.summary.10.255.0.206.input-messages
+    -
+        type: single-value
+        method: xpath
+        xpath: //*[local-name() = 'bgp-peer']/output-messages
+        variable-name:  $host.protocols.bgp.summary.10.255.0.206.output-messages

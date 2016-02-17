@@ -1,0 +1,28 @@
+log_dir: logs
+data_dir: data
+junos_parsers_dir: data/junos_parsers
+pfe_parsers_dir: data/pfe_parsers
+hosts_file: hosts.yaml
+commands_file: commands.yaml
+credentials_file: credentials.yaml
+default_junos_rpc_timeout: 600
+max_collector_threads: 45
+delay_between_commands: 3
+max_connection_retries: 5
+# db_schema options, 1-  measurement per kpi per host, 2- one measurement for all kpi, 3- one measurement per kpi
+# NOTE: For option 2, all gathered values MUST be the same type.
+db_schema: 1
+db_server: localhost
+db_port: 8086
+db_name: juniper
+db_admin: root
+db_admin_password: root
+db_user: juniper
+db_user_password: juniper
+logging_level: 20
+
+#CRITICAL   50
+#ERROR      40
+#WARNING    30
+#INFO       20
+#DEBUG      10

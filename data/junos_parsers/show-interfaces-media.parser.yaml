@@ -1,0 +1,98 @@
+parser:
+    regex-command: show\s+interfaces\s+media\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //physical-interface[starts-with(name,'xe-')]
+        loop:
+            key: ./name
+            sub-matches:
+            -
+                xpath: ./traffic-statistics/input-bps
+                variable-name:  $host.interfaces.$key.input-bps
+            -
+                xpath: ./traffic-statistics/output-bps
+                variable-name:  $host.interfaces.$key.output-bps
+            -
+                xpath: ./traffic-statistics/input-pps
+                variable-name:  $host.interfaces.$key.input-pps
+            -
+                xpath: ./traffic-statistics/output-pps
+                variable-name:  $host.interfaces.$key.output-pps
+    -
+        type: multi-value
+        method: xpath
+        xpath: //physical-interface[starts-with(name,'ge-')]
+        loop:
+            key: ./name
+            sub-matches:
+            -
+                xpath: ./traffic-statistics/input-bps
+                variable-name:  $host.interfaces.$key.input-bps
+            -
+                xpath: ./traffic-statistics/output-bps
+                variable-name:  $host.interfaces.$key.output-bps
+            -
+                xpath: ./traffic-statistics/input-pps
+                variable-name:  $host.interfaces.$key.input-pps
+            -
+                xpath: ./traffic-statistics/output-pps
+                variable-name:  $host.interfaces.$key.output-pps
+    -
+        type: multi-value
+        method: xpath
+        xpath: //physical-interface[starts-with(name,'at-')]
+        loop:
+            key: ./name
+            sub-matches:
+            -
+                xpath: ./traffic-statistics/input-bps
+                variable-name:  $host.interfaces.$key.input-bps
+            -
+                xpath: ./traffic-statistics/output-bps
+                variable-name:  $host.interfaces.$key.output-bps
+            -
+                xpath: ./traffic-statistics/input-pps
+                variable-name:  $host.interfaces.$key.input-pps
+            -
+                xpath: ./traffic-statistics/output-pps
+                variable-name:  $host.interfaces.$key.output-pps
+    -
+        type: multi-value
+        method: xpath
+        xpath: //physical-interface[starts-with(name,'so-')]
+        loop:
+            key: ./name
+            sub-matches:
+            -
+                xpath: ./traffic-statistics/input-bps
+                variable-name:  $host.interfaces.$key.input-bps
+            -
+                xpath: ./traffic-statistics/output-bps
+                variable-name:  $host.interfaces.$key.output-bps
+            -
+                xpath: ./traffic-statistics/input-pps
+                variable-name:  $host.interfaces.$key.input-pps
+            -
+                xpath: ./traffic-statistics/output-pps
+                variable-name:  $host.interfaces.$key.output-pps
+    -
+        type: multi-value
+        method: xpath
+        xpath: //physical-interface[starts-with(name,'sp-')]
+        loop:
+            key: ./name
+            sub-matches:
+            -
+                xpath: ./traffic-statistics/input-bps
+                variable-name:  $host.interfaces.$key.input-bps
+            -
+                xpath: ./traffic-statistics/output-bps
+                variable-name:  $host.interfaces.$key.output-bps
+            -
+                xpath: ./traffic-statistics/input-pps
+                variable-name:  $host.interfaces.$key.input-pps
+            -
+                xpath: ./traffic-statistics/output-pps
+                variable-name:  $host.interfaces.$key.output-pps

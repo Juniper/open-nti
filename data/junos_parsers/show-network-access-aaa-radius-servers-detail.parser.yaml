@@ -1,0 +1,57 @@
+parser:
+    regex-command: show\s+network-access\s+aaa\s+radius-servers\s+detail\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //aaa-module-radius-servers-statistics/server-address
+        loop:
+            key: .
+            sub-matches:
+            -
+                xpath: ./following-sibling::authentication-requests[1]
+                variable-name:  $host.bng.aaa.radius-servers-stats.$key.authentication-requests
+            -
+                xpath: ./following-sibling::authentication-rollover-requests[1]
+                variable-name:  $host.bng.aaa.radius-servers-stats.$key.authentication-rollover-requests
+            -
+                xpath: ./following-sibling::authentication-retransmissions[1]
+                variable-name:  $host.bng.aaa.radius-servers-stats.$key.authentication-retransmissions
+            -
+                xpath: ./following-sibling::accepts[1]
+                variable-name:  $host.bng.aaa.radius-servers-stats.$key.accepts
+            -
+                xpath: ./following-sibling::rejects[1]
+                variable-name:  $host.bng.aaa.radius-servers-stats.$key.rejects
+            -
+                xpath: ./following-sibling::authentication-timeouts[1]
+                variable-name:  $host.bng.aaa.radius-servers-stats.$key.authentication-timeouts
+            -
+                xpath: ./following-sibling::authentication-packets-dropped[1]
+                variable-name:  $host.bng.aaa.radius-servers-stats.$key.authentication-packets-dropped
+            -
+                xpath: ./following-sibling::accounting-start-requests[1]
+                variable-name:  $host.bng.aaa.radius-servers-stats.$key.accounting-start-requests
+            -
+                xpath: ./following-sibling::accounting-interim-requests[1]
+                variable-name:  $host.bng.aaa.radius-servers-stats.$key.accounting-interim-requests
+            -
+                xpath: ./following-sibling::accounting-stop-requests[1]
+                variable-name:  $host.bng.aaa.radius-servers-stats.$key.accounting-stop-requests
+            -
+                xpath: ./following-sibling::accounting-rollover-requests[1]
+                variable-name:  $host.bng.aaa.radius-servers-stats.$key.accounting-rollover-requests
+            -
+                xpath: ./following-sibling::accounting-retransmissions[1]
+                variable-name:  $host.bng.aaa.radius-servers-stats.$key.accounting-retransmissions
+            -
+                xpath: ./following-sibling::accounting-interim-response[1]
+                variable-name:  $host.bng.aaa.radius-servers-stats.$key.accounting-interim-response
+            -
+                xpath: ./following-sibling::accounting-stop-response[1]
+                variable-name:  $host.bng.aaa.radius-servers-stats.$key.accounting-stop-response
+            -
+                xpath: ./following-sibling::accounting-timeouts[1]
+                variable-name:  $host.bng.aaa.radius-servers-stats.$key.accounting-timeouts
+
+

@@ -1,0 +1,153 @@
+---
+profiles:
+#  huawei: 
+#     username: un53088 
+#     password: un530882017
+#     model: HUAWEI
+#     pri_prompt: '<\w+\d-\d+>'
+#     alt_prompt: ']'
+#     connection_mode: ssh
+#     escape_char: 'q'
+#     gateway_list:
+#       - rgtmco1-02
+#     startup_commands:
+#        interactive:
+#        -
+#           send: system-view
+#           spec: ']'
+#        -
+#           send: user-interface current
+#           spec: ']'
+#        -
+#           send: screen-length 0 temporary
+#           spec: ']'
+#        -
+#           send: 'q'
+#           spec: ']'
+#        -
+#           send: 'q'
+#           spec: '<\w+\d-\d+>'
+#        non_interactive:
+#        -
+#           send: system-view
+#           spec: ']'
+#        -
+#           send: user-interface current
+#           spec: ']'
+#        -
+#           send: screen-length 0 temporary
+#           spec: ']'
+#        -
+#           send: 'q'
+#           spec: ']'
+#        -
+#           send: 'q'
+#           spec: '<\w+\d-\d+>'
+#   alcatel: 
+#      username: un43116 
+#      password: un43116P4bl0
+#      model: ALCATEL
+#      pri_prompt: '>'
+#      alt_prompt: ']'
+#      connection_mode: ssh
+#      escape_char: 'q'
+#      gateway_list: 
+#         - rgtmco1-01
+#      startup_commands:
+#        - system-view
+#        - user-interface current
+#        - screen-length 0 temporary  
+#   ericsson: 
+#      username: un43116 
+#      password: un43116P4bl0
+#      model: ERICSSON
+#      pri_prompt: '<\w+\d-\d+>'
+#      alt_prompt: ']'
+#      connection_mode: ssh
+#      escape_char: 'q'
+#      gateway_list: 
+#         - rgtmco1-01
+#      startup_commands:  
+#        - system-view
+#        - user-interface current
+#        - screen-length 0 temporary 
+   juniper_lab: 
+      username: lab
+      password: lab123
+      model: JUNIPER
+      pri_prompt: '\w+\@.*?\>'
+      alt_prompt: '#'
+      connection_mode: ssh
+      escape_char: 'exit'
+      startup_commands:
+         interactive:
+         -
+            send: set cli screen-length 300
+            spec: '\w+\@.*?\>' 
+         non_interactive:
+         -
+            send: set cli screen-length 0
+            spec: '\w+\@.*?\>'
+         -
+            send: set cli screen-width 300
+            spec: '\w+\@.*?\>' 
+         -
+            send: start shell user root
+            spec: 'Password' 
+         -
+            send: lab123
+            spec: '\w+\@.*?\%'
+#   juniper_rima: 
+#      username: junipersup
+#      password: smgrUj734!w
+#      model: JUNIPER
+#      pri_prompt: '\w+\@\w+\-\w+\>'
+#      alt_prompt: '#'
+#      connection_mode: ssh
+#      escape_char: 'exit'
+#      gateway_list:
+#      - rspjmco1-01
+#      startup_commands:
+#         interactive:
+#         -
+#            send: set cli screen-length 100
+#            spec: '\w+\@\w+\-\w+\>'
+#         -
+#            send: set cli timestamp
+#            spec: '\w+\@\w+\-\w+\>'  
+#         non_interactive:
+#         -
+#            send: set cli screen-length 0
+#            spec: '\w+\@\w+\-\w+\>' 
+---
+gateways:
+   centos: 
+      ip_address: 172.16.180.1
+      username: jedapa 
+      password: QWer!@34
+      model: MAC
+      pri_prompt: '$'
+      alt_prompt: '#'
+      connection_mode: ssh
+      escape_char: 'exit'
+
+   rgtmco1-02: 
+      ip_address: 10.15.102.115
+      username: un53088 
+      password: j4n1p3r2
+      model: UNIX
+      pri_prompt: '$'
+      alt_prompt: '#'
+      connection_mode: ssh
+      escape_char: 'exit'
+
+   rspjmco1-01: 
+      ip_address: 172.20.66.204
+      username: juniper
+      password: j4n1p3r0s!
+      model: UNIX
+      pri_prompt: '$'
+      alt_prompt: '#'
+      connection_mode: ssh
+      escape_char: 'exit'
+

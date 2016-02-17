@@ -1,0 +1,33 @@
+parser:
+    regex-command: show\s+pppoe\s+statistics\s+\|\s+display\s+xml
+    matches:
+    -
+        type: single-value
+        method: xpath
+        xpath: //pppoe-counters/padi-received
+        variable-name:  $host.bng.pppoe.statistics.padi-received
+    -
+        type: single-value
+        method: xpath
+        xpath: //pppoe-counters/pado-sent
+        variable-name:  $host.bng.pppoe.statistics.pado-sent
+    -
+        type: single-value
+        method: xpath
+        xpath: //pppoe-counters/padr-received
+        variable-name:  $host.bng.pppoe.statistics.padr-received
+    -
+        type: single-value
+        method: xpath
+        xpath: //pppoe-counters/pads-sent
+        variable-name:  $host.bng.pppoe.statistics.pads-sent
+    -
+        type: single-value
+        method: xpath
+        xpath: //pppoe-counters/padt-sent
+        variable-name:  $host.bng.pppoe.statistics.padt-sent
+    -
+        type: single-value
+        method: xpath
+        xpath: //pppoe-counters/padt-received
+        variable-name:  $host.bng.pppoe.statistics.padt-received

@@ -1,0 +1,18 @@
+parser:
+    regex-command: show\s+snmp\s+statistics\s+\|\s+display\s+xml
+    matches:
+    -
+        type: single-value
+        method: xpath
+        xpath: //snmp-input-statistics/packets
+        variable-name:  $host.snmp-input-packets
+    -
+        type: single-value
+        method: xpath
+        xpath: //snmp-input-statistics/get-nexts
+        variable-name:  $host.snmp-input-get-nexts
+    -
+        type: single-value
+        method: xpath
+        xpath: //snmp-output-statistics/packets
+        variable-name:  $host.snmp-output-packets

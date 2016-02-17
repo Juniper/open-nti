@@ -1,0 +1,54 @@
+# GENERIC COMMANDS
+
+#NOTE:  Commands will be executed & parsed as text/regex ONLY if there isn't any valid xml output for that command
+#       (so please check the output of the command with "| display xml" before building the parser or adding it in this file)
+
+base_command:
+   commands: |
+      show system processes extensive
+      show chassis routing-engine | display xml
+   tags: agg edge tor
+
+bgp_commands:
+   commands: |
+      show route summary | display xml
+      show bgp summary | display xml
+   tags: bgp
+
+isis_commands:
+   commands: |
+      show isis statistics | display xml
+      show route summary | display xml
+   tags: isis
+
+generic_commands:
+   commands: |
+      show version | display xml
+      show isis statistics | display xml
+      show chassis routing-engine | display xml
+      show pfe statistics traffic | display xml
+      show system processes extensive
+      show system buffers
+      show system statistics icmp | display xml
+      show route summary | display xml
+   tags: cgnat cang transit rumba
+
+lab_commands:
+   commands: |
+      show version | display xml
+      show isis statistics | display xml
+      show chassis routing-engine | display xml
+      show pfe statistics traffic | display xml
+      show system processes extensive
+      show system buffers
+      show system statistics icmp | display xml
+      show route summary | display xml
+      show snmp statistics | display xml
+      show bgp summary | display xml
+      show firewall | display xml
+      show task io
+      show task accounting
+   tags: lab
+
+# Do not remove this three dashes (“---”) they are used to separate documents
+---

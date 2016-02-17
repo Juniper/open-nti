@@ -1,0 +1,81 @@
+parser:
+    regex-command: rtsockmon\s+\-g\s+rpd\s+\-i\s+0
+    matches:
+    -
+        type: single-value
+        method: regex
+        regex: \s+route::\s+add\s+(\d+)\s+\d+\s+\d+\s+(\d+)\s+\d+\s+\d+
+        variables:
+        -
+            variable-name:  $host.re.rtsockmon.route.add.sndpkts
+            variable-type:  integer
+        -
+            variable-name:  $host.re.rtsockmon.route.add.rcvpkts
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s+route::(?:\s+ add.*?$)?\s+change\s+(\d+)\s+\d+\s+\d+\s+(\d+)\s+\d+\s+\d+
+        variables:
+        -
+            variable-name:  $host.re.rtsockmon.route.change.sndpkts
+            variable-type:  integer
+        -
+            variable-name:  $host.re.rtsockmon.route.change.rcvpkts
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s+route::(?:\s+ add.*?$)?(?:\s+change.*?$)?\s+delete\s+(\d+)\s+\d+\s+\d+\s+(\d+)\s+\d+\s+\d+
+        variables:
+        -
+            variable-name:  $host.re.rtsockmon.route.delete.sndpkts
+            variable-type:  integer
+        -
+            variable-name:  $host.re.rtsockmon.route.delete.rcvpkts
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s+nexthop::\s+change\s+(\d+)\s+\d+\s+\d+\s+(\d+)\s+\d+\s+\d+
+        variables:
+        -
+            variable-name:  $host.re.rtsockmon.nexthop.change.sndpkts
+            variable-type:  integer
+        -
+            variable-name:  $host.re.rtsockmon.nexthop.change.rcvpkts
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s+nexthop::(?:\s+change.*?$)?\s+delete\s+(\d+)\s+\d+\s+\d+\s+(\d+)\s+\d+\s+\d+
+        variables:
+        -
+            variable-name:  $host.re.rtsockmon.nexthop.delete.sndpkts
+            variable-type:  integer
+        -
+            variable-name:  $host.re.rtsockmon.nexthop.delete.rcvpkts
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s+nexthop::(?:\s+change.*?$)?(?:\s+delete.*?$)?\s+ get\s+(\d+)\s+\d+\s+\d+\s+(\d+)\s+\d+\s+\d+
+        variables:
+        -
+            variable-name:  $host.re.rtsockmon.nexthop.get.sndpkts
+            variable-type:  integer
+        -
+            variable-name:  $host.re.rtsockmon.nexthop.get.rcvpkts
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s+nexthop::(?:\s+change.*?$)?(?:\s+delete.*?$)?(?:\s+ get.*?$)?\s+add_get\s+(\d+)\s+\d+\s+\d+\s+(\d+)\s+\d+\s+\d+
+        variables:
+        -
+            variable-name:  $host.re.rtsockmon.nexthop.add_get.sndpkts
+            variable-type:  integer
+        -
+            variable-name:  $host.re.rtsockmon.nexthop.add_get.rcvpkts
+            variable-type:  integer
+

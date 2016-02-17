@@ -1,0 +1,25 @@
+parser:
+    regex-command: show\s+system\s+resource-monitor\s+summary\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //resource-monitor-summary-information-summary
+        loop:
+            key: ./fpc-slot
+            sub-matches:
+            -
+                xpath: ./used-heap-mem-percent
+                variable-name:  $host.fpc.slot$key.resource.used-heap-mem-percent
+            -
+                xpath: ./pfe-num[text()="0"]/following-sibling::used-filter-counter-percent[1]
+                variable-name:  $host.fpc.slot$key.pfe0.resource.used-filter-counter-percent
+            -
+                xpath: ./pfe-num[text()="0"]/following-sibling::used-ifl-counter-percent[1]
+                variable-name:  $host.fpc.slot$key.pfe0.resource.used-ifl-counter-percent
+            -
+                xpath: ./pfe-num[text()="1"]/following-sibling::used-filter-counter-percent[1]
+                variable-name:  $host.fpc.slot$key.pfe1.resource.used-filter-counter-percent
+            -
+                xpath: ./pfe-num[text()="1"]/following-sibling::used-ifl-counter-percent[1]
+                variable-name:  $host.fpc.slot$key.pfe1.resource.used-ifl-counter-percent

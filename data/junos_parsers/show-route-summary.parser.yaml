@@ -1,0 +1,152 @@
+parser:
+    regex-command: show\s+route\s+summary\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //route-table[table-name='inet.0']
+        loop:
+            key: ./table-name
+            sub-matches:
+            -
+                xpath: ./destination-count
+                variable-name:  $host.route-table.summary.$key.destinations
+                tags:
+                -
+                    table: $key
+                    test: delete_me
+            -
+                xpath: ./total-route-count
+                variable-name:  $host.route-table.summary.$key.routes
+                tags:
+                -
+                    table: $key
+            -
+                xpath: ./active-route-count
+                variable-name:  $host.route-table.summary.$key.actives
+                tags:
+                -
+                    table: $key
+            -
+                xpath: ./holddown-route-count
+                variable-name:  $host.route-table.summary.$key.holddown
+                tags:
+                -
+                    table: $key
+            -
+                xpath: ./hidden-route-count
+                variable-name:  $host.route-table.summary.$key.hidden
+                tags:
+                -
+                    table: $key
+    -
+        type: multi-value
+        method: xpath
+        xpath: //route-table[table-name='inet.3']
+        loop:
+            key: ./table-name
+            sub-matches:
+            -
+                xpath: ./destination-count
+                variable-name:  $host.route-table.summary.$key.destinations
+                tags:
+                -
+                    table: $key
+            -
+                xpath: ./total-route-count
+                variable-name:  $host.route-table.summary.$key.routes
+                tags:
+                -
+                    table: $key
+            -
+                xpath: ./active-route-count
+                variable-name:  $host.route-table.summary.$key.actives
+                tags:
+                -
+                    table: $key
+            -
+                xpath: ./holddown-route-count
+                variable-name:  $host.route-table.summary.$key.holddown
+                tags:
+                -
+                    table: $key
+            -
+                xpath: ./hidden-route-count
+                variable-name:  $host.route-table.summary.$key.hidden
+                tags:
+                -
+                    table: $key
+    -
+        type: multi-value
+        method: xpath
+        xpath: //route-table[table-name='inet6.0']
+        loop:
+            key: ./table-name
+            sub-matches:
+            -
+                xpath: ./destination-count
+                variable-name:  $host.route-table.summary.$key.destinations
+                tags:
+                -
+                    table: $key
+            -
+                xpath: ./total-route-count
+                variable-name:  $host.route-table.summary.$key.routes
+                tags:
+                -
+                    table: $key
+            -
+                xpath: ./active-route-count
+                variable-name:  $host.route-table.summary.$key.actives
+                tags:
+                -
+                    table: $key
+            -
+                xpath: ./holddown-route-count
+                variable-name:  $host.route-table.summary.$key.holddown
+                tags:
+                -
+                    table: $key
+            -
+                xpath: ./hidden-route-count
+                variable-name:  $host.route-table.summary.$key.hidden
+                tags:
+                -
+                    table: $key
+    -
+        type: multi-value
+        method: xpath
+        xpath: //route-table[table-name='bgp.l3vpn.0']
+        loop:
+            key: ./table-name
+            sub-matches:
+            -
+                xpath: ./destination-count
+                variable-name:  $host.route-table.summary.$key.destinations
+                tags:
+                -
+                    table: $key
+            -
+                xpath: ./total-route-count
+                variable-name:  $host.route-table.summary.$key.routes
+                tags:
+                -
+                    table: $key
+            -
+                xpath: ./active-route-count
+                variable-name:  $host.route-table.summary.$key.actives
+                tags:
+                -
+                    table: $key
+            -
+                xpath: ./holddown-route-count
+                variable-name:  $host.route-table.summary.$key.holddown
+                tags:
+                -
+                    table: $key
+            -
+                xpath: ./hidden-route-count
+                variable-name:  $host.route-table.summary.$key.hidden
+                tags:
+                -
+                    table: $key   

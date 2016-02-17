@@ -1,0 +1,19 @@
+parser:
+    regex-command: show\s+services\s+stateful-firewall\s+subscriber-analysis\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //subs-analysis-statistics-pic-info
+        loop:
+            key: ./pic-name
+            sub-matches:
+            -
+                xpath: ./following-sibling::subs-analysis-statistics-entry[1]/num-total-subs-active
+                variable-name:  $host.cgnat.subscriber-analysis.$key.num-total-subs-active
+            -
+                xpath: ./following-sibling::subs-analysis-statistics-entry[1]/num-created-subs-per-sec
+                variable-name:  $host.cgnat.subscriber-analysis.$key.num-created-subs-per-sec
+            -
+                xpath: ./following-sibling::subs-analysis-statistics-entry[1]/num-deleted-subs-per-sec
+                variable-name:  $host.cgnat.subscriber-analysis.$key.num-deleted-subs-per-sec
