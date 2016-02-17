@@ -543,6 +543,22 @@ def collector(**kwargs):
                         kpi_tags['version'] = 'unknown'
                     value_tmp = xml_data.xpath(product_model_xpath)[0].text.strip()
                     kpi_tags['product-model'] = convert_variable_type(value_tmp)
+
+                    ## Based on parameter defined in config file
+ 
+                    if use_hostname:
+                        hostname_xpth = "//host-name"
+                        hostname_tmp = xml_data.xpath(hostname_xpth)[0].text.strip()
+                        hostname = convert_variable_type(hostname_tmp)
+                        logger.info('[%s]: Host will now be referenced as : %s', host, hostname)
+                        host = hostname
+                        latest_datapoints = get_latest_datapoints(host=host)
+                        logger.info("Latest Datapoints are:")
+                        logger.info(pformat(latest_datapoints))
+                    else:
+                        logger.info('[%s]: Host will be referenced as : %s', host, host)
+
+
                     kpi_tags['host']=host
                     kpi_tags['kpi']="base-info"
                     match={}
@@ -620,6 +636,7 @@ max_collector_threads = default_variables['max_collector_threads']
 delay_between_commands = default_variables['delay_between_commands']
 logging_level = default_variables['logging_level']
 default_junos_rpc_timeout = default_variables['default_junos_rpc_timeout']
+use_hostname = default_variables['use_hostname']
 
 ################################################################################################
 # Validate Arguments
