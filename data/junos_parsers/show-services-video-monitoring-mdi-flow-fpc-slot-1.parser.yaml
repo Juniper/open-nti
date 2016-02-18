@@ -15,4 +15,11 @@ parser:
                 variable-name:  $host.services.video-monitoring.mdi.$flow_sno.$src_ip-$dst_ip.mdi-avg-mrv
             -
                 xpath: ./mdi-avg-df-mlr
-                variable-name:  $host.services.video-monitoring.mdi.$flow_sno.$src_ip-$dst_ip.mdi-avg-df-mlr
+                regex: (\d+\.\d+):(\d+)
+                variables:
+                -
+                    variable-name:  $host.services.video-monitoring.mdi.$flow_sno.$src_ip-$dst_ip.mdi-avg-df
+                    variable-type:  float
+                -
+                    variable-name:  $host.services.video-monitoring.mdi.$flow_sno.$src_ip-$dst_ip.mdi-avg-mlr
+                    variable-type:  float
