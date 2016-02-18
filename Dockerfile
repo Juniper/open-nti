@@ -1,7 +1,7 @@
 FROM phusion/baseimage:0.9.17
 MAINTAINER Damien Garros <dgarros@gmail.com>
 
-RUN     apt-get -y update && \
+RUN     apt-get -y update --fix-missing && \
         apt-get -y upgrade
 
 # dependencies
