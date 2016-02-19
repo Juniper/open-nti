@@ -17,7 +17,8 @@ ENV INFLUXDB_VERSION 0.9.6.1
 ENV TELEGRAF_VERSION 0.10.1-1
 ENV FLUENTD_JUNIPER_VERSION 0.2.5-beta
 
-RUN     apt-get -y install \
+RUN     apt-get -y update && \
+        apt-get -y install \
             build-essential \
             python-simplejson \
             python-support \
