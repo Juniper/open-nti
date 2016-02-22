@@ -9220,7 +9220,7 @@
         "name": "Commit",
         "query": "SELECT * FROM events WHERE event = 'UI_COMMIT_COMPLETED' AND $timeFilter",
         "showLine": true,
-        "tagsColumn": "host",
+        "tagsColumn": "device",
         "textColumn": "message",
         "titleColumn": "events"
       }
