@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 # coding: utf-8
 # Authors: efrain@juniper.net psagrera@juniper.net
-# Version 2.0  20160124 
+# Version 2.0  20160124
 
 from datetime import datetime # In order to retreive time and timespan
 from datetime import timedelta # In order to retreive time and timespan
 from influxdb import InfluxDBClient
 from jnpr.junos import *
 from jnpr.junos import Device
-from jnpr.junos.exception import * 
+from jnpr.junos.exception import *
 from jnpr.junos.utils.start_shell import StartShell
 from lxml import etree  # Used for xml manipulation
 from pprint import pformat
@@ -37,7 +37,7 @@ logging.getLogger("paramiko").setLevel(logging.INFO)
 
 ####################################################################################
 ####################################################################################
-# Defining the classes and procedures used later on the script 
+# Defining the classes and procedures used later on the script
 ####################################################################################
 ####################################################################################
 
@@ -54,12 +54,12 @@ def convert_variable_type(var):
         return result
     except Exception as e:
         pass
-    return var   # I guess that is a string 
+    return var   # I guess that is a string
 
 def check_db_status():
     return True
     for i in range(0, 3):
-        try: 
+        try:
             query = "list series"
             response = requests.get('http://%s:%s/db/%s/series?u=%s&p=%s&q=%s' % (db_server,db_port,db_name,db_user,db_user_password,query),timeout=1)
             break
@@ -82,7 +82,7 @@ def check_db_status():
         logger.error('Error querying open-nti database: %s', e)
 
 def get_latest_datapoints(**kwargs):
-    
+
     dbclient = InfluxDBClient(db_server, db_port, db_admin, db_admin_password)
     dbclient.switch_database(db_name)
     query = "select value from /%s\./ ORDER BY time DESC limit 1 " % (kwargs['host'])
@@ -135,8 +135,8 @@ def get_credentials(my_host):
         for my_host_tag in my_host_tags.strip().split():
             for credential_tag in credentials[credential]["tags"].split():
                 if re.search(my_host_tag, credential_tag, re.IGNORECASE):
-                    return credentials[credential]["username"], credentials[credential]["password"] 
-        
+                    return credentials[credential]["username"], credentials[credential]["password"]
+
 def execute_command(jdevice,command):
     format = "text"
     command_tmp = command
@@ -145,14 +145,14 @@ def execute_command(jdevice,command):
         command_tmp = command.replace("| display xml","")
     elif re.search("\| count", command, re.IGNORECASE):
         format = "txt-filtered"
-        command_tmp = command.split("|")[0]       
+        command_tmp = command.split("|")[0]
     try:
-        # Remember... all rpc must have format=xml at execution time, 
+        # Remember... all rpc must have format=xml at execution time,
         command_result = jdevice.rpc.cli(command_tmp, format="xml")
-    except RpcError as err:    
+    except RpcError as err:
         rpc_error = err.__repr__()
         logger.error("Error found executing command: %s, error: %s:", command ,rpc_error)
-        return False 
+        return False
     if format == "text":
         # We need to confirm that root tag in command_result is <output> if not then raise exception and skip
         return command_result.text
@@ -166,7 +166,7 @@ def execute_command(jdevice,command):
             logger.info("Processing <%s>", operation )
             if re.search("count", operation, re.IGNORECASE):
                 result = "Count: %s lines" % len(lines)
-                logger.debug("Count result: <%s>", result ) 
+                logger.debug("Count result: <%s>", result )
                 return result
             match = re.search("match (.*)", operation, re.IGNORECASE)
             if match:
@@ -246,7 +246,7 @@ def insert_datapoints(datapoints):
 
 def get_metadata_and_add_datapoint(datapoints,**kwargs):
 
-    value_tmp  = kwargs['value_tmp']                              
+    value_tmp  = kwargs['value_tmp']
     host = kwargs['host']
     latest_datapoints=kwargs['latest_datapoints']
 
@@ -258,7 +258,7 @@ def get_metadata_and_add_datapoint(datapoints,**kwargs):
     kpi_tags={}
     if 'kpi_tags' in kwargs.keys():
         # This is due dict are mutable and a normal assigment does NOT copy the value, it copy the reference
-        kpi_tags=copy.deepcopy(kwargs['kpi_tags'])   
+        kpi_tags=copy.deepcopy(kwargs['kpi_tags'])
 
     key=''
     if 'key' in kwargs.keys():
@@ -269,21 +269,21 @@ def get_metadata_and_add_datapoint(datapoints,**kwargs):
         # This is due dict are mutable and a normal assigment does NOT copy the value, it copy the reference
         keys=copy.deepcopy(kwargs['keys'])
 
-    # Resolving the variable name 
+    # Resolving the variable name
     value = convert_variable_type(value_tmp)
     variable_name, kpi_tags['kpi'] = eval_variable_name(match["variable-name"],host=host,keys=keys)
-    
+
 
     # Calculating delta values (only applies for numeric values)
     delta = 0
-    if type (value) != str:           
+    if type (value) != str:
         if variable_name in latest_datapoints.keys():
             # We asume that allways 'value' is the latest 'value' in the list
             latest_value = latest_datapoints[variable_name]
             if latest_value != '':
                 delta = value - convert_variable_type(latest_value)
             else:
-                delta = value    
+                delta = value
         if type (value) == int:
             delta = int(delta)
         elif type (value) == float:
@@ -303,7 +303,7 @@ def get_metadata_and_add_datapoint(datapoints,**kwargs):
         kpi = {
             "measurement": variable_name,
             "fields": {
-                "value": value, 
+                "value": value,
                 "delta": delta
             }
         }
@@ -311,7 +311,7 @@ def get_metadata_and_add_datapoint(datapoints,**kwargs):
         kpi = {
             "measurement": variable_name,
             "fields": {
-                "value_str": value, 
+                "value_str": value,
                 "delta_str": delta
             }
         }
@@ -383,8 +383,29 @@ def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tag
                                     try:
                                         logger.debug('[%s]: Looking for a sub-match: %s', host, sub_match["xpath"])
                                         if node.xpath(sub_match["xpath"]):
-                                            value_tmp = node.xpath(sub_match["xpath"])[0].text.strip()
-                                            get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags,keys=keys)
+                                            if "regex" in sub_match:
+                                                value_tmp = node.xpath(sub_match["xpath"])[0].text.strip()
+                                                regex = sub_match["regex"]
+                                                text_matches = re.search(regex,value_tmp,re.MULTILINE)
+                                                if text_matches:
+                                                    if text_matches.lastindex == len(sub_match["variables"]):
+                                                        logger.debug('[%s]: We have (%s) matches with this regex %s', host, text_matches.lastindex,regex)
+                                                        for i in range(0,text_matches.lastindex):
+                                                            j=i+1
+                                                            variable_name = eval_variable_name(sub_match["variables"][i]["variable-name"],host=host)
+                                                            value_tmp = text_matches.group(j).strip()
+                                                            # Begin function  (pero pendiente de ver si variable-type existe y su valor)
+                                                            if "variable-type" in sub_match["variables"][i]:
+                                                                value_tmp = eval_variable_value(value_tmp, type=sub_match["variables"][i]["variable-type"])
+                                                            get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match["variables"][i],value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags,keys=keys)
+                                                    else:
+                                                        logger.error('[%s]: More matches found on regex than variables especified on parser: %s', host, regex_command)
+                                                else:
+                                                    logger.info('[%s]: No matches found for regex: %s', host, regex)
+
+                                            else:
+                                                value_tmp = node.xpath(sub_match["xpath"])[0].text.strip()
+                                                get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags,keys=keys)
                                         else:
                                             logger.debug('[%s]: No match found: %s', host, match["xpath"])
                                             if 'default-if-missing' in sub_match.keys():
@@ -397,7 +418,7 @@ def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tag
                                         pass  # Notify about the specific problem with the host BUT we need to continue with our list
                         else:
                             logger.error('[%s]: An unkown match-type found in parser with regex: %s', host, regex_command)
-                    elif match["method"] == "regex": # we need to evaluate a text regex 
+                    elif match["method"] == "regex": # we need to evaluate a text regex
                         if match["type"] == "single-value":
                             regex = match["regex"]
                             text_matches = re.search(regex,result,re.MULTILINE)
@@ -418,7 +439,7 @@ def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tag
                                 logger.info('[%s]: No matches found for regex: %s', host, regex)
                         else:
                             logger.error('[%s]: An unkown match-type found in parser with regex: %s', host, regex_command)
-                    else: 
+                    else:
                         logger.error('[%s]: An unkown method found in parser with regex: %s', host, regex_command)
                 except Exception, e:
                     logger.info('[%s]: Exception found.', host)
@@ -444,7 +465,7 @@ def collector(**kwargs):
                 dev.ixia_connect()
                 connected = True
                 logger.info( "connected" )
-            except Exception, e: 
+            except Exception, e:
                 connected = False
                 print e
                 print "failed connection"
@@ -461,7 +482,7 @@ def collector(**kwargs):
                         parse_ixia_result(host,target_command,result,datapoints,latest_datapoints,kpi_tags)
                     except Exception, e:
                         logger.error('[%s]: Problems gathering ixia stats  %s', target_command)
-                        continue 
+                        continue
                 dev.ixia_disconnect ()
                 if datapoints:   # Only insert datapoints if there is any :)
                     pprint(datapoints)
@@ -491,12 +512,12 @@ def collector(**kwargs):
                         logger.debug('[%s]: Parsing command: %s', host, target_command)
                         parse_result(host,target_command,result,datapoints,latest_datapoints)
                         time.sleep(delay_between_commands)
-                        
+
                 connector.close(device)
-                timestamp_tracking['collector_ssh_ends'] = int(datetime.today().strftime('%s'))  
+                timestamp_tracking['collector_ssh_ends'] = int(datetime.today().strftime('%s'))
                 if datapoints:
                     insert_datapoints(datapoints)
-                logger.info('[%s]: timestamp_tracking - CLI collection %s', host, timestamp_tracking['collector_ssh_ends']-timestamp_tracking['collector_ssh_start'])    
+                logger.info('[%s]: timestamp_tracking - CLI collection %s', host, timestamp_tracking['collector_ssh_ends']-timestamp_tracking['collector_ssh_start'])
 
         else: # By default it's a junos device
             # We need to CATCH errors then print then but we need to continue with next host...
@@ -545,7 +566,7 @@ def collector(**kwargs):
                     kpi_tags['product-model'] = convert_variable_type(value_tmp)
 
                     ## Based on parameter defined in config file
- 
+
                     if use_hostname:
                         hostname_xpth = "//host-name"
                         hostname_tmp = xml_data.xpath(hostname_xpth)[0].text.strip()
@@ -580,17 +601,17 @@ def collector(**kwargs):
                 jdev.close()
                 timestamp_tracking['collector_cli_ends'] = int(datetime.today().strftime('%s'))
                 logger.info('[%s]: timestamp_tracking - CLI collection %s', host, timestamp_tracking['collector_cli_ends']-timestamp_tracking['collector_cli_start'])
-    
+
                 if datapoints:   # Only insert datapoints if there is any :)
                     insert_datapoints(datapoints)
-                
-                timestamp_tracking['collector_ends'] = int(datetime.today().strftime('%s'))   
+
+                timestamp_tracking['collector_ends'] = int(datetime.today().strftime('%s'))
                 logger.info('[%s]: timestamp_tracking - total collection %s', host, timestamp_tracking['collector_ends']-timestamp_tracking['collector_start'])
             else:
                 logger.error('[%s]: Skiping host due connectivity issue', host)
 
 
-################################################################################################ 
+################################################################################################
 ################################################################################################
 ################################################################################################
 
@@ -614,13 +635,13 @@ full_parser.add_argument("-s", "--start", action='store_true', help="Start colle
 dynamic_args = vars(full_parser.parse_args())
 
 ################################################################################################
-# Loading YAML Default Variables 
+# Loading YAML Default Variables
 ###############################################################################################
 
 default_variables_yaml_file = BASE_DIR + "/data/open-nti.variables.yaml"
 default_variables = {}
 
-with open(default_variables_yaml_file) as f: 
+with open(default_variables_yaml_file) as f:
     default_variables = yaml.load(f)
 
 db_schema = default_variables['db_schema']
@@ -655,7 +676,7 @@ if not(dynamic_args['start']):
 
 
 ################################################################################################
-# open-nti starts here start 
+# open-nti starts here start
 ################################################################################################
 
 # Setting up logging directories and files
@@ -680,7 +701,7 @@ if dynamic_args['console']:
 credentials_yaml_file = BASE_DIR + "/data/" + default_variables['credentials_file']
 credentials = {}
 logger.debug('Importing credentials file: %s ',credentials_yaml_file)
-with open(credentials_yaml_file) as f: 
+with open(credentials_yaml_file) as f:
     credentials = yaml.load(f)
 
 #  LOAD all hosts with their tags in a dic
@@ -688,7 +709,7 @@ with open(credentials_yaml_file) as f:
 hosts_yaml_file = BASE_DIR + "/data/" + default_variables['hosts_file']
 hosts = {}
 logger.debug('Importing host file: %s ',hosts_yaml_file)
-with open(hosts_yaml_file) as f: 
+with open(hosts_yaml_file) as f:
     hosts = yaml.load(f)
 
 #  LOAD all commands with their tags in a dict
@@ -696,9 +717,9 @@ with open(hosts_yaml_file) as f:
 commands_yaml_file = BASE_DIR + "/data/" + default_variables['commands_file']
 commands = []
 logger.debug('Importing commands file: %s ',commands_yaml_file)
-with open(commands_yaml_file) as f: 
+with open(commands_yaml_file) as f:
     for document in yaml.load_all(f):
-        commands.append(document)    
+        commands.append(document)
 
 general_commands = commands[0]
 
@@ -708,14 +729,14 @@ junos_parsers = []
 junos_parsers_yaml_files = os.listdir(BASE_DIR + "/" + default_variables['junos_parsers_dir'])
 logger.debug('Importing junos parsers file: %s ',junos_parsers_yaml_files)
 for junos_parsers_yaml_file in junos_parsers_yaml_files:
-    with open(BASE_DIR + "/" + default_variables['junos_parsers_dir'] + "/"  + junos_parsers_yaml_file) as f: 
+    with open(BASE_DIR + "/" + default_variables['junos_parsers_dir'] + "/"  + junos_parsers_yaml_file) as f:
         junos_parsers.append(yaml.load(f))
 
 pfe_parsers = []
 pfe_parsers_yaml_files = os.listdir(BASE_DIR + "/" + default_variables['pfe_parsers_dir'])
 logger.debug('Importing pfe parsers file: %s ',pfe_parsers_yaml_files)
 for pfe_parsers_yaml_file in pfe_parsers_yaml_files:
-    with open(BASE_DIR + "/" + default_variables['pfe_parsers_dir'] + "/" + pfe_parsers_yaml_file) as f: 
+    with open(BASE_DIR + "/" + default_variables['pfe_parsers_dir'] + "/" + pfe_parsers_yaml_file) as f:
         pfe_parsers.append(yaml.load(f))
 
 if __name__ == "__main__":
@@ -730,21 +751,21 @@ if __name__ == "__main__":
     if check_db_status():
         # Create a list of jobs and then iterate through
         # the number of threads appending each thread to
-        # the job list 
+        # the job list
         target_hosts_lists = [target_hosts[x:x+len(target_hosts)/max_collector_threads+1] for x in range(0, len(target_hosts), len(target_hosts)/max_collector_threads+1)]
-        
+
         jobs = []
-        i=1   
+        i=1
         for target_hosts_list in target_hosts_lists:
             logger.info('Collector Thread-%s scheduled with following hosts: %s', i, target_hosts_list)
             thread = threading.Thread(target=collector, kwargs={"host_list":target_hosts_list})
             jobs.append(thread)
             i=i+1
 
-        # Start the threads 
+        # Start the threads
         for j in jobs:
             j.start()
-    
+
         # Ensure all of the threads have finished
         for j in jobs:
             j.join()
