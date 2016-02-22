@@ -23,7 +23,7 @@ It's also available for [Mac](https://docs.docker.com/engine/installation/mac/) 
 ### How to Install
 
 ```
-git clone https://git.juniper.net/jdi-tme/docker-analytics-collector.git
+git clone https://github.com/Juniper/open-nti.git
 cd docker-analytics-collector
 chmod +x docker.*
 ./docker.build.sh
@@ -159,6 +159,8 @@ Currently the collector accept:
  - Analyticsd (qfx5k) streams in JSON/UDP on port **50020**
  - Juniper Telemetry Interface (mx) streams in GPB/UDP on port **50000**
 
+> **it's important that all devices have the correct time defined**, it's recommended to configure NTP everywhere
+
 # statsd interface
 
 open-nti is using telegraf to support statsd  
@@ -256,8 +258,8 @@ tail -f /var/log/fluentd.log
 
 ## How to report feedback / participate in the project
 
-For any comments, suggestions or questions please send a mail to : **docker-analytics-collector@juniper**
-Contribution are more than Welcome
+For any comments, suggestions or questions please open an issue on Github [issues](issues)
+Contributions are more than Welcome
 
 ## Tools used
  - fluentd
