@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.17
+FROM phusion/baseimage:0.9.18
 MAINTAINER Damien Garros <dgarros@gmail.com>
 
 RUN     apt-get -y update && \
@@ -15,7 +15,8 @@ RUN     /usr/sbin/enable_insecure_key
 ENV GRAFANA_VERSION 2.6.0
 ENV INFLUXDB_VERSION 0.9.6.1
 ENV TELEGRAF_VERSION 0.10.1-1
-ENV FLUENTD_JUNIPER_VERSION 0.2.5-beta
+ENV FLUENTD_VERSION 0.12.20
+ENV FLUENTD_JUNIPER_VERSION 0.2.6-beta
 
 RUN     apt-get -y update && \
         apt-get -y install \
@@ -62,7 +63,8 @@ RUN     mkdir /src/grafana                                                      
 
 # RUN     gem install fluentd fluent-plugin-influxdb --no-ri --no-rdoc
 RUN     gem install --no-ri --no-rdoc \
-            fluentd \
+            fluentd -v ${FLUENTD_VERSION} && \
+        gem install --no-ri --no-rdoc \
             influxdb \
             rake \
             bundler \
