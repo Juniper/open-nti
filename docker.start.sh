@@ -5,7 +5,7 @@ docker rm open-nti_con
 
 docker run -d --volume $(pwd)/data:/opt/open-nti/data \
               --volume $(pwd)/logs:/opt/open-nti/logs \
-              --volume $(pwd)/db:/var/lib/influxdb \
+              --volume $(pwd)/db:/data \
               --volume $(pwd)/dashboards:/src/dashboards \
               --restart always \
               --publish 8125:8125/udp --publish 6000:6000/udp \
