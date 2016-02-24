@@ -13,19 +13,18 @@ It's pre-configured with all tools and with a default dashboard ..
 
 Thanks to docker, it can run pretty much anywhere on server, on laptop ... on the device itself
 
-### Requirements
+## Requirements
 
 The only requirement is to have docker installed on your Linux server/machine
 Instructions to install docker are available [here](http://docs.docker.com/engine/installation/ubuntulinux/)
 
 It's also available for [Mac](https://docs.docker.com/engine/installation/mac/) & [Windows](https://docs.docker.com/engine/installation/windows/)
 
-### How to Install
+## How to Install
 
 ```
 git clone https://github.com/Juniper/open-nti.git
-cd docker-analytics-collector
-chmod +x docker.*
+cd open-nti
 ./docker.build.sh
 ./docker.start.sh
 ```
@@ -34,7 +33,19 @@ chmod +x docker.*
 By default the container is named "open-nti_con"  
 >The first time you run "./docker.build.sh", it will take 10-15min to download and compile everything but after that it will be very fast
 
-### How to use
+## How to report feedback / participate in the project
+
+For any issues please open an [issue on Github](issues)
+For comments, suggestions or questions please use our [google group](https://groups.google.com/forum/#!forum/open-nti)
+
+To participate, please:
+```
+- Fork the project
+- Send us a pull request
+```
+**Contributions are more than Welcome**
+
+## How to use
 
 Once the container is running, you can access :
 - Graphical User Interface (Grafana) at http://hostip        (Login: admin / Pwd: admin)
@@ -184,6 +195,9 @@ g indicate gauge
 By default the dashboard is configured to display some "events" that are stored in the database into the serie "events"
 Their are multiple ways to record entry in the events serie
 
+> This feature is *still experimental*, some users observed delay between events and visualization in the dashboard
+> if you are not seeing your event, try to increase the time windows.
+
 ## Insert events via syslog
 
 open-nti will access events in the syslog format on port UDP 6000.  
@@ -256,11 +270,6 @@ If everything is all right, nothing would be print on this log.
 tail -f /var/log/fluentd.log
 ```
 
-## How to report feedback / participate in the project
-
-For any comments, suggestions or questions please open an issue on Github [issues](issues)
-Contributions are more than Welcome
-
 ## Tools used
  - fluentd
  - influxdb
@@ -270,7 +279,7 @@ Contributions are more than Welcome
  - pyez
 
 # Contributors
- - Damien Garros <dgarros@juniper.net>
- - Efrain Gonzalez <efrain@juniper.net>
- - Michael Pergament <mpergament@juniper.net>
- - Pablo Sagrera Garcia <psagrera@juniper.net>
+ - Damien Garros
+ - Efrain Gonzalez
+ - Michael Pergament
+ - Pablo Sagrera Garcia
