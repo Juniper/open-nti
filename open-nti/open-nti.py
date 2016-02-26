@@ -14,7 +14,6 @@ from lxml import etree  # Used for xml manipulation
 from pprint import pformat
 from pprint import pprint
 from pybot_jixia import pybot_jixia
-from ssh_manager_lite import *
 import argparse   # Used for argument parsing
 import json
 import logging
@@ -487,37 +486,6 @@ def collector(**kwargs):
                 if datapoints:   # Only insert datapoints if there is any :)
                     pprint(datapoints)
                     insert_datapoints(datapoints)
-
-        elif 'ssh' in hosts[host].split():
-
-            connected = False
-            logger.info('Connecting to host: %s', host)
-            target_commands = get_target_commands(host)
-            timestamp_tracking={}
-            connector = ssh_manager_lite (target=host)
-            try:
-                device = connector.open()
-                connected = True
-            except timeout_exception as tmout:
-                raise (tmout)
-            print target_commands
-            if connected:
-                datapoints = []
-                timestamp_tracking['collector_ssh_start'] = int(datetime.today().strftime('%s'))
-                for target_command in target_commands:
-                    logger.info('[%s]: Executing command: %s', host, target_command)
-                    result = connector.command_executor(device,target_command)
-                    print result
-                    if result:
-                        logger.debug('[%s]: Parsing command: %s', host, target_command)
-                        parse_result(host,target_command,result,datapoints,latest_datapoints)
-                        time.sleep(delay_between_commands)
-
-                connector.close(device)
-                timestamp_tracking['collector_ssh_ends'] = int(datetime.today().strftime('%s'))
-                if datapoints:
-                    insert_datapoints(datapoints)
-                logger.info('[%s]: timestamp_tracking - CLI collection %s', host, timestamp_tracking['collector_ssh_ends']-timestamp_tracking['collector_ssh_start'])
 
         else: # By default it's a junos device
             # We need to CATCH errors then print then but we need to continue with next host...
