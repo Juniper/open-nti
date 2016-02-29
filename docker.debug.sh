@@ -1,7 +1,20 @@
 #! /bin/bash
 
+
+#Load params file with all variables
+source open-nti.params
+
 docker run --rm -t \
-        -p 50000:50000/udp -p 50010:50010/udp -p 50020:50020/udp  \
-        -p 8125:8125/udp -p 50021:50021/udp -p 6000:6000/udp \
-        -p 80:80 -p 3000:3000 -p 8083:8083 -p 8086:8086 \
-        -i juniper/open-nti /sbin/my_init -- bash -l
+        --volume $(pwd)/$LOCAL_DIR_DATA:/opt/open-nti/data \
+        --volume $(pwd)/$LOCAL_DIR_DASHBOARD:/src/dashboards \
+        --publish $LOCAL_PORT_STATSD:8125/udp \
+        --publish $LOCAL_PORT_EVENT:6000/udp \
+        --publish $LOCAL_PORT_JTI:50000/udp \
+        --publish $LOCAL_PORT_NA:50010/udp \
+        --publish $LOCAL_PORT_ANALYTICSD:50020/udp \
+        --publish 80:80 \
+        --publish $LOCAL_PORT_GRAFANA:3000 \
+        --publish $LOCAL_PORT_INFLUXDB:8083 \
+        --publish $LOCAL_PORT_INFLUXDB_API:8086 \
+        --publish $LOCAL_PORT_SSH:22 \
+        -i $IMAGE_NAME /sbin/my_init -- bash -l

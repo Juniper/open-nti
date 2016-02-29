@@ -1,10 +1,17 @@
 #!/bin/bash
 
-comd=$1
+#Load params file with all variables
+source open-nti.params
 
+# Find container ID
+CONTAINER_ID=$(docker ps | grep $CONTAINER_NAME | awk '{print $1}')
+
+echo "Container ID : $CONTAINER_ID"
+
+comd=$1
 if [ $comd == "all" ]; then
-    docker exec -it $(docker ps | awk '/open-nti/ {print $1}') /usr/bin/python /opt/open-nti/startcron.py -a show  -c "$comd"
+    docker exec -it $CONTAINER_ID /usr/bin/python /opt/open-nti/startcron.py -a show  -c "$comd"
     exit 1
 fi
-    
-docker exec -it $(docker ps | awk '/open-nti/ {print $1}') /usr/bin/python /opt/open-nti/startcron.py -a show  -c "/usr/bin/python /opt/open-nti/open-nti.py -s $comd"
+
+docker exec -it $CONTAINER_ID /usr/bin/python /opt/open-nti/startcron.py -a show  -c "/usr/bin/python /opt/open-nti/open-nti.py -s $comd"
