@@ -124,8 +124,6 @@ ADD     docker/nginx/run.sh /etc/service/nginx/run
 
 ### open-nti python scripts (for gathering informatino from server to router)  ###
 ADD     open-nti/open-nti.py /opt/open-nti/open-nti.py
-ADD     open-nti/pybot_jixia.py /opt/open-nti/pybot_jixia.py
-ADD     open-nti/IxNetwork.py /opt/open-nti/IxNetwork.py
 ADD     open-nti/startcron.py /opt/open-nti/startcron.py
 
 # ################
