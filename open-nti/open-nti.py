@@ -13,7 +13,6 @@ from jnpr.junos.utils.start_shell import StartShell
 from lxml import etree  # Used for xml manipulation
 from pprint import pformat
 from pprint import pprint
-from pybot_jixia import pybot_jixia
 import argparse   # Used for argument parsing
 import json
 import logging
@@ -112,18 +111,6 @@ def get_target_commands(my_host):
                 if re.search(my_host_tag, command_tag, re.IGNORECASE):
                     if "commands" in general_commands[group_command].keys():
                         for cmd in general_commands[group_command]["commands"].strip().split("\n"):
-                            my_target_commands[cmd] = 1
-    return my_target_commands.keys()
-
-def get_ixia_commands(my_host):
-    my_host_tags = hosts[my_host]
-    my_target_commands = {}
-    for group_command in sorted(general_commands.keys()):
-        for my_host_tag in my_host_tags.strip().split():
-            for command_tag in general_commands[group_command]["tags"].split():
-                if re.search(my_host_tag, command_tag, re.IGNORECASE):
-                    if "default_views" in general_commands[group_command].keys():
-                        for cmd in general_commands[group_command]["default_views"].strip().split("\n"):
                             my_target_commands[cmd] = 1
     return my_target_commands.keys()
 
@@ -318,25 +305,6 @@ def get_metadata_and_add_datapoint(datapoints,**kwargs):
     kpi["tags"] = kpi_tags
     datapoints.append(copy.deepcopy(kpi))
 
-def parse_ixia_result(host,target_command,result,datapoints,latest_datapoints,kpi_tags):
-    timestamp = str(int(datetime.today().strftime('%s')))
-    for tmp in result:
-        columns = [x.replace(' ','_') for x in tmp['columnCaption']]
-        rows = tmp['RowVal']
-        logger.info("Command =  <%s>, len_cols = <%s> len_rows <%s> " ,target_command, len(columns),len(rows) )
-        for row in rows:
-            row_data = row[0]
-            for i in range(1,len(columns)):
-                variable_name = host + "." + target_command.replace(' ','_') + "." + row_data[0].replace(' ','_') + "." + columns[i].replace(' ','_')
-                value = convert_variable_type(row_data[i])
-                if value != '':
-                    kpi_tags['kpi']=variable_name
-                    add_datapoint(datapoints=datapoints,variable_name=variable_name,value=value,latest_datapoints=latest_datapoints,kpi_tags=kpi_tags)
-                else:
-                    value = 0   # This is a hack in order to allways put something on grafana chats (need to review if apply for all variables)
-                    kpi_tags['kpi']=variable_name
-                    add_datapoint(datapoints=datapoints,variable_name=variable_name,value=value,latest_datapoints=latest_datapoints,kpi_tags=kpi_tags)
-
 def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tags):
     for junos_parser in junos_parsers:
         regex_command = junos_parser["parser"]["regex-command"]
@@ -456,37 +424,9 @@ def collector(**kwargs):
 #       kpi_tags = get_host_base_tags(host=host)
         logger.info("Latest Datapoints are:")
         logger.info(pformat(latest_datapoints))
-        # Check host tag to identify what kind of connections will be used (ej junos / ixia  / etc)
-        if "ixia" in hosts[host].split():
-            connected = False
-            try:
-                dev = pybot_jixia(ixia_server="172.30.153.72",ixia_port=8009)
-                dev.ixia_connect()
-                connected = True
-                logger.info( "connected" )
-            except Exception, e:
-                connected = False
-                print e
-                print "failed connection"
-                continue
-            if connected:
-                datapoints = []
-                kpi_tags = {}
-                target_commands = get_ixia_commands(host)
-                for target_command in target_commands:
-                    result = {}
-                    try:
-                        result = dev.gather_stats(view=target_command, verbose=False)
-                        # Revisar aqui si el output es valido antes de parsear
-                        parse_ixia_result(host,target_command,result,datapoints,latest_datapoints,kpi_tags)
-                    except Exception, e:
-                        logger.error('[%s]: Problems gathering ixia stats  %s', target_command)
-                        continue
-                dev.ixia_disconnect ()
-                if datapoints:   # Only insert datapoints if there is any :)
-                    pprint(datapoints)
-                    insert_datapoints(datapoints)
-
+        # Check host tag to identify what kind of connections will be used (ej junos / others  / etc)
+        if "non_junos_devices" in hosts[host].split():
+            # Reserved for future purposes
         else: # By default it's a junos device
             # We need to CATCH errors then print then but we need to continue with next host...
             connected = False
