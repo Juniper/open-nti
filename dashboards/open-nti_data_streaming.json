@@ -91,7 +91,7 @@
             }
           ],
           "thresholds": "0, > 0",
-          "title": "Aggregated Error Statistics over all MXs and all interfaces (last 60 minutes)",
+          "title": "Aggregated Error Statistics over all MXs and all interfaces",
           "type": "singlestat",
           "valueFontSize": "80%",
           "valueMaps": [
@@ -174,7 +174,7 @@
             }
           ],
           "thresholds": "0, > 0",
-          "title": "Aggregated Error Statistics over all QFXs and all interfaces (last 60 minutes)",
+          "title": "Aggregated Error Statistics over all QFXs and all interfaces",
           "type": "singlestat",
           "valueFontSize": "80%",
           "valueMaps": [
