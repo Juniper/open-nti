@@ -1,3 +1,6 @@
 #! /bin/bash
 
-docker build -t juniper/open-nti .
+#Load params file with all variables
+source open-nti.params
+
+docker build -t $IMAGE_NAME .

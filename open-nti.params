@@ -1,0 +1,23 @@
+#! /bin/bash
+
+## Image and container
+IMAGE_NAME='juniper/open-nti'
+CONTAINER_NAME='open-nti_con'
+
+## Local ports that will be redirected to the Open NTI
+## Startup will fail if some ports are already in use
+LOCAL_PORT_JTI=50000
+LOCAL_PORT_NA=50010
+LOCAL_PORT_ANALYTICSD=50020
+LOCAL_PORT_STATSD=8125
+LOCAL_PORT_EVENT=6000
+LOCAL_PORT_GRAFANA=3000
+LOCAL_PORT_INFLUXDB=8083
+LOCAL_PORT_INFLUXDB_API=8086
+LOCAL_PORT_SSH=22222
+
+## Local directories that will be mapped into the container
+LOCAL_DIR_DATA='data'
+LOCAL_DIR_LOG='logs'
+LOCAL_DIR_DB='db'
+LOCAL_DIR_DASHBOARD='dashboards'

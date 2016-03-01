@@ -1,5 +1,5 @@
 {
-  "id": 1,
+  "id": 2,
   "title": "Data Streaming Collector Dashboard",
   "originalTitle": "Data Streaming Collector Dashboard",
   "tags": [
@@ -15,6 +15,180 @@
   "hideControls": false,
   "sharedCrosshair": false,
   "rows": [
+    {
+      "collapse": false,
+      "editable": true,
+      "height": "25px",
+      "panels": [
+        {
+          "cacheTimeout": null,
+          "colorBackground": false,
+          "colorValue": true,
+          "colors": [
+            "rgba(54, 245, 80, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(232, 37, 7, 0.97)"
+          ],
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "format": "none",
+          "height": "",
+          "id": 13,
+          "interval": null,
+          "isNew": true,
+          "links": [],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "span": 4,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": false
+          },
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "query": "SELECT sum(\"value\") FROM \"jnpr.jvision\" WHERE  (\"type\" = 'ingress_errors.if_in_discards' OR \"type\" = 'ingress_errors.if_in_errors' OR \"type\" = 'ingress_errors.if_in_frame_errors' OR \"type\" = 'ingress_errors.if_in_l2_mismatch_timeouts' OR \"type\" = 'ingress_errors.if_in_l2chan_errors' OR \"type\" = 'ingress_errors.if_in_l3_incompletes' OR \"type\" = 'ingress_errors.if_in_qdrops'  OR \"type\" = 'ingress_errors.if_in_resource_errors'  OR \"type\" = 'ingress_errors.if_in_runts') AND  $timeFilter",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "0, > 0",
+          "title": "Aggregated Error Statistics over all MXs and all interfaces",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "avg"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": false,
+          "colorValue": true,
+          "colors": [
+            "rgba(54, 245, 80, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(232, 37, 7, 0.97)"
+          ],
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "format": "none",
+          "height": "",
+          "id": 18,
+          "interval": null,
+          "isNew": true,
+          "links": [],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "span": 4,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": false
+          },
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "query": "SELECT sum(\"value\") FROM \"jnpr.analyticsd\" WHERE  (\"type\" = 'traffic-stats.rxcrcerr' OR \"type\" = 'traffic-stats.rxdroppkt' ) AND $timeFilter",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "0, > 0",
+          "title": "Aggregated Error Statistics over all QFXs and all interfaces",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "avg"
+        }
+      ],
+      "title": "New row"
+    },
     {
       "collapse": false,
       "editable": true,
@@ -108,7 +282,7 @@
                 }
               ],
               "measurement": "jnpr.analyticsd",
-              "query": "SELECT mean(\"value\") FROM \"jnpr.analyticsd\" WHERE (\"type\" = 'traffic-stats.rxpps' OR \"type\" = 'traffic-stats.txpps') AND \"device\" =~ /$host_regex/ AND $timeFilter GROUP BY time($interval), \"device\", \"device\", \"type\" fill(null)",
+              "query": "SELECT mean(\"value\") FROM \"jnpr.analyticsd\" WHERE (\"type\" = 'traffic-stats.rxpps' OR \"type\" = 'traffic-stats.txpps') AND \"device\" =~ /$host_regex/ AND $timeFilter GROUP BY time($interval), \"device\", \"interface\", \"type\" fill(null)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -170,23 +344,23 @@
               ],
               "hide": false,
               "measurement": "jnpr.jvision",
-              "query": "SELECT derivative(\"value\", 1s) FROM \"jnpr.jvision\" WHERE \"type\" = 'egress_stats.if_pkts' AND \"device\" =~ /$host_regex$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\"",
-              "rawQuery": false,
+              "query": "SELECT derivative(\"value\", 1s) FROM \"jnpr.jvision\" WHERE (\"type\" = 'egress_stats.if_pkts' OR \"type\" = 'ingress_stats.if_pkts') AND \"device\" =~ /$host_regex$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\"",
+              "rawQuery": true,
               "refId": "C",
               "resultFormat": "time_series",
               "select": [
                 [
                   {
-                    "type": "field",
                     "params": [
                       "value"
-                    ]
+                    ],
+                    "type": "field"
                   },
                   {
-                    "type": "derivative",
                     "params": [
                       "1s"
-                    ]
+                    ],
+                    "type": "derivative"
                   }
                 ]
               ],
@@ -195,64 +369,6 @@
                   "key": "type",
                   "operator": "=",
                   "value": "egress_stats.if_pkts"
-                },
-                {
-                  "condition": "AND",
-                  "key": "device",
-                  "operator": "=~",
-                  "value": "/$host_regex$/"
-                }
-              ]
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "device"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "interface"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "type"
-                  ],
-                  "type": "tag"
-                }
-              ],
-              "hide": false,
-              "measurement": "jnpr.jvision",
-              "query": "SELECT derivative(\"value\", 1s) FROM \"jnpr.jvision\" WHERE \"type\" = 'ingress_stats.if_pkts' AND \"device\" =~ /$host_regex$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\"",
-              "rawQuery": false,
-              "refId": "D",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "type": "field",
-                    "params": [
-                      "value"
-                    ]
-                  },
-                  {
-                    "type": "derivative",
-                    "params": [
-                      "1s"
-                    ]
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "type",
-                  "operator": "=",
-                  "value": "ingress_stats.if_pkts"
                 },
                 {
                   "condition": "AND",
@@ -553,7 +669,7 @@
               ],
               "hide": false,
               "measurement": "jnpr.jvision",
-              "query": "SELECT derivative(\"value\", $interval)*8 FROM \"jnpr.jvision\" WHERE \"type\" = 'egress_stats.if_octets' AND \"device\" =~ /$host_regex$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\"",
+              "query": "SELECT derivative(\"value\", $interval)*8 FROM \"jnpr.jvision\" WHERE (\"type\" = 'egress_stats.if_octets' OR \"type\" = 'ingress_stats.if_octets') AND \"device\" =~ /$host_regex$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\"",
               "rawQuery": true,
               "refId": "C",
               "resultFormat": "time_series",
@@ -576,73 +692,6 @@
                   "key": "type",
                   "operator": "=",
                   "value": "egress_stats.if_1sec_octets"
-                },
-                {
-                  "condition": "AND",
-                  "key": "device",
-                  "operator": "=~",
-                  "value": "/$host_regex$/"
-                }
-              ]
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "device"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "interface"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "type"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "jnpr.jvision",
-              "query": "SELECT derivative(\"value\", $interval)*8 FROM \"jnpr.jvision\" WHERE \"type\" = 'ingress_stats.if_octets' AND \"device\" =~ /$host_regex$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\"",
-              "rawQuery": true,
-              "refId": "D",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "type",
-                  "operator": "=",
-                  "value": "ingress_stats.if_1sec_octets"
                 },
                 {
                   "condition": "AND",
@@ -718,6 +767,14 @@
           ]
         }
       ],
+      "repeat": null,
+      "scopedVars": {
+        "host_regex": {
+          "text": "10.92.10.96",
+          "value": "10\\.92\\.10\\.96",
+          "selected": false
+        }
+      },
       "title": "New row"
     },
     {
@@ -915,70 +972,6 @@
                   "key": "device",
                   "operator": "=~",
                   "value": "/$host_regex$/"
-                }
-              ]
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "device"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "interface"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "type"
-                  ],
-                  "type": "tag"
-                }
-              ],
-              "hide": false,
-              "measurement": "jnpr.jvision",
-              "query": "SELECT derivative(\"value\", 1s) FROM \"jnpr.jvision\" WHERE \"type\" = 'ingress_stats.if_uc_pkts' OR \"type\" = 'ingress_stats.if_bc_pkts' OR \"type\" = 'ingress_stats.if_mc_pkts' AND $timeFilter GROUP BY \"device\", \"interface\", \"type\"",
-              "rawQuery": false,
-              "refId": "G",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [
-                      "1s"
-                    ],
-                    "type": "derivative"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "type",
-                  "operator": "=",
-                  "value": "ingress_stats.if_uc_pkts"
-                },
-                {
-                  "condition": "OR",
-                  "key": "type",
-                  "operator": "=",
-                  "value": "ingress_stats.if_bc_pkts"
-                },
-                {
-                  "condition": "OR",
-                  "key": "type",
-                  "operator": "=",
-                  "value": "ingress_stats.if_mc_pkts"
                 }
               ]
             },
@@ -1268,7 +1261,7 @@
                 }
               ],
               "measurement": "jnpr.analyticsd",
-              "query": "SELECT derivative(mean(\"value\"), 1s) FROM \"jnpr.analyticsd\" WHERE \"type\" = 'traffic-stats.rxcrcerr' AND \"device\" =~ /$host_regex/ AND $timeFilter GROUP BY time(10s), \"device\", \"interface\", \"type\" fill(null)",
+              "query": "SELECT derivative(mean(\"value\"), 1s) FROM \"jnpr.analyticsd\" WHERE  (\"type\" = 'traffic-stats.rxcrcerr' OR \"type\" = 'traffic-stats.rxdroppkt') AND \"device\" =~ /$host_regex/ AND $timeFilter GROUP BY time(10s), \"device\", \"interface\", \"type\" fill(null)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1317,7 +1310,7 @@
                 }
               ],
               "measurement": "jnpr.jvision",
-              "query": "SELECT derivative(mean(\"value\"), 1s) FROM \"jnpr.jvision\" WHERE \"type\" = 'ingress_errors.if_in_frame_errors' AND \"device\" =~ /$host_regex/ AND $timeFilter GROUP BY time(10s), \"device\", \"interface\", \"type\" fill(null)",
+              "query": "SELECT derivative(\"value\", 1s) FROM \"jnpr.jvision\" WHERE  (\"type\" = 'ingress_errors.if_in_discards' OR \"type\" = 'ingress_errors.if_in_errors' OR \"type\" = 'ingress_errors.if_in_frame_errors' OR \"type\" = 'ingress_errors.if_in_l2_mismatch_timeouts' OR \"type\" = 'ingress_errors.if_in_l2chan_errors' OR \"type\" = 'ingress_errors.if_in_l3_incompletes' OR \"type\" = 'ingress_errors.if_in_qdrops'  OR \"type\" = 'ingress_errors.if_in_resource_errors'  OR \"type\" = 'ingress_errors.if_in_runts') AND \"device\" =~ /$host_regex$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\"",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -1328,10 +1321,6 @@
                       "value"
                     ],
                     "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "count"
                   }
                 ]
               ],
@@ -1339,7 +1328,7 @@
                 {
                   "key": "type",
                   "operator": "=",
-                  "value": "ingress_errors.if_in_frame_errors"
+                  "value": "egress_queue_info.packets"
                 }
               ]
             }
@@ -1794,6 +1783,146 @@
             "short",
             "short"
           ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 12,
+          "isNew": true,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [
+            {
+              "alias": "/rxpps/i",
+              "transform": "negative-Y"
+            },
+            {
+              "alias": "/ingress/i",
+              "transform": "negative-Y"
+            }
+          ],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "query": "SELECT sum(\"value\") FROM \"jnpr.analyticsd\" WHERE (\"type\" = 'traffic-stats.rxpps' OR \"type\" = 'traffic-stats.txpps') AND \"device\" =~ /$host_regex/ AND $timeFilter GROUP BY time($interval), \"device\", \"type\" fill(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "query": "SELECT sum(\"value\")  FROM \"jnpr.jvision\" WHERE (\"type\" = 'egress_stats.if_1sec_pkts' OR \"type\" = 'ingress_stats.if_1sec_pkts') AND \"device\" =~ /$host_regex/  AND $timeFilter GROUP BY time($interval), \"device\", \"type\" fill(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Aggregated TX/RX (PPS)",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ]
         }
       ],
       "title": "New row"
@@ -2135,7 +2264,7 @@
     }
   ],
   "time": {
-    "from": "now-15m",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
@@ -2172,26 +2301,37 @@
   "templating": {
     "list": [
       {
-        "allFormat": "glob",
+        "allFormat": "regex wildcard",
         "current": {
-          "text": "192.168.1.20",
-          "value": "192.168.1.20"
+          "text": "qfx5100-02-48s",
+          "value": "qfx5100\\-02\\-48s",
+          "tags": []
         },
         "datasource": null,
         "hideLabel": false,
-        "includeAll": false,
+        "includeAll": true,
         "multi": false,
         "multiFormat": "regex values",
         "name": "host_regex",
         "options": [
           {
-            "text": "192.168.1.20",
-            "value": "192.168.1.20",
+            "text": "All",
+            "value": ".*",
+            "selected": false
+          },
+          {
+            "text": "10.92.10.96",
+            "value": "10\\.92\\.10\\.96",
+            "selected": false
+          },
+          {
+            "text": "qfx5100-02-48s",
+            "value": "qfx5100\\-02\\-48s",
             "selected": true
           },
           {
-            "text": "QFX5100",
-            "value": "QFX5100",
+            "text": "vMX",
+            "value": "vMX",
             "selected": false
           }
         ],
@@ -2222,6 +2362,6 @@
   },
   "refresh": "10s",
   "schemaVersion": 8,
-  "version": 5,
+  "version": 20,
   "links": []
 }
