@@ -59,94 +59,39 @@ def convert_variable_type(var):
 
 def check_db_status():
     # if the db is not found, then try to create it
-    return True
-    for i in range(0, 3):
-        try:
-            query = "list series"
-            response = requests.get('http://%s:%s/db/%s/series?u=%s&p=%s&q=%s' % (db_server,db_port,db_name,db_user,db_user_password,query),timeout=1)
-            break
-        except requests.exceptions.Timeout as e:
-            # Maybe set up for a retry, or continue in a retry loop
-            if i < 2:
-                continue
-            else:
-                logger.error('Error trying to connect to database server, check IP connectivity and db server status.\n %s', e)
-                sys.exit(1)
-        except Exception as e:
-            logger.error('Error trying to connect to database daemon, check ports used and server status.\n %s', e)
-            sys.exit(1)
-
-    logger.debug('Request response status code: %s', response.status_code)
     try:
-        response.raise_for_status()  # It will raise an exception if status_code is error (a 4XX client error or 5XX server error response)
+        dbclient = InfluxDBClient(db_server, db_port, db_admin, db_admin_password)
+        dblist = dbclient.get_list_database()
+        db_found = False
+        for db in dblist:
+            if db['name'] == db_name:
+                db_found = True
+        if not(db_found):
+            logger.info('Database <%s> not found, trying to create it', db_name) 
+            dbclient.create_database(db_name)
         return True
     except Exception as e:
-        logger.error('Error querying open-nti database: %s', e)
+        logger.error('Error querying open-nti database: %s', e) 
+        return False     
 
 def get_latest_datapoints(**kwargs):
 
     dbclient = InfluxDBClient(db_server, db_port, db_admin, db_admin_password)
     dbclient.switch_database(db_name)
-    query = "select value from /%s\./ ORDER BY time DESC limit 1 " % (kwargs['host'])
-    results_tmp = dbclient.query(query)
     results = {}
-    if results_tmp.raw:
-        for result_tmp in results_tmp.raw['series']:
-            results[result_tmp['name']] = result_tmp['values'][0][1]
-    return results
-
-def get_latest_datapoint(**kwargs):
-
-    kpi_tags={}
-    if 'kpi_tags' in kwargs.keys():
-        # This is due dict are mutable and a normal assigment does NOT copy the value, it copy the reference
-        kpi_tags=copy.deepcopy(kwargs['kpi_tags'])
-
-    result = {}
-
-    dbclient = InfluxDBClient(db_server, db_port, db_admin, db_admin_password)
-    dbclient.switch_database(db_name)
-
     if db_schema == 1:
-        logger.error("ERROR: db_schema 1 is not supported by this function: <get_latest_datapoint>")
-        return ''
+        query = "select * from /%s\./ GROUP BY * ORDER BY time DESC limit 1 " % (kwargs['host'])
     elif db_schema == 2:
-        kpi_query_string = ""
-        for kpi_tag in kpi_tags.keys():
-            if kpi_query_string != "":
-                tmp = " AND \"%s\"  = '%s' " % (kpi_tag,kpi_tags[kpi_tag])
-                kpi_query_string = kpi_query_string + tmp
-            else:
-                tmp = " \"%s\" = '%s' " % (kpi_tag,kpi_tags[kpi_tag])
-                kpi_query_string = kpi_query_string + tmp                
-        if kpi_query_string != "":
-            kpi_query_string = "WHERE " + kpi_query_string
-
-        query = "select value from \"%s\" %s ORDER BY time DESC limit 1 " % ('jnpr.collector',kpi_query_string)
+        query = "select * from \"%s\" WHERE device = '%s' GROUP BY * ORDER BY time DESC limit 1 " % ('jnpr.collector',kwargs['host'])
     elif db_schema == 3:
-        kpi_query_string = ""
-        for kpi_tag in kpi_tags.keys():
-            if kpi_query_string != "":
-                tmp = " AND \"%s\"  = '%s' " % (kpi_tag,kpi_tags[kpi_tag])
-                kpi_query_string = kpi_query_string + tmp
-            else:
-                tmp = " \"%s\" = '%s' " % (kpi_tag,kpi_tags[kpi_tag])
-                kpi_query_string = kpi_query_string + tmp                
-        if kpi_query_string != "":
-            kpi_query_string = "WHERE " + kpi_query_string
-
-        query = "select value from \"%s\" %s ORDER BY time DESC limit 1 " % (kpi_tags['kpi'],kpi_query_string)
+        query = "select * from // WHERE device = '%s' GROUP BY * ORDER BY time DESC limit 1 " % (kwargs['host'])
     else:
         logger.error("ERROR: Unknown db_schema: <%s>", db_schema)
-        results = {}
-    
-    result = dbclient.query(query)
-    if result.raw:
-        timestamp, value = result.raw['series'][0]['values'][0]
-        return value
-    #   return timestamp, value   # PENDING for future 'rate' calculation, need to convert timetstam into epoch
-    else:  # no result found
-        return ''
+        return results
+
+    results = dbclient.query(query)
+    return results
+
 
 def get_target_hosts():
     my_target_hosts = {}
@@ -321,19 +266,27 @@ def get_metadata_and_add_datapoint(datapoints,**kwargs):
     delta = 0
     latest_value = ''
     if type (value) != str:
+
+        points=[]
         if (db_schema == 1):
-            if variable_name in latest_datapoints.keys():
-                latest_value = latest_datapoints[variable_name]
-                # We asume that allways 'value' is the latest 'value' in the list
-        elif ((db_schema == 2) or (db_schema == 3)):
-            latest_value = get_latest_datapoint(kpi_tags=kpi_tags)
+            points = list(latest_datapoints.get_points(measurement = variable_name))
+        elif (db_schema == 2):
+            points = list(latest_datapoints.get_points(measurement = 'jnpr.collector', tags=kpi_tags))
+        elif (db_schema == 3):
+            points = list(latest_datapoints.get_points(measurement = kpi_tags['kpi'], tags=kpi_tags))
         else:
             logger.error("ERROR: Unknown db_schema: <%s>", db_schema)
 
-        if latest_value != '':
+        if len(points) == 1: 
+            latest_value = points[0]['value']
             delta = value - convert_variable_type(latest_value)
-        else:
+            logger.debug("Delta found : points <%s> latest_value <%s>", points,latest_value)
+        elif len(points) == 0:
             delta = value
+            logger.debug("No latest datapoint found for <%s>", kpi_tags)
+        else:
+            logger.error("ERROR: Latest datapoint query returns more than one match : <%s>", points)
+        
         if type (value) == int:
             delta = int(delta)
         elif type (value) == float:
@@ -371,9 +324,11 @@ def get_metadata_and_add_datapoint(datapoints,**kwargs):
     datapoints.append(copy.deepcopy(kpi))
 
 def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tags):
+    parser_found = False
     for junos_parser in junos_parsers:
         regex_command = junos_parser["parser"]["regex-command"]
         if re.search(regex_command, target_command, re.IGNORECASE):
+            parser_found = True
             matches = junos_parser["parser"]["matches"]
             timestamp = str(int(datetime.today().strftime('%s')))
             for match in matches:
@@ -433,7 +388,7 @@ def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tag
                                                     else:
                                                         logger.error('[%s]: More matches found on regex than variables especified on parser: %s', host, regex_command)
                                                 else:
-                                                    logger.info('[%s]: No matches found for regex: %s', host, regex)
+                                                    logger.debug('[%s]: No matches found for regex: %s', host, regex)
 
                                             else:
                                                 value_tmp = node.xpath(sub_match["xpath"])[0].text.strip()
@@ -468,7 +423,7 @@ def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tag
                                 else:
                                     logger.error('[%s]: More matches found on regex than variables especified on parser: %s', host, regex_command)
                             else:
-                                logger.info('[%s]: No matches found for regex: %s', host, regex)
+                                logger.debug('[%s]: No matches found for regex: %s', host, regex)
                         else:
                             logger.error('[%s]: An unkown match-type found in parser with regex: %s', host, regex_command)
                     else:
@@ -477,15 +432,20 @@ def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tag
                     logger.info('[%s]: Exception found.', host)
                     logging.exception(e)
                     pass  # Notify about the specific problem with the host BUT we need to continue with our list
+        if parser_found:
+            logger.info('[%s]: Parser found and processed, going to next comand.', host)
+            break
+    if (not(parser_found)):
+        logger.error('[%s]: ERROR: Parser not found for command: %s', host, target_command)
+
 
 def collector(**kwargs):
-
-    dbclient = InfluxDBClient(db_server, db_port, db_user, db_user_password, db_name)
 
     for host in kwargs["host_list"]:
         kpi_tags={}
         latest_datapoints={}
-        if ((db_schema == 1) and (not(use_hostname))):
+#        if ((db_schema == 1) and (not(use_hostname))):
+        if (not(use_hostname)):
             latest_datapoints = get_latest_datapoints(host=host)
             logger.info("Latest Datapoints are:")
             logger.info(pformat(latest_datapoints))
@@ -549,10 +509,13 @@ def collector(**kwargs):
                         hostname = convert_variable_type(hostname_tmp)
                         logger.info('[%s]: Host will now be referenced as : %s', host, hostname)
                         host = hostname
-                        if (db_schema == 1):
-                            latest_datapoints = get_latest_datapoints(host=host)
-                            logger.info("Latest Datapoints are:")
-                            logger.info(pformat(latest_datapoints))
+#                        if (db_schema == 1):
+#                            latest_datapoints = get_latest_datapoints(host=host)
+#                            logger.info("Latest Datapoints are:")
+#                            logger.info(pformat(latest_datapoints))
+                        latest_datapoints = get_latest_datapoints(host=host)
+                        logger.info("Latest Datapoints are:")
+                        logger.info(pformat(latest_datapoints))
                     else:
                         logger.info('[%s]: Host will be referenced as : %s', host, host)
 
@@ -585,7 +548,7 @@ def collector(**kwargs):
                 timestamp_tracking['collector_ends'] = int(datetime.today().strftime('%s'))
                 logger.info('[%s]: timestamp_tracking - total collection %s', host, timestamp_tracking['collector_ends']-timestamp_tracking['collector_start'])
             else:
-                logger.error('[%s]: Skiping host due connectivity issue', host)
+                logger.error('[%s]: Skipping host due connectivity issue', host)
 
 
 ################################################################################################
