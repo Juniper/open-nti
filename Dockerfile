@@ -168,21 +168,13 @@ ENV SSL_SUPPORT **False**
 ENV SSL_CERT **None**
 RUN chmod -R 777 /var/log/
 
-## Fluentd
-EXPOSE 50000
-EXPOSE 50010
-EXPOSE 50020
 
-## Graphana
+# ## Graphana
 EXPOSE 80
 EXPOSE 3000
 
-# Influxdb Admin server WebUI
+# # Influxdb Admin server WebUI
 EXPOSE 8083
 EXPOSE 8086
-
-# Telegraf
-EXPOSE 8125
-
 
 CMD ["/sbin/my_init"]
