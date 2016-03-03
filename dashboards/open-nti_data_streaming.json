@@ -1,5 +1,5 @@
 {
-  "id": 1,
+  "id": 2,
   "title": "Data Streaming Collector Dashboard",
   "originalTitle": "Data Streaming Collector Dashboard",
   "tags": [
@@ -770,9 +770,9 @@
       "repeat": null,
       "scopedVars": {
         "host_regex": {
-          "selected": false,
           "text": "10.92.10.96",
-          "value": "10\\.92\\.10\\.96"
+          "value": "10\\.92\\.10\\.96",
+          "selected": false
         }
       },
       "title": "New row"
@@ -2264,7 +2264,7 @@
     }
   ],
   "time": {
-    "from": "now-15m",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
@@ -2303,8 +2303,9 @@
       {
         "allFormat": "regex wildcard",
         "current": {
-          "text": "All",
-          "value": ".*"
+          "text": "qfx5100-02-48s",
+          "value": "qfx5100\\-02\\-48s",
+          "tags": []
         },
         "datasource": null,
         "hideLabel": false,
@@ -2316,21 +2317,21 @@
           {
             "text": "All",
             "value": ".*",
+            "selected": false
+          },
+          {
+            "text": "10.92.10.96",
+            "value": "10\\.92\\.10\\.96",
+            "selected": false
+          },
+          {
+            "text": "qfx5100-02-48s",
+            "value": "qfx5100\\-02\\-48s",
             "selected": true
           },
           {
-            "text": "192.168.1.20",
-            "value": "192\\.168\\.1\\.20",
-            "selected": false
-          },
-          {
-            "text": "MX-RE0",
-            "value": "MX\\-RE0",
-            "selected": false
-          },
-          {
-            "text": "WFD-QFX5100-48T-1",
-            "value": "WFD\\-QFX5100\\-48T\\-1",
+            "text": "vMX",
+            "value": "vMX",
             "selected": false
           }
         ],
@@ -2354,7 +2355,6 @@
         "name": "Commit",
         "query": "SELECT * FROM events WHERE event = 'UI_COMMIT_COMPLETED' AND $timeFilter",
         "showLine": true,
-        "tagsColumn": "device",
         "textColumn": "message",
         "titleColumn": "event"
       }
@@ -2362,6 +2362,6 @@
   },
   "refresh": "10s",
   "schemaVersion": 8,
-  "version": 0,
+  "version": 20,
   "links": []
 }
