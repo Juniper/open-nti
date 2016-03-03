@@ -13,8 +13,6 @@ from jnpr.junos.utils.start_shell import StartShell
 from lxml import etree  # Used for xml manipulation
 from pprint import pformat
 from pprint import pprint
-from pybot_jixia import pybot_jixia
-from ssh_manager_lite import *
 import argparse   # Used for argument parsing
 import json
 import logging
@@ -34,6 +32,9 @@ import yaml
 import copy
 
 logging.getLogger("paramiko").setLevel(logging.INFO)
+logging.getLogger("ncclient").setLevel(logging.WARNING) # In order to remove http request from ssh/paramiko
+logging.getLogger("requests").setLevel(logging.INFO)
+logging.getLogger("urllib3").setLevel(logging.WARNING)  # In order to remove http request from InfluxDBClient
 
 ####################################################################################
 ####################################################################################
@@ -57,48 +58,45 @@ def convert_variable_type(var):
     return var   # I guess that is a string
 
 def check_db_status():
-    return True
-    for i in range(0, 3):
-        try:
-            query = "list series"
-            response = requests.get('http://%s:%s/db/%s/series?u=%s&p=%s&q=%s' % (db_server,db_port,db_name,db_user,db_user_password,query),timeout=1)
-            break
-        except requests.exceptions.Timeout as e:
-            # Maybe set up for a retry, or continue in a retry loop
-            if i < 2:
-                continue
-            else:
-                logger.error('Error trying to connect to database server, check IP connectivity and db server status.\n %s', e)
-                sys.exit(1)
-        except Exception as e:
-            logger.error('Error trying to connect to database daemon, check ports used and server status.\n %s', e)
-            sys.exit(1)
-
-    logger.debug('Request response status code: %s', response.status_code)
+    # if the db is not found, then try to create it
     try:
-        response.raise_for_status()  # It will raise an exception if status_code is error (a 4XX client error or 5XX server error response)
+        dbclient = InfluxDBClient(db_server, db_port, db_admin, db_admin_password)
+        dblist = dbclient.get_list_database()
+        db_found = False
+        for db in dblist:
+            if db['name'] == db_name:
+                db_found = True
+        if not(db_found):
+            logger.info('Database <%s> not found, trying to create it', db_name) 
+            dbclient.create_database(db_name)
         return True
     except Exception as e:
-        logger.error('Error querying open-nti database: %s', e)
+        logger.error('Error querying open-nti database: %s', e) 
+        return False     
 
 def get_latest_datapoints(**kwargs):
 
     dbclient = InfluxDBClient(db_server, db_port, db_admin, db_admin_password)
     dbclient.switch_database(db_name)
-    query = "select value from /%s\./ ORDER BY time DESC limit 1 " % (kwargs['host'])
-    results_tmp = dbclient.query(query)
     results = {}
-    if results_tmp.raw:
-        for result_tmp in results_tmp.raw['series']:
-            results[result_tmp['name']] = result_tmp['values'][0][1]
+    if db_schema == 1:
+        query = "select * from /%s\./ GROUP BY * ORDER BY time DESC limit 1 " % (kwargs['host'])
+    elif db_schema == 2:
+        query = "select * from \"%s\" WHERE device = '%s' GROUP BY * ORDER BY time DESC limit 1 " % ('jnpr.collector',kwargs['host'])
+    elif db_schema == 3:
+        query = "select * from // WHERE device = '%s' GROUP BY * ORDER BY time DESC limit 1 " % (kwargs['host'])
+    else:
+        logger.error("ERROR: Unknown db_schema: <%s>", db_schema)
+        return results
+
+    results = dbclient.query(query)
     return results
+
 
 def get_target_hosts():
     my_target_hosts = {}
     for host in sorted(hosts.keys()):
         for tag in tag_list:
-            print type(tag)
-            print tag
             for hosts_tag in hosts[host].split():
                 if re.search(tag, hosts_tag, re.IGNORECASE):
                     my_target_hosts[host] = 1
@@ -113,18 +111,6 @@ def get_target_commands(my_host):
                 if re.search(my_host_tag, command_tag, re.IGNORECASE):
                     if "commands" in general_commands[group_command].keys():
                         for cmd in general_commands[group_command]["commands"].strip().split("\n"):
-                            my_target_commands[cmd] = 1
-    return my_target_commands.keys()
-
-def get_ixia_commands(my_host):
-    my_host_tags = hosts[my_host]
-    my_target_commands = {}
-    for group_command in sorted(general_commands.keys()):
-        for my_host_tag in my_host_tags.strip().split():
-            for command_tag in general_commands[group_command]["tags"].split():
-                if re.search(my_host_tag, command_tag, re.IGNORECASE):
-                    if "default_views" in general_commands[group_command].keys():
-                        for cmd in general_commands[group_command]["default_views"].strip().split("\n"):
                             my_target_commands[cmd] = 1
     return my_target_commands.keys()
 
@@ -198,17 +184,19 @@ def eval_variable_name(variable,**kwargs):
         # This is due dict are mutable and a normal assigment does NOT copy the value, it copy the reference
         keys=copy.deepcopy(kwargs['keys'])
     if db_schema == 3:
-        for key in kwargs:
+        for key in keys.keys():
             variable = variable.replace("$"+key,"")
             variable = variable.replace("..",".")
-            variable = re.sub(r"^\.", "", variable)
+        variable = variable.replace("$host","")
+        variable = re.sub(r"^\.", "", variable)
         return variable, variable
     if db_schema == 2:
-        for key in kwargs:
+        for key in keys.keys():
             variable = variable.replace("$"+key,"")
             variable = variable.replace("..",".")
-            variable = re.sub(r"^\.", "", variable)
-        return "juniper", variable
+        variable = variable.replace("$host","")
+        variable = re.sub(r"^\.", "", variable)
+        return "jnpr.collector", variable
     else: # default db_schema (option 1) open-nti legacy
         for key in keys.keys():
             variable = variable.replace("$"+key,keys[key])
@@ -220,7 +208,6 @@ def eval_tag_name(variable,**kwargs):
     for key in kwargs:
         variable = variable.replace("$"+key,kwargs[key])
     return variable
-
 
 def eval_variable_value(value,**kwargs):
 
@@ -243,7 +230,6 @@ def insert_datapoints(datapoints):
     logger.info(pformat(datapoints))
     response = dbclient.write_points(datapoints)
 
-
 def get_metadata_and_add_datapoint(datapoints,**kwargs):
 
     value_tmp  = kwargs['value_tmp']
@@ -260,30 +246,47 @@ def get_metadata_and_add_datapoint(datapoints,**kwargs):
         # This is due dict are mutable and a normal assigment does NOT copy the value, it copy the reference
         kpi_tags=copy.deepcopy(kwargs['kpi_tags'])
 
-    key=''
-    if 'key' in kwargs.keys():
-        key=kwargs['key']
+    #    Need to double check if with latest improvements key variable is not used anymore
+    #    key=''
+    #    if 'key' in kwargs.keys():
+    #        key=kwargs['key']
 
     keys={}
     if 'keys' in kwargs.keys():
         # This is due dict are mutable and a normal assigment does NOT copy the value, it copy the reference
         keys=copy.deepcopy(kwargs['keys'])
+        for key_name in keys.keys():
+            kpi_tags[key_name] = keys[key_name]
 
     # Resolving the variable name
     value = convert_variable_type(value_tmp)
     variable_name, kpi_tags['kpi'] = eval_variable_name(match["variable-name"],host=host,keys=keys)
 
-
     # Calculating delta values (only applies for numeric values)
     delta = 0
+    latest_value = ''
     if type (value) != str:
-        if variable_name in latest_datapoints.keys():
-            # We asume that allways 'value' is the latest 'value' in the list
-            latest_value = latest_datapoints[variable_name]
-            if latest_value != '':
-                delta = value - convert_variable_type(latest_value)
-            else:
-                delta = value
+
+        points=[]
+        if (db_schema == 1):
+            points = list(latest_datapoints.get_points(measurement = variable_name))
+        elif (db_schema == 2):
+            points = list(latest_datapoints.get_points(measurement = 'jnpr.collector', tags=kpi_tags))
+        elif (db_schema == 3):
+            points = list(latest_datapoints.get_points(measurement = kpi_tags['kpi'], tags=kpi_tags))
+        else:
+            logger.error("ERROR: Unknown db_schema: <%s>", db_schema)
+
+        if len(points) == 1: 
+            latest_value = points[0]['value']
+            delta = value - convert_variable_type(latest_value)
+            logger.debug("Delta found : points <%s> latest_value <%s>", points,latest_value)
+        elif len(points) == 0:
+            delta = value
+            logger.debug("No latest datapoint found for <%s>", kpi_tags)
+        else:
+            logger.error("ERROR: Latest datapoint query returns more than one match : <%s>", points)
+        
         if type (value) == int:
             delta = int(delta)
         elif type (value) == float:
@@ -292,11 +295,12 @@ def get_metadata_and_add_datapoint(datapoints,**kwargs):
         delta = 'N/A'
 
     # Getting all tags related to the kpi
-    if 'tags' in match.keys():
-        for tag in match['tags']:
-            tag_name = tag.keys()[0]  # We asume that this dict only has one key
-            tag_value = eval_tag_name(tag[tag_name],host=host,key=key)
-            kpi_tags[tag_name] = tag_value
+    #    if 'tags' in match.keys():
+    #        for tag in match['tags']:
+    #            tag_name = tag.keys()[0]  # We asume that this dict only has one key
+    #            tag_value = eval_tag_name(tag[tag_name],host=host,key=key)
+    #            # this need to be updated when there is more than one key
+    #            kpi_tags[tag_name] = tag_value
 
     # Building the kpi and append it to the other kpis before database insertion
     if type (value) != str:
@@ -319,29 +323,12 @@ def get_metadata_and_add_datapoint(datapoints,**kwargs):
     kpi["tags"] = kpi_tags
     datapoints.append(copy.deepcopy(kpi))
 
-def parse_ixia_result(host,target_command,result,datapoints,latest_datapoints,kpi_tags):
-    timestamp = str(int(datetime.today().strftime('%s')))
-    for tmp in result:
-        columns = [x.replace(' ','_') for x in tmp['columnCaption']]
-        rows = tmp['RowVal']
-        logger.info("Command =  <%s>, len_cols = <%s> len_rows <%s> " ,target_command, len(columns),len(rows) )
-        for row in rows:
-            row_data = row[0]
-            for i in range(1,len(columns)):
-                variable_name = host + "." + target_command.replace(' ','_') + "." + row_data[0].replace(' ','_') + "." + columns[i].replace(' ','_')
-                value = convert_variable_type(row_data[i])
-                if value != '':
-                    kpi_tags['kpi']=variable_name
-                    add_datapoint(datapoints=datapoints,variable_name=variable_name,value=value,latest_datapoints=latest_datapoints,kpi_tags=kpi_tags)
-                else:
-                    value = 0   # This is a hack in order to allways put something on grafana chats (need to review if apply for all variables)
-                    kpi_tags['kpi']=variable_name
-                    add_datapoint(datapoints=datapoints,variable_name=variable_name,value=value,latest_datapoints=latest_datapoints,kpi_tags=kpi_tags)
-
 def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tags):
+    parser_found = False
     for junos_parser in junos_parsers:
         regex_command = junos_parser["parser"]["regex-command"]
         if re.search(regex_command, target_command, re.IGNORECASE):
+            parser_found = True
             matches = junos_parser["parser"]["matches"]
             timestamp = str(int(datetime.today().strftime('%s')))
             for match in matches:
@@ -397,11 +384,11 @@ def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tag
                                                             # Begin function  (pero pendiente de ver si variable-type existe y su valor)
                                                             if "variable-type" in sub_match["variables"][i]:
                                                                 value_tmp = eval_variable_value(value_tmp, type=sub_match["variables"][i]["variable-type"])
-                                                            get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match["variables"][i],value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags,keys=keys)
+                                                            get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match["variables"][i],value_tmp=value_tmp,host=host,latest_datapoints=latest_datapoints,kpi_tags=kpi_tags,keys=keys)
                                                     else:
                                                         logger.error('[%s]: More matches found on regex than variables especified on parser: %s', host, regex_command)
                                                 else:
-                                                    logger.info('[%s]: No matches found for regex: %s', host, regex)
+                                                    logger.debug('[%s]: No matches found for regex: %s', host, regex)
 
                                             else:
                                                 value_tmp = node.xpath(sub_match["xpath"])[0].text.strip()
@@ -417,7 +404,7 @@ def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tag
                                         logging.exception(e)
                                         pass  # Notify about the specific problem with the host BUT we need to continue with our list
                         else:
-                            logger.error('[%s]: An unkown match-type found in parser with regex: %s', host, regex_command)
+                            logger.error('[%s]: An unknown match-type found in parser with regex: %s', host, regex_command)
                     elif match["method"] == "regex": # we need to evaluate a text regex
                         if match["type"] == "single-value":
                             regex = match["regex"]
@@ -436,7 +423,7 @@ def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tag
                                 else:
                                     logger.error('[%s]: More matches found on regex than variables especified on parser: %s', host, regex_command)
                             else:
-                                logger.info('[%s]: No matches found for regex: %s', host, regex)
+                                logger.debug('[%s]: No matches found for regex: %s', host, regex)
                         else:
                             logger.error('[%s]: An unkown match-type found in parser with regex: %s', host, regex_command)
                     else:
@@ -445,80 +432,29 @@ def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tag
                     logger.info('[%s]: Exception found.', host)
                     logging.exception(e)
                     pass  # Notify about the specific problem with the host BUT we need to continue with our list
+        if parser_found:
+            logger.info('[%s]: Parser found and processed, going to next comand.', host)
+            break
+    if (not(parser_found)):
+        logger.error('[%s]: ERROR: Parser not found for command: %s', host, target_command)
 
 
 def collector(**kwargs):
 
-    dbclient = InfluxDBClient(db_server, db_port, db_user, db_user_password, db_name)
-
     for host in kwargs["host_list"]:
-        latest_datapoints = get_latest_datapoints(host=host)
         kpi_tags={}
-#       kpi_tags = get_host_base_tags(host=host)
-        logger.info("Latest Datapoints are:")
-        logger.info(pformat(latest_datapoints))
-        # Check host tag to identify what kind of connections will be used (ej junos / ixia  / etc)
-        if "ixia" in hosts[host].split():
-            connected = False
-            try:
-                dev = pybot_jixia(ixia_server="172.30.153.72",ixia_port=8009)
-                dev.ixia_connect()
-                connected = True
-                logger.info( "connected" )
-            except Exception, e:
-                connected = False
-                print e
-                print "failed connection"
-                continue
-            if connected:
-                datapoints = []
-                kpi_tags = {}
-                target_commands = get_ixia_commands(host)
-                for target_command in target_commands:
-                    result = {}
-                    try:
-                        result = dev.gather_stats(view=target_command, verbose=False)
-                        # Revisar aqui si el output es valido antes de parsear
-                        parse_ixia_result(host,target_command,result,datapoints,latest_datapoints,kpi_tags)
-                    except Exception, e:
-                        logger.error('[%s]: Problems gathering ixia stats  %s', target_command)
-                        continue
-                dev.ixia_disconnect ()
-                if datapoints:   # Only insert datapoints if there is any :)
-                    pprint(datapoints)
-                    insert_datapoints(datapoints)
+        latest_datapoints={}
+#        if ((db_schema == 1) and (not(use_hostname))):
+        if (not(use_hostname)):
+            latest_datapoints = get_latest_datapoints(host=host)
+            logger.info("Latest Datapoints are:")
+            logger.info(pformat(latest_datapoints))
 
-        elif 'ssh' in hosts[host].split():
-
-            connected = False
-            logger.info('Connecting to host: %s', host)
-            target_commands = get_target_commands(host)
-            timestamp_tracking={}
-            connector = ssh_manager_lite (target=host)
-            try:
-                device = connector.open()
-                connected = True
-            except timeout_exception as tmout:
-                raise (tmout)
-            print target_commands
-            if connected:
-                datapoints = []
-                timestamp_tracking['collector_ssh_start'] = int(datetime.today().strftime('%s'))
-                for target_command in target_commands:
-                    logger.info('[%s]: Executing command: %s', host, target_command)
-                    result = connector.command_executor(device,target_command)
-                    print result
-                    if result:
-                        logger.debug('[%s]: Parsing command: %s', host, target_command)
-                        parse_result(host,target_command,result,datapoints,latest_datapoints)
-                        time.sleep(delay_between_commands)
-
-                connector.close(device)
-                timestamp_tracking['collector_ssh_ends'] = int(datetime.today().strftime('%s'))
-                if datapoints:
-                    insert_datapoints(datapoints)
-                logger.info('[%s]: timestamp_tracking - CLI collection %s', host, timestamp_tracking['collector_ssh_ends']-timestamp_tracking['collector_ssh_start'])
-
+        #    kpi_tags = get_host_base_tags(host=host)
+        # Check host tag to identify what kind of connections will be used (ej junos / others  / etc)
+        if "non_junos_devices" in hosts[host].split():
+            pass
+            # Reserved for future purposes
         else: # By default it's a junos device
             # We need to CATCH errors then print then but we need to continue with next host...
             connected = False
@@ -573,6 +509,10 @@ def collector(**kwargs):
                         hostname = convert_variable_type(hostname_tmp)
                         logger.info('[%s]: Host will now be referenced as : %s', host, hostname)
                         host = hostname
+#                        if (db_schema == 1):
+#                            latest_datapoints = get_latest_datapoints(host=host)
+#                            logger.info("Latest Datapoints are:")
+#                            logger.info(pformat(latest_datapoints))
                         latest_datapoints = get_latest_datapoints(host=host)
                         logger.info("Latest Datapoints are:")
                         logger.info(pformat(latest_datapoints))
@@ -608,7 +548,7 @@ def collector(**kwargs):
                 timestamp_tracking['collector_ends'] = int(datetime.today().strftime('%s'))
                 logger.info('[%s]: timestamp_tracking - total collection %s', host, timestamp_tracking['collector_ends']-timestamp_tracking['collector_start'])
             else:
-                logger.error('[%s]: Skiping host due connectivity issue', host)
+                logger.error('[%s]: Skipping host due connectivity issue', host)
 
 
 ################################################################################################
@@ -670,7 +610,7 @@ else:
     tag_list = [ ".*" ]
 
 if not(dynamic_args['start']):
-    print "Mising <start> option, so nothing to do"
+    logger.error('Mising <start> option, so nothing to do')
     sys.exit(0)
 
 
@@ -689,7 +629,7 @@ formatter = '%(asctime)s %(name)s %(levelname)s %(threadName)-10s:  %(message)s'
 logging.basicConfig(filename=log_dir + "/"+ timestamp + '_open-nti.log',level=logging_level,format=formatter, datefmt='%Y-%m-%d %H:%M:%S')
 
 if dynamic_args['console']:
-    print "Console logs enabled"
+    logger.info("Console logs enabled")
     console = logging.StreamHandler()
     console.setLevel (logging.DEBUG)
     logging.getLogger('').addHandler(console)

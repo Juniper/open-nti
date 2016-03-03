@@ -16,7 +16,8 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]
 then
     # If we are on Linux, we are using Docker to get the IP of the container
     CONTAINER_IP=$(docker inspect  --format '{{ .NetworkSettings.IPAddress }}' $CONTAINER_NAME)
-
+    LOCAL_PORT_SSH=22
+    
 elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]
 then
     echo "Unable to find Container IP, using $CONTAINER_IP"
