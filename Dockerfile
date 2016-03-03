@@ -124,9 +124,6 @@ ADD     docker/nginx/run.sh /etc/service/nginx/run
 
 ### open-nti python scripts (for gathering informatino from server to router)  ###
 ADD     open-nti/open-nti.py /opt/open-nti/open-nti.py
-ADD     open-nti/pybot_jixia.py /opt/open-nti/pybot_jixia.py
-ADD     open-nti/IxNetwork.py /opt/open-nti/IxNetwork.py
-ADD     open-nti/ssh_manager_lite.py /opt/open-nti/ssh_manager_lite.py
 ADD     open-nti/startcron.py /opt/open-nti/startcron.py
 
 # ################
@@ -168,21 +165,13 @@ ENV SSL_SUPPORT **False**
 ENV SSL_CERT **None**
 RUN chmod -R 777 /var/log/
 
-## Fluentd
-EXPOSE 50000
-EXPOSE 50010
-EXPOSE 50020
 
-## Graphana
+# ## Graphana
 EXPOSE 80
 EXPOSE 3000
 
-# Influxdb Admin server WebUI
+# # Influxdb Admin server WebUI
 EXPOSE 8083
 EXPOSE 8086
-
-# Telegraf
-EXPOSE 8125
-
 
 CMD ["/sbin/my_init"]
