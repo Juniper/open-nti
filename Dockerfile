@@ -44,7 +44,7 @@ RUN     pip install influxdb && \
         easy_install pysnmp && \
         pip install lxml && \
         pip install python-crontab && \
-        pip install git+https://github.com/Juniper/py-junos-eznc.git
+        pip install junos-eznc
 
 RUN     mkdir /src
 
