@@ -6,8 +6,8 @@ services:
   - docker
 
 install:
-  - sh ./docker.build.sh
-  - sh ./docker.start.sh
+  - sudo -s sh ./docker.build.sh
+  - sudo -s sh ./docker.start.sh
 
 script:
   - docker ps | grep open-nti_con
