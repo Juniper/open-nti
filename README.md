@@ -38,7 +38,7 @@ By default the container is named "open-nti_con"
 
 ## How to report feedback / participate in the project
 
-For any issues please open an [issue on Github](issues)
+For any issues please open an [issue on Github](https://github.com/Juniper/open-nti/issues).  
 For comments, suggestions or questions please use our [google group](https://groups.google.com/forum/#!forum/open-nti)
 
 To participate, please:
