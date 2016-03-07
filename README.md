@@ -13,6 +13,9 @@ It's pre-configured with all tools and with a default dashboard ..
 
 Thanks to docker, it can run pretty much anywhere on server, on laptop ... on the device itself
 
+More detailed description of a project can be found here (including a series of videos on how to use it):
+http://forums.juniper.net/t5/Analytics/Open-Source-Universal-Telemetry-Collector-for-Junos/ba-p/288677
+
 ## Requirements
 
 The only requirement is to have docker installed on your Linux server/machine
