@@ -1,5 +1,6 @@
 from docker import Client
 import influxdb
+import time
 import docker.tls as tls
 from os import path
 import pprint
@@ -66,6 +67,7 @@ def test_collection_agent():
     exec_job_id = c.exec_create(container=container_id, cmd='/usr/bin/python /opt/open-nti/open-nti.py  -s -t --tag test')
     c.exec_start(exec_job_id)
 
+    time.sleep(5)
     query = 'select mean(value) from /P1-tf-mx960-1-re0.route-table.summary.inet.0.actives/;'
     result = db.query(query)
     points = list(result.get_points())
