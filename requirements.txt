@@ -1,3 +1,4 @@
 pytest
+influxdb
 pytest-cov
 docker-py
