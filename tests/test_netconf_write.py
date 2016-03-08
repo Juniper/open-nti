@@ -77,7 +77,7 @@ def test_influxdb_running_database_exist():
 
 def test_collection_agent():
     # Write datapoint using mocked Junos device
-    container_id = ip = c.inspect_container('open-nti_con')['Id']
+    container_id = c.inspect_container('open-nti_con')['Id']
     exec_job_id = c.exec_create(
         container=container_id,
         cmd='/usr/bin/python /opt/open-nti/open-nti.py  -s -t --tag test'
