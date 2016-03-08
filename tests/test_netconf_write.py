@@ -39,6 +39,6 @@ def test_connect_docker():
     assert len(containers) == 1
 
 def test_influxdb_running_database_exist():
-    db = influxdb.InfluxDBClient("127.0.0.1", "8086", "juniper", "juniper", "juniper")
+    db = influxdb.InfluxDBClient(host="127.0.0.1", port="8086", database="juniper", username="juniper", password="juniper")
     db_list = db.get_list_database()
     assert len(db_list) == 2
