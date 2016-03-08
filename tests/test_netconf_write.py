@@ -20,10 +20,15 @@ elif _platform == "darwin":
 
     dockerip = dockerout.splitlines()[0]
 
-    CERTS = path.join(path.expanduser('~'), '.docker', 'machine', 'machines', 'default')
+    CERTS = path.join(
+        path.expanduser('~'), '.docker', 'machine',
+        'machines', 'default'
+    )
 
     tls_config = tls.TLSConfig(
-        client_cert=(path.join(CERTS, 'cert.pem'), path.join(CERTS, 'key.pem')),
+        client_cert=(
+            path.join(CERTS, 'cert.pem'), path.join(CERTS, 'key.pem')
+        ),
         ca_cert=path.join(CERTS, 'ca.pem'),
         assert_hostname=False,
         verify=True
@@ -36,7 +41,11 @@ elif _platform == "win32":
     exit
 
 database = "juniper"
-db = influxdb.InfluxDBClient(host='127.0.0.1', port="8086", database=database, username="juniper", password="juniper")
+db = influxdb.InfluxDBClient(
+    host='127.0.0.1', port="8086", database=database, username="juniper",
+    password="juniper"
+)
+
 
 def test_connect_docker():
     # Verify one container is running
@@ -64,7 +73,12 @@ def test_influxdb_running_database_exist():
 def test_collection_agent():
     # Write datapoint using mocked Junos device
     container_id = ip = c.inspect_container('open-nti_con')['Id']
-    exec_job_id = c.exec_create(container=container_id, cmd='/usr/bin/python /opt/open-nti/open-nti.py  -s -t --tag test')
+    exec_job_id = c.exec_create(
+        container=container_id,
+        cmd='/usr/bin/python /opt/open-nti/open-nti.py  -s -t --tag test'
+    )
+
+    c.exec_start(exec_job_id)
     c.exec_start(exec_job_id)
 
     time.sleep(5)
