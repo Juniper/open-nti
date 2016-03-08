@@ -6,7 +6,7 @@ services:
   - docker
 
 install:
-  - pip install docker
+  - pip install docker-py
   - pip install subprocess
   - pip install pprint
   - docker build -t juniper/open-nti .
