@@ -5,8 +5,13 @@ import docker.tls as tls
 from os import path
 import pprint
 import subprocess
+import json
 import sys, getopt, argparse, os.path, math
 from sys import platform as _platform
+
+class StreamLineBuildGenerator(object):
+    def __init__(self, json_data):
+        self.__dict__ = json.loads(json_data)
 
 if _platform == "linux" or _platform == "linux2":
     # linux
@@ -78,8 +83,27 @@ def test_collection_agent():
         cmd='/usr/bin/python /opt/open-nti/open-nti.py  -s -t --tag test'
     )
 
-    c.exec_start(exec_job_id)
-    c.exec_start(exec_job_id)
+    result = c.exec_start(exec_job_id, stream=True)
+    for line in result:
+        try:
+            stream_line = StreamLineBuildGenerator(line)
+            # Do something with your stream line
+            # ...
+        except ValueError:
+            # If we are not able to deserialize the received line as JSON object, just print it out
+            print(line)
+            continue
+
+    result = c.exec_start(exec_job_id, stream=True)
+    for line in result:
+        try:
+            stream_line = StreamLineBuildGenerator(line)
+            # Do something with your stream line
+            # ...
+        except ValueError:
+            # If we are not able to deserialize the received line as JSON object, just print it out
+            print(line)
+            continue
 
     time.sleep(5)
     query = 'select mean(value) from /P1-tf-mx960-1-re0.route-table.summary.inet.0.actives/;'
