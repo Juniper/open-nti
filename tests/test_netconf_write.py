@@ -30,17 +30,22 @@ elif _platform == "darwin":
 
     url = "https://" + dockerip + ":2376"
     print "URL: " + url
-    c = Client(base_url= url, tls=tls_config)
+    c = Client(base_url=url, tls=tls_config)
 elif _platform == "win32":
     exit
 
+database = "juniper"
+db = influxdb.InfluxDBClient(host='127.0.0.1', port="8086", database=database, username="juniper", password="juniper")
+
 def test_connect_docker():
+    # Verify one container is running
     containers = c.containers()
     assert len(containers) == 1
 
+
 def test_influxdb_running_database_exist():
-    database="juniper"
-    db = influxdb.InfluxDBClient(host='127.0.0.1', port="8086", database=database, username="juniper", password="juniper")
+    # Verify we can connect to InfluxDB and DB with a name juniper exists
+    # wait in Travis for 10 seconds before run this test
     db_list = db.get_list_database()
     found_db = 0
     for db_entry in db_list:
@@ -53,3 +58,16 @@ def test_influxdb_running_database_exist():
         assert 1
     else:
         assert 0
+
+
+def test_collection_agent():
+    # Write datapoint using mocked Junos device
+    container_id = ip = c.inspect_container('open-nti_con')['Id']
+    exec_job_id = c.exec_create(container=container_id, cmd='/usr/bin/python /opt/open-nti/open-nti.py  -s -t --tag test')
+    c.exec_start(exec_job_id)
+
+    query = 'select mean(value) from /P1-tf-mx960-1-re0.route-table.summary.inet.0.actives/;'
+    result = db.query(query)
+    points = list(result.get_points())
+
+    assert len(points) == 1 and points[0]['mean'] == 16
