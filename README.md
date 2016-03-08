@@ -1,7 +1,7 @@
 
-# open-nti
+# OpenNTI
 
-open-nti is a container packaged with all tools needed to collect and visualize time series data from network devices.
+OpenNTI is a container packaged with all tools needed to collect and visualize time series data from network devices.
 Data can be collected from different sources:
 
 - **Data Collection Agent** : Collect data on devices using CLI/Shell or Netconf
@@ -13,32 +13,43 @@ It's pre-configured with all tools and with a default dashboard ..
 
 Thanks to docker, it can run pretty much anywhere on server, on laptop ... on the device itself
 
-More detailed description of a project can be found here (including a series of videos on how to use it):
-http://forums.juniper.net/t5/Analytics/Open-Source-Universal-Telemetry-Collector-for-Junos/ba-p/288677
+More detailed description of a project can be found [here](http://forums.juniper.net/t5/Analytics/Open-Source-Universal-Telemetry-Collector-for-Junos/ba-p/288677) (including a series of videos on how to use it):
+
 
 ## Requirements
 
-The only requirement is to have docker installed on your Linux server/machine
+The only requirement is to have docker installed on your Linux server/machine.  
 Instructions to install docker are available [here](http://docs.docker.com/engine/installation/ubuntulinux/)
 
 It's also available for [Mac](https://docs.docker.com/engine/installation/mac/) & [Windows](https://docs.docker.com/engine/installation/windows/)
 
-## How to Install
+## How to Install/Start
 
+OpenNTI is available on [Docker Cloud](https://hub.docker.com/r/juniper/open-nti/) and this project provide scripts to easily download/start/stop it.  
 ```
 git clone https://github.com/Juniper/open-nti.git
 cd open-nti
-./docker.build.sh
 ./docker.start.sh
 ```
-> On Ubuntu, you'll have to add "sudo" before the last 2 commands
+> On Ubuntu, you'll have to add "sudo" before the last command
 
-By default the container is named "open-nti_con"  
+By default the container is named "open-nti_con" and is working in **non-persistent mode**, once you stop it all data are gone.  
+On Linux, it's possible to start the container in **persistent mode** to save the database outside the container, by using the startup script ```docker.start.persistent.sh```. *Persistent mode is not supported on Mac OS*
+
+### Customize OpenNTI
+
+#### Customize container's name and ports
+
+All port numbers and names used by start/stop scripts are centralized in one file : [open-nti.params](open-nti.params), you can easily adapt this file with your own port numbers or names. It's mandatory if you are planning to run multiple instances of OpenNTI on the same server.  
+
+#### Customize the container itself
+
+If you want to make some modifications, you can always build the container yourself using the script ```./docker.build.sh```.  
 >The first time you run "./docker.build.sh", it will take 10-15min to download and compile everything but after that it will be very fast
 
 ## How to report feedback / participate in the project
 
-For any issues please open an [issue on Github](issues)
+For any issues please open an [issue on Github](https://github.com/Juniper/open-nti/issues).  
 For comments, suggestions or questions please use our [google group](https://groups.google.com/forum/#!forum/open-nti)
 
 To participate, please:
