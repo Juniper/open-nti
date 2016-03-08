@@ -24,6 +24,7 @@ import sys, getopt, argparse, os.path, math
 # url = "https://" + dockerip + ":2376"
 # print "URL: " + url
 # c = Client(base_url= url, tls=tls_config)
+c = docker.Client(version='1.20')
 c = Client(base_url='unix://var/run/docker.sock')
 
 def test_connect_docker():
