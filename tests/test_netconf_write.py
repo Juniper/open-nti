@@ -1,5 +1,6 @@
 from docker import Client
 import influxdb
+import time
 import docker.tls as tls
 from os import path
 import pprint
@@ -7,6 +8,7 @@ import subprocess
 import sys, getopt, argparse, os.path, math
 from sys import platform as _platform
 
+time.sleep(10)
 if _platform == "linux" or _platform == "linux2":
     # linux
     c = Client(base_url='unix://var/run/docker.sock', version='1.20')
