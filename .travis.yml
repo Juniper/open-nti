@@ -12,4 +12,5 @@ install:
 
 script:
   - docker ps | grep open-nti_con
+  - docker inspect open-nti_con
   - python -m pytest -v --durations=10
