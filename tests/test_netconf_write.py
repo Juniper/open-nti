@@ -1,6 +1,5 @@
 from docker import Client
 import influxdb
-import time
 import docker.tls as tls
 from os import path
 import pprint
@@ -8,7 +7,6 @@ import subprocess
 import sys, getopt, argparse, os.path, math
 from sys import platform as _platform
 
-time.sleep(10)
 if _platform == "linux" or _platform == "linux2":
     # linux
     c = Client(base_url='unix://var/run/docker.sock', version='1.20')
@@ -36,18 +34,22 @@ elif _platform == "darwin":
 elif _platform == "win32":
     exit
 
-if _platform == "linux" or _platform == "linux2":
-    ip = c.inspect_container('open-nti_con')['NetworkSettings']['IPAddress']
-elif _platform == "darwin":
-    ip = '127.0.0.1'
-else:
-    exit
-
 def test_connect_docker():
     containers = c.containers()
     assert len(containers) == 1
 
 def test_influxdb_running_database_exist():
-    db = influxdb.InfluxDBClient(host=ip, port="8086", database="juniper", username="juniper", password="juniper")
+    database="juniper"
+    db = influxdb.InfluxDBClient(host='127.0.0.1', port="8086", database=database, username="juniper", password="juniper")
     db_list = db.get_list_database()
-    assert len(db_list) == 2
+    found_db = 0
+    for db_entry in db_list:
+        if db_entry['name'] == database:
+            found_db = 1
+        else:
+            continue
+
+    if found_db:
+        assert 1
+    else:
+        assert 0

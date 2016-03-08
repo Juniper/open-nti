@@ -10,6 +10,9 @@ install:
   - docker build -t juniper/open-nti .
   - docker run -d --volume ./data:/opt/open-nti/data  --volume ./dashboards:/src/dashboards --restart always --publish 8125:8125/udp --publish 6000:6000/udp --publish 5000:50000/udp --publish 50010:50010/udp --publish 50020:50020/udp --publish 80:80 --publish 3000:3000 --publish 8083:8083 --publish 8086:8086 --publish 2222:2222 --name 'open-nti_con' 'juniper/open-nti' /sbin/my_init
 
+before_script:
+  - sleep 10
+
 script:
   - docker ps | grep open-nti_con
   - docker inspect open-nti_con
