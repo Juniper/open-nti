@@ -39,7 +39,12 @@ def mocked_device(rpc_reply_dict, mock_connect):
             rpc_command = rpc_command.replace(" ", "_")
             if rpc_request in rpc_reply_dict:
                 xml = rpc_reply_dict[rpc_request]
+            elif 'dir' in rpc_reply_dict:
+                fname = os.path.join(rpc_reply_dict['dir'], 'rpc-reply', rpc_command, rpc_request + '.xml')
+                with open(fname, 'r') as f:
+                    xml = f.read()
             else:
+                _rpc_reply_dict['dir']
                 fname = os.path.join(os.path.dirname(__file__), 'rpc-reply', rpc_command, rpc_request + '.xml')
                 with open(fname, 'r') as f:
                     xml = f.read()
