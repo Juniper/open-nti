@@ -10,7 +10,6 @@ docker rm $CONTAINER_NAME
 ## Start New Container
 docker run -d --volume $(pwd)/$LOCAL_DIR_DATA:/opt/open-nti/data \
               --volume $(pwd)/$LOCAL_DIR_DASHBOARD:/src/dashboards \
-              --volume $(pwd)/$LOCAL_DIR_TESTS:/opt/open-nti/tests \
               --restart always \
               --publish $LOCAL_PORT_STATSD:8125/udp \
               --publish $LOCAL_PORT_EVENT:6000/udp \
