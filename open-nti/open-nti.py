@@ -3,8 +3,8 @@
 # Authors: efrain@juniper.net psagrera@juniper.net
 # Version 2.0  20160124
 
-import sys
-sys.path.append('/opt/open-nti/tests')
+# import sys
+# sys.path.append('/opt/open-nti/tests')
 from datetime import datetime # In order to retreive time and timespan
 from datetime import timedelta # In order to retreive time and timespan
 from influxdb import InfluxDBClient
@@ -629,7 +629,7 @@ else:
     tag_list = [ ".*" ]
 
 if not(dynamic_args['start']):
-    logger.error('Mising <start> option, so nothing to do')
+    logger.error('Missing <start> option, so nothing to do')
     sys.exit(0)
 
 
