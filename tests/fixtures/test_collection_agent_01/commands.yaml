@@ -1,0 +1,23 @@
+# GENERIC COMMANDS
+
+#NOTE:  Commands will be executed & parsed as text/regex ONLY if there isn't any valid xml output for that command
+#       (so please check the output of the command with "| display xml" before building the parser or adding it in this file)
+
+generic_commands:
+   commands: |
+      show isis statistics | display xml
+      show chassis routing-engine | display xml
+      show pfe statistics traffic | display xml
+      show system processes extensive
+      show system buffers
+      show system statistics icmp | display xml
+      show route summary | display xml
+   tags: generic
+
+lab_commands:
+   commands: |
+      show route summary | display xml
+   tags: test
+
+# Do not remove this three dashes (“---”) they are used to separate documents
+---

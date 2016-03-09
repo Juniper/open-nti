@@ -3,15 +3,13 @@
 # Authors: efrain@juniper.net psagrera@juniper.net
 # Version 2.0  20160124
 
-# import sys
-# sys.path.append('/opt/open-nti/tests')
 from datetime import datetime # In order to retreive time and timespan
 from datetime import timedelta # In order to retreive time and timespan
 from influxdb import InfluxDBClient
 from pyez_mock import mocked_device, rpc_reply_dict
 #from jnpr.junos import *
 #from jnpr.junos import Device
-#from jnpr.junos.exception import *
+from jnpr.junos.exception import *
 #from jnpr.junos.utils.start_shell import StartShell
 from lxml import etree  # Used for xml manipulation
 from pprint import pformat
@@ -95,7 +93,6 @@ def get_latest_datapoints(**kwargs):
     results = dbclient.query(query)
     return results
 
-
 def get_target_hosts():
     my_target_hosts = {}
     for host in sorted(hosts.keys()):
@@ -142,6 +139,7 @@ def execute_command(jdevice,command):
         rpc_error = err.__repr__()
         logger.error("Error found executing command: %s, error: %s:", command ,rpc_error)
         return False
+
     if format == "text":
         # We need to confirm that root tag in command_result is <output> if not then raise exception and skip
         return command_result.text
@@ -441,7 +439,6 @@ def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tag
     if (not(parser_found)):
         logger.error('[%s]: ERROR: Parser not found for command: %s', host, target_command)
 
-
 def collector(**kwargs):
 
     for host in kwargs["host_list"]:
@@ -470,7 +467,9 @@ def collector(**kwargs):
             if dynamic_args['test']:
                 #Open an emulated Junos device instead of connecting to the real one
                 _rpc_reply_dict = rpc_reply_dict()
+                _rpc_reply_dict['dir'] = BASE_DIR_INPUT
                 _rpc_reply_dict['test'] = 1
+
                 jdev = mocked_device(_rpc_reply_dict)
                 # First collect all kpi in datapoints {} then at the end we insert them into DB (performance improvement)
                 connected = True
@@ -585,19 +584,26 @@ else:
     # unfrozen
     BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
+BASE_DIR_INPUT = BASE_DIR + "/data/"
+
 full_parser = argparse.ArgumentParser()
 full_parser.add_argument("--tag", nargs='+', help="Collect data from hosts that matches the tag")
 full_parser.add_argument("-c", "--console", action='store_true', help="Console logs enabled")
 full_parser.add_argument("-t", "--test", action='store_true', help="Use emulated Junos device")
 full_parser.add_argument("-s", "--start", action='store_true', help="Start collecting (default 'no')")
-full_parser.add_argument("-v", "--variable", default="/data/open-nti.variables.yaml", help="Variable file (default '/data/open-nti.variables.yaml')")
+full_parser.add_argument("-i", "--input", default= BASE_DIR_INPUT, help="Directory where to find input files")
+
 dynamic_args = vars(full_parser.parse_args())
+
+## Change BASE_DIR_INPUT if we are in "test" mode
+if dynamic_args['test']:
+    BASE_DIR_INPUT = dynamic_args['input']
 
 ################################################################################################
 # Loading YAML Default Variables
 ###############################################################################################
 
-default_variables_yaml_file = BASE_DIR + dynamic_args['variable']
+default_variables_yaml_file = BASE_DIR_INPUT + "open-nti.variables.yaml"
 default_variables = {}
 
 with open(default_variables_yaml_file) as f:
@@ -632,8 +638,6 @@ if not(dynamic_args['start']):
     logger.error('Missing <start> option, so nothing to do')
     sys.exit(0)
 
-
-
 ################################################################################################
 # open-nti starts here start
 ################################################################################################
@@ -657,7 +661,7 @@ if dynamic_args['console']:
 
 #  LOAD all credentials in a dict
 
-credentials_yaml_file = BASE_DIR + "/data/" + default_variables['credentials_file']
+credentials_yaml_file = BASE_DIR_INPUT + default_variables['credentials_file']
 credentials = {}
 logger.debug('Importing credentials file: %s ',credentials_yaml_file)
 with open(credentials_yaml_file) as f:
@@ -665,7 +669,7 @@ with open(credentials_yaml_file) as f:
 
 #  LOAD all hosts with their tags in a dic
 
-hosts_yaml_file = BASE_DIR + "/data/" + default_variables['hosts_file']
+hosts_yaml_file = BASE_DIR_INPUT + default_variables['hosts_file']
 hosts = {}
 logger.debug('Importing host file: %s ',hosts_yaml_file)
 with open(hosts_yaml_file) as f:
@@ -673,7 +677,7 @@ with open(hosts_yaml_file) as f:
 
 #  LOAD all commands with their tags in a dict
 
-commands_yaml_file = BASE_DIR + "/data/" + default_variables['commands_file']
+commands_yaml_file = BASE_DIR_INPUT + default_variables['commands_file']
 commands = []
 logger.debug('Importing commands file: %s ',commands_yaml_file)
 with open(commands_yaml_file) as f:
