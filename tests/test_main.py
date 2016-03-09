@@ -33,19 +33,29 @@ TEST_PORT_INFLUXDB_API = 48086
 
 ## Local directories that will be mapped into the container
 CURRENT_DIR=os.getcwd()
-LOCAL_DIR_DATA = CURRENT_DIR + 'data'
-LOCAL_DIR_LOG = CURRENT_DIR + 'logs'
-LOCAL_DIR_DB = CURRENT_DIR + 'db'
-LOCAL_DIR_TESTS = CURRENT_DIR + 'tests'
-LOCAL_DIR_DASHBOARD = CURRENT_DIR + 'dashboards'
+LOCAL_DIR_DATA = CURRENT_DIR + '/data'
+LOCAL_DIR_LOG = CURRENT_DIR + '/logs'
+LOCAL_DIR_DB = CURRENT_DIR + '/db'
+LOCAL_DIR_TESTS = CURRENT_DIR + '/tests'
+LOCAL_DIR_DASHBOARD = CURRENT_DIR + '/dashboards'
 
 DOCKER_IP = '127.0.0.1'
 CONTAINER_ID = ''
-
-
+HANDLE_DB = ''
 
 #############################################
+def get_handle_db():
+    global HANDLE_DB
 
+    if HANDLE_DB == '':
+        HANDLE_DB = influxdb.InfluxDBClient(
+            host=DOCKER_IP, port=TEST_PORT_INFLUXDB_API, database=DATABASE_NAME, username="juniper",
+            password="juniper"
+        )
+
+    return HANDLE_DB
+
+#############################################
 class StreamLineBuildGenerator(object):
     def __init__(self, json_data):
         self.__dict__ = json.loads(json_data)
@@ -97,8 +107,16 @@ def test_connect_docker():
 def test_start_container():
     global CONTAINER_ID
 
-    ## TODO add tear down of existing container if exist
+    ## Force Stop and delete existing container if exist
+    try:
+        old_container_id = c.inspect_container(CONTAINER_NAME)['Id']
 
+        c.stop(container=old_container_id)
+        c.remove_container(container=old_container_id)
+    except:
+        print "Container do not exit"
+
+    ## Create new container
     container = c.create_container(
         image=IMAGE_NAME,
         command='/sbin/my_init',
@@ -140,23 +158,24 @@ def test_start_container():
 
     c.start(container)
 
-    running_container = c.containers(latest=True)
-    CONTAINER_ID = running_container[0]["Id"]
+    CONTAINER_ID = c.inspect_container(CONTAINER_NAME)['Id']
 
     ## Wait few sec for the container to start
     time.sleep(10)
 
-    assert running_container[0]["Names"][0] == "/"+CONTAINER_NAME
+    assert c.inspect_container(CONTAINER_NAME)["State"]["Running"]
 
 def test_influxdb_running_database_exist():
-    global db
+    # global db
     # Verify we can connect to InfluxDB and DB with a name juniper exists
 
     ##
-    db = influxdb.InfluxDBClient(
-        host=DOCKER_IP, port=TEST_PORT_INFLUXDB_API, database=DATABASE_NAME, username="juniper",
-        password="juniper"
-    )
+    # db = influxdb.InfluxDBClient(
+    #     host=DOCKER_IP, port=TEST_PORT_INFLUXDB_API, database=DATABASE_NAME, username="juniper",
+    #     password="juniper"
+    # )
+
+    db = get_handle_db()
 
     db_list = db.get_list_database()
     found_db = 0
@@ -191,16 +210,12 @@ def test_collection_agent_01():
             print(line)
             continue
 
-    result = c.exec_start(exec_job_id, stream=True)
-    for line in result:
-        try:
-            stream_line = StreamLineBuildGenerator(line)
-            # Do something with your stream line
-            # ...
-        except ValueError:
-            # If we are not able to deserialize the received line as JSON object, just print it out
-            print(line)
-            continue
+    db = get_handle_db()
+
+    # db = influxdb.InfluxDBClient(
+    #     host=DOCKER_IP, port=TEST_PORT_INFLUXDB_API, database=DATABASE_NAME, username="juniper",
+    #     password="juniper"
+    # )
 
     time.sleep(5)
     query = 'select mean(value) from /P1-tf-mx960-1-re0.route-table.summary.inet.0.actives/;'
