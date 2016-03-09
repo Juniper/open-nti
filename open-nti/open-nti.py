@@ -95,7 +95,6 @@ def get_latest_datapoints(**kwargs):
     results = dbclient.query(query)
     return results
 
-
 def get_target_hosts():
     my_target_hosts = {}
     for host in sorted(hosts.keys()):
@@ -585,19 +584,26 @@ else:
     # unfrozen
     BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
+BASE_DIR_INPUT = BASE_DIR + "/data/"
+
 full_parser = argparse.ArgumentParser()
 full_parser.add_argument("--tag", nargs='+', help="Collect data from hosts that matches the tag")
 full_parser.add_argument("-c", "--console", action='store_true', help="Console logs enabled")
 full_parser.add_argument("-t", "--test", action='store_true', help="Use emulated Junos device")
 full_parser.add_argument("-s", "--start", action='store_true', help="Start collecting (default 'no')")
-full_parser.add_argument("-v", "--variable", default="/data/open-nti.variables.yaml", help="Variable file (default '/data/open-nti.variables.yaml')")
+full_parser.add_argument("-i", "--input", default= BASE_DIR_INPUT, help="Directory where to find input files")
+
 dynamic_args = vars(full_parser.parse_args())
+
+## Change BASE_DIR_INPUT if we are in "test" mode
+if dynamic_args['test']:
+    BASE_DIR_INPUT = dynamic_args['input']
 
 ################################################################################################
 # Loading YAML Default Variables
 ###############################################################################################
 
-default_variables_yaml_file = BASE_DIR + dynamic_args['variable']
+default_variables_yaml_file = BASE_DIR_INPUT + "open-nti.variables.yaml"
 default_variables = {}
 
 with open(default_variables_yaml_file) as f:
@@ -632,8 +638,6 @@ if not(dynamic_args['start']):
     logger.error('Missing <start> option, so nothing to do')
     sys.exit(0)
 
-
-
 ################################################################################################
 # open-nti starts here start
 ################################################################################################
@@ -657,7 +661,7 @@ if dynamic_args['console']:
 
 #  LOAD all credentials in a dict
 
-credentials_yaml_file = BASE_DIR + "/data/" + default_variables['credentials_file']
+credentials_yaml_file = BASE_DIR_INPUT + default_variables['credentials_file']
 credentials = {}
 logger.debug('Importing credentials file: %s ',credentials_yaml_file)
 with open(credentials_yaml_file) as f:
@@ -665,7 +669,7 @@ with open(credentials_yaml_file) as f:
 
 #  LOAD all hosts with their tags in a dic
 
-hosts_yaml_file = BASE_DIR + "/data/" + default_variables['hosts_file']
+hosts_yaml_file = BASE_DIR_INPUT + default_variables['hosts_file']
 hosts = {}
 logger.debug('Importing host file: %s ',hosts_yaml_file)
 with open(hosts_yaml_file) as f:
@@ -673,7 +677,7 @@ with open(hosts_yaml_file) as f:
 
 #  LOAD all commands with their tags in a dict
 
-commands_yaml_file = BASE_DIR + "/data/" + default_variables['commands_file']
+commands_yaml_file = BASE_DIR_INPUT + default_variables['commands_file']
 commands = []
 logger.debug('Importing commands file: %s ',commands_yaml_file)
 with open(commands_yaml_file) as f:

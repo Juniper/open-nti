@@ -194,9 +194,11 @@ def test_collection_agent_01():
     # Write datapoint using mocked Junos device
     global db
 
+    FIXTURES_DIR = "/opt/open-nti/tests/fixtures/test_collection_agent_01/"
+
     exec_job_id = c.exec_create(
         container=CONTAINER_ID,
-        cmd='/usr/bin/python /opt/open-nti/open-nti.py  -s -t --tag test'
+        cmd='/usr/bin/python /opt/open-nti/open-nti.py -s -t --tag test --input ' + FIXTURES_DIR
     )
 
     result = c.exec_start(exec_job_id, stream=True)
@@ -211,11 +213,6 @@ def test_collection_agent_01():
             continue
 
     db = get_handle_db()
-
-    # db = influxdb.InfluxDBClient(
-    #     host=DOCKER_IP, port=TEST_PORT_INFLUXDB_API, database=DATABASE_NAME, username="juniper",
-    #     password="juniper"
-    # )
 
     time.sleep(5)
     query = 'select mean(value) from /P1-tf-mx960-1-re0.route-table.summary.inet.0.actives/;'
