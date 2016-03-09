@@ -3,13 +3,16 @@
 # Authors: efrain@juniper.net psagrera@juniper.net
 # Version 2.0  20160124
 
+import sys
+sys.path.append('/opt/open-nti/tests')
 from datetime import datetime # In order to retreive time and timespan
 from datetime import timedelta # In order to retreive time and timespan
 from influxdb import InfluxDBClient
-from jnpr.junos import *
-from jnpr.junos import Device
-from jnpr.junos.exception import *
-from jnpr.junos.utils.start_shell import StartShell
+from pyez_mock import mocked_device, rpc_reply_dict
+#from jnpr.junos import *
+#from jnpr.junos import Device
+#from jnpr.junos.exception import *
+#from jnpr.junos.utils.start_shell import StartShell
 from lxml import etree  # Used for xml manipulation
 from pprint import pformat
 from pprint import pprint
@@ -67,12 +70,12 @@ def check_db_status():
             if db['name'] == db_name:
                 db_found = True
         if not(db_found):
-            logger.info('Database <%s> not found, trying to create it', db_name) 
+            logger.info('Database <%s> not found, trying to create it', db_name)
             dbclient.create_database(db_name)
         return True
     except Exception as e:
-        logger.error('Error querying open-nti database: %s', e) 
-        return False     
+        logger.error('Error querying open-nti database: %s', e)
+        return False
 
 def get_latest_datapoints(**kwargs):
 
@@ -277,7 +280,7 @@ def get_metadata_and_add_datapoint(datapoints,**kwargs):
         else:
             logger.error("ERROR: Unknown db_schema: <%s>", db_schema)
 
-        if len(points) == 1: 
+        if len(points) == 1:
             latest_value = points[0]['value']
             delta = value - convert_variable_type(latest_value)
             logger.debug("Delta found : points <%s> latest_value <%s>", points,latest_value)
@@ -286,7 +289,7 @@ def get_metadata_and_add_datapoint(datapoints,**kwargs):
             logger.debug("No latest datapoint found for <%s>", kpi_tags)
         else:
             logger.error("ERROR: Latest datapoint query returns more than one match : <%s>", points)
-        
+
         if type (value) == int:
             delta = int(delta)
         elif type (value) == float:
@@ -464,21 +467,30 @@ def collector(**kwargs):
             timestamp_tracking['collector_start'] = int(datetime.today().strftime('%s'))
             # Establish connection to hosts
             user, passwd = get_credentials(host)
-            jdev = Device(user=user, host=host, password=passwd, gather_facts=False, auto_probe=True, port=22)
-            for i in range(1, max_connection_retries+1):
-                try:
-                    jdev.open()
-                    jdev.timeout = default_junos_rpc_timeout
-                    connected = True
-                    break
-                except Exception, e:
-                    if i < max_connection_retries:
-                        logger.error('[%s]: Connection failed %s time(s), retrying....', host, i)
-                        time.sleep(1)
-                        continue
-                    else:
-                        logging.exception(e)
-                        connected = False  # Notify about the specific problem with the host BUT we need to continue with our list
+            if dynamic_args['test']:
+                #Open an emulated Junos device instead of connecting to the real one
+                _rpc_reply_dict = rpc_reply_dict()
+                _rpc_reply_dict['test'] = 1
+                jdev = mocked_device(_rpc_reply_dict)
+                # First collect all kpi in datapoints {} then at the end we insert them into DB (performance improvement)
+                connected = True
+            else:
+                jdev = Device(user=user, host=host, password=passwd, gather_facts=False, auto_probe=True, port=22)
+                for i in range(1, max_connection_retries+1):
+                    try:
+                        jdev.open()
+                        jdev.timeout = default_junos_rpc_timeout
+                        connected = True
+                        break
+                    except Exception, e:
+                        if i < max_connection_retries:
+                            logger.error('[%s]: Connection failed %s time(s), retrying....', host, i)
+                            time.sleep(1)
+                            continue
+                        else:
+                            logging.exception(e)
+                            connected = False  # Notify about the specific problem with the host BUT we need to continue with our list
+            # First collect all kpi in datapoints {} then at the end we insert them into DB (performance improvement)
             # First collect all kpi in datapoints {} then at the end we insert them into DB (performance improvement)
             if connected:
                 datapoints = []
@@ -538,7 +550,12 @@ def collector(**kwargs):
                         logger.debug('[%s]: Parsing command: %s', host, target_command)
                         parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tags)
                         time.sleep(delay_between_commands)
-                jdev.close()
+
+                if dynamic_args['test']:
+                    print "Close emulated device"
+                else:
+                    jdev.close()
+
                 timestamp_tracking['collector_cli_ends'] = int(datetime.today().strftime('%s'))
                 logger.info('[%s]: timestamp_tracking - CLI collection %s', host, timestamp_tracking['collector_cli_ends']-timestamp_tracking['collector_cli_start'])
 
@@ -571,6 +588,7 @@ else:
 full_parser = argparse.ArgumentParser()
 full_parser.add_argument("--tag", nargs='+', help="Collect data from hosts that matches the tag")
 full_parser.add_argument("-c", "--console", action='store_true', help="Console logs enabled")
+full_parser.add_argument("-t", "--test", action='store_true', help="Use emulated Junos device")
 full_parser.add_argument("-s", "--start", action='store_true', help="Start collecting (default 'no')")
 dynamic_args = vars(full_parser.parse_args())
 

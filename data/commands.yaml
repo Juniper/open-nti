@@ -12,23 +12,12 @@ generic_commands:
       show system buffers
       show system statistics icmp | display xml
       show route summary | display xml
-   tags: generic 
+   tags: generic
 
 lab_commands:
    commands: |
-      show isis statistics | display xml
-      show chassis routing-engine | display xml
-      show pfe statistics traffic | display xml
-      show system processes extensive
-      show system buffers
-      show system statistics icmp | display xml
       show route summary | display xml
-      show snmp statistics | display xml
-      show bgp summary | display xml
-      show firewall | display xml
-      show task io
-      show task accounting
-   tags: lab
+   tags: test
 
 # Do not remove this three dashes (“---”) they are used to separate documents
 ---
