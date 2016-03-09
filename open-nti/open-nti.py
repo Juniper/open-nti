@@ -590,13 +590,14 @@ full_parser.add_argument("--tag", nargs='+', help="Collect data from hosts that 
 full_parser.add_argument("-c", "--console", action='store_true', help="Console logs enabled")
 full_parser.add_argument("-t", "--test", action='store_true', help="Use emulated Junos device")
 full_parser.add_argument("-s", "--start", action='store_true', help="Start collecting (default 'no')")
+full_parser.add_argument("-v", "--variable", default="/data/open-nti.variables.yaml", help="Variable file (default '/data/open-nti.variables.yaml')")
 dynamic_args = vars(full_parser.parse_args())
 
 ################################################################################################
 # Loading YAML Default Variables
 ###############################################################################################
 
-default_variables_yaml_file = BASE_DIR + "/data/open-nti.variables.yaml"
+default_variables_yaml_file = BASE_DIR + dynamic_args['variable']
 default_variables = {}
 
 with open(default_variables_yaml_file) as f:
