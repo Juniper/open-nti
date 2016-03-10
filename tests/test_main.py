@@ -10,18 +10,22 @@ import json
 import sys, getopt, argparse, os.path, math
 from sys import platform as _platform
 import time
+import requests
 
 pp = pprint.PrettyPrinter(indent=4)
 
 ############################################
-### Variables initialization
+# Variables initialization
 #############################################
-## Image and container
+# Image and container
 IMAGE_NAME = 'juniper/open-nti'
 CONTAINER_NAME = 'open-nti_test'
 DATABASE_NAME = 'juniper'
-## Local ports that will be redirected to the Open NTI
-## Startup will fail if some ports are already in use
+GRAFANA_USER = 'admin'
+GRAFANA_PASS = 'admin'
+
+# Local ports that will be redirected to the Open NTI
+# Startup will fail if some ports are already in use
 TEST_PORT_JTI = 40000
 TEST_PORT_NA = 40010
 TEST_PORT_ANALYTICSD = 40020
@@ -31,17 +35,22 @@ TEST_PORT_GRAFANA = 43000
 TEST_PORT_INFLUXDB = 48083
 TEST_PORT_INFLUXDB_API = 48086
 
-## Local directories that will be mapped into the container
-CURRENT_DIR=os.getcwd()
+# Local directories that will be mapped into the container
+CURRENT_DIR = os.getcwd()
 LOCAL_DIR_DATA = CURRENT_DIR + '/data'
 LOCAL_DIR_LOG = CURRENT_DIR + '/logs'
 LOCAL_DIR_DB = CURRENT_DIR + '/db'
 LOCAL_DIR_TESTS = CURRENT_DIR + '/tests'
 LOCAL_DIR_DASHBOARD = CURRENT_DIR + '/dashboards'
+LOCAL_PCAP_DIR = LOCAL_DIR_TESTS + '/pcap'
+LOCAL_GRAFANA_DIR = LOCAL_DIR_TESTS + '/grafana'
+LOCAL_GRAFANA_FILE = LOCAL_GRAFANA_DIR + '/test.json'
 
 DOCKER_IP = '127.0.0.1'
 CONTAINER_ID = ''
+TCP_REPLAY_CONTAINER_ID = ''
 HANDLE_DB = ''
+
 
 #############################################
 def get_handle_db():
@@ -55,6 +64,7 @@ def get_handle_db():
 
     return HANDLE_DB
 
+
 #############################################
 class StreamLineBuildGenerator(object):
     def __init__(self, json_data):
@@ -63,11 +73,12 @@ class StreamLineBuildGenerator(object):
 # def setup_function(function):
 #     print('\nsetup_function()')
 
+
 def test_connect_docker():
     global c
     global DOCKER_IP
 
-    ## initialize Docker Object
+    # initialize Docker Object
     if _platform == "linux" or _platform == "linux2":
         # linux
         c = Client(base_url='unix://var/run/docker.sock', version='1.20')
@@ -95,19 +106,20 @@ def test_connect_docker():
         )
 
         url = "https://" + DOCKER_IP + ":2376"
-        c = Client(base_url=url, tls=tls_config)
+        c = Client(base_url=url, tls=tls_config, version='1.20')
 
     elif _platform == "win32":
         exit
 
-    ## Check if connection to Docker work by listing all images
+    # Check if connection to Docker work by listing all images
     list_images = c.images()
     assert len(list_images) >= 1
+
 
 def test_start_container():
     global CONTAINER_ID
 
-    ## Force Stop and delete existing container if exist
+    # Force Stop and delete existing container if exist
     try:
         old_container_id = c.inspect_container(CONTAINER_NAME)['Id']
 
@@ -116,7 +128,7 @@ def test_start_container():
     except:
         print "Container do not exit"
 
-    ## Create new container
+    # Create new container
     container = c.create_container(
         image=IMAGE_NAME,
         command='/sbin/my_init',
@@ -160,10 +172,11 @@ def test_start_container():
 
     CONTAINER_ID = c.inspect_container(CONTAINER_NAME)['Id']
 
-    ## Wait few sec for the container to start
+    # Wait few sec for the container to start
     time.sleep(10)
 
     assert c.inspect_container(CONTAINER_NAME)["State"]["Running"]
+
 
 def test_influxdb_running_database_exist():
     # Verify we can connect to InfluxDB and DB with a name juniper exists
@@ -183,6 +196,7 @@ def test_influxdb_running_database_exist():
     else:
         assert 0
 
+
 def test_collection_agent_01():
     # Write datapoint using mocked Junos device
     global CONTAINER_ID
@@ -201,18 +215,79 @@ def test_collection_agent_01():
             # Do something with your stream line
             # ...
         except ValueError:
-            # If we are not able to deserialize the received line as JSON object, just print it out
+            # If we are not able to deserialize the received line
+            # as JSON object, just print it out
             print(line)
             continue
 
     db = get_handle_db()
 
     time.sleep(3)
-    query = 'select mean(value) from /P1-tf-mx960-1-re0.route-table.summary.inet.0.actives/;'
+    query = 'select mean(value) from ' + \
+        '/P1-tf-mx960-1-re0.route-table.summary.inet.0.actives/;'
     result = db.query(query)
     points = list(result.get_points())
 
     assert len(points) == 1 and points[0]['mean'] == 16
+
+
+def test_start_tcpreplay_container():
+    global TCP_REPLAY_CONTAINER_ID
+
+    # TODO add tear down of existing container if exist
+
+    container = c.create_container(
+        image='dgarros/tcpreplay',
+        command='/usr/bin/tcpreplay --loop 1000 --intf1=eth0 /data/test50000.pcap',
+        name='tcpreplay',
+        detach=True,
+        volumes=[
+            '/data'
+        ],
+        host_config=c.create_host_config(
+            binds=[
+                LOCAL_PCAP_DIR + ':/data',
+            ]
+        )
+    )
+
+    c.start(container)
+
+    print c.inspect_container('tcpreplay')
+    TCP_REPLAY_CONTAINER_ID = c.inspect_container('tcpreplay')['Id']
+
+    # Wait few sec for the container to start
+    time.sleep(10)
+
+    assert c.inspect_container('tcpreplay')['Name'] == '/tcpreplay'
+
+
+def test_jti_agent():
+    db = get_handle_db()
+    query = 'SELECT "value" FROM "jnpr.jvision" WHERE  "type" = \'egress_stats.if_pkts\';'
+    result = db.query(query)
+    points = list(result.get_points())
+
+    assert len(points) >= 1
+
+
+def test_grafana_running():
+    url = 'http://' + DOCKER_IP + ':' + \
+        str(TEST_PORT_GRAFANA) + '/api/dashboards/db'
+
+    json_data = open(LOCAL_GRAFANA_FILE)
+    resp = requests.post(
+        url=url,
+        auth=(GRAFANA_USER, GRAFANA_PASS),
+        json=json.load(json_data),
+        headers={'Content-Type': 'application/json; charset=UTF-8'}
+    )
+    if resp.status_code != 200:
+        print "ERROR: " + str(resp.status_code)
+        assert 0
+
+    assert 1
+
 
 def teardown_module(module):
     global c
@@ -220,3 +295,5 @@ def teardown_module(module):
 
     c.stop(container=CONTAINER_ID)
     c.remove_container(container=CONTAINER_ID)
+    c.stop(container=TCP_REPLAY_CONTAINER_ID)
+    c.remove_container(container=TCP_REPLAY_CONTAINER_ID)
