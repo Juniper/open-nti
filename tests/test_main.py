@@ -7,7 +7,7 @@ import os
 import pprint
 import subprocess
 import json
-import sys, getopt, argparse, os.path, math
+import os.path
 from sys import platform as _platform
 import time
 import requests
@@ -58,7 +58,10 @@ def get_handle_db():
 
     if HANDLE_DB == '':
         HANDLE_DB = influxdb.InfluxDBClient(
-            host=DOCKER_IP, port=TEST_PORT_INFLUXDB_API, database=DATABASE_NAME, username="juniper",
+            host=DOCKER_IP,
+            port=TEST_PORT_INFLUXDB_API,
+            database=DATABASE_NAME,
+            username="juniper",
             password="juniper"
         )
 
@@ -205,7 +208,8 @@ def test_collection_agent_01():
 
     exec_job_id = c.exec_create(
         container=CONTAINER_ID,
-        cmd='/usr/bin/python /opt/open-nti/open-nti.py -s -t --tag test --input ' + FIXTURES_DIR
+        cmd='/usr/bin/python ' +
+        '/opt/open-nti/open-nti.py -s -t --tag test --input ' + FIXTURES_DIR
     )
 
     result = c.exec_start(exec_job_id, stream=True)

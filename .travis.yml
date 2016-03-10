@@ -22,5 +22,5 @@ notifications:
       - psagrerag@gmail.com
       - dgarros@gmail.com
       - mpergament@googlemail.com
-    on_success: [always] # default: change
-    on_failure: [always] # default: always
+    on_success: always # default: change
+    on_failure: always # default: always
