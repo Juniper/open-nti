@@ -54,4 +54,5 @@ def mocked_device(rpc_reply_dict, mock_connect):
     dev = Device(host='1.1.1.1', user='juniper', gather_facts=False)
     dev.open()
     dev._conn.rpc = MagicMock(side_effect=mock_manager)
+    dev.close() = MagicMock()
     return dev

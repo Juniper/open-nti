@@ -468,7 +468,6 @@ def collector(**kwargs):
                 #Open an emulated Junos device instead of connecting to the real one
                 _rpc_reply_dict = rpc_reply_dict()
                 _rpc_reply_dict['dir'] = BASE_DIR_INPUT
-                _rpc_reply_dict['test'] = 1
 
                 jdev = mocked_device(_rpc_reply_dict)
                 # First collect all kpi in datapoints {} then at the end we insert them into DB (performance improvement)
@@ -550,10 +549,7 @@ def collector(**kwargs):
                         parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tags)
                         time.sleep(delay_between_commands)
 
-                if dynamic_args['test']:
-                    print "Close emulated device"
-                else:
-                    jdev.close()
+                jdev.close()
 
                 timestamp_tracking['collector_cli_ends'] = int(datetime.today().strftime('%s'))
                 logger.info('[%s]: timestamp_tracking - CLI collection %s', host, timestamp_tracking['collector_cli_ends']-timestamp_tracking['collector_cli_start'])

@@ -238,7 +238,7 @@ def test_start_tcpreplay_container():
 
     container = c.create_container(
         image='dgarros/tcpreplay',
-        command='/usr/bin/tcpreplay --loop 1000 --intf1=eth0 /data/test50000.pcap',
+        command='/usr/bin/tcpreplay --intf1=eth0 /data/test50000.pcap',
         name='tcpreplay',
         detach=True,
         volumes=[
@@ -253,18 +253,19 @@ def test_start_tcpreplay_container():
 
     c.start(container)
 
-    print c.inspect_container('tcpreplay')
     TCP_REPLAY_CONTAINER_ID = c.inspect_container('tcpreplay')['Id']
 
     # Wait few sec for the container to start
-    time.sleep(10)
+    time.sleep(30)
 
     assert c.inspect_container('tcpreplay')['Name'] == '/tcpreplay'
 
 
 def test_jti_agent():
     db = get_handle_db()
-    query = 'SELECT "value" FROM "jnpr.jvision" WHERE  "type" = \'egress_stats.if_pkts\';'
+
+    query = 'SELECT "value" FROM "jnpr.jvision" WHERE  ' + \
+        '"type" = \'egress_stats.if_pkts\';'
     result = db.query(query)
     points = list(result.get_points())
 
