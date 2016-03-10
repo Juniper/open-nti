@@ -9,8 +9,18 @@ services:
 
 install:
   - pip install -r requirements.txt
-  - docker pull dgarros/tcpreplay 
+  - docker pull dgarros/tcpreplay
   - docker build -t juniper/open-nti .
 
 script:
   - python -m pytest -v --durations=10
+
+notifications:
+  email:
+    recipients:
+      - efrain.gonzalez@gmail.com
+      - psagrerag@gmail.com
+      - dgarros@gmail.com
+      - mpergament@googlemail.com
+    on_success: [always] # default: change
+    on_failure: [always] # default: always
