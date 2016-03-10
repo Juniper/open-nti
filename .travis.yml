@@ -9,6 +9,7 @@ services:
 
 install:
   - pip install -r requirements.txt
+  - docker pull dgarros/tcpreplay 
   - docker build -t juniper/open-nti .
 
 script:
