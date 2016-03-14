@@ -7,10 +7,10 @@ from datetime import datetime # In order to retreive time and timespan
 from datetime import timedelta # In order to retreive time and timespan
 from influxdb import InfluxDBClient
 from pyez_mock import mocked_device, rpc_reply_dict
-#from jnpr.junos import *
-#from jnpr.junos import Device
+from jnpr.junos import *
+from jnpr.junos import Device
 from jnpr.junos.exception import *
-#from jnpr.junos.utils.start_shell import StartShell
+from jnpr.junos.utils.start_shell import StartShell
 from lxml import etree  # Used for xml manipulation
 from pprint import pformat
 from pprint import pprint
