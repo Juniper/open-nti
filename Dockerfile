@@ -13,7 +13,7 @@ RUN     /usr/sbin/enable_insecure_key
 
 # Latest version
 ENV GRAFANA_VERSION 2.6.0
-ENV INFLUXDB_VERSION 0.9.6.1
+ENV INFLUXDB_VERSION 0.10.3-1
 ENV TELEGRAF_VERSION 0.10.1-1
 ENV FLUENTD_VERSION 0.12.20
 ENV FLUENTD_JUNIPER_VERSION 0.2.6-beta
@@ -44,7 +44,9 @@ RUN     pip install influxdb && \
         easy_install pysnmp && \
         pip install lxml && \
         pip install python-crontab && \
-        pip install junos-eznc
+        pip install junos-eznc && \
+        pip install pytest && \
+        pip install mock
 
 RUN     mkdir /src
 
@@ -125,6 +127,10 @@ ADD     docker/nginx/run.sh /etc/service/nginx/run
 ### open-nti python scripts (for gathering informatino from server to router)  ###
 ADD     open-nti/open-nti.py /opt/open-nti/open-nti.py
 ADD     open-nti/startcron.py /opt/open-nti/startcron.py
+ADD     tests/pyez_mock.py /opt/open-nti/pyez_mock.py
+
+### Add test files
+RUN     mkdir /opt/open-nti/tests
 
 # ################
 

@@ -6,6 +6,7 @@
 from datetime import datetime # In order to retreive time and timespan
 from datetime import timedelta # In order to retreive time and timespan
 from influxdb import InfluxDBClient
+from pyez_mock import mocked_device, rpc_reply_dict
 from jnpr.junos import *
 from jnpr.junos import Device
 from jnpr.junos.exception import *
@@ -67,12 +68,12 @@ def check_db_status():
             if db['name'] == db_name:
                 db_found = True
         if not(db_found):
-            logger.info('Database <%s> not found, trying to create it', db_name) 
+            logger.info('Database <%s> not found, trying to create it', db_name)
             dbclient.create_database(db_name)
         return True
     except Exception as e:
-        logger.error('Error querying open-nti database: %s', e) 
-        return False     
+        logger.error('Error querying open-nti database: %s', e)
+        return False
 
 def get_latest_datapoints(**kwargs):
 
@@ -91,7 +92,6 @@ def get_latest_datapoints(**kwargs):
 
     results = dbclient.query(query)
     return results
-
 
 def get_target_hosts():
     my_target_hosts = {}
@@ -139,6 +139,7 @@ def execute_command(jdevice,command):
         rpc_error = err.__repr__()
         logger.error("Error found executing command: %s, error: %s:", command ,rpc_error)
         return False
+
     if format == "text":
         # We need to confirm that root tag in command_result is <output> if not then raise exception and skip
         return command_result.text
@@ -277,7 +278,7 @@ def get_metadata_and_add_datapoint(datapoints,**kwargs):
         else:
             logger.error("ERROR: Unknown db_schema: <%s>", db_schema)
 
-        if len(points) == 1: 
+        if len(points) == 1:
             latest_value = points[0]['value']
             delta = value - convert_variable_type(latest_value)
             logger.debug("Delta found : points <%s> latest_value <%s>", points,latest_value)
@@ -286,7 +287,7 @@ def get_metadata_and_add_datapoint(datapoints,**kwargs):
             logger.debug("No latest datapoint found for <%s>", kpi_tags)
         else:
             logger.error("ERROR: Latest datapoint query returns more than one match : <%s>", points)
-        
+
         if type (value) == int:
             delta = int(delta)
         elif type (value) == float:
@@ -438,7 +439,6 @@ def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tag
     if (not(parser_found)):
         logger.error('[%s]: ERROR: Parser not found for command: %s', host, target_command)
 
-
 def collector(**kwargs):
 
     for host in kwargs["host_list"]:
@@ -464,21 +464,31 @@ def collector(**kwargs):
             timestamp_tracking['collector_start'] = int(datetime.today().strftime('%s'))
             # Establish connection to hosts
             user, passwd = get_credentials(host)
-            jdev = Device(user=user, host=host, password=passwd, gather_facts=False, auto_probe=True, port=22)
-            for i in range(1, max_connection_retries+1):
-                try:
-                    jdev.open()
-                    jdev.timeout = default_junos_rpc_timeout
-                    connected = True
-                    break
-                except Exception, e:
-                    if i < max_connection_retries:
-                        logger.error('[%s]: Connection failed %s time(s), retrying....', host, i)
-                        time.sleep(1)
-                        continue
-                    else:
-                        logging.exception(e)
-                        connected = False  # Notify about the specific problem with the host BUT we need to continue with our list
+            if dynamic_args['test']:
+                #Open an emulated Junos device instead of connecting to the real one
+                _rpc_reply_dict = rpc_reply_dict()
+                _rpc_reply_dict['dir'] = BASE_DIR_INPUT
+
+                jdev = mocked_device(_rpc_reply_dict)
+                # First collect all kpi in datapoints {} then at the end we insert them into DB (performance improvement)
+                connected = True
+            else:
+                jdev = Device(user=user, host=host, password=passwd, gather_facts=False, auto_probe=True, port=22)
+                for i in range(1, max_connection_retries+1):
+                    try:
+                        jdev.open()
+                        jdev.timeout = default_junos_rpc_timeout
+                        connected = True
+                        break
+                    except Exception, e:
+                        if i < max_connection_retries:
+                            logger.error('[%s]: Connection failed %s time(s), retrying....', host, i)
+                            time.sleep(1)
+                            continue
+                        else:
+                            logging.exception(e)
+                            connected = False  # Notify about the specific problem with the host BUT we need to continue with our list
+            # First collect all kpi in datapoints {} then at the end we insert them into DB (performance improvement)
             # First collect all kpi in datapoints {} then at the end we insert them into DB (performance improvement)
             if connected:
                 datapoints = []
@@ -538,7 +548,9 @@ def collector(**kwargs):
                         logger.debug('[%s]: Parsing command: %s', host, target_command)
                         parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tags)
                         time.sleep(delay_between_commands)
+
                 jdev.close()
+
                 timestamp_tracking['collector_cli_ends'] = int(datetime.today().strftime('%s'))
                 logger.info('[%s]: timestamp_tracking - CLI collection %s', host, timestamp_tracking['collector_cli_ends']-timestamp_tracking['collector_cli_start'])
 
@@ -568,17 +580,26 @@ else:
     # unfrozen
     BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
+BASE_DIR_INPUT = BASE_DIR + "/data/"
+
 full_parser = argparse.ArgumentParser()
 full_parser.add_argument("--tag", nargs='+', help="Collect data from hosts that matches the tag")
 full_parser.add_argument("-c", "--console", action='store_true', help="Console logs enabled")
+full_parser.add_argument("-t", "--test", action='store_true', help="Use emulated Junos device")
 full_parser.add_argument("-s", "--start", action='store_true', help="Start collecting (default 'no')")
+full_parser.add_argument("-i", "--input", default= BASE_DIR_INPUT, help="Directory where to find input files")
+
 dynamic_args = vars(full_parser.parse_args())
+
+## Change BASE_DIR_INPUT if we are in "test" mode
+if dynamic_args['test']:
+    BASE_DIR_INPUT = dynamic_args['input']
 
 ################################################################################################
 # Loading YAML Default Variables
 ###############################################################################################
 
-default_variables_yaml_file = BASE_DIR + "/data/open-nti.variables.yaml"
+default_variables_yaml_file = BASE_DIR_INPUT + "open-nti.variables.yaml"
 default_variables = {}
 
 with open(default_variables_yaml_file) as f:
@@ -610,10 +631,8 @@ else:
     tag_list = [ ".*" ]
 
 if not(dynamic_args['start']):
-    logger.error('Mising <start> option, so nothing to do')
+    logger.error('Missing <start> option, so nothing to do')
     sys.exit(0)
-
-
 
 ################################################################################################
 # open-nti starts here start
@@ -638,7 +657,7 @@ if dynamic_args['console']:
 
 #  LOAD all credentials in a dict
 
-credentials_yaml_file = BASE_DIR + "/data/" + default_variables['credentials_file']
+credentials_yaml_file = BASE_DIR_INPUT + default_variables['credentials_file']
 credentials = {}
 logger.debug('Importing credentials file: %s ',credentials_yaml_file)
 with open(credentials_yaml_file) as f:
@@ -646,7 +665,7 @@ with open(credentials_yaml_file) as f:
 
 #  LOAD all hosts with their tags in a dic
 
-hosts_yaml_file = BASE_DIR + "/data/" + default_variables['hosts_file']
+hosts_yaml_file = BASE_DIR_INPUT + default_variables['hosts_file']
 hosts = {}
 logger.debug('Importing host file: %s ',hosts_yaml_file)
 with open(hosts_yaml_file) as f:
@@ -654,7 +673,7 @@ with open(hosts_yaml_file) as f:
 
 #  LOAD all commands with their tags in a dict
 
-commands_yaml_file = BASE_DIR + "/data/" + default_variables['commands_file']
+commands_yaml_file = BASE_DIR_INPUT + default_variables['commands_file']
 commands = []
 logger.debug('Importing commands file: %s ',commands_yaml_file)
 with open(commands_yaml_file) as f:
