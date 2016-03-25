@@ -1,0 +1,40 @@
+
+
+# lb:
+#   image: jwilder/nginx-proxy
+#   links:
+#    - opennti-input-jti
+#   volumes:
+#    - /var/run/docker.sock:/tmp/docker.sock:ro
+#   ports:
+#    - "50000:50000/udp"
+#    - "50010:50010/udp"
+#    - "50020:50020/udp"
+
+opennti-input-jti:
+  image: juniper/open-nti-input-jti
+  entrypoint: /sbin/my_init
+  environment:
+   - "INFLUXDB_ADDR=opennti"
+  expose:
+   - "50000/udp"
+   - "50010/udp"
+   - "50020/udp"
+  links:
+   - opennti
+
+opennti:
+  image: juniper/open-nti
+  # container_name: open-nti_con
+  entrypoint: /sbin/my_init
+  restart: always
+  volumes:
+   - ./dashboards:/src/dashboards
+   - ./dashboards:/opt/open-nti/data
+  ports:
+   - "8125:8125/udp"
+   - "6000:6000/udp"
+   - "80:80"
+   - "3000:3000"
+   - "8083:8083"
+   - "8086:8086"
