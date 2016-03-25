@@ -2,11 +2,15 @@ FROM phusion/baseimage:0.9.18
 MAINTAINER Damien Garros <dgarros@gmail.com>
 
 RUN     apt-get -y update && \
-        apt-get -y upgrade
-
+        apt-get -y upgrade && \
+        apt-get clean   &&\
+        rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+        
 # dependencies
 RUN     apt-get -y --force-yes install \
-        git adduser libfontconfig wget make curl
+        git adduser libfontconfig wget make curl && \
+        apt-get clean   &&\
+        rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN     rm -f /etc/service/sshd/down
 RUN     /usr/sbin/enable_insecure_key
@@ -35,7 +39,9 @@ RUN     apt-get -y update && \
             ruby \
             ruby-dev \
             snmp \
-            zlib1g-dev
+            zlib1g-dev && \
+        apt-get clean   &&\
+        rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install some python modules
 RUN     pip install influxdb && \
