@@ -7,7 +7,8 @@ RUN     apt-get -y update && \
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
         
 # dependencies
-RUN     apt-get -y --force-yes install \
+RUN     apt-get -y update && \
+        apt-get -y install \
         git adduser libfontconfig wget make curl && \
         apt-get clean   &&\
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
