@@ -120,6 +120,7 @@ jdi_lab:
     username: '*login*'         (Single quote is to force to be imported as string)
     password: '*password*'      (Single quote is to force to be imported as string)
     method: password            (other supported methods 'key' and 'enc_key' for ssh Key-Based Authentication)
+    key_file: ./data/*key_file* (optional: only appies if method key or enc_key is used, it must be located at data directory)
     tags: tag1 tag2
 ```
 
