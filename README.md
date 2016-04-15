@@ -119,6 +119,7 @@ You need to provide at least one credential profile for your devices
 jdi_lab:
     username: '*login*'         (Single quote is to force to be imported as string)
     password: '*password*'      (Single quote is to force to be imported as string)
+    method: password            (other supported methods 'key' and 'enc_key' for ssh Key-Based Authentication)
     tags: tag1 tag2
 ```
 
