@@ -117,8 +117,8 @@ You need to provide at least one credential profile for your devices
 
 ```yaml
 jdi_lab:
-    username: *login*
-    password: *password*
+    username: '*login*'         (Single quote is to force to be imported as string)
+    password: '*password*'      (Single quote is to force to be imported as string)
     tags: tag1 tag2
 ```
 
