@@ -5,7 +5,7 @@ RUN     apt-get -y update && \
         apt-get -y upgrade && \
         apt-get clean   &&\
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-        
+
 # dependencies
 RUN     apt-get -y update && \
         apt-get -y install \
@@ -21,7 +21,7 @@ ENV GRAFANA_VERSION 2.6.0
 ENV INFLUXDB_VERSION 0.10.3-1
 ENV TELEGRAF_VERSION 0.10.1-1
 ENV FLUENTD_VERSION 0.12.20
-ENV FLUENTD_JUNIPER_VERSION 0.2.6-beta
+ENV FLUENTD_JUNIPER_VERSION 0.2.10
 
 RUN     apt-get -y update && \
         apt-get -y install \
@@ -82,6 +82,9 @@ RUN     gem install --no-ri --no-rdoc \
             dogstatsd-ruby \
             fluent-plugin-newsyslog \
             fluent-plugin-rewrite-tag-filter
+
+RUN     gem install --no-ri --no-rdoc \
+            fluent-plugin-juniper-telemetry -v ${FLUENTD_JUNIPER_VERSION} 
 
 ADD     docker/fluentd/fluentd.launcher.sh /etc/service/fluentd/run
 
@@ -163,14 +166,11 @@ RUN     fluentd --setup
 ADD     docker/fluentd/plugin/out_influxdb.rb       /etc/fluent/plugin/out_influxdb.rb
 ADD     docker/fluentd/plugin/out_statsd.rb         /etc/fluent/plugin/out_statsd.rb
 
-WORKDIR /tmp
-RUN     wget -O /tmp/fluent-plugin-juniper-telemetry.tar.gz https://github.com/JNPRAutomate/fluent-plugin-juniper-telemetry/archive/v${FLUENTD_JUNIPER_VERSION}.tar.gz &&\
-        tar -xzf /tmp/fluent-plugin-juniper-telemetry.tar.gz                &&\
-        cd /tmp/fluent-plugin-juniper-telemetry-${FLUENTD_JUNIPER_VERSION}  &&\
-        rake install
-
-RUN     apt-get clean   &&\
-        rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+# WORKDIR /tmp
+# RUN     wget -O /tmp/fluent-plugin-juniper-telemetry.tar.gz https://github.com/JNPRAutomate/fluent-plugin-juniper-telemetry/archive/v${FLUENTD_JUNIPER_VERSION}.tar.gz &&\
+#        tar -xzf /tmp/fluent-plugin-juniper-telemetry.tar.gz                &&\
+#        cd /tmp/fluent-plugin-juniper-telemetry-${FLUENTD_JUNIPER_VERSION}  &&\
+#        rake install
 
 WORKDIR /
 ENV HOME /root
