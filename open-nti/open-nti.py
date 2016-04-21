@@ -121,7 +121,38 @@ def get_credentials(my_host):
         for my_host_tag in my_host_tags.strip().split():
             for credential_tag in credentials[credential]["tags"].split():
                 if re.search(my_host_tag, credential_tag, re.IGNORECASE):
-                    return credentials[credential]["username"], credentials[credential]["password"]
+                    if ("username" in credentials[credential].keys()):
+                        if ("method" in credentials[credential].keys()):
+                            if (credentials[credential]["method"] == "key"):
+                                if ("key_file" in credentials[credential].keys()):
+                                    return credentials[credential]["username"], "", credentials[credential]["method"], credentials[credential]["key_file"]
+                                else:
+                                    logger.error("Missing key_file information")
+                                    sys.exit(0)
+
+                            elif (credentials[credential]["method"] == "enc_key"):
+                                if ("key_file" in credentials[credential].keys()):
+                                    if ("password" in credentials[credential].keys()):
+                                        return credentials[credential]["username"], credentials[credential]["password"], credentials[credential]["method"], credentials[credential]["key_file"]
+                                    else:
+                                        logger.error("Missing password information")
+                                        sys.exit(0)
+                                else:
+                                    logger.error("Missing key_file information")
+                            elif (credentials[credential]["method"] == "password"):
+                                return credentials[credential]["username"], credentials[credential]["password"], credentials[credential]["method"], ""
+                            else:
+                                logger.error("Unknown authentication method found")
+                                sys.exit(0)
+                        else:
+                            if ("password" in credentials[credential].keys()):
+                                return credentials[credential]["username"], credentials[credential]["password"], "password", ""
+                            else:
+                                logger.error("Missing password information")
+                                sys.exit(0)
+                    else:
+                        logger.error("Missing username information")
+                        sys.exit(0)
 
 def execute_command(jdevice,command):
     format = "text"
@@ -463,7 +494,7 @@ def collector(**kwargs):
             timestamp_tracking={}
             timestamp_tracking['collector_start'] = int(datetime.today().strftime('%s'))
             # Establish connection to hosts
-            user, passwd = get_credentials(host)
+            user, passwd, authMethod,authKey_file = get_credentials(host)
             if dynamic_args['test']:
                 #Open an emulated Junos device instead of connecting to the real one
                 _rpc_reply_dict = rpc_reply_dict()
@@ -473,7 +504,12 @@ def collector(**kwargs):
                 # First collect all kpi in datapoints {} then at the end we insert them into DB (performance improvement)
                 connected = True
             else:
-                jdev = Device(user=user, host=host, password=passwd, gather_facts=False, auto_probe=True, port=22)
+                if authMethod in "key":
+                    jdev = Device(user=user, host=host, ssh_private_key_file=authKey_file, gather_facts=False, auto_probe=True, port=22)
+                elif authMethod in "enc_key":
+                    jdev = Device(user=user, host=host, ssh_private_key_file=authKey_file, password=passwd, gather_facts=False, auto_probe=True, port=22)
+                else: # Default is 
+                    jdev = Device(user=user, host=host, password=passwd, gather_facts=False, auto_probe=True, port=22)
                 for i in range(1, max_connection_retries+1):
                     try:
                         jdev.open()
@@ -488,7 +524,6 @@ def collector(**kwargs):
                         else:
                             logging.exception(e)
                             connected = False  # Notify about the specific problem with the host BUT we need to continue with our list
-            # First collect all kpi in datapoints {} then at the end we insert them into DB (performance improvement)
             # First collect all kpi in datapoints {} then at the end we insert them into DB (performance improvement)
             if connected:
                 datapoints = []

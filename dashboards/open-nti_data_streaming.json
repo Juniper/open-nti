@@ -669,7 +669,7 @@
               ],
               "hide": false,
               "measurement": "jnpr.jvision",
-              "query": "SELECT derivative(\"value\", $interval)*8 FROM \"jnpr.jvision\" WHERE (\"type\" = 'egress_stats.if_octets' OR \"type\" = 'ingress_stats.if_octets') AND \"device\" =~ /$host_regex$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\"",
+              "query": "SELECT derivative(\"value\", 1s)*8 FROM \"jnpr.jvision\" WHERE (\"type\" = 'egress_stats.if_octets' OR \"type\" = 'ingress_stats.if_octets') AND \"device\" =~ /$host_regex$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\"",
               "rawQuery": true,
               "refId": "C",
               "resultFormat": "time_series",
