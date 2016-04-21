@@ -74,6 +74,7 @@ RUN     mkdir /src/grafana                                                      
 RUN     gem install --no-ri --no-rdoc \
             fluentd -v ${FLUENTD_VERSION} && \
         gem install --no-ri --no-rdoc \
+            cause \
             influxdb \
             rake \
             bundler \
@@ -84,7 +85,7 @@ RUN     gem install --no-ri --no-rdoc \
             fluent-plugin-rewrite-tag-filter
 
 RUN     gem install --no-ri --no-rdoc \
-            fluent-plugin-juniper-telemetry -v ${FLUENTD_JUNIPER_VERSION} 
+            fluent-plugin-juniper-telemetry -v ${FLUENTD_JUNIPER_VERSION}
 
 ADD     docker/fluentd/fluentd.launcher.sh /etc/service/fluentd/run
 
