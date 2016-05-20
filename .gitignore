@@ -3,3 +3,5 @@ db/*
 logs/*
 
 *.pyc
+
+.cache/v/cache/lastfailed

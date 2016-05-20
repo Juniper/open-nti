@@ -2,11 +2,16 @@ FROM phusion/baseimage:0.9.18
 MAINTAINER Damien Garros <dgarros@gmail.com>
 
 RUN     apt-get -y update && \
-        apt-get -y upgrade
+        apt-get -y upgrade && \
+        apt-get clean   &&\
+        rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # dependencies
-RUN     apt-get -y --force-yes install \
-        git adduser libfontconfig wget make curl
+RUN     apt-get -y update && \
+        apt-get -y install \
+        git adduser libfontconfig wget make curl && \
+        apt-get clean   &&\
+        rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN     rm -f /etc/service/sshd/down
 RUN     /usr/sbin/enable_insecure_key
@@ -16,7 +21,7 @@ ENV GRAFANA_VERSION 2.6.0
 ENV INFLUXDB_VERSION 0.10.3-1
 ENV TELEGRAF_VERSION 0.10.1-1
 ENV FLUENTD_VERSION 0.12.20
-ENV FLUENTD_JUNIPER_VERSION 0.2.6-beta
+ENV FLUENTD_JUNIPER_VERSION 0.2.11
 
 RUN     apt-get -y update && \
         apt-get -y install \
@@ -35,9 +40,13 @@ RUN     apt-get -y update && \
             ruby \
             ruby-dev \
             snmp \
-            zlib1g-dev
+            zlib1g-dev \
+            libffi-dev \
+            libssl-dev && \
+        apt-get clean   &&\
+        rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Install some python modules
+# # Install some python modules
 RUN     pip install influxdb && \
         pip install xmltodict && \
         pip install pexpect && \
@@ -46,12 +55,13 @@ RUN     pip install influxdb && \
         pip install python-crontab && \
         pip install junos-eznc && \
         pip install pytest && \
-        pip install mock
+        pip install mock &&\
+        pip install cryptography==1.2.1
 
 RUN     mkdir /src
 
 ########################
-# Install Grafana
+### Install Grafana
 ########################
 RUN     mkdir /src/grafana                                                                                    &&\
         mkdir /opt/grafana                                                                                    &&\
@@ -63,10 +73,17 @@ RUN     mkdir /src/grafana                                                      
 ### Install Fluentd  ###
 ########################
 
+# install RVM, Ruby, and Bundler
+RUN curl -sSL https://rvm.io/mpapis.asc | gpg --import
+RUN \curl -L https://get.rvm.io | bash -s stable
+RUN /bin/bash -l -c "rvm requirements"
+RUN /bin/bash -l -c "rvm install 1.9.3"
+
 # RUN     gem install fluentd fluent-plugin-influxdb --no-ri --no-rdoc
-RUN     gem install --no-ri --no-rdoc \
-            fluentd -v ${FLUENTD_VERSION} && \
-        gem install --no-ri --no-rdoc \
+RUN     /bin/bash -l -c "gem install --no-ri --no-rdoc \
+            fluentd -v ${FLUENTD_VERSION}" && \
+        /bin/bash -l -c "gem install --no-ri --no-rdoc \
+            cause \
             influxdb \
             rake \
             bundler \
@@ -74,7 +91,10 @@ RUN     gem install --no-ri --no-rdoc \
             statsd-ruby \
             dogstatsd-ruby \
             fluent-plugin-newsyslog \
-            fluent-plugin-rewrite-tag-filter
+            fluent-plugin-rewrite-tag-filter"
+
+RUN     /bin/bash -l -c "gem install --no-ri --no-rdoc \
+            fluent-plugin-juniper-telemetry -v ${FLUENTD_JUNIPER_VERSION}"
 
 ADD     docker/fluentd/fluentd.launcher.sh /etc/service/fluentd/run
 
@@ -151,26 +171,22 @@ RUN     mkdir /etc/fluent && \
 
 ADD     docker/fluentd/fluent.conf /etc/fluent/fluent.conf
 ADD     docker/fluentd/fluent.conf /fluent/fluent.conf
-RUN     fluentd --setup
+RUN     /bin/bash -l -c "fluentd --setup"
 
 ADD     docker/fluentd/plugin/out_influxdb.rb       /etc/fluent/plugin/out_influxdb.rb
 ADD     docker/fluentd/plugin/out_statsd.rb         /etc/fluent/plugin/out_statsd.rb
 
-WORKDIR /tmp
-RUN     wget -O /tmp/fluent-plugin-juniper-telemetry.tar.gz https://github.com/JNPRAutomate/fluent-plugin-juniper-telemetry/archive/v${FLUENTD_JUNIPER_VERSION}.tar.gz &&\
-        tar -xzf /tmp/fluent-plugin-juniper-telemetry.tar.gz                &&\
-        cd /tmp/fluent-plugin-juniper-telemetry-${FLUENTD_JUNIPER_VERSION}  &&\
-        rake install
-
-RUN     apt-get clean   &&\
-        rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+# # WORKDIR /tmp
+# # RUN     wget -O /tmp/fluent-plugin-juniper-telemetry.tar.gz https://github.com/JNPRAutomate/fluent-plugin-juniper-telemetry/archive/v${FLUENTD_JUNIPER_VERSION}.tar.gz &&\
+# #        tar -xzf /tmp/fluent-plugin-juniper-telemetry.tar.gz                &&\
+# #        cd /tmp/fluent-plugin-juniper-telemetry-${FLUENTD_JUNIPER_VERSION}  &&\
+# #        rake install
 
 WORKDIR /
 ENV HOME /root
 ENV SSL_SUPPORT **False**
 ENV SSL_CERT **None**
 RUN chmod -R 777 /var/log/
-
 
 # ## Graphana
 EXPOSE 80
