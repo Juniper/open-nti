@@ -11,29 +11,56 @@
 #    - "50010:50010/udp"
 #    - "50020:50020/udp"
 
+# opennti-kapacitor:
+#   image: kapacitor:0.13.1
+#   environment:
+#    - "KAPACITOR_INFLUXDB_0_URLS_0=http://opennti:8086"
+#   ports:
+#    - "9092:9092"
+#   links:
+#    - opennti
+
 opennti-input-jti:
   image: juniper/open-nti-input-jti
-  entrypoint: /sbin/my_init
   environment:
    - "INFLUXDB_ADDR=opennti"
+   - "OUTPUT_INFLUXDB=true"
+   - "OUTPUT_STDOUT=true"
+  ports:
+   - "50000:50000/udp"
+   - "50020:50020/udp"
   expose:
    - "50000/udp"
-   - "50010/udp"
    - "50020/udp"
+  volumes:
+   - /etc/localtime:/etc/localtime
+  links:
+   - opennti
+
+opennti-input-syslog:
+  image: juniper/open-nti-input-syslog
+  environment:
+   - "INFLUXDB_ADDR=opennti"
+   - "OUTPUT_INFLUXDB=true"
+   - "OUTPUT_STDOUT=true"
+  ports:
+   - "6000:6000/udp"
+  expose:
+   - "6000/udp"
+  volumes:
+   - /etc/localtime:/etc/localtime
   links:
    - opennti
 
 opennti:
   image: juniper/open-nti
-  # container_name: open-nti_con
-  entrypoint: /sbin/my_init
   restart: always
   volumes:
    - ./dashboards:/src/dashboards
    - ./dashboards:/opt/open-nti/data
+   - /etc/localtime:/etc/localtime
   ports:
    - "8125:8125/udp"
-   - "6000:6000/udp"
    - "80:80"
    - "3000:3000"
    - "8083:8083"
