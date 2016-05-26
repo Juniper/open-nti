@@ -55,7 +55,8 @@ RUN     pip install influxdb && \
         pip install python-crontab && \
         pip install junos-eznc && \
         pip install pytest && \
-        pip install mock
+        pip install mock &&\
+        pip install cryptography==1.2.1
 
 RUN     mkdir /src
 
