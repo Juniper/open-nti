@@ -1,0 +1,57 @@
+
+
+lb:
+  image: dgarros/nginx-udp
+  volumes:
+   - /var/run/docker.sock:/tmp/docker.sock:ro
+  environment:
+   - "SERVICES_LB=6000"
+  ports:
+   - "6000:6000/udp"
+
+opennti-input-jti:
+  image: juniper/open-nti-input-jti
+  environment:
+   - "INFLUXDB_ADDR=opennti"
+   - "OUTPUT_INFLUXDB=true"
+   - "OUTPUT_STDOUT=true"
+   - "SERVICES_CLIENT=50000,50020"
+  expose:
+   - "50000/udp"
+   - "50020/udp"
+  ports:
+   - "50000:50000/udp"
+   - "50020:50020/udp"
+
+  volumes:
+   - /etc/localtime:/etc/localtime
+  links:
+   - opennti
+
+opennti-input-syslog:
+  image: juniper/open-nti-input-syslog
+  environment:
+   - "INFLUXDB_ADDR=opennti"
+   - "OUTPUT_INFLUXDB=true"
+   - "OUTPUT_STDOUT=true"
+   - "SERVICES_CLIENT=6000"
+  expose:
+   - "6000/udp"
+  volumes:
+   - /etc/localtime:/etc/localtime
+  links:
+   - opennti
+
+opennti:
+  image: juniper/open-nti
+  restart: always
+  volumes:
+   - ./dashboards:/src/dashboards
+   - ./data:/opt/open-nti/data
+   - /etc/localtime:/etc/localtime
+  ports:
+   - "8125:8125/udp"
+   - "80:80"
+   - "3000:3000"
+   - "8083:8083"
+   - "8086:8086"
