@@ -2,7 +2,7 @@
 
 
 #Load params file with all variables
-source open-nti.params
+source ./open-nti.params
 
 docker run --rm -t \
         --volume $(pwd)/$LOCAL_DIR_DATA:/opt/open-nti/data \
