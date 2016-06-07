@@ -57,7 +57,7 @@ opennti:
   restart: always
   volumes:
    - ./dashboards:/src/dashboards
-   - ./dashboards:/opt/open-nti/data
+   - ./data:/opt/open-nti/data
    - /etc/localtime:/etc/localtime
   ports:
    - "8125:8125/udp"
