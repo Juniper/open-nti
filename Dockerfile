@@ -117,7 +117,7 @@ ADD     docker/influxdb/influxdb.launcher.sh /etc/service/influxdb/run
 ### Install telegraf ###
 ########################
 
-RUN     curl -s -o /tmp/telegraf_latest_amd64.deb http://get.influxdb.org/telegraf/telegraf_${TELEGRAF_VERSION}_amd64.deb && \
+RUN     curl -s -o /tmp/telegraf_latest_amd64.deb https://dl.influxdata.com/telegraf/releases/telegraf_${TELEGRAF_VERSION}_amd64.deb && \
         dpkg -i /tmp/telegraf_latest_amd64.deb && \
         rm /tmp/telegraf_latest_amd64.deb
 
