@@ -17,9 +17,9 @@ RUN     rm -f /etc/service/sshd/down
 RUN     /usr/sbin/enable_insecure_key
 
 # Latest version
-ENV GRAFANA_VERSION 2.6.0
-ENV INFLUXDB_VERSION 0.10.3-1
-ENV TELEGRAF_VERSION 0.10.1-1
+ENV GRAFANA_VERSION 3.0.4-1464167696
+ENV INFLUXDB_VERSION 0.13.0
+ENV TELEGRAF_VERSION 0.13.1
 ENV FLUENTD_VERSION 0.12.20
 ENV FLUENTD_JUNIPER_VERSION 0.2.11
 
@@ -102,7 +102,7 @@ ADD     docker/fluentd/fluentd.launcher.sh /etc/service/fluentd/run
 ### Install InfluxDB ###
 ########################
 
-RUN     curl -s -o /tmp/influxdb_latest_amd64.deb https://s3.amazonaws.com/influxdb/influxdb_${INFLUXDB_VERSION}_amd64.deb && \
+RUN     curl -s -o /tmp/influxdb_latest_amd64.deb https://dl.influxdata.com/influxdb/releases/influxdb_${INFLUXDB_VERSION}_amd64.deb && \
         dpkg -i /tmp/influxdb_latest_amd64.deb && \
         rm /tmp/influxdb_latest_amd64.deb
 
@@ -117,7 +117,7 @@ ADD     docker/influxdb/influxdb.launcher.sh /etc/service/influxdb/run
 ### Install telegraf ###
 ########################
 
-RUN     curl -s -o /tmp/telegraf_latest_amd64.deb http://get.influxdb.org/telegraf/telegraf_${TELEGRAF_VERSION}_amd64.deb && \
+RUN     curl -s -o /tmp/telegraf_latest_amd64.deb https://dl.influxdata.com/telegraf/releases/telegraf_${TELEGRAF_VERSION}_amd64.deb && \
         dpkg -i /tmp/telegraf_latest_amd64.deb && \
         rm /tmp/telegraf_latest_amd64.deb
 
