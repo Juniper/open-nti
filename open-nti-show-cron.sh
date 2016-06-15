@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Load params file with all variables
-source open-nti.params
+source ./open-nti.params
 
 # Find container ID
 CONTAINER_ID=$(docker ps | grep $CONTAINER_NAME | awk '{print $1}')
