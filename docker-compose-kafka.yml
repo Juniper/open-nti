@@ -116,7 +116,7 @@ opennti-input-syslog:
 ## Open NTI - Database / Gui
 ##################################
 opennti:
-  image: juniper/open-nti:grafana3_0_influxdb_0_13
+  image: juniper/open-nti
   volumes:
    - ./dashboards:/src/dashboards
    - ./data:/opt/open-nti/data
