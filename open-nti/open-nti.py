@@ -81,7 +81,7 @@ def get_latest_datapoints(**kwargs):
     dbclient.switch_database(db_name)
     results = {}
     if db_schema == 1:
-        query = "select * from /%s\./ GROUP BY * ORDER BY time DESC limit 1 " % (kwargs['host'])
+        query = "select * from /%s\./ ORDER BY time DESC limit 1 " % (kwargs['host'])
     elif db_schema == 2:
         query = "select * from \"%s\" WHERE device = '%s' GROUP BY * ORDER BY time DESC limit 1 " % ('jnpr.collector',kwargs['host'])
     elif db_schema == 3:
