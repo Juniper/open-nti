@@ -168,7 +168,7 @@ def execute_command(jdevice,command):
         command_result = jdevice.rpc.cli(command_tmp, format="xml")
     except RpcError as err:
         rpc_error = err.__repr__()
-        logger.error("Error found executing command: %s, error: %s:", command ,rpc_error)
+        logger.error("Error found on <%s> executing command: %s, error: %s:", jdevice.hostname, command ,rpc_error)
         return False
 
     if format == "text":
