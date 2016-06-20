@@ -1,0 +1,7 @@
+
+template: graph-base-01.j2
+datasource: influxdb
+query: "select mean(value) from /$host_regex.chassis.routing-engine.*.cpu-idle/ where $timeFilter group by time($interval)"
+series: "/$host_regex.chassis.routing-engine.*.cpu-idle/"
+title: "RE - CPU idle"
+span: 6
