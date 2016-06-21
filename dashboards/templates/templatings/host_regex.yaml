@@ -1,0 +1,5 @@
+
+template: templating_base.j2
+
+name: host_regex
+query: SHOW TAG VALUES WITH KEY = \"device\"

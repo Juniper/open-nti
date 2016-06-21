@@ -1,0 +1,10 @@
+
+template: graph-lines-01.j2
+datasource: influxdb
+query: "select mean(value) from /$host_regex.re.memory.snmpd-SIZE/ where $timeFilter group by time($interval)"
+series: "/$host_regex.re.memory.snmpd-SIZE/"
+title: "SNMPD SIZE"
+span: 6
+
+templatings_used:
+  - host_regex.yaml

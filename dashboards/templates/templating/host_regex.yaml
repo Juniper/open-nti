@@ -1,5 +1,0 @@
-
-
-templating_name: host_regex
-templating_query: >
-  SHOW TAG VALUES WITH KEY = \"device\"

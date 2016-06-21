@@ -1,5 +1,5 @@
 
-query: SELECT * FROM events WHERE event = 'UI_COMMIT_COMPLETED' AND $timeFilter
+query: SELECT * FROM events WHERE event = 'RPD_BGP_NEIGHBOR_STATE_CHANGED' AND $timeFilter
 icon_color: "#C0C6BE"
 icon_size: 13
 name: Commit

@@ -1,5 +1,5 @@
 
-query: SELECT * FROM events WHERE event = 'UI_COMMIT_COMPLETED' AND $timeFilter
+query: SELECT * FROM events WHERE event = 'SNMP_TRAP_LINK_DOWN' AND $timeFilter
 icon_color: "#C0C6BE"
 icon_size: 13
 name: Commit

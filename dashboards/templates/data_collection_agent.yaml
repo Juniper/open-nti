@@ -1,3 +1,9 @@
 
+title: Data Collection Agent Dashboard TEST
+template: "dashboard_base.j2"
 
-dashboard_title: Data Collection Agent Dashboard
+rows:
+  - re_processes.yaml
+
+# templatings:
+#   - host_regex.yaml

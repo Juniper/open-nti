@@ -1,0 +1,305 @@
+{
+  "version": 0, 
+  "style": "dark", 
+  "rows": [
+    {
+      "collapse": true, 
+      "title": "RE processes", 
+      "editable": true, 
+      "height": "250px", 
+      "panels": [
+        {
+          "bars": false, 
+          "timeFrom": null, 
+          "links": [], 
+          "nullPointMode": "connected", 
+          "renderer": "flot", 
+          "id": 1, 
+          "linewidth": 1, 
+          "steppedLine": false, 
+          "targets": [
+            {
+              "function": "mean", 
+              "dsType": "influxdb", 
+              "rawQuery": true, 
+              "tags": [], 
+              "column": "value", 
+              "series": "/$host_regex.re.memory.rpd-SIZE/", 
+              "interval": "", 
+              "refId": "A", 
+              "select": [
+                [
+                  {
+                    "type": "field", 
+                    "params": [
+                      "value"
+                    ]
+                  }, 
+                  {
+                    "type": "mean", 
+                    "params": []
+                  }
+                ]
+              ], 
+              "policy": "default", 
+              "query": "select mean(value) from /$host_regex.re.memory.rpd-SIZE/ where $timeFilter group by time($interval)", 
+              "groupBy": [
+                {
+                  "type": "time", 
+                  "params": [
+                    "$interval"
+                  ]
+                }, 
+                {
+                  "type": "fill", 
+                  "params": [
+                    "null"
+                  ]
+                }
+              ], 
+              "resultFormat": "time_series"
+            }
+          ], 
+          "fill": 0, 
+          "span": 6, 
+          "title": "RPD SIZE", 
+          "tooltip": {
+            "shared": false, 
+            "value_type": "cumulative", 
+            "msResolution": false
+          }, 
+          "legend": {
+            "total": false, 
+            "show": false, 
+            "max": false, 
+            "min": false, 
+            "current": false, 
+            "values": false, 
+            "avg": false
+          }, 
+          "yaxes": [
+            {
+              "format": "short", 
+              "max": null, 
+              "logBase": 1, 
+              "min": null, 
+              "show": true
+            }, 
+            {
+              "format": "short", 
+              "max": null, 
+              "logBase": 1, 
+              "min": null, 
+              "show": true
+            }
+          ], 
+          "xaxis": {
+            "show": true
+          }, 
+          "seriesOverrides": [], 
+          "percentage": false, 
+          "type": "graph", 
+          "error": false, 
+          "editable": true, 
+          "grid": {
+            "threshold1": null, 
+            "threshold2Color": "rgba(234, 112, 112, 0.22)", 
+            "threshold2": null, 
+            "threshold1Color": "rgba(216, 200, 27, 0.27)"
+          }, 
+          "stack": false, 
+          "timeShift": null, 
+          "aliasColors": {}, 
+          "lines": true, 
+          "points": true, 
+          "datasource": "influxdb", 
+          "pointradius": 1
+        }, 
+        {
+          "bars": false, 
+          "timeFrom": null, 
+          "links": [], 
+          "nullPointMode": "connected", 
+          "renderer": "flot", 
+          "id": 2, 
+          "linewidth": 1, 
+          "steppedLine": false, 
+          "targets": [
+            {
+              "function": "mean", 
+              "dsType": "influxdb", 
+              "rawQuery": true, 
+              "tags": [], 
+              "column": "value", 
+              "series": "/$host_regex.re.memory.dfwd-SIZE/", 
+              "interval": "", 
+              "refId": "A", 
+              "select": [
+                [
+                  {
+                    "type": "field", 
+                    "params": [
+                      "value"
+                    ]
+                  }, 
+                  {
+                    "type": "mean", 
+                    "params": []
+                  }
+                ]
+              ], 
+              "policy": "default", 
+              "query": "select mean(value) from /$host_regex.re.memory.dfwd-SIZE/ where $timeFilter group by time($interval)", 
+              "groupBy": [
+                {
+                  "type": "time", 
+                  "params": [
+                    "$interval"
+                  ]
+                }, 
+                {
+                  "type": "fill", 
+                  "params": [
+                    "null"
+                  ]
+                }
+              ], 
+              "resultFormat": "time_series"
+            }
+          ], 
+          "fill": 0, 
+          "span": 6, 
+          "title": "DFWD SIZE", 
+          "tooltip": {
+            "shared": false, 
+            "value_type": "cumulative", 
+            "msResolution": false
+          }, 
+          "legend": {
+            "total": false, 
+            "show": false, 
+            "max": false, 
+            "min": false, 
+            "current": false, 
+            "values": false, 
+            "avg": false
+          }, 
+          "yaxes": [
+            {
+              "format": "short", 
+              "max": null, 
+              "logBase": 1, 
+              "min": null, 
+              "show": true
+            }, 
+            {
+              "format": "short", 
+              "max": null, 
+              "logBase": 1, 
+              "min": null, 
+              "show": true
+            }
+          ], 
+          "xaxis": {
+            "show": true
+          }, 
+          "seriesOverrides": [], 
+          "percentage": false, 
+          "type": "graph", 
+          "error": false, 
+          "editable": true, 
+          "grid": {
+            "threshold1": null, 
+            "threshold2Color": "rgba(234, 112, 112, 0.22)", 
+            "threshold2": null, 
+            "threshold1Color": "rgba(216, 200, 27, 0.27)"
+          }, 
+          "stack": false, 
+          "timeShift": null, 
+          "aliasColors": {}, 
+          "lines": true, 
+          "points": true, 
+          "datasource": "influxdb", 
+          "pointradius": 1
+        }
+      ], 
+      "showTitle": true
+    }
+  ], 
+  "templating": {
+    "enable": true, 
+    "list": [
+      {
+        "regex": "", 
+        "hide": 0, 
+        "name": "host_regex", 
+        "refresh_on_load": false, 
+        "allFormat": "glob", 
+        "refresh": 1, 
+        "current": {
+          "isNone": true, 
+          "text": "None", 
+          "value": ""
+        }, 
+        "datasource": "influxdb", 
+        "query": "SHOW TAG VALUES WITH KEY = \"device\"", 
+        "type": "query", 
+        "options": [
+          {
+            "isNone": true, 
+            "text": "None", 
+            "selected": true, 
+            "value": ""
+          }
+        ], 
+        "includeAll": false
+      }
+    ]
+  }, 
+  "links": [], 
+  "tags": [], 
+  "hideControls": false, 
+  "title": "Data Collection Agent Dashboard TEST", 
+  "editable": true, 
+  "refresh": "1m", 
+  "originalTitle": "Data Collection Agent Dashboard TEST", 
+  "timepicker": {
+    "status": "Stable", 
+    "notice": false, 
+    "enable": true, 
+    "collapse": false, 
+    "time_options": [
+      "5m", 
+      "15m", 
+      "1h", 
+      "6h", 
+      "12h", 
+      "24h", 
+      "2d", 
+      "7d", 
+      "30d"
+    ], 
+    "refresh_intervals": [
+      "5s", 
+      "10s", 
+      "30s", 
+      "1m", 
+      "5m", 
+      "15m", 
+      "30m", 
+      "1h", 
+      "2h", 
+      "1d"
+    ], 
+    "now": true, 
+    "type": "timepicker"
+  }, 
+  "sharedCrosshair": false, 
+  "time": {
+    "to": "now", 
+    "from": "now-1h"
+  }, 
+  "timezone": "browser", 
+  "schemaVersion": 12, 
+  "id": null
+}
