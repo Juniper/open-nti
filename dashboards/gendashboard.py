@@ -44,10 +44,11 @@ logging.basicConfig(format=' %(name)s - %(levelname)s - %(message)s')
 ### Load main configuration file
 #############################################
 
-ROWS_DIR = 'rows/'
-GRAPHS_DIR = 'graphs/'
-TEMPLATINGS_DIR = 'templatings/'
-ANNOTATIONS_DIR = 'annotations/'
+TEMPLATES_DIR = 'templates/'
+ROWS_DIR = TEMPLATES_DIR +'rows/'
+GRAPHS_DIR = TEMPLATES_DIR + 'graphs/'
+TEMPLATINGS_DIR = TEMPLATES_DIR + 'templatings/'
+ANNOTATIONS_DIR = TEMPLATES_DIR + 'annotations/'
 
 logger.info('Opening Configuration file {0}'.format(args.dashboard))
 dashboard = yaml.load(open(args.dashboard))
@@ -140,7 +141,7 @@ if 'templatings' in dashboard.keys():
 #############################################
 ### Render Dashboard
 #############################################
-dashboard_tpl = open(dashboard['template'])
+dashboard_tpl = open(TEMPLATES_DIR + dashboard['template'])
 dashboard_tpl_rdr = Template(dashboard_tpl.read().decode("utf8")).render(dashboard)
 
 ## Validate Json
