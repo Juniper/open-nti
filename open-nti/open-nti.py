@@ -81,7 +81,7 @@ def get_latest_datapoints(**kwargs):
     dbclient.switch_database(db_name)
     results = {}
     if db_schema == 1:
-        query = "select * from /%s\./ GROUP BY * ORDER BY time DESC limit 1 " % (kwargs['host'])
+        query = "select * from /%s\./ ORDER BY time DESC limit 1 " % (kwargs['host'])
     elif db_schema == 2:
         query = "select * from \"%s\" WHERE device = '%s' GROUP BY * ORDER BY time DESC limit 1 " % ('jnpr.collector',kwargs['host'])
     elif db_schema == 3:
@@ -168,7 +168,7 @@ def execute_command(jdevice,command):
         command_result = jdevice.rpc.cli(command_tmp, format="xml")
     except RpcError as err:
         rpc_error = err.__repr__()
-        logger.error("Error found executing command: %s, error: %s:", command ,rpc_error)
+        logger.error("Error found on <%s> executing command: %s, error: %s:", jdevice.hostname, command ,rpc_error)
         return False
 
     if format == "text":
