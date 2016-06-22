@@ -1,7 +1,7 @@
 #! /bin/bash
 
 #Load params file with all variables
-source open-nti.params
+source ./open-nti.params
 
 CONTAINER_IP='127.0.0.1'
 
@@ -17,7 +17,7 @@ then
     # If we are on Linux, we are using Docker to get the IP of the container
     CONTAINER_IP=$(docker inspect  --format '{{ .NetworkSettings.IPAddress }}' $CONTAINER_NAME)
     LOCAL_PORT_SSH=22
-    
+
 elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]
 then
     echo "Unable to find Container IP, using $CONTAINER_IP"

@@ -1,7 +1,7 @@
 #! /bin/bash
 
 #Load params file with all variables
-source open-nti.params
+source ./open-nti.params
 
 ## Stop / Delete existing Container with the name to avoid Conflicts
 docker stop $CONTAINER_NAME
