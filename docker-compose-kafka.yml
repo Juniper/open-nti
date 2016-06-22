@@ -6,7 +6,7 @@ kafka:
   image: spotify/kafka
   environment:
    - "ADVERTISED_PORT=9092"
-   - "ADVERTISED_HOST=172.29.110.16"
+   - "ADVERTISED_HOST=172.29.34.63"
   volumes:
    - /etc/localtime:/etc/localtime
   ports:
@@ -18,39 +18,39 @@ kafka:
 #   environment:
 #     - "INFLUXDB_ADDR=opennti"
 #     - "KAFKA_TOPIC=jnpr.jvision"
-#     - "ZOOKEEPER_ADDR=172.29.110.16"
+#     - "ZOOKEEPER_ADDR=172.29.34.63"
 #   volumes:
 #    - /etc/localtime:/etc/localtime
 #   links:
 #    - kafka
 #    - opennti
-#
-kafka-consumer-syslog:
-  image: juniper/open-nti-kafka-consumer:fluentd
-  environment:
-    - "INFLUXDB_ADDR=opennti"
-    - "INFLUXDB_VALUE_KEY=message"
-    - "KAFKA_TOPIC=events"
-    - "KAFKA_ADDR=172.29.110.16"
-    - "FLUENTD_TAG=events"
-  volumes:
-   - /etc/localtime:/etc/localtime
-  links:
-   - kafka
-   - opennti
+# #
+# kafka-consumer-syslog:
+#   image: juniper/open-nti-kafka-consumer:fluentd
+#   environment:
+#     - "INFLUXDB_ADDR=opennti"
+#     - "INFLUXDB_VALUE_KEY=message"
+#     - "KAFKA_TOPIC=events"
+#     - "KAFKA_ADDR=172.29.34.63"
+#     - "FLUENTD_TAG=events"
+#   volumes:
+#    - /etc/localtime:/etc/localtime
+#   links:
+#    - kafka
+#    - opennti
 
-kafka-consumer-analyticsd:
-  image: juniper/open-nti-kafka-consumer:fluentd
-  environment:
-    - "INFLUXDB_ADDR=172.29.110.16"
-    - "INFLUXDB_VALUE_KEY=value"
-    - "KAFKA_TOPIC=jnpr.analyticsd"
-    - "KAFKA_ADDR=172.29.110.16"
-    - "FLUENTD_TAG=jnpr"
-  volumes:
-   - /etc/localtime:/etc/localtime
-  links:
-   - opennti
+# kafka-consumer-analyticsd:
+#   image: juniper/open-nti-kafka-consumer:fluentd
+#   environment:
+#     - "INFLUXDB_ADDR=172.29.34.63"
+#     - "INFLUXDB_VALUE_KEY=value"
+#     - "KAFKA_TOPIC=jnpr.analyticsd"
+#     - "KAFKA_ADDR=172.29.34.63"
+#     - "FLUENTD_TAG=jnpr"
+#   volumes:
+#    - /etc/localtime:/etc/localtime
+#   links:
+#    - opennti
 
 #################
 ## Input
@@ -59,7 +59,7 @@ kafka-consumer-analyticsd:
 # input-jti:
 #   image: juniper/open-nti-input-jti
 #   environment:
-#    - "KAFKA_ADDR=172.29.110.16"
+#    - "KAFKA_ADDR=172.29.34.63"
 #    #- "KAFKA_TOPIC=jnpr.jvision"
 #    - "OUTPUT_KAFKA=true"
 #    - "OUTPUT_STDOUT=true"
@@ -80,7 +80,7 @@ kafka-consumer-analyticsd:
 input-analyticsd:
   image: juniper/open-nti-input-jti
   environment:
-   - "KAFKA_ADDR=172.29.110.16"
+   - "KAFKA_ADDR=172.29.34.63"
    - "KAFKA_TOPIC=jnpr.analyticsd"
    - "OUTPUT_KAFKA=true"
    - "OUTPUT_STDOUT=true"
@@ -96,7 +96,7 @@ input-analyticsd:
 opennti-input-syslog:
   image: juniper/open-nti-input-syslog
   environment:
-   - "KAFKA_ADDR=172.29.110.16"
+   - "KAFKA_ADDR=172.29.34.63"
    - "KAFKA_TOPIC=events"
    - "OUTPUT_KAFKA=true"
    - "OUTPUT_STDOUT=true"
