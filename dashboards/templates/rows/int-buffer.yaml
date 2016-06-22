@@ -1,0 +1,8 @@
+
+title: Interfaces Buffer
+height: 250px
+template: row_base.j2
+panels:
+  graphs:
+    - int-buffer-latency.yaml
+    - int-buffer-size.yaml

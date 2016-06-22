@@ -6,5 +6,13 @@ series: "/$host_regex.re.memory.cosd-SIZE/"
 title: "COSD SIZE"
 span: 6
 
+targets:
+  A:
+    query: >
+      SELECT mean(value)
+      FROM /$host_regex.chassis.routing-engine.*.cpu-idle/
+      WHERE $timeFilter
+      GROUP BY time($interval)"
+
 templatings_used:
   - host_regex.yaml

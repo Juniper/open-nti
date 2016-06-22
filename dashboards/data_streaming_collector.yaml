@@ -1,14 +1,17 @@
 
-title: Data Steaming Collector TEST2
+title: Data Steaming Collector ALPHA
 template: "dashboard_base.j2"
 
 tags:
   - juniper
   - jti
   - opennti
+  - streaming
 
 rows:
-  - int-stats.yaml
+  - int-traffic.yaml
+  - int-queue.yaml
+  - int-buffer.yaml
 
 templatings:
   - host_regex.yaml

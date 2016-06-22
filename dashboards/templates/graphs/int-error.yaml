@@ -1,0 +1,26 @@
+
+
+title: "Interface Error Statistics"
+template: graph-lines-02.j2
+datasource: influxdb
+span: 6
+
+targets:
+
+  B:
+    query: >
+      SELECT derivative("value", $interval)
+      FROM "jnpr.jvision"
+      WHERE "type" = 'egress_queue_info.packets'
+      AND "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
+      GROUP BY "device", "interface", "egress_queue"
+
+##TODO Why are we using $interval here for dericative and not 1s
+
+yaxes:
+  - format: pps
+  - format: short
+
+templatings_used:
+  - host_regex.yaml
+  - interface.yaml

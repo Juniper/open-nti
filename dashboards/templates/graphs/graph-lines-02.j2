@@ -11,9 +11,6 @@
     "threshold2": null,
     "threshold2Color": "rgba(234, 112, 112, 0.22)"
   },
-{% if left_y_axis_label is defined %}
-  "leftYAxisLabel": "{{ left_y_axis_label}}",
-{% endif%}
   "id": {{ id }},
   "legend": {
     "avg": false,
@@ -50,7 +47,6 @@
       "rawQuery": true,
       "refId": "{{ id }}",
       "resultFormat": "time_series",
-      "series": "{{ target.series }}",
       "policy": "default"
     }
 {% if not loop.last %},{% endif %}
@@ -66,6 +62,9 @@
   },
   "type": "graph",
   "yaxes": [
+{% if yaxes is not defined %}
+{% set yaxes = [ {format: 'short' }, {format: 'short' }] %}
+{% endif %}
 {% for yaxe in yaxes %}
     {
       "show": true,
