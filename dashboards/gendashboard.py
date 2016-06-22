@@ -114,6 +114,16 @@ if 'rows' in dashboard.keys():
 #############################################
 if 'annotations' in dashboard.keys():
     logger.info('Nothing here yet')
+
+#############################################
+### Process TAGS
+#############################################
+if 'tags' in dashboard.keys():
+
+    tags = '","'.join(map(str, dashboard['tags']))
+    dashboard['tags_data'] = '"' + tags + '"'
+    logger.info('Add Tag(s) : {0}'.format(dashboard['tags_data']))
+
 #############################################
 ### Process TEMPLATINGS
 #############################################
@@ -144,13 +154,14 @@ if 'templatings' in dashboard.keys():
 dashboard_tpl = open(TEMPLATES_DIR + dashboard['template'])
 dashboard_tpl_rdr = Template(dashboard_tpl.read().decode("utf8")).render(dashboard)
 
-## Validate Json
-dashboard_json = json.loads(dashboard_tpl_rdr)
-
 dashboard_file_name = dashboard['title'].lower() + '.json'
 dashboard_file_name = re.sub(r'\s', '_', dashboard_file_name)
 
 logger.info('Dashboard File name : {0}'.format(dashboard_file_name))
 
 with open(dashboard_file_name, "w") as text_file:
-    json.dump(dashboard_json, text_file, indent=2)
+    text_file.write(dashboard_tpl_rdr)
+    # json.dump(dashboard_json, text_file, indent=2)
+
+## Validate Json
+dashboard_json = json.loads(dashboard_tpl_rdr)

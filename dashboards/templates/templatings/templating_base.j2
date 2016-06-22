@@ -1,12 +1,11 @@
 {
-  "allFormat": "glob",
+  "allFormat": "regex wildcard",
   "current": {
-    "text": "None",
-    "value": "",
-    "isNone": true
+    "text": "All",
+    "value": ".*"
   },
   "datasource": "influxdb",
-  "includeAll": false,
+  "includeAll": true,
   "name": "{{ name }}",
   "options": [
     {
@@ -16,10 +15,11 @@
       "selected": true
     }
   ],
-  "query": "{{ query }}",
+  "query": "{{ query|replace('"', '\\"')|trim }}",
   "refresh": 1,
+  "multi": false,
+  "multiFormat": "regex values",
   "refresh_on_load": false,
   "regex": "",
-  "type": "query",
-  "hide": 0
+  "type": "query"
 }

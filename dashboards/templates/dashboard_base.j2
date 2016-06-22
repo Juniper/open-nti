@@ -2,7 +2,11 @@
   "id": null,
   "title": "{{ title }}",
   "originalTitle": "{{ title }}",
-  "tags": [],
+{% if tags_data is defined -%}
+  "tags": [
+    {{ tags_data }}
+  ],
+{%- endif %}
   "style": "dark",
   "timezone": "browser",
   "editable": true,

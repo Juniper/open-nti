@@ -1,14 +1,15 @@
 
-title: Data Collection Agent Dashboard TEST
+title: Data Steaming Collector TEST2
 template: "dashboard_base.j2"
 
 tags:
   - juniper
-  - netconf
+  - jti
   - opennti
 
 rows:
-  - re_processes.yaml
+  - int-stats.yaml
 
 templatings:
   - host_regex.yaml
+  - interface.yaml

@@ -1,0 +1,4 @@
+
+template: templating_base.j2
+name: interface
+query: SHOW TAG VALUES WITH KEY = "interface"

@@ -1,0 +1,83 @@
+{
+  "cacheTimeout": null,
+  "colorBackground": false,
+  "colorValue": true,
+  "colors": [
+    "rgba(54, 245, 80, 0.9)",
+    "rgba(237, 129, 40, 0.89)",
+    "rgba(232, 37, 7, 0.97)"
+  ],
+  "datasource": null,
+  "editable": true,
+  "error": false,
+  "format": "none",
+  "height": "",
+  "id": {{ id }},
+  "interval": null,
+  "isNew": true,
+  "links": [],
+  "maxDataPoints": 100,
+  "nullPointMode": "connected",
+  "nullText": null,
+  "postfix": "{{ postfix | '' }}",
+  "postfixFontSize": "{{ postfix_fontsize | '50%' }}",
+  "prefix": "{{ prefix | '' }}",
+  "prefixFontSize": "{{ prefix_fontsize | '50%' }}",
+  "span": {{ span }},
+  "sparkline": {
+    "fillColor": "rgba(31, 118, 189, 0.18)",
+    "full": false,
+    "lineColor": "rgb(31, 120, 193)",
+    "show": false
+  },
+  "targets": [
+    {
+      "dsType": "influxdb",
+      "groupBy": [
+        {
+          "params": [
+            "$interval"
+          ],
+          "type": "time"
+        },
+        {
+          "params": [
+            "null"
+          ],
+          "type": "fill"
+        }
+      ],
+      "query": "{{ query }}",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "select": [
+        [
+          {
+            "params": [
+              "value"
+            ],
+            "type": "field"
+          },
+          {
+            "params": [],
+            "type": "mean"
+          }
+        ]
+      ],
+      "tags": []
+    }
+  ],
+  "thresholds": "0, > 0",
+  "title": "{{ title }}",
+  "type": "singlestat",
+  "valueFontSize": "80%",
+  "valueMaps": [
+    {
+      "op": "=",
+      "text": "N/A",
+      "value": "null"
+    }
+  ],
+  "valueName": "avg"
+}
