@@ -1,16 +1,4 @@
 
-
-# lb:
-#   image: jwilder/nginx-proxy
-#   links:
-#    - opennti-input-jti
-#   volumes:
-#    - /var/run/docker.sock:/tmp/docker.sock:ro
-#   ports:
-#    - "50000:50000/udp"
-#    - "50010:50010/udp"
-#    - "50020:50020/udp"
-
 # opennti-kapacitor:
 #   image: kapacitor:0.13.1
 #   environment:
