@@ -297,7 +297,7 @@ def get_metadata_and_add_datapoint(datapoints,**kwargs):
     # Calculating delta values (only applies for numeric values)
     delta = 0
     latest_value = ''
-    if type (value) != str:
+    if (type (value) != str):
 
         points=[]
         if (db_schema == 1):
@@ -478,8 +478,8 @@ def collector(**kwargs):
 #        if ((db_schema == 1) and (not(use_hostname))):
         if (not(use_hostname)):
             latest_datapoints = get_latest_datapoints(host=host)
-            logger.info("Latest Datapoints are:")
-            logger.info(pformat(latest_datapoints))
+            logger.debug("Latest Datapoints are:")
+            logger.debug(pformat(latest_datapoints))
 
         #    kpi_tags = get_host_base_tags(host=host)
         # Check host tag to identify what kind of connections will be used (ej junos / others  / etc)
@@ -559,8 +559,8 @@ def collector(**kwargs):
 #                            logger.info("Latest Datapoints are:")
 #                            logger.info(pformat(latest_datapoints))
                         latest_datapoints = get_latest_datapoints(host=host)
-                        logger.info("Latest Datapoints are:")
-                        logger.info(pformat(latest_datapoints))
+                        logger.debug("Latest Datapoints are:")
+                        logger.debug(pformat(latest_datapoints))
                     else:
                         logger.info('[%s]: Host will be referenced as : %s', host, host)
 
@@ -588,14 +588,50 @@ def collector(**kwargs):
 
                 timestamp_tracking['collector_cli_ends'] = int(datetime.today().strftime('%s'))
                 logger.info('[%s]: timestamp_tracking - CLI collection %s', host, timestamp_tracking['collector_cli_ends']-timestamp_tracking['collector_cli_start'])
+                timestamp_tracking['collector_ends'] = int(datetime.today().strftime('%s'))
+
+                # Add open-nti internal kpi 
+                collection_time = timestamp_tracking['collector_ends']-timestamp_tracking['collector_start']
+                #kpi_tags['device']=host
+                kpi_tags['stats']="collection-time"
+                match={}
+                match["variable-name"]="open-nti-stats"
+                value_tmp =collection_time
+                # We'll add a dummy kpi in oder to have at least one fixed kpi with version/platform data.
+                get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
+
+                #kpi_tags['device']=host
+                kpi_tags['stats']="collection-successful"
+                match={}
+                match["variable-name"]="open-nti-stats"
+                value_tmp = 1
+                # We'll add a dummy kpi in oder to have at least one fixed kpi with version/platform data.
+                get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
+
+
 
                 if datapoints:   # Only insert datapoints if there is any :)
                     insert_datapoints(datapoints)
 
-                timestamp_tracking['collector_ends'] = int(datetime.today().strftime('%s'))
-                logger.info('[%s]: timestamp_tracking - total collection %s', host, timestamp_tracking['collector_ends']-timestamp_tracking['collector_start'])
+                
+                logger.info('[%s]: timestamp_tracking - total collection %s', host, collection_time)
             else:
                 logger.error('[%s]: Skipping host due connectivity issue', host)
+
+                datapoints = []
+                latest_datapoints = get_latest_datapoints(host=host)
+                # By default execute show version in order to get version and platform as default tags for all kpi related to this host
+                kpi_tags['device']=host
+                kpi_tags['stats']="collection-failure"
+                match={}
+                match["variable-name"]="open-nti-stats"
+                value_tmp = 1
+                # We'll add a dummy kpi in oder to have at least one fixed kpi with version/platform data.
+                get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
+
+                if datapoints:   # Only insert datapoints if there is any :)
+                    insert_datapoints(datapoints)
+
 
 
 ################################################################################################
