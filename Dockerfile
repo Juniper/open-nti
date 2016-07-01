@@ -70,6 +70,8 @@ RUN     mkdir /src/grafana                                                      
         tar -xzf /src/grafana.tar.gz -C /opt/grafana --strip-components=1                                     &&\
         rm /src/grafana.tar.gz
 
+RUN     /opt/grafana/bin/grafana-cli plugins install grafana-piechart-panel
+
 ########################
 ### Install Fluentd  ###
 ########################
