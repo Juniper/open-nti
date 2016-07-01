@@ -1,55 +1,43 @@
 
-# opennti-kapacitor:
-#   image: kapacitor:0.13.1
-#   environment:
-#    - "KAPACITOR_INFLUXDB_0_URLS_0=http://opennti:8086"
-#   ports:
-#    - "9092:9092"
-#   links:
-#    - opennti
-
-opennti-input-jti:
+input-jti:
   image: juniper/open-nti-input-jti
+  container_name: opennti_input_jti
   environment:
    - "INFLUXDB_ADDR=opennti"
    - "OUTPUT_INFLUXDB=true"
-   - "OUTPUT_STDOUT=true"
+   - "OUTPUT_STDOUT=false"
   ports:
-   - "50000:50000/udp"
-   - "50020:50020/udp"
-  expose:
-   - "50000/udp"
-   - "50020/udp"
+   - "$LOCAL_PORT_JTI:50000/udp"
+   - "$LOCAL_PORT_ANALYTICSD:50020/udp"
   volumes:
    - /etc/localtime:/etc/localtime
   links:
    - opennti
 
-opennti-input-syslog:
+input-syslog:
   image: juniper/open-nti-input-syslog
+  container_name: opennti_input_syslog
   environment:
    - "INFLUXDB_ADDR=opennti"
    - "OUTPUT_INFLUXDB=true"
-   - "OUTPUT_STDOUT=true"
+   - "OUTPUT_STDOUT=false"
   ports:
-   - "6000:6000/udp"
-  expose:
-   - "6000/udp"
+   - "$LOCAL_PORT_EVENT:6000/udp"
   volumes:
    - /etc/localtime:/etc/localtime
   links:
    - opennti
 
 opennti:
-  image: juniper/open-nti
-  restart: always
+  image: $IMAGE_NAME
+  container_name: $CONTAINER_NAME
   volumes:
-   - ./dashboards:/src/dashboards
-   - ./data:/opt/open-nti/data
+   - ./$LOCAL_DIR_DASHBOARD:/src/dashboards
+   - ./$LOCAL_DIR_DATA:/opt/open-nti/data
    - /etc/localtime:/etc/localtime
   ports:
-   - "8125:8125/udp"
-   - "80:80"
-   - "3000:3000"
-   - "8083:8083"
-   - "8086:8086"
+   - "$LOCAL_PORT_STATSD:8125/udp"
+   - "$LOCAL_PORT_NGINX:80"
+   - "$LOCAL_PORT_GRAFANA:3000"
+   - "$LOCAL_PORT_INFLUXDB:8083"
+   - "$LOCAL_PORT_INFLUXDB_API:8086"
