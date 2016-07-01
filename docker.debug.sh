@@ -13,7 +13,7 @@ docker run --rm -t \
         --publish $LOCAL_PORT_JTI:50000/udp \
         --publish $LOCAL_PORT_NA:50010/udp \
         --publish $LOCAL_PORT_ANALYTICSD:50020/udp \
-        --publish 80:80 \
+        --publish $LOCAL_PORT_NGINX:80 \
         --publish $LOCAL_PORT_GRAFANA:3000 \
         --publish $LOCAL_PORT_INFLUXDB:8083 \
         --publish $LOCAL_PORT_INFLUXDB_API:8086 \
