@@ -12,6 +12,7 @@ rows:
   - int-traffic.yaml
   - int-queue.yaml
   - int-buffer.yaml
+  - mpls-lsp.yaml
 
 templatings:
   - host_regex.yaml
