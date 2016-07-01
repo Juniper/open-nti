@@ -1,7 +1,12 @@
 
+##################################################################
+## This file is under development and is not yet operational    ##
+##################################################################
+
 #####################################
 ## Message Bus and Consumers       ##
 #####################################
+
 kafka:
   image: spotify/kafka
   environment:
@@ -105,25 +110,24 @@ opennti-input-syslog:
   volumes:
    - /etc/localtime:/etc/localtime
   ports:
-   - "6000:6000/udp"
-  expose:
-   - "6000/udp"
+   - "$LOCAL_PORT_EVENT:6000/udp"
   links:
    - kafka
    - opennti
 
-##################################
-## Open NTI - Database / Gui
-##################################
+##########################################################
+## Database and GUI                                     ##
+##########################################################
 opennti:
-  image: juniper/open-nti
+  image: $IMAGE_NAME
+  container_name: $CONTAINER_NAME
   volumes:
-   - ./dashboards:/src/dashboards
-   - ./data:/opt/open-nti/data
+   - ../$LOCAL_DIR_DASHBOARD:/src/dashboards
+   - ../$LOCAL_DIR_DATA:/opt/open-nti/data
    - /etc/localtime:/etc/localtime
   ports:
-   - "8125:8125/udp"
-   - "80:80"
-   - "3000:3000"
-   - "8083:8083"
-   - "8086:8086"
+   - "$LOCAL_PORT_STATSD:8125/udp"
+   - "$LOCAL_PORT_NGINX:80"
+   - "$LOCAL_PORT_GRAFANA:3000"
+   - "$LOCAL_PORT_INFLUXDB:8083"
+   - "$LOCAL_PORT_INFLUXDB_API:8086"
