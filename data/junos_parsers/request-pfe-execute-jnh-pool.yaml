@@ -1,0 +1,35 @@
+parser:
+    regex-command: request\s+pfe\s+execute\s+command\s+"show\s+jnh\s+\d\s+pool"\s+target\s+fpc\d
+    matches:
+    -
+        type: single-value
+        method: regex
+        regex: \s*GOT:\s+Next\s+Hop\s+\w+\s+\d+\s+\d+\s+(\d+)%\s+\d+\s+\d+%$
+        variables:
+        -
+            variable-name:  $host.pfe.memory.nh-USED-PERCENT
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*GOT:\s+Next\s+Hop\s+\w+\s+\d+\s+(\d+)\s+\d+%\s+\d+\s+\d+%$
+        variables:
+        -
+            variable-name:  $host.pfe.memory.nh-USED
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*GOT:\s+Firewall\s+\w+\s+\d+\s+\d+\s+(\d+)%\s+\d+\s+\d+%$
+        variables:
+        -
+            variable-name:  $host.pfe.memory.fw-USED-PERCENT
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*GOT:\s+Firewall\s+\w+\s+\d+\s+(\d+)\s+\d+%\s+\d+\s+\d+%$
+        variables:
+        -
+            variable-name:  $host.pfe.memory.fw-USED
+            variable-type:  integer

@@ -1,0 +1,31 @@
+parser:
+    regex-command: show\s+chassis\s+fpc\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //fpc
+        loop:
+            key: ./slot
+            sub-matches:
+            -
+                xpath: ./state
+                variable-name:  $host.chassis.fpc.$key.state
+            -
+                xpath: ./temperature
+                variable-name:  $host.chassis.fpc.$key.temp
+            -
+                xpath: ./cpu-total
+                variable-name:  $host.chassis.fpc.$key.cpu-total
+            -
+                xpath: ./cpu-interrupt
+                variable-name:  $host.chassis.fpc.$key.cpu-interrupt
+            -
+                xpath: ./memory-dram-size
+                variable-name:  $host.chassis.fpc.$key.memory-dram-size
+            -
+                xpath: ./memory-heap-utilization
+                variable-name:  $host.chassis.fpc.$key.memory-heap-util
+            -
+                xpath: ./memory-buffer-utilization
+                variable-name:  $host.chassis.fpc.$key.memory-buffer-util
