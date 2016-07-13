@@ -519,21 +519,10 @@ def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tag
                                     except Exception, e:
                                         logger.info('[%s]: Exception found.', host)
                                         logging.exception(e)
-
                                     start_index = 0
                                     for i in range(tuple_index,text_matches.lastindex,regexmatch_group_count):
                                         match_groups[(text_matches.groups()[start_index:i])] = {"key":text_matches.groups()[i]}
                                         start_index += regexmatch_group_count
-                                        # print "Got to line 522.  Here are the match groups:"
-                                        # print match_groups
-                                        # print "regexmatch_group_count: %s" % regexmatch_group_count
-                                        # print "variable_count: %s" % variable_count
-                                        # print "start index: %s" % start_index
-                                        # print "tuple_index: %s" % tuple_index
-                                        # print "i: %s" % i
-                                        # print "key_index: %s" % key_index
-                                        # print "text_matches.lastindex: %s" % text_matches.lastindex
-
                                     data_tuples = match_groups.keys()
                                     for tuple in data_tuples:
                                         index_key = match_groups[tuple]
