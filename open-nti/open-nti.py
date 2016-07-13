@@ -31,6 +31,7 @@ import time
 import xmltodict
 import yaml
 import copy
+import collections
 
 logging.getLogger("paramiko").setLevel(logging.INFO)
 logging.getLogger("ncclient").setLevel(logging.WARNING) # In order to remove http request from ssh/paramiko
@@ -81,7 +82,7 @@ def get_latest_datapoints(**kwargs):
     dbclient.switch_database(db_name)
     results = {}
     if db_schema == 1:
-        query = "select * from /%s\./ ORDER BY time DESC limit 1 " % (kwargs['host'])
+        query = "select * from /%s\./ GROUP BY * ORDER BY time DESC limit 1 " % (kwargs['host'])
     elif db_schema == 2:
         query = "select * from \"%s\" WHERE device = '%s' GROUP BY * ORDER BY time DESC limit 1 " % ('jnpr.collector',kwargs['host'])
     elif db_schema == 3:
@@ -168,7 +169,7 @@ def execute_command(jdevice,command):
         command_result = jdevice.rpc.cli(command_tmp, format="xml")
     except RpcError as err:
         rpc_error = err.__repr__()
-        logger.error("Error found on <%s> executing command: %s, error: %s:", jdevice.hostname, command ,rpc_error)
+        logger.error("Error found executing command: %s, error: %s:", command ,rpc_error)
         return False
 
     if format == "text":
@@ -234,6 +235,7 @@ def eval_variable_name(variable,**kwargs):
             variable = variable.replace("$"+key,keys[key])
         variable = variable.replace("$host",kwargs['host'])
         # the host replacement should be move it to other place
+        print variable
         return variable, variable
 
 def eval_tag_name(variable,**kwargs):
@@ -454,6 +456,98 @@ def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tag
                                         get_metadata_and_add_datapoint(datapoints=datapoints,match=match["variables"][i],value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
                                 else:
                                     logger.error('[%s]: More matches found on regex than variables especified on parser: %s', host, regex_command)
+                            else:
+                                logger.debug('[%s]: No matches found for regex: %s', host, regex)
+                        elif match["type"] == "multi-value":
+                            '''
+                            New multi-value statement allowing for multiple identical regex matches parsed from a string.
+                            The idea here is if you want to parse a multiline string using regex and return X number of matches
+                            instead of the usual single match.  This is useful for capturing, say, the top 5 highest CPU performers
+                            in the "show system processes extensive" command each time you call the command.  Used in blackbox style
+                            testing to see which daemons are contributors to high CPU although you might not know the names, hence are
+                            unable to add them into the YAML one by one.
+
+                            Each re.search result will capture more than one set of rows if mcount >1, so you'll need a "key" to figure out
+                            which re.search.group() will be equal to a newline and be able to split the output into the appropriate
+                            sub-outputs for parsing.
+
+                            Example psuedo code:
+                                input multiline string from XML:
+                                "10 root        1 155   52     0K    12K RUN    594:20 93.80% idle
+
+                                33794 root        1  40    0 43036K 33116K select   0:00  1.75% mgd"
+
+                                match.lastindex = 8
+                                match.groups() = ('0K', '12K', '93.80', 'idle', '43036K', '33116K', '1.75', 'mgd')
+                                key = match.groups([3]) and match.groups([7])
+                                Use the Key as the daemon name and create a measurement name with it.  All other values
+                                are field values.
+
+                            '''
+                            mcount = match["match_count"]
+                            regex_block = match["regex"]
+                            regex_framework = "{0}" * mcount
+                            regex = regex_framework.format(regex_block)
+                            text_matches = re.search(regex,result,re.MULTILINE)
+                            if text_matches:
+                                '''We want to check the number of variables in the yaml is equal to the number of variables/groups
+                                in the regex minus one (for the group's key).
+                                Example: 20 total matches, divided by mcount 5 gives us 4 matches per group, minus 1 for the key
+                                which tells us there are 5 regex output groups we want, each 4 members long with a key
+                                which we need to subtract out.  This gives us 3 variables expected in our yaml list.
+                                '''
+                                # Total number of regex groups per match
+                                regexmatch_group_count = (text_matches.lastindex / mcount)
+                                # Number of variables should be total number of groups minus the index for the group data.
+                                variable_count = regexmatch_group_count - 1
+                                if variable_count == len(match["variables"]):
+                                    logger.debug('[%s]: We have (%s) matches and match_count of (%s) with this regex %s', host, text_matches.lastindex,mcount,regex)
+                                    match_groups ={}
+                                    try:
+                                        key_index = int(match["key_index"])
+                                        if key_index >= 1:
+                                            # Used because regex output is a tuple, and indexes start at 0, not 1.
+                                            # Tells is the location of our "index" value (aka- measurement name) within the tuple.
+                                            tuple_index = key_index - 1
+                                        else:
+                                            logger.info('[%s]: Exception found in yaml for key_index = %s. '
+                                                        'Key_index is less than 1. Please make key index 1 or greater.', host, match["key_index"])
+                                            pass    # Perhaps some other solution is better?
+                                    except ValueError as e:
+                                        logger.info('[%s]: Exception found in yaml for key_index = %s.  Key_index not an integer', host, match["key_index"])
+                                        logging.exception(e)
+                                    except Exception, e:
+                                        logger.info('[%s]: Exception found.', host)
+                                        logging.exception(e)
+
+                                    start_index = 0
+                                    for i in range(tuple_index,text_matches.lastindex,regexmatch_group_count):
+                                        match_groups[(text_matches.groups()[start_index:i])] = {"key":text_matches.groups()[i]}
+                                        start_index += regexmatch_group_count
+                                        # print "Got to line 522.  Here are the match groups:"
+                                        # print match_groups
+                                        # print "regexmatch_group_count: %s" % regexmatch_group_count
+                                        # print "variable_count: %s" % variable_count
+                                        # print "start index: %s" % start_index
+                                        # print "tuple_index: %s" % tuple_index
+                                        # print "i: %s" % i
+                                        # print "key_index: %s" % key_index
+                                        # print "text_matches.lastindex: %s" % text_matches.lastindex
+
+                                    data_tuples = match_groups.keys()
+                                    for tuple in data_tuples:
+                                        index_key = match_groups[tuple]
+                                        # Add measurements to DB per variable for each group of values.
+                                        for i in range(0,variable_count):
+                                            variable_name = eval_variable_name(match["variables"][i]["variable-name"],host=host,keys=index_key)
+                                            value_tmp = tuple[i].strip()
+                                            # Begin function  (pero pendiente de ver si variable-type existe y su valor)
+                                            if "variable-type" in match["variables"][i]:
+                                                value_tmp = eval_variable_value(value_tmp, type=match["variables"][i]["variable-type"])
+                                            get_metadata_and_add_datapoint(datapoints=datapoints,match=match["variables"][i],value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags,keys=index_key)
+                                else:
+                                    logger.error('[%s]: More matches found on regex than variables specified on parser: %s', host, regex_command)
+
                             else:
                                 logger.debug('[%s]: No matches found for regex: %s', host, regex)
                         else:
