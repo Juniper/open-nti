@@ -1,0 +1,8 @@
+
+title: Queue Stats
+height: 250px
+template: row_base.j2
+panels:
+  graphs:
+    - jti-oc-int-bps.yaml
+    - jti-oc-queue-bps.yaml
