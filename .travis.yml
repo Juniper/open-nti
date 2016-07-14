@@ -10,6 +10,8 @@ services:
 install:
   - pip install -r requirements.txt
   - docker pull dgarros/tcpreplay
+  - docker pull juniper/open-nti-input-jti
+  - docker pull dgarros/open-nti-input-syslog
   - docker build -t juniper/open-nti .
 
 script:
