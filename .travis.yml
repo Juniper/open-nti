@@ -16,6 +16,10 @@ install:
 
 script:
   - python -m pytest -v --durations=10
+  - docker logs open-nti_test
+  - docker logs open-nti_in_jti_test
+  - docker logs open-nti_in_log_test
+  - docker logs tcpreplay_test
 
 notifications:
   email:
