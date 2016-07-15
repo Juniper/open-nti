@@ -673,8 +673,13 @@ if dynamic_args['test']:
 default_variables_yaml_file = BASE_DIR_INPUT + "open-nti.variables.yaml"
 default_variables = {}
 
-with open(default_variables_yaml_file) as f:
-    default_variables = yaml.load(f)
+try:
+    with open(default_variables_yaml_file) as f:
+        default_variables = yaml.load(f)
+except Exception, e:
+    logger.info('Error importing default variables file": %s', default_variables_yaml_file)
+    logging.exception(e)
+    sys.exit(0)
 
 db_schema = default_variables['db_schema']
 db_server = default_variables['db_server']
@@ -731,16 +736,26 @@ if dynamic_args['console']:
 credentials_yaml_file = BASE_DIR_INPUT + default_variables['credentials_file']
 credentials = {}
 logger.debug('Importing credentials file: %s ',credentials_yaml_file)
-with open(credentials_yaml_file) as f:
-    credentials = yaml.load(f)
-
+try:
+    with open(credentials_yaml_file) as f:
+        credentials = yaml.load(f)
+except Exception, e:
+    logger.error('Error importing credentials file: %s', credentials_yaml_file)
+ #   logging.exception(e)
+    sys.exit(0)  
 #  LOAD all hosts with their tags in a dic
 
 hosts_yaml_file = BASE_DIR_INPUT + default_variables['hosts_file']
 hosts = {}
 logger.debug('Importing host file: %s ',hosts_yaml_file)
-with open(hosts_yaml_file) as f:
-    hosts = yaml.load(f)
+try:
+    with open(hosts_yaml_file) as f:
+        hosts = yaml.load(f)
+except Exception, e:
+    logger.error('Error importing host file: %s', hosts_yaml_file)
+    #logging.exception(e)
+    sys.exit(0)        
+
 
 #  LOAD all commands with their tags in a dict
 
@@ -748,8 +763,13 @@ commands_yaml_file = BASE_DIR_INPUT + default_variables['commands_file']
 commands = []
 logger.debug('Importing commands file: %s ',commands_yaml_file)
 with open(commands_yaml_file) as f:
-    for document in yaml.load_all(f):
-        commands.append(document)
+    try:
+        for document in yaml.load_all(f):
+            commands.append(document)
+    except Exception, e:
+        logger.error('Error importing commands file: %s', commands_yaml_file)
+#        logging.exception(e)
+        sys.exit(0)        
 
 general_commands = commands[0]
 
@@ -759,15 +779,25 @@ junos_parsers = []
 junos_parsers_yaml_files = os.listdir(BASE_DIR + "/" + default_variables['junos_parsers_dir'])
 logger.debug('Importing junos parsers file: %s ',junos_parsers_yaml_files)
 for junos_parsers_yaml_file in junos_parsers_yaml_files:
-    with open(BASE_DIR + "/" + default_variables['junos_parsers_dir'] + "/"  + junos_parsers_yaml_file) as f:
-        junos_parsers.append(yaml.load(f))
+    try:
+        with open(BASE_DIR + "/" + default_variables['junos_parsers_dir'] + "/"  + junos_parsers_yaml_file) as f:
+            junos_parsers.append(yaml.load(f))
+    except Exception, e:
+        logger.error('Error importing junos parser: %s', junos_parsers_yaml_file)
+ #       logging.exception(e)
+        pass
 
 pfe_parsers = []
 pfe_parsers_yaml_files = os.listdir(BASE_DIR + "/" + default_variables['pfe_parsers_dir'])
 logger.debug('Importing pfe parsers file: %s ',pfe_parsers_yaml_files)
 for pfe_parsers_yaml_file in pfe_parsers_yaml_files:
-    with open(BASE_DIR + "/" + default_variables['pfe_parsers_dir'] + "/" + pfe_parsers_yaml_file) as f:
-        pfe_parsers.append(yaml.load(f))
+    try:
+        with open(BASE_DIR + "/" + default_variables['pfe_parsers_dir'] + "/" + pfe_parsers_yaml_file) as f:
+            pfe_parsers.append(yaml.load(f))
+    except Exception, e:
+        logger.error('Error importing pfe parser: %s', pfe_parsers_yaml_file)
+ #       logging.exception(e)
+        pass
 
 if __name__ == "__main__":
 
