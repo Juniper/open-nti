@@ -402,14 +402,17 @@ def teardown_module(module):
     global OPENNTI_IN_JTI_C
     global OPENNTI_IN_LOG_C
 
-    c.stop(container=OPENNTI_C)
-    c.remove_container(container=OPENNTI_C)
+    # Delete all files in /tests/output/
+    if not os.getenv('TRAVIS'):
+        
+        c.stop(container=OPENNTI_C)
+        c.remove_container(container=OPENNTI_C)
 
-    c.stop(container=OPENNTI_IN_JTI_C)
-    c.remove_container(container=OPENNTI_IN_JTI_C)
+        c.stop(container=OPENNTI_IN_JTI_C)
+        c.remove_container(container=OPENNTI_IN_JTI_C)
 
-    c.stop(container=OPENNTI_IN_LOG_C)
-    c.remove_container(container=OPENNTI_IN_LOG_C)
+        c.stop(container=OPENNTI_IN_LOG_C)
+        c.remove_container(container=OPENNTI_IN_LOG_C)
 
-    c.stop(container=TCP_REPLAY_C)
-    c.remove_container(container=TCP_REPLAY_C)
+        c.stop(container=TCP_REPLAY_C)
+        c.remove_container(container=TCP_REPLAY_C)
