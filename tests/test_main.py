@@ -205,8 +205,8 @@ def test_start_opennti_in_jti_container():
             (50020, 'udp')
         ],
         environment=[
-            "PORT_JTI="+str(TEST_PORT_JTI),
-            "PORT_ANALYTICSD="+str(TEST_PORT_ANALYTICSD),
+            "PORT_JTI=50000",
+            "PORT_ANALYTICSD=50020",
             "INFLUXDB_PORT="+str(INFLUXDB_PORT),
             "INFLUXDB_DB="+str(DATABASE_NAME),
             "INFLUXDB_USER=juniper",
@@ -218,8 +218,8 @@ def test_start_opennti_in_jti_container():
         ],
         host_config=c.create_host_config(
             port_bindings={
-                str(TEST_PORT_JTI)+'/udp': TEST_PORT_JTI,
-                str(TEST_PORT_ANALYTICSD)+'/udp': TEST_PORT_ANALYTICSD
+                '50000/udp': TEST_PORT_JTI,
+                '50020/udp': TEST_PORT_ANALYTICSD
             }
         )
     )
@@ -404,7 +404,7 @@ def teardown_module(module):
 
     # Delete all files in /tests/output/
     if not os.getenv('TRAVIS'):
-        
+
         c.stop(container=OPENNTI_C)
         c.remove_container(container=OPENNTI_C)
 
