@@ -10,10 +10,16 @@ services:
 install:
   - pip install -r requirements.txt
   - docker pull dgarros/tcpreplay
+  - docker pull juniper/open-nti-input-jti
+  - docker pull juniper/open-nti-input-syslog
   - docker build -t juniper/open-nti .
 
 script:
   - python -m pytest -v --durations=10
+  - docker logs open-nti_test
+  - docker logs open-nti_in_jti_test
+  - docker logs open-nti_in_log_test
+  - docker logs tcpreplay_test
 
 notifications:
   email:

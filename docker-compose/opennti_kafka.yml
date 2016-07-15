@@ -1,0 +1,133 @@
+
+##################################################################
+## This file is under development and is not yet operational    ##
+##################################################################
+
+#####################################
+## Message Bus and Consumers       ##
+#####################################
+
+kafka:
+  image: spotify/kafka
+  environment:
+   - "ADVERTISED_PORT=9092"
+   - "ADVERTISED_HOST=172.29.34.63"
+  volumes:
+   - /etc/localtime:/etc/localtime
+  ports:
+   - "2181:2181"
+   - "9092:9092"
+
+# kafka-consumer-jti:
+#   image: juniper/open-nti-kafka-consumer
+#   environment:
+#     - "INFLUXDB_ADDR=opennti"
+#     - "KAFKA_TOPIC=jnpr.jvision"
+#     - "ZOOKEEPER_ADDR=172.29.34.63"
+#   volumes:
+#    - /etc/localtime:/etc/localtime
+#   links:
+#    - kafka
+#    - opennti
+# #
+# kafka-consumer-syslog:
+#   image: juniper/open-nti-kafka-consumer:fluentd
+#   environment:
+#     - "INFLUXDB_ADDR=opennti"
+#     - "INFLUXDB_VALUE_KEY=message"
+#     - "KAFKA_TOPIC=events"
+#     - "KAFKA_ADDR=172.29.34.63"
+#     - "FLUENTD_TAG=events"
+#   volumes:
+#    - /etc/localtime:/etc/localtime
+#   links:
+#    - kafka
+#    - opennti
+
+# kafka-consumer-analyticsd:
+#   image: juniper/open-nti-kafka-consumer:fluentd
+#   environment:
+#     - "INFLUXDB_ADDR=172.29.34.63"
+#     - "INFLUXDB_VALUE_KEY=value"
+#     - "KAFKA_TOPIC=jnpr.analyticsd"
+#     - "KAFKA_ADDR=172.29.34.63"
+#     - "FLUENTD_TAG=jnpr"
+#   volumes:
+#    - /etc/localtime:/etc/localtime
+#   links:
+#    - opennti
+
+#################
+## Input
+#################
+
+# input-jti:
+#   image: juniper/open-nti-input-jti
+#   environment:
+#    - "KAFKA_ADDR=172.29.34.63"
+#    #- "KAFKA_TOPIC=jnpr.jvision"
+#    - "OUTPUT_KAFKA=true"
+#    - "OUTPUT_STDOUT=true"
+#    - "OUTPUT_INFLUXDB=false"
+#    - "PORT_JTI=40000"
+#    # - "PORT_ANALYTICSD=40020"
+#   ports:
+#    - "40000:40000/udp"
+#    # - "40020:40020/udp"
+#   expose:
+#    - "40000/udp"
+#    # - "40020/udp"
+#   volumes:
+#    - /etc/localtime:/etc/localtime
+#   links:
+#    - kafka
+
+input-analyticsd:
+  image: juniper/open-nti-input-jti
+  environment:
+   - "KAFKA_ADDR=172.29.34.63"
+   - "KAFKA_TOPIC=jnpr.analyticsd"
+   - "OUTPUT_KAFKA=true"
+   - "OUTPUT_STDOUT=true"
+   - "OUTPUT_INFLUXDB=false"
+   - "PORT_ANALYTICSD=50020"
+  ports:
+   - "50020:50020/udp"
+  volumes:
+   - /etc/localtime:/etc/localtime
+  links:
+   - kafka
+
+opennti-input-syslog:
+  image: juniper/open-nti-input-syslog
+  environment:
+   - "KAFKA_ADDR=172.29.34.63"
+   - "KAFKA_TOPIC=events"
+   - "OUTPUT_KAFKA=true"
+   - "OUTPUT_STDOUT=true"
+   - "OUTPUT_INFLUXDB=false"
+   - "PORT_SYSLOG=6000"
+  volumes:
+   - /etc/localtime:/etc/localtime
+  ports:
+   - "$LOCAL_PORT_EVENT:6000/udp"
+  links:
+   - kafka
+   - opennti
+
+##########################################################
+## Database and GUI                                     ##
+##########################################################
+opennti:
+  image: $IMAGE_NAME
+  container_name: $CONTAINER_NAME
+  volumes:
+   - ../$LOCAL_DIR_DASHBOARD:/src/dashboards
+   - ../$LOCAL_DIR_DATA:/opt/open-nti/data
+   - /etc/localtime:/etc/localtime
+  ports:
+   - "$LOCAL_PORT_STATSD:8125/udp"
+   - "$LOCAL_PORT_NGINX:80"
+   - "$LOCAL_PORT_GRAFANA:3000"
+   - "$LOCAL_PORT_INFLUXDB:8083"
+   - "$LOCAL_PORT_INFLUXDB_API:8086"
