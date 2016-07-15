@@ -6,4 +6,4 @@ source ./open-nti.params
 DOCKER_COMPOSE_FILE="docker-compose/opennti_persistent.yml"
 
 echo "Use docker compose file : $DOCKER_COMPOSE_FILE"
-docker-compose -f $DOCKER_COMPOSE_FILE up -d
+docker-compose -f $DOCKER_COMPOSE_FILE down
