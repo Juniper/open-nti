@@ -1,0 +1,37 @@
+
+
+title: "Traffic Statistics (PPS)"
+template: graph-lines-02.j2
+datasource: influxdb
+span: 6
+
+targets:
+  A:
+    query: >
+      SELECT mean("value")
+      FROM "jnpr.analyticsd"
+      WHERE ("type" = 'traffic-stats.rxpps' OR "type" = 'traffic-stats.txpps')
+      AND "device" =~ /$host_regex/ AND "interface" =~ /$interface$/ AND $timeFilter
+      GROUP BY time($interval), "device", "interface", "type"
+  B:
+    query: >
+      SELECT derivative("value", 1s)
+      FROM "jnpr.jvision"
+      WHERE ("type" = 'egress_stats.if_pkts' OR "type" = 'ingress_stats.if_pkts')
+      AND "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
+      GROUP BY "device", "interface", "type"
+
+yaxes:
+  - format: pps
+    label: RX / TX
+  - format: short
+# left_y_axis_label: RX / TX
+
+series_overrides:
+  - alias: "/rxpps/i"
+    transform: "negative-Y"
+  - alias: "/ingress/i"
+    transform: "negative-Y"
+
+templatings_used:
+  - host_regex.yaml

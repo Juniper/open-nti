@@ -1,0 +1,19 @@
+
+title: Data Steaming Collector ALPHA
+template: "dashboard_base.j2"
+
+tags:
+  - juniper
+  - jti
+  - opennti
+  - streaming
+
+rows:
+  - int-traffic.yaml
+  - int-queue.yaml
+  - int-buffer.yaml
+  - mpls-lsp.yaml
+
+templatings:
+  - host_regex.yaml
+  - interface.yaml

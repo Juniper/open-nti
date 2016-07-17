@@ -1,0 +1,10 @@
+
+title: Interfaces statistics
+height: 250px
+template: row_base.j2
+panels:
+  graphs:
+    - int-pps.yaml
+    - int-bps.yaml
+    - int-error.yaml
+    - int-pps-ucast-bcast-mcast.yaml

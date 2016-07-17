@@ -1,0 +1,16 @@
+{
+  "collapse": true,
+  "editable": true,
+  "height": "{{ height }}",
+  "panels": [
+{% if panels_data is defined %}
+    {{ panels_data }}
+{% endif %}
+  ],
+{% if title is defined %}
+  "showTitle": true,
+  "title": "{{ title }}"
+{% else %}
+  "showTitle": false
+{% endif %}
+}

@@ -1,0 +1,25 @@
+{
+  "allFormat": "regex wildcard",
+  "current": {
+    "text": "All",
+    "value": ".*"
+  },
+  "datasource": "influxdb",
+  "includeAll": true,
+  "name": "{{ name }}",
+  "options": [
+    {
+      "text": "None",
+      "value": "",
+      "isNone": true,
+      "selected": true
+    }
+  ],
+  "query": "{{ query|replace('"', '\\"')|trim }}",
+  "refresh": 1,
+  "multi": false,
+  "multiFormat": "regex values",
+  "refresh_on_load": false,
+  "regex": "",
+  "type": "query"
+}

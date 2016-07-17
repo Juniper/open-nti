@@ -1,0 +1,16 @@
+
+template: graph-lines-02.j2
+datasource: influxdb
+title: "COSD SIZE"
+span: 6
+
+targets:
+  A:
+    query: >
+      SELECT mean(value)
+      FROM /$host_regex.re.memory.cosd-SIZE/
+      WHERE $timeFilter
+      GROUP BY time($interval)"
+
+templatings_used:
+  - host_regex.yaml

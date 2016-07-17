@@ -1,0 +1,7 @@
+
+title: Aggregated Error Statistics over all QFXs and all interfaces
+query: |
+  SELECT sum(\"value\")
+  FROM \"jnpr.analyticsd\"
+  WHERE  (\"type\" = 'traffic-stats.rxcrcerr' OR \"type\" = 'traffic-stats.rxdroppkt' )
+  AND $timeFilter

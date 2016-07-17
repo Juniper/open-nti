@@ -1,0 +1,16 @@
+
+title: Data Steaming Collector ALPHA
+template: "dashboard_base.j2"
+
+tags:
+  - juniper
+  - jti
+  - opennti
+  - streaming
+
+rows:
+  - qfx-queue.yaml
+
+templatings:
+  - host_regex.yaml
+  - interface.yaml

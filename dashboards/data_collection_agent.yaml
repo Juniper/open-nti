@@ -1,0 +1,14 @@
+
+title: Data Collection Agent Dashboard TEST
+template: "dashboard_base.j2"
+
+tags:
+  - juniper
+  - netconf
+  - opennti
+
+rows:
+  - re_processes.yaml
+
+templatings:
+  - host_regex.yaml
