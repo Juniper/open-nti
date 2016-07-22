@@ -9,13 +9,11 @@ targets:
 
   B:
     query: >
-      SELECT derivative("value", $interval)
+      SELECT derivative(mean("value"), 1s)
       FROM "jnpr.jvision"
       WHERE "type" = 'egress_queue_info.packets'
       AND "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
-      GROUP BY "device", "interface", "egress_queue"
-
-##TODO Why are we using $interval here for dericative and not 1s
+      GROUP BY "device", "interface", "egress_queue", time($GroupBy)
 
 yaxes:
   - format: pps
@@ -24,3 +22,4 @@ yaxes:
 templatings_used:
   - host_regex.yaml
   - interface.yaml
+  - group_by.yaml
