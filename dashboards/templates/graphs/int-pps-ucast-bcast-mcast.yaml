@@ -13,7 +13,6 @@ targets:
       WHERE ( "type" = 'traffic-stats.txmcpkt' OR "type" = 'traffic-stats.txucpkt' OR "type" = 'traffic-stats.txmcpkt' )
       AND "device" =~ /$host_regex/ AND "interface" =~ /$interface$/ AND $timeFilter
       GROUP BY "device", "interface", "type"
-
   B:
     query: >
       SELECT derivative("value", 1s)
@@ -24,11 +23,11 @@ targets:
 
   C:
     query: >
-      SELECT derivative("value", 1s)
+      SELECT derivative(mean("value"), 1s)
       FROM "jnpr.jvision"
       WHERE ("type" = 'egress_stats.if_uc_pkts' OR "type" = 'egress_stats.if_bc_pkts' OR "type" = 'ingress_stats.if_mc_pkts')
       AND "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
-      GROUP BY "device", "interface", "type"
+      GROUP BY "device", "interface", "type", time($GroupBy)
 
 #TODO Check if more counters are available on MX
 
@@ -47,3 +46,4 @@ series_overrides:
 templatings_used:
   - host_regex.yaml
   - interface.yaml
+  - group_by.yaml

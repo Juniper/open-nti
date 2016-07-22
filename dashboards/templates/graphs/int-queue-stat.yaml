@@ -12,7 +12,7 @@ targets:
       FROM "jnpr.analyticsd"
       WHERE  ("type" = 'traffic-stats.rxcrcerr' OR "type" = 'traffic-stats.rxdroppkt')
       AND "device" =~ /$host_regex/ AND "interface" =~ /$interface$/ AND $timeFilter
-      GROUP BY time(10s), "device", "interface", "type"
+      GROUP BY "device", "interface", "type"
 ##TODO Should it be group by time ($interval)
 
   B:
@@ -29,7 +29,7 @@ targets:
       OR "type" = 'ingress_errors.if_in_resource_errors'
       OR "type" = 'ingress_errors.if_in_runts')
       AND "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
-      GROUP BY "device", "interface", "type"
+      GROUP BY "device", "interface", "type", time($GroupBy)
 
 templatings_used:
   - host_regex.yaml

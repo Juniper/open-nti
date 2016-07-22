@@ -12,14 +12,14 @@ targets:
       FROM "jnpr.analyticsd"
       WHERE ("type" = 'traffic-stats.rxpps' OR "type" = 'traffic-stats.txpps')
       AND "device" =~ /$host_regex/ AND "interface" =~ /$interface$/ AND $timeFilter
-      GROUP BY time($interval), "device", "interface", "type"
+      GROUP BY "device", "interface", "type", time($GroupBy)
   B:
     query: >
-      SELECT derivative("value", 1s)
+      SELECT derivative(mean("value"), 1s)
       FROM "jnpr.jvision"
       WHERE ("type" = 'egress_stats.if_pkts' OR "type" = 'ingress_stats.if_pkts')
       AND "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
-      GROUP BY "device", "interface", "type"
+      GROUP BY "device", "interface", "type", time($GroupBy)
 
 yaxes:
   - format: pps
@@ -35,3 +35,4 @@ series_overrides:
 
 templatings_used:
   - host_regex.yaml
+  - group_by.yaml

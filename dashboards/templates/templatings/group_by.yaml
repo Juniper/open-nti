@@ -1,0 +1,3 @@
+
+template: templating_interval.j2
+name: GroupBy
