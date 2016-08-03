@@ -15,11 +15,10 @@ Thanks to docker, it can run pretty much anywhere on server, on laptop ... on th
 
 More detailed description of a project can be found [here](http://forums.juniper.net/t5/Analytics/Open-Source-Universal-Telemetry-Collector-for-Junos/ba-p/288677) (including a series of videos on how to use it):
 
-
 ## Requirements
 
-The only requirement is to have docker installed on your Linux server/machine.  
-Instructions to install docker are available [here](http://docs.docker.com/engine/installation/ubuntulinux/)
+The only requirements is to have docker and docker-compose installed on your Linux server/machine.
+Instructions to install docker are available [here](http://docs.docker.com/engine/installation/ubuntulinux/) and for docker-compose [here](https://docs.docker.com/compose/install/)
 
 It's also available for [Mac](https://docs.docker.com/engine/installation/mac/) & [Windows](https://docs.docker.com/engine/installation/windows/)
 
@@ -34,13 +33,13 @@ cd open-nti
 > On Ubuntu, you'll have to add "sudo" before the last command
 
 By default the container is named "open-nti_con" and is working in **non-persistent mode**, once you stop it all data are gone.  
-On Linux, it's possible to start the container in **persistent mode** to save the database outside the container, by using the startup script ```docker.start.persistent.sh```. *Persistent mode is not supported on Mac OS*
+It's possible to start the container in **persistent mode** to save the database outside the container, by using the startup script ```docker.start.persistent.sh```. *Persistent mode on Mac OS requires at least v1.12*
 
 ### Customize OpenNTI
 
 #### Customize container's name and ports
 
-All port numbers and names used by start/stop scripts are centralized in one file : [open-nti.params](open-nti.params), you can easily adapt this file with your own port numbers or names. It's mandatory if you are planning to run multiple instances of OpenNTI on the same server.  
+All port numbers and names used by start/stop scripts are centralized in one file : [open-nti.params](open-nti.params), you can easily adapt this file with your own port numbers or names. It's mandatory if you are planning to run multiple instances of OpenNTI on the same server.
 
 #### Customize the container itself
 
@@ -53,10 +52,11 @@ For any issues please open an [issue on Github](https://github.com/Juniper/open-
 For comments, suggestions or questions please use our [google group](https://groups.google.com/forum/#!forum/open-nti)
 
 To participate, please:
-```
 - Fork the project
 - Send us a pull request
-```
+
+> if you are planning significant changes, please start a discussion first.
+
 **Contributions are more than Welcome**
 
 ## How to use
@@ -68,18 +68,13 @@ Once the container is running, you can access :
 
 By default the *Data Streaming Collector* accept data on ports :
  - MX - Jvision : **50000**
- - QFX10K - Network Agent : **50010**
  - QFX5K - Analyticsd : **50020**
-
->**MAC OSX users**: If you want to run this container directly on MAC OSX you will need to install NAT rules to >forward ports from OSX to Docker VM.  
->There is a script which will add/delete rules automatically based on container name:   >https://github.com/mpergament/docker-virtualbox-nat-macosx
 
 To use the *Data Collection Agent* you need to provide few informations
 
 > For now, there are 2 dashboards predefined, one for the Data Collection Agent and one for the Data Streaming > Collector. in the future, these will be merged into a single dashboard.
 
 # Data Collection Agent
-
 ### Configuration
 
 **data/hosts.yaml**
