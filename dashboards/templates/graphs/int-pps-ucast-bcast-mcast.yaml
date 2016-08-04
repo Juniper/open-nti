@@ -29,6 +29,31 @@ targets:
       AND "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
       GROUP BY "device", "interface", "type", time($GroupBy)
 
+## Queries for gRPC / openconfig_telemetry
+  D:
+    query: >
+      SELECT  derivative(mean("counters/out-broadcast-pkts"), 1s) AS "Bcast out",
+      derivative(mean("counters/in-broadcast-pkts"), 1s) AS "Bcast in"
+      FROM "/junos/system/linecard/interface/"
+      WHERE "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
+      GROUP BY interface, device, time($GroupBy)
+
+  E:
+    query: >
+      SELECT  derivative(mean("counters/out-unicast-pkts"), 1s) AS "Ucast out",
+      derivative(mean("counters/in-unicast-pkts"), 1s) AS "Ucast in"
+      FROM "/junos/system/linecard/interface/"
+      WHERE "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
+      GROUP BY interface, device, time($GroupBy)
+
+  F:
+    query: >
+      SELECT  derivative(mean("counters/out-multicast-pkts"), 1s) AS "Mcast out",
+      derivative(mean("counters/in-multicast-pkts"), 1s) AS "Mcast in"
+      FROM "/junos/system/linecard/interface/"
+      WHERE "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
+      GROUP BY interface, device, time($GroupBy)
+
 #TODO Check if more counters are available on MX
 
 yaxes:
@@ -41,7 +66,8 @@ series_overrides:
     transform: "negative-Y"
   - alias: "/ingress/i"
     transform: "negative-Y"
-
+  - alias: "/in/i"
+    transform: "negative-Y"
 
 templatings_used:
   - host_regex.yaml

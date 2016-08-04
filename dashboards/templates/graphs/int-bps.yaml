@@ -28,6 +28,14 @@ targets:
       AND "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
       GROUP BY "device", "interface", "type", time($GroupBy)
 
+  D:
+    query: >
+      SELECT  derivative(mean("counters/out-octets"), 1s)*8 AS "OUT",
+      derivative(mean("counters/in-octets"), 1s)*8 AS "IN"
+      FROM "/junos/system/linecard/interface/"
+      WHERE "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
+      GROUP BY interface, device, time($GroupBy)
+
 yaxes:
   - format: pps
     label: RX / TX
@@ -37,6 +45,8 @@ series_overrides:
   - alias: "/rxpps/i"
     transform: "negative-Y"
   - alias: "/ingress/i"
+    transform: "negative-Y"
+  - alias: "/in/i"
     transform: "negative-Y"
 
 templatings_used:

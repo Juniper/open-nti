@@ -5,7 +5,7 @@ OpenNTI is a container packaged with all tools needed to collect and visualize t
 Data can be collected from different sources:
 
 - **Data Collection Agent** : Collect data on devices using CLI/Shell or Netconf
-- **Data Streaming Collector** : Take all data streamed by Juniper devices as Input (Jvision, Analyticsd, network agent)
+- **Data Streaming Collector** : Take all data streamed by Juniper devices as Input (JTI, Analyticsd, soon Openconfig with gRPC)
 - **Statsd interface** : Accept any Statsd packets
 
 It's pre-configured with all tools and with a default dashboard ..
@@ -15,11 +15,10 @@ Thanks to docker, it can run pretty much anywhere on server, on laptop ... on th
 
 More detailed description of a project can be found [here](http://forums.juniper.net/t5/Analytics/Open-Source-Universal-Telemetry-Collector-for-Junos/ba-p/288677) (including a series of videos on how to use it):
 
-
 ## Requirements
 
-The only requirement is to have docker installed on your Linux server/machine.  
-Instructions to install docker are available [here](http://docs.docker.com/engine/installation/ubuntulinux/)
+The requirements is to have docker and docker-compose installed on your Linux server/machine.
+Instructions to install docker are available [here](http://docs.docker.com/engine/installation/ubuntulinux/) and for docker-compose [here](https://docs.docker.com/compose/install/)
 
 It's also available for [Mac](https://docs.docker.com/engine/installation/mac/) & [Windows](https://docs.docker.com/engine/installation/windows/)
 
@@ -33,14 +32,21 @@ cd open-nti
 ```
 > On Ubuntu, you'll have to add "sudo" before the last command
 
-By default the container is named "open-nti_con" and is working in **non-persistent mode**, once you stop it all data are gone.  
-On Linux, it's possible to start the container in **persistent mode** to save the database outside the container, by using the startup script ```docker.start.persistent.sh```. *Persistent mode is not supported on Mac OS*
+By default it will start 3 containers and it's working in **non-persistent mode**, once you stop it all data are gone.  
+It's possible to start the main container in **persistent mode** to save the database outside the container, by using the startup script ```docker.start.persistent.sh```. *Persistent mode on Mac OS requires at least v1.12*
+
+### How to update
+
+It's recommended to upgrade the project periodically, both the files from github.com and the containers from Docker Hub.
+You can update easily with
+```
+./docker.update.sh
+```
 
 ### Customize OpenNTI
-
 #### Customize container's name and ports
 
-All port numbers and names used by start/stop scripts are centralized in one file : [open-nti.params](open-nti.params), you can easily adapt this file with your own port numbers or names. It's mandatory if you are planning to run multiple instances of OpenNTI on the same server.  
+All port numbers and names used by start/stop scripts are centralized in one file : [open-nti.params](open-nti.params), you can easily adapt this file with your own port numbers or names. It's mandatory if you are planning to run multiple instances of OpenNTI on the same server.
 
 #### Customize the container itself
 
@@ -53,10 +59,11 @@ For any issues please open an [issue on Github](https://github.com/Juniper/open-
 For comments, suggestions or questions please use our [google group](https://groups.google.com/forum/#!forum/open-nti)
 
 To participate, please:
-```
 - Fork the project
 - Send us a pull request
-```
+
+> if you are planning significant changes, please start a discussion first.
+
 **Contributions are more than Welcome**
 
 ## How to use
@@ -67,19 +74,14 @@ Once the container is running, you can access :
 - Database REST API (Influxdb) at http://hostip:8088         (Login: juniper / Pwd: juniper / db : juniper)
 
 By default the *Data Streaming Collector* accept data on ports :
- - MX - Jvision : **50000**
- - QFX10K - Network Agent : **50010**
+ - MX - JTI : **50000**
  - QFX5K - Analyticsd : **50020**
-
->**MAC OSX users**: If you want to run this container directly on MAC OSX you will need to install NAT rules to >forward ports from OSX to Docker VM.  
->There is a script which will add/delete rules automatically based on container name:   >https://github.com/mpergament/docker-virtualbox-nat-macosx
 
 To use the *Data Collection Agent* you need to provide few informations
 
 > For now, there are 2 dashboards predefined, one for the Data Collection Agent and one for the Data Streaming > Collector. in the future, these will be merged into a single dashboard.
 
 # Data Collection Agent
-
 ### Configuration
 
 **data/hosts.yaml**
@@ -138,7 +140,6 @@ generic_commands:  <--- You can name the group as best fits you
 ```
 
 ### Execution periodic
-
 To collect data periodically with the __Data Collection Agent__, you need to setup a cron job inside the container.  
 As part of the project, open-nti is providing some scripts to easily add/remove cron jobs __inside__ the container __from__ the host.
 
@@ -182,9 +183,8 @@ To stop cron job for specific tag:
 # Data Streaming Collector
 
 Currently the collector accept:
- - Network agent (qfx10k) streams in JSON/UDP on port **50010**
- - Analyticsd (qfx5k) streams in JSON/UDP on port **50020**
- - Juniper Telemetry Interface (mx) streams in GPB/UDP on port **50000**
+ - Analyticsd (qfx5k) streams in JSON/UDP on port **UDP/50020**
+ - Juniper Telemetry Interface (MX/PTX) streams in GPB/UDP on port **UDP/50000**
 
 > **it's important that all devices have the correct time defined**, it's recommended to configure NTP everywhere
 
@@ -207,16 +207,12 @@ g indicate gauge
 ```
 
 # Events
-
-By default the dashboard is configured to display some "events" that are stored in the database into the serie "events"
+By default dashboards are configured to display some "events" that are stored in the database into the serie "events"
 Their are multiple ways to record entry in the events serie
-
-> This feature is *still experimental*, some users observed delay between events and visualization in the dashboard
-> if you are not seeing your event, try to increase the time windows.
 
 ## Insert events via syslog
 
-open-nti will access events in the syslog format on port UDP 6000.  
+open-nti will access events in the syslog format on port **UDP/6000**.  
 The goal is not to send all syslog but only relevant information like Commit or Protocol Flaps
 
 To send only one syslog at commit time you can use the configuration below
@@ -232,24 +228,9 @@ It's possible to insert events with just a HTTP POST request to the database, he
 ```
 curl -i -XPOST 'http://10.92.71.225:8086/write?db=juniper' --data-binary 'events,type=Error text="BGP Flap"'
 curl -i -XPOST 'http://10.92.71.225:8086/write?db=juniper' --data-binary 'events,device=qfx5100-01,type=Commit text="Change applied"'
-
 ```
-
-## How to run multiple instance of the same container on the same server
-
-By default, only 1 container can run on the same server because of default parameters
-In order to run multiple container on the same Server, you need to customize the script "docker.start.sh" to :
- - Change the container name
- - Change the external ports the container is listening to
-
-Below an example of start command that will allow multiple container on the same server
-```
-docker run -d  \
-    -p 150000:50000/udp -p 150010:50010/udp -p 150020:50020/udp \
-    -p 18083:8083 -p 18086:8086 -p 8080:80 -p 13000:3000 \
-    juniper/open-nti /sbin/my_init
-```
-In this case I added "1" to each ports number
+> any system that knows how to generate a HTTP POST request can inject an event.  
+> its very utile if you have a script/tool that run some tests to keep track of when major events happen
 
 ## How to change the default dashboard
 
@@ -258,32 +239,26 @@ If you want to replace the default dashboard, you can replace the existing .json
 
 ## How to troubleshoot
 
-To check if the container is running, execute
+To check if containers are running, execute the following command. By default you should have 3 containers running
 ```
-docker ps | grep open-nti_con
-```
-
-To force the container to stop, execute
-```
- docker stop open-nti_con
+docker ps
 ```
 
-To access the CLI of the container for debug , there are multi option
-1 - Start the container in debug mode, you'll be directly on the CLI
+To force containers to stop, execute
 ```
-./docker.debug.sh
+./docker.stop.sh
 ```
 
-2 - Start a SSH session using the insecure_key provided in the repo and the script "docker.cli.sh"
+To access the CLI of the main container for debug,  
+Start a SSH session using the insecure_key provided in the repo and the script "docker.cli.sh"
 ```
 chmod 600 insecure_key
 ./docker.cli.sh
 ```
 
-Once in CLI mode, you can check fluentd log
-If everything is all right, nothing would be print on this log.
+For the Input containers named __open-nti-input-*__ you can access the logs directly from docker by running :
 ```
-tail -f /var/log/fluentd.log
+docker logs <container name or ID>
 ```
 
 ## Tools used

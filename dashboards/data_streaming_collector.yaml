@@ -8,12 +8,16 @@ tags:
   - opennti
   - streaming
 
+templatings:
+  - host_regex.yaml
+  - interface.yaml
+  - group_by.yaml
+
+annotations:
+  - commit.yaml
+
 rows:
   - int-traffic.yaml
   - int-queue.yaml
   - int-buffer.yaml
   - mpls-lsp.yaml
-
-templatings:
-  - host_regex.yaml
-  - interface.yaml

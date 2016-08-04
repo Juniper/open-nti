@@ -115,11 +115,30 @@ if 'rows' in dashboard.keys():
 if 'annotations' in dashboard.keys():
     logger.info('Nothing here yet')
 
+    # dashboard['annotations_data'] = ''
+    # nbr_annotations = 0
+    #
+    # ## Extract unique values
+    # list_annotations = set(dashboard['annotations'])
+    #
+    # for annotation in list(list_annotations):
+    #     logger.info('Add Annotation {0}'.format(annotation))
+    #     annotation_conf = yaml.load(open(ANNOTATIONS_DIR + annotation).read())
+    #
+    #     annotation_tpl = open(ANNOTATIONS_DIR + annotation_conf['template'])
+    #     annotation_tpl_rdr = Template(annotation_tpl.read()).render(annotation_conf)
+    #
+    #     ## Add template to list of panels
+    #     if nbr_annotations > 0:
+    #         logger.debug('Not the first annotation, add a ","')
+    #         dashboard['annotations_data'] = dashboard['annotations_data'] + ','
+    #     dashboard['annotations_data'] = dashboard['annotations_data'] + annotation_tpl_rdr
+    #     nbr_templatings =+ 1
+
 #############################################
 ### Process TAGS
 #############################################
 if 'tags' in dashboard.keys():
-
     tags = '","'.join(map(str, dashboard['tags']))
     dashboard['tags_data'] = '"' + tags + '"'
     logger.info('Add Tag(s) : {0}'.format(dashboard['tags_data']))
