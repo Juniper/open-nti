@@ -7,7 +7,8 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-
+   architecture.rst
+   dashboard.rst
 
 Indices and tables
 ==================
