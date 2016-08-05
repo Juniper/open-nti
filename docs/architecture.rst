@@ -1,5 +1,5 @@
 
-OpenNTI Architecture description
+Architecture description [WIP]
 ==================================
 
 OpenNTI architecture is designed to be modular.
