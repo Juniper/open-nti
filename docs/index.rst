@@ -42,8 +42,6 @@ To participate, please:
 
 **Contributions are more than Welcome**
 
-
-
 .. toctree::
    :maxdepth: 2
 
