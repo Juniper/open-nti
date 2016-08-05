@@ -30,9 +30,14 @@
   "points": true,
   "renderer": "flot",
   "seriesOverrides": [
-  {% if series_overrides_data is defined %}
-    {{ series_overrides_data }}
-  {% endif%}
+{% if series_overrides is defined %}
+{%- for serie in series_overrides %}
+    {
+      "alias": "{{ serie.alias }}",
+      "transform": "{{ serie.transform }}"
+    }{% if not loop.last %},{% endif %}
+{% endfor -%}
+{% endif%}
   ],
   "span": {{ span }},
   "stack": false,
