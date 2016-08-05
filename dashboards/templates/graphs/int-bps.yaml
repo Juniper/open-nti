@@ -32,21 +32,21 @@ targets:
     query: >
       SELECT  derivative(mean("counters/out-octets"), 1s)*8 AS "OUT",
       derivative(mean("counters/in-octets"), 1s)*8 AS "IN"
-      FROM "/junos/system/linecard/interface/"
+      FROM "openconfig-ifd"
       WHERE "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
       GROUP BY interface, device, time($GroupBy)
 
 yaxes:
-  - format: pps
+  - format: bps
     label: RX / TX
   - format: short
 
 series_overrides:
-  - alias: "/rxpps/i"
+  - alias: "/rxbps/i"
     transform: "negative-Y"
   - alias: "/ingress/i"
     transform: "negative-Y"
-  - alias: "/in/i"
+  - alias: "/IN/"
     transform: "negative-Y"
 
 templatings_used:

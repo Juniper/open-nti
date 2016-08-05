@@ -34,7 +34,7 @@ targets:
     query: >
       SELECT  derivative(mean("counters/out-broadcast-pkts"), 1s) AS "Bcast out",
       derivative(mean("counters/in-broadcast-pkts"), 1s) AS "Bcast in"
-      FROM "/junos/system/linecard/interface/"
+      FROM "openconfig-ifd"
       WHERE "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
       GROUP BY interface, device, time($GroupBy)
 
@@ -42,7 +42,7 @@ targets:
     query: >
       SELECT  derivative(mean("counters/out-unicast-pkts"), 1s) AS "Ucast out",
       derivative(mean("counters/in-unicast-pkts"), 1s) AS "Ucast in"
-      FROM "/junos/system/linecard/interface/"
+      FROM "openconfig-ifd"
       WHERE "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
       GROUP BY interface, device, time($GroupBy)
 
@@ -50,7 +50,7 @@ targets:
     query: >
       SELECT  derivative(mean("counters/out-multicast-pkts"), 1s) AS "Mcast out",
       derivative(mean("counters/in-multicast-pkts"), 1s) AS "Mcast in"
-      FROM "/junos/system/linecard/interface/"
+      FROM "openconfig-ifd"
       WHERE "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
       GROUP BY interface, device, time($GroupBy)
 
@@ -66,7 +66,7 @@ series_overrides:
     transform: "negative-Y"
   - alias: "/ingress/i"
     transform: "negative-Y"
-  - alias: "/in/i"
+  - alias: "/cast in/i"
     transform: "negative-Y"
 
 templatings_used:
