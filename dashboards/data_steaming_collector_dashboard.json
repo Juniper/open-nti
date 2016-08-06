@@ -12,6 +12,30 @@
   "sharedCrosshair": false,
   "rows": [
     {
+  "height": "25px",
+  "editable": true,
+  "collapse": false,
+  
+    "showTitle": true,
+    "title": "Disclaimer",
+  
+  "panels": [
+    {
+      "title": "",
+      "error": false,
+      "span": 12,
+      "editable": true,
+      "type": "text",
+      "isNew": true,
+      "id": 102,
+      "mode": "markdown",
+      "content": "**This dashboard has been automatically generated using the dashboard generator of OpenNTI** - It's very easy to personalize it and create your own.",
+      "links": [],
+      "transparent": true,
+      "height": "10px"
+    }
+  ]
+},{
   "collapse": true,
   "editable": true,
   "height": "250px",

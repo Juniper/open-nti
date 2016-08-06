@@ -15,7 +15,7 @@ annotations:
   - commit.yaml
 
 rows:
-#  - opennti-disclaimer.yaml
+  - opennti-disclaimer.yaml
   - re-statistics.yaml
   - re-processes.yaml
   - protocol-isis.yaml

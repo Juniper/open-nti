@@ -17,7 +17,7 @@ annotations:
   - commit.yaml
 
 rows:
-#  - opennti-disclaimer.yaml
+  - opennti-disclaimer.yaml
   - int-traffic.yaml
   - int-queue.yaml
   - int-buffer.yaml
