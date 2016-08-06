@@ -17,11 +17,9 @@ RUN     rm -f /etc/service/sshd/down
 RUN     /usr/sbin/enable_insecure_key
 
 # Latest version
-ENV GRAFANA_VERSION 3.0.4-1464167696
+ENV GRAFANA_VERSION 3.1.1-1470047149
 ENV INFLUXDB_VERSION 0.13.0
-ENV TELEGRAF_VERSION 0.13.1
-# ENV FLUENTD_VERSION 0.12.20
-# ENV FLUENTD_JUNIPER_VERSION 0.2.11
+ENV TELEGRAF_VERSION 0.13.2
 
 RUN     apt-get -y update && \
         apt-get -y install \
@@ -43,9 +41,6 @@ RUN     apt-get -y update && \
             libssl-dev && \
         apt-get clean   &&\
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-        # ruby \
-        # ruby-dev \
 
 # # Install some python modules
 RUN     pip install influxdb && \
@@ -71,35 +66,6 @@ RUN     mkdir /src/grafana                                                      
         rm /src/grafana.tar.gz
 
 RUN     /opt/grafana/bin/grafana-cli plugins install grafana-piechart-panel
-
-########################
-### Install Fluentd  ###
-########################
-
-# # install RVM, Ruby, and Bundler
-# RUN curl -sSL https://rvm.io/mpapis.asc | gpg --import
-# RUN \curl -L https://get.rvm.io | bash -s stable
-# RUN /bin/bash -l -c "rvm requirements"
-# RUN /bin/bash -l -c "rvm install 1.9.3"
-#
-# # RUN     gem install fluentd fluent-plugin-influxdb --no-ri --no-rdoc
-# RUN     /bin/bash -l -c "gem install --no-ri --no-rdoc \
-#             fluentd -v ${FLUENTD_VERSION}" && \
-#         /bin/bash -l -c "gem install --no-ri --no-rdoc \
-#             cause \
-#             influxdb \
-#             rake \
-#             bundler \
-#             protobuf \
-#             statsd-ruby \
-#             dogstatsd-ruby \
-#             fluent-plugin-newsyslog \
-#             fluent-plugin-rewrite-tag-filter"
-#
-# RUN     /bin/bash -l -c "gem install --no-ri --no-rdoc \
-#             fluent-plugin-juniper-telemetry -v ${FLUENTD_JUNIPER_VERSION}"
-#
-# ADD     docker/fluentd/fluentd.launcher.sh /etc/service/fluentd/run
 
 ########################
 ### Install InfluxDB ###
@@ -157,33 +123,12 @@ RUN     mkdir /opt/open-nti/tests
 
 # ################
 
-# RUN     chmod +x /etc/service/fluentd/run       &&\
 RUN     chmod +x /etc/service/nginx/run         &&\
         chmod +x /etc/service/grafana/run       &&\
         chmod +x /etc/my_init.d/grafana.init.sh &&\
         chmod +x /etc/service/influxdb/run      &&\
         chmod +x /etc/service/telegraf/run      &&\
         chmod +x /influxdbrun.sh
-
-#######
-### Copy files that change often
-######
-
-# RUN     mkdir /etc/fluent && \
-#         mkdir /etc/fluent/plugin
-
-# ADD     docker/fluentd/fluent.conf /etc/fluent/fluent.conf
-# ADD     docker/fluentd/fluent.conf /fluent/fluent.conf
-# RUN     /bin/bash -l -c "fluentd --setup"
-
-# ADD     docker/fluentd/plugin/out_influxdb.rb       /etc/fluent/plugin/out_influxdb.rb
-# ADD     docker/fluentd/plugin/out_statsd.rb         /etc/fluent/plugin/out_statsd.rb
-
-# # WORKDIR /tmp
-# # RUN     wget -O /tmp/fluent-plugin-juniper-telemetry.tar.gz https://github.com/JNPRAutomate/fluent-plugin-juniper-telemetry/archive/v${FLUENTD_JUNIPER_VERSION}.tar.gz &&\
-# #        tar -xzf /tmp/fluent-plugin-juniper-telemetry.tar.gz                &&\
-# #        cd /tmp/fluent-plugin-juniper-telemetry-${FLUENTD_JUNIPER_VERSION}  &&\
-# #        rake install
 
 WORKDIR /
 ENV HOME /root
