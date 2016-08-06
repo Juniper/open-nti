@@ -10,7 +10,7 @@ targets:
       SELECT mean(value)
       FROM /$host_regex.re.memory.cosd-SIZE/
       WHERE $timeFilter
-      GROUP BY time($interval)"
+      GROUP BY time($GroupBy)
 
 templatings_used:
   - host_regex.yaml
