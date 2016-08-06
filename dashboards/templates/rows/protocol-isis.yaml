@@ -1,0 +1,14 @@
+
+title: ISIS Statistics
+height: 250px
+template: row_base.j2
+panels:
+  graphs:
+    - isis-packet-total-sent.yaml
+    - isis-packet-total-received.yaml
+    - isis-packet-total-retransmit.yaml
+    - isis-packet-total-dropped.yaml
+    - isis-packet-total-processed.yaml
+    - isis-fragment-rebuilt.yaml
+    - isis-spf-run.yaml
+    - isis-lsp-regeneration-run.yaml

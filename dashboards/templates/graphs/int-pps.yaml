@@ -25,7 +25,7 @@ targets:
     query: >
       SELECT  derivative(mean("counters/out-packets"), 1s) AS "OUT",
       derivative(mean("counters/in-packets"), 1s) AS "IN"
-      FROM "/junos/system/linecard/interface/"
+      FROM "openconfig-ifd"
       WHERE "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
       GROUP BY interface, device, time($GroupBy)
 
@@ -40,9 +40,9 @@ series_overrides:
     transform: "negative-Y"
   - alias: "/ingress/i"
     transform: "negative-Y"
-  - alias: "/in/i"
+  - alias: "/IN/"
     transform: "negative-Y"
-    
+
 templatings_used:
   - host_regex.yaml
   - group_by.yaml

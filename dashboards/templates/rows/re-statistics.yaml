@@ -1,0 +1,8 @@
+
+title: RE Statistics
+height: 250px
+template: row_base.j2
+panels:
+  graphs:
+    - re-cpu-idle.yaml
+    - re-memory-utilization.yaml

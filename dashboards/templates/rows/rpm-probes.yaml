@@ -1,0 +1,7 @@
+
+title: RPM Probes
+height: 250px
+template: row_base.j2
+panels:
+  graphs:
+    - rpm-probes.yaml
