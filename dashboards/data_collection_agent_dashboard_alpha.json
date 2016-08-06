@@ -1,0 +1,2249 @@
+{
+  "id": null,
+  "title": "Data Collection Agent Dashboard ALPHA",
+  "originalTitle": "Data Collection Agent Dashboard ALPHA",
+"tags": [
+    "juniper","netconf","opennti"
+  ],
+  "style": "dark",
+  "timezone": "browser",
+  "editable": true,
+  "hideControls": false,
+  "sharedCrosshair": false,
+  "rows": [
+    {
+  "collapse": true,
+  "editable": true,
+  "height": "250px",
+  "panels": [
+
+    {
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 1,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(value) FROM /$host_regex.chassis.routing-engine.*.cpu-idle/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "RE - CPU idle",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 2,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(value) FROM /$host_regex.chassis.routing-engine.*.memory-buffer-utilization/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "RE - CPU idle",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+}
+
+  ],
+
+  "showTitle": true,
+  "title": "RE Statistics"
+
+},{
+  "collapse": true,
+  "editable": true,
+  "height": "250px",
+  "panels": [
+
+    {
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 3,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(value) FROM /$host_regex.re.memory.rpd-SIZE/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "RPD SIZE",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 4,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(value) FROM /$host_regex.re.memory.dfwd-SIZE/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "DFWD SIZE",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 5,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(value) FROM /$host_regex.re.memory.cosd-SIZE/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "COSD SIZE",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 6,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(value) FROM /$host_regex.re.memory.dcd-SIZE/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "DCD SIZE",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 7,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(value) FROM /$host_regex.re.memory.dfwd-SIZE/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "DFWD SIZE",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 8,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+    {
+      "column": "value",
+      "dsType": "influxdb",
+      "function": "mean",
+      "groupBy": [
+        {
+          "params": [
+            "$interval"
+          ],
+          "type": "time"
+        },
+        {
+          "params": [
+            "null"
+          ],
+          "type": "fill"
+        }
+      ],
+      "interval": "",
+      "query": "",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "select": [
+        [
+          {
+            "params": [
+              "value"
+            ],
+            "type": "field"
+          },
+          {
+            "params": [],
+            "type": "mean"
+          }
+        ]
+      ],
+      "series": "",
+      "tags": [],
+      "policy": "default"
+    }
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "MIB2D SIZE",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short"
+    },
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short"
+    }
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 9,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(value) FROM /$host_regex.re.memory.sampled-SIZE/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "SAMPLED SIZE",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 10,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(value) FROM /$host_regex.re.memory.smid-SIZE/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "SMID SIZE",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 11,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(value) FROM /$host_regex.re.memory.smihelperd-SIZE/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "SMI-HELPER SIZE",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 12,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(value) FROM /$host_regex.re.memory.snmpd-SIZE/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "SNMPD SIZE",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+}
+
+  ],
+
+  "showTitle": true,
+  "title": "RE Processes"
+
+},{
+  "collapse": true,
+  "editable": true,
+  "height": "250px",
+  "panels": [
+
+    {
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 13,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(delta) FROM /$host_regex.protocols.isis.statistics.Totals.packets-sent/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "ISIS Total packets-sent (delta)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 14,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(delta) FROM /$host_regex.protocols.isis.statistics.Totals.packets-received/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "ISIS Total packets-received (delta)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 15,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(delta) FROM /$host_regex.protocols.isis.statistics.Totals.packets-retransmitted/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "ISIS Total packets-retransmitted (delta)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 16,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(delta) FROM /$host_regex.protocols.isis.statistics.Totals.packets-dropped/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "ISIS Total packets-dropped (delta)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 17,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(delta) FROM /$host_regex.protocols.isis.statistics.Totals.packets-processed/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "ISIS Total packets-processed (delta)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 18,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(delta) FROM /$host_regex.protocols.isis.statistics.general.fragments-rebuilt/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "ISIS fragments-rebuilt (delta)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 19,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(delta) FROM /$host_regex.protocols.isis.statistics.general.spf-runs/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "ISIS spf-runs (delta)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 20,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(delta) FROM /$host_regex.protocols.isis.statistics.general.lsps-regenerated/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "ISIS LSP regenerations (delta)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+}
+
+  ],
+
+  "showTitle": true,
+  "title": "ISIS Statistics"
+
+},{
+  "collapse": true,
+  "editable": true,
+  "height": "250px",
+  "panels": [
+
+    {
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 21,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(value) FROM /$host_regex.protocols.bgp.summary.peer-count/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "BGP peer-count",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 22,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(value) FROM /$host_regex.protocols.bgp.summary.group-count/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "BGP group-count",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 23,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(value) FROM /$host_regex.protocols.bgp.summary.down-peer-count/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "BGP down-peer-count",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+}
+
+  ],
+
+  "showTitle": true,
+  "title": "BGP Statistics"
+
+}
+  ],
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {
+    "collapse": false,
+    "enable": true,
+    "notice": false,
+    "now": true,
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "status": "Stable",
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ],
+    "type": "timepicker"
+  },
+
+  "templating": {
+    "enable": true,
+    "list": [
+    {
+  "allFormat": "regex wildcard",
+  "current": {
+    "text": "All",
+    "value": ".*"
+  },
+  "datasource": "influxdb",
+  "includeAll": true,
+  "name": "host_regex",
+  "options": [
+    {
+      "text": "None",
+      "value": "",
+      "isNone": true,
+      "selected": true
+    }
+  ],
+  "query": "SHOW TAG VALUES WITH KEY = \"device\"",
+  "refresh": 1,
+  "multi": false,
+  "multiFormat": "regex values",
+  "refresh_on_load": false,
+  "regex": "",
+  "type": "query"
+},{
+   "type": "interval",
+   "datasource": null,
+   "refresh": 1,
+   "name": "GroupBy",
+   "hide": 0,
+   "options": [
+     {
+       "text": "auto",
+       "value": "$__auto_interval",
+       "selected": true
+     },
+     {
+       "text": "1s",
+       "value": "1s",
+       "selected": false
+     },
+     {
+       "text": "10s",
+       "value": "10s",
+       "selected": false
+     },
+     {
+       "text": "30s",
+       "value": "30s",
+       "selected": false
+     },
+     {
+       "text": "1m",
+       "value": "1m",
+       "selected": false
+     },
+     {
+       "text": "5m",
+       "value": "5m",
+       "selected": false
+     }
+   ],
+   "includeAll": false,
+   "multi": false,
+   "query": "1s,10s,30s,1m,5m",
+   "current": {
+     "text": "auto",
+     "value": "$__auto_interval"
+   },
+   "regex": "",
+   "auto": true,
+   "auto_count": 100,
+   "auto_min": "1s"
+ }
+    ]
+  },
+
+
+  "annotations": {
+    "list": [
+      {
+  "datasource": "influxdb",
+  "enable": true,
+  "iconColor": "#C0C6BE",
+  "iconSize": 13,
+  "lineColor": "rgba(47, 60, 207, 0.59)",
+  "name": "Commit",
+  "query": "SELECT * FROM events WHERE event = 'UI_COMMIT_COMPLETED' AND $timeFilter",
+  "showLine": "True",
+  "tagsColumn": "device",
+  "textColumn": "message",
+  "titleColumn": "events"
+}
+    ]
+  },
+
+  "refresh": "1m",
+  "schemaVersion": 12,
+  "version": 0,
+  "links": []
+}
