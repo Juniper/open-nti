@@ -1,5 +1,5 @@
 
-title: Data Steaming Collector ALPHA
+title: Data Steaming Collector Dashboard
 template: "dashboard_base.j2"
 
 tags:
@@ -17,6 +17,7 @@ annotations:
   - commit.yaml
 
 rows:
+#  - opennti-disclaimer.yaml
   - int-traffic.yaml
   - int-queue.yaml
   - int-buffer.yaml

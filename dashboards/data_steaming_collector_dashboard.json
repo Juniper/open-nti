@@ -1,0 +1,1186 @@
+{
+  "id": null,
+  "title": "Data Steaming Collector Dashboard",
+  "originalTitle": "Data Steaming Collector Dashboard",
+"tags": [
+    "juniper","jti","opennti","streaming"
+  ],
+  "style": "dark",
+  "timezone": "browser",
+  "editable": true,
+  "hideControls": false,
+  "sharedCrosshair": false,
+  "rows": [
+    {
+  "collapse": true,
+  "editable": true,
+  "height": "250px",
+  "panels": [
+
+    {
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 1,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+    {
+      "alias": "/rxpps/i",
+      "transform": "negative-Y"
+    },
+
+    {
+      "alias": "/ingress/i",
+      "transform": "negative-Y"
+    },
+
+    {
+      "alias": "/IN/",
+      "transform": "negative-Y"
+    }
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(\"value\") FROM \"jnpr.analyticsd\" WHERE (\"type\" = 'traffic-stats.rxpps' OR \"type\" = 'traffic-stats.txpps') AND \"device\" =~ /$host_regex/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\", time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+,{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT  derivative(mean(\"counters/out-packets\"), 1s) AS \"OUT\", derivative(mean(\"counters/in-packets\"), 1s) AS \"IN\" FROM \"openconfig-ifd\" WHERE \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY interface, device, time($GroupBy)",
+      "rawQuery": true,
+      "refId": "C",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+,{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT derivative(mean(\"value\"), 1s) FROM \"jnpr.jvision\" WHERE (\"type\" = 'egress_stats.if_pkts' OR \"type\" = 'ingress_stats.if_pkts') AND \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\", time($GroupBy)",
+      "rawQuery": true,
+      "refId": "B",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "Traffic Statistics (PPS)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "pps",
+      "label": "RX / TX"
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 2,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+    {
+      "alias": "/rxbps/i",
+      "transform": "negative-Y"
+    },
+
+    {
+      "alias": "/ingress/i",
+      "transform": "negative-Y"
+    },
+
+    {
+      "alias": "/IN/",
+      "transform": "negative-Y"
+    }
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(\"value\") FROM \"jnpr.analyticsd\" WHERE \"type\" = 'traffic-stats.txbps' AND \"device\" =~ /$host_regex/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\", time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+,{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT derivative(mean(\"value\"), 1s)*8 FROM \"jnpr.jvision\" WHERE  (\"type\" = 'egress_stats.if_octets' OR \"type\" = 'ingress_stats.if_octets') AND \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\", time($GroupBy)",
+      "rawQuery": true,
+      "refId": "C",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+,{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(\"value\") FROM \"jnpr.analyticsd\" WHERE \"type\" = 'traffic-stats.rxbps' AND \"device\" =~ /$host_regex/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\", time($GroupBy)",
+      "rawQuery": true,
+      "refId": "B",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+,{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT  derivative(mean(\"counters/out-octets\"), 1s)*8 AS \"OUT\", derivative(mean(\"counters/in-octets\"), 1s)*8 AS \"IN\" FROM \"openconfig-ifd\" WHERE \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY interface, device, time($GroupBy)",
+      "rawQuery": true,
+      "refId": "D",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "Traffic Statistics (BPS)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "bps",
+      "label": "RX / TX"
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 3,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT derivative(mean(\"value\"), 1s) FROM \"jnpr.jvision\" WHERE \"type\" = 'egress_queue_info.packets' AND \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"egress_queue\", time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+,{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT  derivative(mean(\"counters/out-discards\"), 1s) AS \"Discard out\" FROM \"openconfig-ifd\" WHERE \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY interface, device, time($GroupBy)",
+      "rawQuery": true,
+      "refId": "B",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "Interface Error Statistics",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "pps",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 4,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+    {
+      "alias": "/rx/i",
+      "transform": "negative-Y"
+    },
+
+    {
+      "alias": "/ingress/i",
+      "transform": "negative-Y"
+    },
+
+    {
+      "alias": "/cast in/i",
+      "transform": "negative-Y"
+    }
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT derivative(\"value\", 1s) FROM \"jnpr.analyticsd\" WHERE ( \"type\" = 'traffic-stats.txmcpkt' OR \"type\" = 'traffic-stats.txucpkt' OR \"type\" = 'traffic-stats.txmcpkt' ) AND \"device\" =~ /$host_regex/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\"",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+,{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT derivative(mean(\"value\"), 1s) FROM \"jnpr.jvision\" WHERE (\"type\" = 'egress_stats.if_uc_pkts' OR \"type\" = 'egress_stats.if_bc_pkts' OR \"type\" = 'ingress_stats.if_mc_pkts') AND \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\", time($GroupBy)",
+      "rawQuery": true,
+      "refId": "C",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+,{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT derivative(\"value\", 1s) FROM \"jnpr.analyticsd\" WHERE ( \"type\" = 'traffic-stats.rxmcpkt' OR \"type\" = 'traffic-stats.rxbcpkt' OR \"type\" = 'traffic-stats.rxucpkt' ) AND \"device\" =~ /$host_regex/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\"",
+      "rawQuery": true,
+      "refId": "B",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+,{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT  derivative(mean(\"counters/out-unicast-pkts\"), 1s) AS \"Ucast out\", derivative(mean(\"counters/in-unicast-pkts\"), 1s) AS \"Ucast in\" FROM \"openconfig-ifd\" WHERE \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY interface, device, time($GroupBy)",
+      "rawQuery": true,
+      "refId": "E",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+,{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT  derivative(mean(\"counters/out-broadcast-pkts\"), 1s) AS \"Bcast out\", derivative(mean(\"counters/in-broadcast-pkts\"), 1s) AS \"Bcast in\" FROM \"openconfig-ifd\" WHERE \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY interface, device, time($GroupBy)",
+      "rawQuery": true,
+      "refId": "D",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+,{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT  derivative(mean(\"counters/out-multicast-pkts\"), 1s) AS \"Mcast out\", derivative(mean(\"counters/in-multicast-pkts\"), 1s) AS \"Mcast in\" FROM \"openconfig-ifd\" WHERE \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY interface, device, time($GroupBy)",
+      "rawQuery": true,
+      "refId": "F",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "Broadcast/Multicast/Unicast Interface Traffic",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "pps",
+      "label": "RX | TX"
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+}
+
+  ],
+
+  "showTitle": true,
+  "title": "Interfaces statistics"
+
+},{
+  "collapse": true,
+  "editable": true,
+  "height": "250px",
+  "panels": [
+
+    {
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 5,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT derivative(mean(\"value\"), 1s) FROM \"jnpr.analyticsd\" WHERE  (\"type\" = 'traffic-stats.rxcrcerr' OR \"type\" = 'traffic-stats.rxdroppkt') AND \"device\" =~ /$host_regex/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\"",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+,{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT derivative(\"value\", 1s) FROM \"jnpr.jvision\" WHERE (\"type\" = 'ingress_errors.if_in_discards' OR \"type\" = 'ingress_errors.if_in_errors' OR \"type\" = 'ingress_errors.if_in_frame_errors' OR \"type\" = 'ingress_errors.if_in_l2_mismatch_timeouts' OR \"type\" = 'ingress_errors.if_in_l2chan_errors' OR \"type\" = 'ingress_errors.if_in_l3_incompletes' OR \"type\" = 'ingress_errors.if_in_qdrops' OR \"type\" = 'ingress_errors.if_in_resource_errors' OR \"type\" = 'ingress_errors.if_in_runts') AND \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\", time($GroupBy)",
+      "rawQuery": true,
+      "refId": "B",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "Interface Queue Stats",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+}
+
+  ],
+
+  "showTitle": true,
+  "title": "Interfaces Queue"
+
+},{
+  "collapse": true,
+  "editable": true,
+  "height": "250px",
+  "panels": [
+
+    {
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 6,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT \"value\" FROM \"jnpr.analyticsd\" WHERE \"type\" = 'queue-stats.latency' AND \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"interface\", \"device\"",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "Buffer Latency",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 7,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(\"value\") FROM \"jnpr.analyticsd\" WHERE \"type\" = 'queue-stats.queue-depth' AND \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY time($interval), \"device\", \"interface\"",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+,{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT \"value\" FROM \"jnpr.jvision\" WHERE \"type\" = 'egress_queue_info.cur_buffer_occupancy' AND \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND  $timeFilter GROUP BY \"device\", \"interface\"",
+      "rawQuery": true,
+      "refId": "B",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "Buffer Utilization",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+}
+
+  ],
+
+  "showTitle": true,
+  "title": "Interfaces Buffer"
+
+},{
+  "collapse": true,
+  "editable": true,
+  "height": "250px",
+  "panels": [
+
+    {
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 8,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT \"value\"*8 FROM \"jnpr.jvision\" WHERE \"type\" = 'lspstata.byte_rate' AND \"device\" =~ /$host_regex$/ AND $timeFilter GROUP BY \"device\", \"lspname\", \"type\"",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "LSP Traffic Rate (BPS)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "bps",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 9,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT \"value\" FROM \"jnpr.jvision\" WHERE \"type\" = 'lspstata.packet_rate' AND \"device\" =~ /$host_regex$/ AND $timeFilter GROUP BY \"device\", \"lspname\"",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "LSP Traffic Rate (PPS)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "pps",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+}
+
+  ],
+
+  "showTitle": true,
+  "title": "MPLS LSP"
+
+}
+  ],
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {
+    "collapse": false,
+    "enable": true,
+    "notice": false,
+    "now": true,
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "status": "Stable",
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ],
+    "type": "timepicker"
+  },
+
+  "templating": {
+    "enable": true,
+    "list": [
+    {
+  "allFormat": "regex wildcard",
+  "current": {
+    "text": "All",
+    "value": ".*"
+  },
+  "datasource": "influxdb",
+  "includeAll": true,
+  "name": "host_regex",
+  "options": [
+    {
+      "text": "None",
+      "value": "",
+      "isNone": true,
+      "selected": true
+    }
+  ],
+  "query": "SHOW TAG VALUES WITH KEY = \"device\"",
+  "refresh": 1,
+  "multi": false,
+  "multiFormat": "regex values",
+  "refresh_on_load": false,
+  "regex": "",
+  "type": "query"
+},{
+  "allFormat": "regex wildcard",
+  "current": {
+    "text": "All",
+    "value": ".*"
+  },
+  "datasource": "influxdb",
+  "includeAll": true,
+  "name": "interface",
+  "options": [
+    {
+      "text": "None",
+      "value": "",
+      "isNone": true,
+      "selected": true
+    }
+  ],
+  "query": "SHOW TAG VALUES WITH KEY = \"interface\"",
+  "refresh": 1,
+  "multi": false,
+  "multiFormat": "regex values",
+  "refresh_on_load": false,
+  "regex": "",
+  "type": "query"
+},{
+   "type": "interval",
+   "datasource": null,
+   "refresh": 1,
+   "name": "GroupBy",
+   "hide": 0,
+   "options": [
+     {
+       "text": "auto",
+       "value": "$__auto_interval",
+       "selected": true
+     },
+     {
+       "text": "1s",
+       "value": "1s",
+       "selected": false
+     },
+     {
+       "text": "10s",
+       "value": "10s",
+       "selected": false
+     },
+     {
+       "text": "30s",
+       "value": "30s",
+       "selected": false
+     },
+     {
+       "text": "1m",
+       "value": "1m",
+       "selected": false
+     },
+     {
+       "text": "5m",
+       "value": "5m",
+       "selected": false
+     }
+   ],
+   "includeAll": false,
+   "multi": false,
+   "query": "1s,10s,30s,1m,5m",
+   "current": {
+     "text": "auto",
+     "value": "$__auto_interval"
+   },
+   "regex": "",
+   "auto": true,
+   "auto_count": 100,
+   "auto_min": "1s"
+ }
+    ]
+  },
+
+
+  "annotations": {
+    "list": [
+      {
+  "datasource": "influxdb",
+  "enable": true,
+  "iconColor": "#C0C6BE",
+  "iconSize": 13,
+  "lineColor": "rgba(47, 60, 207, 0.59)",
+  "name": "Commit",
+  "query": "SELECT * FROM events WHERE event = 'UI_COMMIT_COMPLETED' AND $timeFilter",
+  "showLine": "True",
+  "tagsColumn": "device",
+  "textColumn": "message",
+  "titleColumn": "events"
+}
+    ]
+  },
+
+  "refresh": "1m",
+  "schemaVersion": 12,
+  "version": 0,
+  "links": []
+}
