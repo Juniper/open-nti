@@ -1,0 +1,8 @@
+parser:
+    regex-command: show\s+subscribers\s+summary\s+port\s+\|\s+display\s+xml
+    matches:
+    -
+        type: single-value
+        method: xpath
+        xpath: //port-total
+        variable-name:  $host.bng.subscribers.summary.by-port.port-total
