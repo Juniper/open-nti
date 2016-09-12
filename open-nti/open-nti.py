@@ -584,7 +584,12 @@ def collector(**kwargs):
                         parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tags)
                         time.sleep(delay_between_commands)
 
-                jdev.close()
+                try:
+                    jdev.close()
+                    time.sleep(0.5)
+                except Exception, e:
+                    print "ERROR: Something wrong happens when closing the connection with the device"
+                    logging.exception(e)
 
                 timestamp_tracking['collector_cli_ends'] = int(datetime.today().strftime('%s'))
                 logger.info('[%s]: timestamp_tracking - CLI collection %s', host, timestamp_tracking['collector_cli_ends']-timestamp_tracking['collector_cli_start'])
