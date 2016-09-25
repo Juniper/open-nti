@@ -1,0 +1,72 @@
+{
+  "id": null,
+  "title": "{{ title }}",
+  "originalTitle": "{{ title }}",
+{% if tags_data is defined -%}
+  "tags": [
+    {{ tags_data }}
+  ],
+{%- endif %}
+  "style": "dark",
+  "timezone": "browser",
+  "editable": true,
+  "hideControls": false,
+  "sharedCrosshair": false,
+  "rows": [
+    {{ rows_data }}
+  ],
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {
+    "collapse": false,
+    "enable": true,
+    "notice": false,
+    "now": true,
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "status": "Stable",
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ],
+    "type": "timepicker"
+  },
+{% if templatings_data is defined %}
+  "templating": {
+    "enable": true,
+    "list": [
+    {{ templatings_data }}
+    ]
+  },
+{% endif %}
+{% if annotations_data is defined %}
+  "annotations": {
+    "list": [
+      {{ annotations_data }}
+    ]
+  },
+{% endif %}
+  "refresh": "1m",
+  "schemaVersion": 12,
+  "version": 0,
+  "links": []
+}

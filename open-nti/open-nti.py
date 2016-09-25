@@ -299,7 +299,7 @@ def get_metadata_and_add_datapoint(datapoints,**kwargs):
     # Calculating delta values (only applies for numeric values)
     delta = 0
     latest_value = ''
-    if type (value) != str:
+    if (type (value) != str):
 
         points=[]
         if (db_schema == 1):
@@ -561,8 +561,8 @@ def collector(**kwargs):
 #        if ((db_schema == 1) and (not(use_hostname))):
         if (not(use_hostname)):
             latest_datapoints = get_latest_datapoints(host=host)
-            logger.info("Latest Datapoints are:")
-            logger.info(pformat(latest_datapoints))
+            logger.debug("Latest Datapoints are:")
+            logger.debug(pformat(latest_datapoints))
 
         #    kpi_tags = get_host_base_tags(host=host)
         # Check host tag to identify what kind of connections will be used (ej junos / others  / etc)
@@ -642,8 +642,8 @@ def collector(**kwargs):
 #                            logger.info("Latest Datapoints are:")
 #                            logger.info(pformat(latest_datapoints))
                         latest_datapoints = get_latest_datapoints(host=host)
-                        logger.info("Latest Datapoints are:")
-                        logger.info(pformat(latest_datapoints))
+                        logger.debug("Latest Datapoints are:")
+                        logger.debug(pformat(latest_datapoints))
                     else:
                         logger.info('[%s]: Host will be referenced as : %s', host, host)
 
@@ -667,18 +667,59 @@ def collector(**kwargs):
                         parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tags)
                         time.sleep(delay_between_commands)
 
-                jdev.close()
+                try:
+                    jdev.close()
+                    time.sleep(0.5)
+                except Exception, e:
+                    print "ERROR: Something wrong happens when closing the connection with the device"
+                    logging.exception(e)
 
                 timestamp_tracking['collector_cli_ends'] = int(datetime.today().strftime('%s'))
                 logger.info('[%s]: timestamp_tracking - CLI collection %s', host, timestamp_tracking['collector_cli_ends']-timestamp_tracking['collector_cli_start'])
+                timestamp_tracking['collector_ends'] = int(datetime.today().strftime('%s'))
+
+                # Add open-nti internal kpi 
+                collection_time = timestamp_tracking['collector_ends']-timestamp_tracking['collector_start']
+                #kpi_tags['device']=host
+                kpi_tags['stats']="collection-time"
+                match={}
+                match["variable-name"]="open-nti-stats"
+                value_tmp =collection_time
+                # We'll add a dummy kpi in oder to have at least one fixed kpi with version/platform data.
+                get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
+
+                #kpi_tags['device']=host
+                kpi_tags['stats']="collection-successful"
+                match={}
+                match["variable-name"]="open-nti-stats"
+                value_tmp = 1
+                # We'll add a dummy kpi in oder to have at least one fixed kpi with version/platform data.
+                get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
+
+
 
                 if datapoints:   # Only insert datapoints if there is any :)
                     insert_datapoints(datapoints)
 
-                timestamp_tracking['collector_ends'] = int(datetime.today().strftime('%s'))
-                logger.info('[%s]: timestamp_tracking - total collection %s', host, timestamp_tracking['collector_ends']-timestamp_tracking['collector_start'])
+                
+                logger.info('[%s]: timestamp_tracking - total collection %s', host, collection_time)
             else:
                 logger.error('[%s]: Skipping host due connectivity issue', host)
+
+                datapoints = []
+                latest_datapoints = get_latest_datapoints(host=host)
+                # By default execute show version in order to get version and platform as default tags for all kpi related to this host
+                kpi_tags['device']=host
+                kpi_tags['stats']="collection-failure"
+                match={}
+                match["variable-name"]="open-nti-stats"
+                value_tmp = 1
+                # We'll add a dummy kpi in oder to have at least one fixed kpi with version/platform data.
+                get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
+
+                if datapoints:   # Only insert datapoints if there is any :)
+                    insert_datapoints(datapoints)
+
 
 
 ################################################################################################
@@ -720,8 +761,13 @@ if dynamic_args['test']:
 default_variables_yaml_file = BASE_DIR_INPUT + "open-nti.variables.yaml"
 default_variables = {}
 
-with open(default_variables_yaml_file) as f:
-    default_variables = yaml.load(f)
+try:
+    with open(default_variables_yaml_file) as f:
+        default_variables = yaml.load(f)
+except Exception, e:
+    logger.info('Error importing default variables file": %s', default_variables_yaml_file)
+    logging.exception(e)
+    sys.exit(0)
 
 db_schema = default_variables['db_schema']
 db_server = default_variables['db_server']
@@ -778,16 +824,26 @@ if dynamic_args['console']:
 credentials_yaml_file = BASE_DIR_INPUT + default_variables['credentials_file']
 credentials = {}
 logger.debug('Importing credentials file: %s ',credentials_yaml_file)
-with open(credentials_yaml_file) as f:
-    credentials = yaml.load(f)
-
+try:
+    with open(credentials_yaml_file) as f:
+        credentials = yaml.load(f)
+except Exception, e:
+    logger.error('Error importing credentials file: %s', credentials_yaml_file)
+ #   logging.exception(e)
+    sys.exit(0)  
 #  LOAD all hosts with their tags in a dic
 
 hosts_yaml_file = BASE_DIR_INPUT + default_variables['hosts_file']
 hosts = {}
 logger.debug('Importing host file: %s ',hosts_yaml_file)
-with open(hosts_yaml_file) as f:
-    hosts = yaml.load(f)
+try:
+    with open(hosts_yaml_file) as f:
+        hosts = yaml.load(f)
+except Exception, e:
+    logger.error('Error importing host file: %s', hosts_yaml_file)
+    #logging.exception(e)
+    sys.exit(0)        
+
 
 #  LOAD all commands with their tags in a dict
 
@@ -795,8 +851,13 @@ commands_yaml_file = BASE_DIR_INPUT + default_variables['commands_file']
 commands = []
 logger.debug('Importing commands file: %s ',commands_yaml_file)
 with open(commands_yaml_file) as f:
-    for document in yaml.load_all(f):
-        commands.append(document)
+    try:
+        for document in yaml.load_all(f):
+            commands.append(document)
+    except Exception, e:
+        logger.error('Error importing commands file: %s', commands_yaml_file)
+#        logging.exception(e)
+        sys.exit(0)        
 
 general_commands = commands[0]
 
@@ -806,15 +867,25 @@ junos_parsers = []
 junos_parsers_yaml_files = os.listdir(BASE_DIR + "/" + default_variables['junos_parsers_dir'])
 logger.debug('Importing junos parsers file: %s ',junos_parsers_yaml_files)
 for junos_parsers_yaml_file in junos_parsers_yaml_files:
-    with open(BASE_DIR + "/" + default_variables['junos_parsers_dir'] + "/"  + junos_parsers_yaml_file) as f:
-        junos_parsers.append(yaml.load(f))
+    try:
+        with open(BASE_DIR + "/" + default_variables['junos_parsers_dir'] + "/"  + junos_parsers_yaml_file) as f:
+            junos_parsers.append(yaml.load(f))
+    except Exception, e:
+        logger.error('Error importing junos parser: %s', junos_parsers_yaml_file)
+ #       logging.exception(e)
+        pass
 
 pfe_parsers = []
 pfe_parsers_yaml_files = os.listdir(BASE_DIR + "/" + default_variables['pfe_parsers_dir'])
 logger.debug('Importing pfe parsers file: %s ',pfe_parsers_yaml_files)
 for pfe_parsers_yaml_file in pfe_parsers_yaml_files:
-    with open(BASE_DIR + "/" + default_variables['pfe_parsers_dir'] + "/" + pfe_parsers_yaml_file) as f:
-        pfe_parsers.append(yaml.load(f))
+    try:
+        with open(BASE_DIR + "/" + default_variables['pfe_parsers_dir'] + "/" + pfe_parsers_yaml_file) as f:
+            pfe_parsers.append(yaml.load(f))
+    except Exception, e:
+        logger.error('Error importing pfe parser: %s', pfe_parsers_yaml_file)
+ #       logging.exception(e)
+        pass
 
 if __name__ == "__main__":
 

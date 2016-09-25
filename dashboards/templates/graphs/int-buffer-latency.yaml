@@ -1,0 +1,19 @@
+
+
+title: "Buffer Latency"
+template: graph-lines-02.j2
+datasource: influxdb
+span: 6
+
+targets:
+  A:
+    query: >
+      SELECT "value"
+      FROM "jnpr.analyticsd"
+      WHERE "type" = 'queue-stats.latency'
+      AND "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
+      GROUP BY "interface", "device"
+
+templatings_used:
+  - host_regex.yaml
+  - interface.yaml

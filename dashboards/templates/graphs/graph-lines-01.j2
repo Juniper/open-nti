@@ -1,0 +1,107 @@
+{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "{{ datasource }}",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": {{ id }},
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [],
+  "span": {{ span }},
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+    {
+      "column": "value",
+      "dsType": "influxdb",
+      "function": "mean",
+      "groupBy": [
+        {
+          "params": [
+            "$interval"
+          ],
+          "type": "time"
+        },
+        {
+          "params": [
+            "null"
+          ],
+          "type": "fill"
+        }
+      ],
+      "interval": "",
+      "query": "{{ query }}",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "select": [
+        [
+          {
+            "params": [
+              "value"
+            ],
+            "type": "field"
+          },
+          {
+            "params": [],
+            "type": "mean"
+          }
+        ]
+      ],
+      "series": "{{ series }}",
+      "tags": [],
+      "policy": "default"
+    }
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "{{ title }}",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short"
+    },
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short"
+    }
+  ],
+  "xaxis": {
+    "show": true
+  }
+}

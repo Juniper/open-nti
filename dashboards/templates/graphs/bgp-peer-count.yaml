@@ -1,0 +1,17 @@
+
+template: graph-lines-02.j2
+datasource: influxdb
+title: "BGP peer-count"
+span: 6
+
+targets:
+  A:
+    query: >
+      SELECT mean(value)
+      FROM /$host_regex.protocols.bgp.summary.peer-count/
+      WHERE $timeFilter
+      GROUP BY time($GroupBy)
+
+templatings_used:
+  - host_regex.yaml
+  - group_by.yaml

@@ -1,0 +1,37 @@
+
+
+title: "Aggregated TX/RX (PPS)"
+template: graph-lines-02.j2
+datasource: influxdb
+span: 6
+
+targets:
+  A:
+    query: >
+      SELECT sum("value")
+      FROM "jnpr.analyticsd"
+      WHERE ("type" = 'traffic-stats.rxpps' OR "type" = 'traffic-stats.txpps')
+      AND "device" =~ /$host_regex/ AND $timeFilter
+      GROUP BY time($interval), "device", "type"
+
+  B:
+    query: >
+      SELECT sum("value")
+      FROM "jnpr.jvision"
+      WHERE ("type" = 'egress_stats.if_1sec_pkts' OR "type" = 'ingress_stats.if_1sec_pkts')
+      AND "device" =~ /$host_regex/ AND $timeFilter
+      GROUP BY time($interval), "device", "type"
+
+yaxes:
+  - format: pps
+    label: RX / TX
+  - format: short
+
+series_overrides:
+  - alias: "/rxpps/i"
+    transform: "negative-Y"
+  - alias: "/ingress/i"
+    transform: "negative-Y"
+
+templatings_used:
+  - host_regex.yaml

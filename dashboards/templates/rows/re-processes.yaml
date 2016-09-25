@@ -1,0 +1,16 @@
+
+title: RE Processes
+height: 250px
+template: row_base.j2
+panels:
+  graphs:
+    - re-memory-rpd.yaml
+    - re-memory-dfwd.yaml
+    - re-memory-cosd.yaml
+    - re-memory-dcd.yaml
+    - re-memory-dfwd.yaml
+    - re-memory-mib2d.yaml
+    - re-memory-sampled.yaml
+    - re-memory-smid.yaml
+    - re-memory-smihelperd.yaml
+    - re-memory-snmpd.yaml

@@ -1,0 +1,22 @@
+
+title: Data Collection Agent Dashboard ALPHA
+template: "dashboard_base.j2"
+
+tags:
+  - juniper
+  - netconf
+  - opennti
+
+templatings:
+  - host_regex.yaml
+  - group_by.yaml
+
+annotations:
+  - commit.yaml
+
+rows:
+  - opennti-disclaimer.yaml
+  - re-statistics.yaml
+  - re-processes.yaml
+  - protocol-isis.yaml
+  - protocol-bgp.yaml

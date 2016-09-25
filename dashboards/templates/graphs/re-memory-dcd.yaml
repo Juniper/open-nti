@@ -1,0 +1,16 @@
+
+template: graph-lines-02.j2
+datasource: influxdb
+title: "DCD SIZE"
+span: 6
+
+targets:
+  A:
+    query: >
+      SELECT mean(value)
+      FROM /$host_regex.re.memory.dcd-SIZE/
+      WHERE $timeFilter
+      GROUP BY time($GroupBy)
+
+templatings_used:
+  - host_regex.yaml

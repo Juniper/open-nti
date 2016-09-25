@@ -1,0 +1,54 @@
+
+
+title: "Traffic Statistics (BPS)"
+template: graph-lines-02.j2
+datasource: influxdb
+span: 6
+
+targets:
+  A:
+    query: >
+      SELECT mean("value")
+      FROM "jnpr.analyticsd"
+      WHERE "type" = 'traffic-stats.txbps'
+      AND "device" =~ /$host_regex/ AND "interface" =~ /$interface$/ AND $timeFilter
+      GROUP BY "device", "interface", "type", time($GroupBy)
+  B:
+    query: >
+      SELECT mean("value")
+      FROM "jnpr.analyticsd"
+      WHERE "type" = 'traffic-stats.rxbps'
+      AND "device" =~ /$host_regex/ AND "interface" =~ /$interface$/ AND $timeFilter
+      GROUP BY "device", "interface", "type", time($GroupBy)
+  C:
+    query: >
+      SELECT derivative(mean("value"), 1s)*8
+      FROM "jnpr.jvision"
+      WHERE  ("type" = 'egress_stats.if_octets' OR "type" = 'ingress_stats.if_octets')
+      AND "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
+      GROUP BY "device", "interface", "type", time($GroupBy)
+
+  D:
+    query: >
+      SELECT  derivative(mean("counters/out-octets"), 1s)*8 AS "OUT",
+      derivative(mean("counters/in-octets"), 1s)*8 AS "IN"
+      FROM "openconfig-ifd"
+      WHERE "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
+      GROUP BY interface, device, time($GroupBy)
+
+yaxes:
+  - format: bps
+    label: RX / TX
+  - format: short
+
+series_overrides:
+  - alias: "/rxbps/i"
+    transform: "negative-Y"
+  - alias: "/ingress/i"
+    transform: "negative-Y"
+  - alias: "/IN/"
+    transform: "negative-Y"
+
+templatings_used:
+  - host_regex.yaml
+  - group_by.yaml

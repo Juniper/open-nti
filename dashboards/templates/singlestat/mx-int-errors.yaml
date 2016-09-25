@@ -1,0 +1,8 @@
+
+title: Aggregated Error Statistics over all MXs and all interfaces
+query: |
+  SELECT sum(\"value\")
+  FROM \"jnpr.jvision\"
+  WHERE  (\"type\" = 'ingress_errors.if_in_discards' OR \"type\" = 'ingress_errors.if_in_errors' OR \"type\" = 'ingress_errors.if_in_frame_errors' OR \"type\" = 'ingress_errors.if_in_l2_mismatch_timeouts' OR \"type\" = 'ingress_errors.if_in_l2chan_errors' OR \"type\" = 'ingress_errors.if_in_l3_incompletes' OR \"type\" = 'ingress_errors.if_in_qdrops'  OR \"type\" = 'ingress_errors.if_in_resource_errors'  OR \"type\" = 'ingress_errors.if_in_runts')
+  AND  $timeFilter
+span: 4

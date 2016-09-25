@@ -1,0 +1,17 @@
+
+template: graph-lines-02.j2
+datasource: influxdb
+title: "ISIS fragments-rebuilt (delta)"
+span: 6
+
+targets:
+  A:
+    query: >
+      SELECT mean(delta)
+      FROM /$host_regex.protocols.isis.statistics.general.fragments-rebuilt/
+      WHERE $timeFilter
+      GROUP BY time($GroupBy)
+
+templatings_used:
+  - host_regex.yaml
+  - group_by.yaml

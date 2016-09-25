@@ -1,0 +1,24 @@
+
+title: Data Steaming Collector Dashboard
+template: "dashboard_base.j2"
+
+tags:
+  - juniper
+  - jti
+  - opennti
+  - streaming
+
+templatings:
+  - host_regex.yaml
+  - interface.yaml
+  - group_by.yaml
+
+annotations:
+  - commit.yaml
+
+rows:
+  - opennti-disclaimer.yaml
+  - int-traffic.yaml
+  - int-queue.yaml
+  - int-buffer.yaml
+  - mpls-lsp.yaml

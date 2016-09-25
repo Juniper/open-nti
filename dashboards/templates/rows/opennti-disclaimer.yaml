@@ -1,0 +1,7 @@
+
+title: Disclaimer
+height: 25px
+template: row_disclaimer.j2
+
+panels:
+  graphs: []

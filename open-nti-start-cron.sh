@@ -3,11 +3,6 @@
 #Load params file with all variables
 source ./open-nti.params
 
-# Find container ID
-CONTAINER_ID=$(docker ps | grep $CONTAINER_NAME | awk '{print $1}')
-
-echo "Container ID : $CONTAINER_ID"
-
 time=$1
 comd=$2
-docker exec -it $CONTAINER_ID /usr/bin/python /opt/open-nti/startcron.py -a add -t "$time" -c "/usr/bin/python /opt/open-nti/open-nti.py -s $comd"
+docker exec -it $CONTAINER_NAME /usr/bin/python /opt/open-nti/startcron.py -a add -t "$time" -c "/usr/bin/python /opt/open-nti/open-nti.py -s $comd"

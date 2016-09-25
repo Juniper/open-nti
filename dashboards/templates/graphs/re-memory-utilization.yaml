@@ -1,0 +1,17 @@
+
+title: "RE - CPU idle"
+template: graph-lines-02.j2
+datasource: influxdb
+span: 6
+
+targets:
+  A:
+    query: >
+      SELECT mean(value)
+      FROM /$host_regex.chassis.routing-engine.*.memory-buffer-utilization/
+      WHERE $timeFilter
+      GROUP BY time($GroupBy)
+
+templatings_used:
+  - host_regex.yaml
+  - group_by.yaml

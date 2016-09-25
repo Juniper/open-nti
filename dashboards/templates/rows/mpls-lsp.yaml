@@ -1,0 +1,8 @@
+
+title: MPLS LSP
+height: 250px
+template: row_base.j2
+panels:
+  graphs:
+    - mpls-lsp-traffic-bps.yaml
+    - mpls-lsp-traffic-pps.yaml

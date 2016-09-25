@@ -1,0 +1,7 @@
+
+title: Interfaces Queue
+height: 250px
+template: row_base.j2
+panels:
+  graphs:
+    - int-queue-stat.yaml
