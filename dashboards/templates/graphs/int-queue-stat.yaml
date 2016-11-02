@@ -12,8 +12,7 @@ targets:
       FROM "jnpr.analyticsd"
       WHERE  ("type" = 'traffic-stats.rxcrcerr' OR "type" = 'traffic-stats.rxdroppkt')
       AND "device" =~ /$host_regex/ AND "interface" =~ /$interface$/ AND $timeFilter
-      GROUP BY "device", "interface", "type"
-##TODO Should it be group by time ($interval)
+      GROUP BY "device", "interface", "type", time($GroupBy)
 
   B:
     query: >
