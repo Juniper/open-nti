@@ -5798,7 +5798,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.bng.subscriber.summary.by-port.port-total/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /$host_regex.bng.subscribers.summary.by-port.port-total/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -5816,13 +5816,13 @@
                   }
                 ]
               ],
-              "series": "/$host_regex.bng.subscriber.summary.by-port.port-total/",
+              "series": "/$host_regex.bng.subscribers.summary.by-port.port-total/",
               "tags": []
             }
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "BNG total subscriber",
+          "title": "BNG total subscribers",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -5902,7 +5902,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.bng.subscriber.summary.l2tp-sessions/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /$host_regex.bng.subscribers.summary.l2tp-sessions/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -5920,7 +5920,7 @@
                   }
                 ]
               ],
-              "series": "/$host_regex.bng.subscriber.summary.l2tp-sessions/",
+              "series": "/$host_regex.bng.subscribers.summary.l2tp-sessions/",
               "tags": []
             }
           ],
@@ -6006,7 +6006,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.bng.subscriber.summary.l2tp-tunnels/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /$host_regex.bng.subscribers.summary.l2tp-tunnels/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6024,7 +6024,7 @@
                   }
                 ]
               ],
-              "series": "/$host_regex.bng.subscriber.summary.l2tp-tunnels/",
+              "series": "/$host_regex.bng.subscribers.summary.l2tp-tunnels/",
               "tags": []
             }
           ],
@@ -6110,7 +6110,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.bng.subscriber.summary.session-state-init/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /$host_regex.bng.subscribers.summary.session-state-init/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6128,7 +6128,7 @@
                   }
                 ]
               ],
-              "series": "/$host_regex.bng.subscriber.summary.session-state-init/",
+              "series": "/$host_regex.bng.subscribers.summary.session-state-init/",
               "tags": []
             }
           ],
@@ -6214,7 +6214,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.bng.subscriber.summary.session-state-configured/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /$host_regex.bng.subscribers.summary.session-state-configured/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6232,7 +6232,7 @@
                   }
                 ]
               ],
-              "series": "/$host_regex.bng.subscriber.summary.session-state-configured/",
+              "series": "/$host_regex.bng.subscribers.summary.session-state-configured/",
               "tags": []
             }
           ],
@@ -6318,7 +6318,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.bng.subscriber.summary.session-state-terminating/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /$host_regex.bng.subscribers.summary.session-state-terminating/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6336,7 +6336,7 @@
                   }
                 ]
               ],
-              "series": "/$host_regex.bng.subscriber.summary.session-state-terminating/",
+              "series": "/$host_regex.bng.subscribers.summary.session-state-terminating/",
               "tags": []
             }
           ],
@@ -6422,7 +6422,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.bng.subscriber.summary.session-state-terminated/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /$host_regex.bng.subscribers.summary.session-state-terminated/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6440,7 +6440,7 @@
                   }
                 ]
               ],
-              "series": "/$host_regex.bng.subscriber.summary.session-state-terminated/",
+              "series": "/$host_regex.bng.subscribers.summary.session-state-terminated/",
               "tags": []
             }
           ],
@@ -6474,7 +6474,7 @@
         }
       ],
       "showTitle": true,
-      "title": "BNG Subscriber Statistics"
+      "title": "BNG Subscribers Statistics"
     },
     {
       "collapse": true,

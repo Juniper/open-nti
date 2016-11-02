@@ -1,5 +1,5 @@
 
-title: Data Collection Agent Dashboard TEST
+title: Data Collection Agent Dashboard ALPHA
 template: "dashboard_base.j2"
 
 tags:
@@ -7,8 +7,16 @@ tags:
   - netconf
   - opennti
 
-rows:
-  - re_processes.yaml
-
 templatings:
   - host_regex.yaml
+  - group_by.yaml
+
+annotations:
+  - commit.yaml
+
+rows:
+  - opennti-disclaimer.yaml
+  - re-statistics.yaml
+  - re-processes.yaml
+  - protocol-isis.yaml
+  - protocol-bgp.yaml

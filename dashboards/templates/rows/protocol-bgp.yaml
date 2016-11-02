@@ -1,0 +1,9 @@
+
+title: BGP Statistics
+height: 250px
+template: row_base.j2
+panels:
+  graphs:
+    - bgp-peer-count.yaml
+    - bgp-group-count.yaml
+    - bgp-peer-down-count.yaml

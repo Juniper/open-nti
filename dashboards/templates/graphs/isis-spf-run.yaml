@@ -1,14 +1,14 @@
 
-title: "RE - CPU idle"
 template: graph-lines-02.j2
 datasource: influxdb
+title: "ISIS spf-runs (delta)"
 span: 6
 
 targets:
   A:
     query: >
-      SELECT mean(value)
-      FROM /$host_regex.chassis.routing-engine.*.cpu-idle/
+      SELECT mean(delta)
+      FROM /$host_regex.protocols.isis.statistics.general.spf-runs/
       WHERE $timeFilter
       GROUP BY time($GroupBy)
 

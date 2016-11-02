@@ -18,7 +18,7 @@ targets:
   B:
     query: >
       SELECT  derivative(mean("counters/out-discards"), 1s) AS "Discard out"
-      FROM "/junos/system/linecard/interface/"
+      FROM "openconfig-ifd"
       WHERE "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
       GROUP BY interface, device, time($GroupBy)
 
