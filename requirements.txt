@@ -3,3 +3,4 @@ influxdb==2.11.0
 pytest-cov
 docker-py
 requests
+jinja2
