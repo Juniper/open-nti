@@ -16,7 +16,7 @@ targets:
 
   B:
     query: >
-      SELECT derivative("value", 1s)
+      SELECT derivative(mean("value"), 1s)
       FROM "jnpr.jvision"
       WHERE ("type" = 'ingress_errors.if_in_discards'
       OR "type" = 'ingress_errors.if_in_errors'
