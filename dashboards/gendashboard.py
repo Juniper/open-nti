@@ -133,7 +133,7 @@ if 'annotations' in dashboard.keys():
             logger.debug('Not the first annotation, add a ","')
             dashboard['annotations_data'] = dashboard['annotations_data'] + ','
         dashboard['annotations_data'] = dashboard['annotations_data'] + annotation_tpl_rdr
-        nbr_templatings =+ 1
+        nbr_annotations =+ 1
 
 #############################################
 ### Process TAGS
