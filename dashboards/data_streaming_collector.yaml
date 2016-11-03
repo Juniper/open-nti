@@ -23,3 +23,4 @@ rows:
   - int-buffer.yaml
   - mpls-lsp.yaml
   - firewall.yaml
+  - cpumem.yaml
