@@ -22,3 +22,4 @@ rows:
   - int-queue.yaml
   - int-buffer.yaml
   - mpls-lsp.yaml
+  - firewall.yaml

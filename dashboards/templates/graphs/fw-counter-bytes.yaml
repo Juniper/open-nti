@@ -1,0 +1,18 @@
+
+
+title: "Firewall Filter Counter - Bytes"
+template: graph-lines-02.j2
+datasource: influxdb
+span: 6
+
+targets:
+  A:
+    query: >
+      SELECT derivative(mean("value"), 1s)
+      FROM "jnpr.jvision"
+      WHERE "type" = 'filter_counter.bytes'
+      AND "device" =~ /$host_regex$/ AND  $timeFilter
+      GROUP BY "device", "interface", "filter_counter_name", time($GroupBy)
+
+templatings_used:
+  - host_regex.yaml
