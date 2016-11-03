@@ -4,3 +4,4 @@ pytest-cov
 docker-py
 requests
 jinja2
+PyYAML
