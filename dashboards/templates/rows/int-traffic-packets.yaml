@@ -1,0 +1,7 @@
+
+title: Interfaces Traffic Packets
+height: 250px
+template: row_base.j2
+panels:
+  graphs:
+    - int-packets.yaml

@@ -1,8 +1,10 @@
 
+template: annotation_base.j2
+
 query: SELECT * FROM events WHERE event = 'SNMP_TRAP_LINK_DOWN' AND $timeFilter
-icon_color: "#C0C6BE"
+icon_color: "#f45342"
 icon_size: 13
-name: Commit
+name: Interface Flap
 show_line: true
 column_tags: device
 column_text: message
