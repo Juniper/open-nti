@@ -1,0 +1,11 @@
+
+template: annotation_base.j2
+
+query: SELECT * FROM events WHERE event = 'RPD_LDP_NBRDOWN' AND $timeFilter
+icon_color: "#f45342"
+icon_size: 13
+name: LDP Down
+show_line: true
+column_tags: device
+column_text: message
+column_title: events
