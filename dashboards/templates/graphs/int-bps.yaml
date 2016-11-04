@@ -30,6 +30,14 @@ targets:
 
   D:
     query: >
+      SELECT derivative(mean("value"), 1s)*8
+      FROM "jnpr.jvision"
+      WHERE  ("type" = 'egress_stats.if_fc_stats.if_octets' OR "type" = 'ingress_stats.if_fc_stats.if_octets')
+      AND "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
+      GROUP BY "device", "interface", "type", "family", "forwarding_class", time($GroupBy)
+
+  E:
+    query: >
       SELECT  derivative(mean("counters/out-octets"), 1s)*8 AS "OUT",
       derivative(mean("counters/in-octets"), 1s)*8 AS "IN"
       FROM "openconfig-ifd"

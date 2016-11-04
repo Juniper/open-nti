@@ -24,6 +24,14 @@ targets:
       AND "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
       GROUP BY "device", "interface", "type", time($GroupBy)
 
+  C:
+    query: >
+      SELECT mean("value")
+      FROM "jnpr.jvision"
+      WHERE  ("type" = 'egress_stats.if_fc_stats.if_packets' OR "type" = 'ingress_stats.if_fc_stats.if_packets')
+      AND "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
+      GROUP BY "device", "interface", "type", "family", "forwarding_class", time($GroupBy)
+
 yaxes:
   - format: short
   - format: short

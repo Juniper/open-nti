@@ -108,7 +108,7 @@
       "column": "value",
       "dsType": "influxdb",
       "interval": "",
-      "query": "SELECT  derivative(mean(\"counters/out-packets\"), 1s) AS \"OUT\", derivative(mean(\"counters/in-packets\"), 1s) AS \"IN\" FROM \"openconfig-ifd\" WHERE \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY interface, device, time($GroupBy)",
+      "query": "SELECT derivative(mean(\"value\"), 1s) FROM \"jnpr.jvision\" WHERE (\"type\" = 'egress_stats.if_packets' OR \"type\" = 'ingress_stats.if_packets') AND \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\", time($GroupBy)",
       "rawQuery": true,
       "refId": "C",
       "resultFormat": "time_series",
@@ -128,7 +128,17 @@
       "column": "value",
       "dsType": "influxdb",
       "interval": "",
-      "query": "SELECT derivative(mean(\"value\"), 1s) FROM \"jnpr.jvision\" WHERE (\"type\" = 'egress_stats.if_packets' OR \"type\" = 'ingress_stats.if_packets') AND \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\", time($GroupBy)",
+      "query": "SELECT  derivative(mean(\"counters/out-packets\"), 1s) AS \"OUT\", derivative(mean(\"counters/in-packets\"), 1s) AS \"IN\" FROM \"openconfig-ifd\" WHERE \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY interface, device, time($GroupBy)",
+      "rawQuery": true,
+      "refId": "E",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+,{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT derivative(mean(\"value\"), 1s) FROM \"jnpr.jvision\" WHERE  (\"type\" = 'egress_stats.if_fc_stats.if_packets' OR \"type\" = 'ingress_stats.if_fc_stats.if_packets') AND \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\", \"family\", \"forwarding_class\", time($GroupBy)",
       "rawQuery": true,
       "refId": "D",
       "resultFormat": "time_series",
@@ -260,6 +270,16 @@
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT  derivative(mean(\"counters/out-octets\"), 1s)*8 AS \"OUT\", derivative(mean(\"counters/in-octets\"), 1s)*8 AS \"IN\" FROM \"openconfig-ifd\" WHERE \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY interface, device, time($GroupBy)",
+      "rawQuery": true,
+      "refId": "E",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+,{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT derivative(mean(\"value\"), 1s)*8 FROM \"jnpr.jvision\" WHERE  (\"type\" = 'egress_stats.if_fc_stats.if_octets' OR \"type\" = 'ingress_stats.if_fc_stats.if_octets') AND \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\", \"family\", \"forwarding_class\", time($GroupBy)",
       "rawQuery": true,
       "refId": "D",
       "resultFormat": "time_series",
