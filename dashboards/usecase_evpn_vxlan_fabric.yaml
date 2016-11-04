@@ -1,0 +1,28 @@
+
+title: EVPN-VXLAN Fabric Dashboard
+template: "dashboard_base.j2"
+
+tags:
+  - juniper
+  - jti
+  - opennti
+  - streaming
+  - evpn/vxlan
+
+templatings:
+  - host_regex.yaml
+  - interface.yaml
+  - group_by.yaml
+
+annotations:
+  - commit.yaml
+  - bgp_state.yaml
+  - interface_flap.yaml
+
+rows:
+  - int-traffic.yaml
+  - int-queue.yaml
+  - int-buffer.yaml
+  - re-statistics.yaml
+  - re-processes.yaml
+  - protocol-bgp.yaml
