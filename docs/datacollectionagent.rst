@@ -69,46 +69,40 @@ To collect data periodically with the **Data Collection Agent**, you need to set
 As part of the project, open-nti is providing some scripts to easily add/remove cron jobs **inside** the container **from** the host.
 
 Scripts provided:
- - **open-nti-start-cron.sh**: Create a new cron job inside the container
- - **open-nti-show-cron.sh**: Show all cron jobs configured inside the container
- - **open-nti-stop-cron.sh**: Delete a cron job inside the container for a specific tag
+ - **make cron-add**: Create a new cron job inside the container
+ - **make cron-show**: Show all cron jobs configured inside the container
+ - **make cron-delete**: Delete a cron job inside the container for a specific tag
 
 To start cron job to execute commands specified above for specific tag every minute:
 
 .. code-block:: text
 
-  ./open-nti-start-cron.sh 1m '--tag tag1'
+  make cron-add TAG=lab
 
 To start cron job for more than one tag at the same time:
 
 .. code-block:: text
 
-  ./open-nti-start-cron.sh 1m '--tag tag1 tag2'
+  make cron-add TAG='lab prod'
 
 To start cron job to execute commands specified above for specific tag every 5 minutes:
 
 .. code-block:: text
 
-    ./open-nti-start-cron.sh 5m '--tag tag1'
-
+  make cron-add TAG=tag1 TIME=5m
 
 To start cron job to execute commands specified above for specific tag every hour:
 
 .. code-block:: text
 
-    ./open-nti-start-cron.sh 1h '--tag tag1'
+  make cron-add TAG=tag1 TIME=1h
 
-To show all scheduled cron jobs:
-
-.. code-block:: text
-
-  ./open-nti-show-cron.sh 'all'
 
 To stop cron job for specific tag:
 
 .. code-block:: text
 
-  ./open-nti-stop-cron.sh '--tag tag1'
+  make cron-show TAG=tag1
 
 .. NOTE::
   If you want to configure the cron job yourself, open-nti use this command:

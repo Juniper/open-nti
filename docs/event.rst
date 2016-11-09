@@ -5,7 +5,7 @@ Their are multiple ways to record entry in the events serie
 
 Insert events via syslog
 ------------------------
-open-nti will access events in the syslog format on port **UDP/6000**.  
+open-nti will access events in the syslog format on port **UDP/6000**.
 The goal is not to send all syslog but only relevant information like Commit or Protocol Flaps
 
 To send only one syslog at commit time you can use the configuration below
