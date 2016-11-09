@@ -1,0 +1,9 @@
+
+title: Firewall Filters
+height: 250px
+template: row_base.j2
+panels:
+  graphs:
+    - fw-counter-bytes.yaml
+    - fw-counter-packets.yaml
+    - fw-memory.yaml

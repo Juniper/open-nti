@@ -22,16 +22,23 @@ targets:
       AND "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
       GROUP BY "device", "interface", "type", time($GroupBy)
 ## JTI New ProtoFile ##
-  D:
+  C:
     query: >
       SELECT derivative(mean("value"), 1s)
       FROM "jnpr.jvision"
       WHERE ("type" = 'egress_stats.if_packets' OR "type" = 'ingress_stats.if_packets')
       AND "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
       GROUP BY "device", "interface", "type", time($GroupBy)
+  D:
+    query: >
+      SELECT derivative(mean("value"), 1s)
+      FROM "jnpr.jvision"
+      WHERE  ("type" = 'egress_stats.if_fc_stats.if_packets' OR "type" = 'ingress_stats.if_fc_stats.if_packets')
+      AND "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
+      GROUP BY "device", "interface", "type", "family", "forwarding_class", time($GroupBy)
 
 ## Openconfig ##
-  C:
+  E:
     query: >
       SELECT  derivative(mean("counters/out-packets"), 1s) AS "OUT",
       derivative(mean("counters/in-packets"), 1s) AS "IN"

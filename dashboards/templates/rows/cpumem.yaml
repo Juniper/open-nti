@@ -1,0 +1,9 @@
+
+title: CPU / Memory
+height: 250px
+template: row_base.j2
+panels:
+  graphs:
+    - cpumem-bytes.yaml
+    - cpumem-size.yaml
+    - cpumem-utilization.yaml

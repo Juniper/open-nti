@@ -1,5 +1,5 @@
 
-title: Data Steaming Collector Dashboard
+title: EVPN-VXLAN Fabric Dashboard
 template: "dashboard_base.j2"
 
 tags:
@@ -7,6 +7,7 @@ tags:
   - jti
   - opennti
   - streaming
+  - evpn/vxlan
 
 templatings:
   - host_regex.yaml
@@ -15,12 +16,13 @@ templatings:
 
 annotations:
   - commit.yaml
+  - bgp_state.yaml
+  - interface_flap.yaml
 
 rows:
-  - opennti-disclaimer.yaml
   - int-traffic.yaml
   - int-queue.yaml
   - int-buffer.yaml
-  - mpls-lsp.yaml
-  - firewall.yaml
-  - cpumem.yaml
+  - re-statistics.yaml
+  - re-processes.yaml
+  - protocol-bgp.yaml
