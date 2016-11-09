@@ -1,9 +1,9 @@
 #! /bin/bash
 
 ## Image and container
-export IMAGE_NAME='juniper/open-nti'
-export CONTAINER_NAME='opennti_con'
-export DOCKER_COMPOSE_FILE='docker-compose.yml'
+export IMAGE_NAME=juniper/open-nti
+export CONTAINER_NAME=opennti_con
+export DOCKER_COMPOSE_FILE=docker-compose.yml
 
 ## Local ports that will be redirected to the Open NTI
 ## Startup will fail if some ports are already in use
@@ -19,8 +19,8 @@ export LOCAL_PORT_NGINX=80
 export LOCAL_PORT_SSH=22222
 
 ## Local directories that will be mapped into the container
-export LOCAL_DIR_DATA='data'
-export LOCAL_DIR_LOG='logs'
-export LOCAL_DIR_DB='db'
-export LOCAL_DIR_TESTS='tests'
-export LOCAL_DIR_DASHBOARD='dashboards'
+export LOCAL_DIR_DATA=data
+export LOCAL_DIR_LOG=logs
+export LOCAL_DIR_DB=db
+export LOCAL_DIR_TESTS=tests
+export LOCAL_DIR_DASHBOARD=dashboards
