@@ -20,7 +20,7 @@ pp = pprint.PrettyPrinter(indent=4)
 # Images and containers
 
 OPENNTI_NAME = 'open-nti_test'
-OPENNTI_IMAGE = 'juniper/open-nti'
+OPENNTI_IMAGE = 'juniper/open-nti:unittest'
 OPENNTI_C = ''
 OPENNTI_IP = ''
 
@@ -290,10 +290,25 @@ def test_influxdb_running_database_exist():
         else:
             continue
 
+# DROP CONTINUOUS QUERY "four_weeks" ON "juniper"
+# CREATE RETENTION POLICY open_nti_test ON juniper DURATION INF REPLICATION 1 DEFAULT
     if found_db:
         assert 1
     else:
         assert 0
+
+def test_influxdb_create_default_RP():
+    # Verify we can connect to InfluxDB and DB with a name juniper exists
+    db = get_handle_db()
+
+    query = 'CREATE RETENTION POLICY "open_nti_test" ON juniper DURATION INF REPLICATION 1 DEFAULT;'
+    result = db.query(query)
+
+# DROP CONTINUOUS QUERY "four_weeks" ON "juniper"
+# CREATE RETENTION POLICY open_nti_test ON juniper DURATION INF REPLICATION 1 DEFAULT
+
+    if result:
+        assert 1
 
 
 def test_collection_agent_01():
@@ -403,16 +418,16 @@ def teardown_module(module):
     global OPENNTI_IN_LOG_C
 
     # Delete all files in /tests/output/
-    if not os.getenv('TRAVIS'):
-
-        c.stop(container=OPENNTI_C)
-        c.remove_container(container=OPENNTI_C)
-
-        c.stop(container=OPENNTI_IN_JTI_C)
-        c.remove_container(container=OPENNTI_IN_JTI_C)
-
-        c.stop(container=OPENNTI_IN_LOG_C)
-        c.remove_container(container=OPENNTI_IN_LOG_C)
-
-        c.stop(container=TCP_REPLAY_C)
-        c.remove_container(container=TCP_REPLAY_C)
+    # if not os.getenv('TRAVIS'):
+        #
+        # c.stop(container=OPENNTI_C)
+        # c.remove_container(container=OPENNTI_C)
+        #
+        # c.stop(container=OPENNTI_IN_JTI_C)
+        # c.remove_container(container=OPENNTI_IN_JTI_C)
+        #
+        # c.stop(container=OPENNTI_IN_LOG_C)
+        # c.remove_container(container=OPENNTI_IN_LOG_C)
+        #
+        # c.stop(container=TCP_REPLAY_C)
+        # c.remove_container(container=TCP_REPLAY_C)
