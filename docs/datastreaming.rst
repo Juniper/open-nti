@@ -2,8 +2,8 @@ Data Streaming Collector
 ========================
 
 Currently the collector accept:
-- Analyticsd (qfx5k) streams in JSON/UDP on port **UDP/50020**
-- Juniper Telemetry Interface (MX/PTX) streams in GPB/UDP on port **UDP/50000**
+ - Analyticsd (QFX5k) streams in JSON/UDP on port **UDP/50020**
+ - Juniper Telemetry Interface (MX/PTX) streams in GPB/UDP on port **UDP/50000**
 
 .. IMPORTANT::
   **it's important that all devices have the correct time defined**,
@@ -13,10 +13,12 @@ statsd interface
 ----------------
 
 open-nti is using telegraf to support statsd
-Statsd is a popular tool to send metrics over the network, it has been designed by etsy
-More information below :
-- https://github.com/etsy/statsd/blob/master/docs/metric_types.md
-- https://github.com/influxdata/telegraf/tree/master/plugins/inputs/statsd
+Statsd is a popular tool to send metrics over the network, it has been designed by etsy.
+
+More information below:
+
+ - https://github.com/etsy/statsd/blob/master/docs/metric_types.md
+ - https://github.com/influxdata/telegraf/tree/master/plugins/inputs/statsd
 
 Here is an example of how to insert statsd data into the Database
 
