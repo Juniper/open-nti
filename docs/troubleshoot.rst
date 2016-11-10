@@ -2,43 +2,57 @@ Troubleshooting Guide
 ======================
 
 To check if containers are running, execute the following command. By default you should have 3 containers running
+
 .. code-block:: text
 
   docker ps
 
 To force containers to stop, execute
+
 .. code-block:: text
 
   make stop
 
 To access the CLI of the main container for debug,
 Start a SSH session using the insecure_key provided in the repo and the script "docker.cli.sh"
+
 .. code-block:: text
 
   make cli
 
 For the Input containers named __open-nti-input-*__ you can access the logs directly from docker by running :
+
 .. code-block:: text
 
   docker logs <container name or ID>
 
+Data Collection Agent
+------------------------
 
-FAQ
----
-I'm streaming data from devices but I'm not seeing anything on the Dashboard
+Q - I configured hosts/credential/commands.yaml files but I'm not seeing anything on the dashboard
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To make sure everything is working as expected, you can run the Data Collection Agent in debug mode
+
+.. code-block:: text
+
+  make cron-debug TAG=lab
+
+Data Streaming Collector
+------------------------
+
+Q - I'm streaming data from devices but I'm not seeing anything on the Dashboard
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To reach the dashboard, traffic have to go through the following path:
 **Device** >(A)> **Host** >(B)> **Container** >(C)> **Fluentd** >(B)> **InfluxDB** >(E)> **Grafana**
 
-
-A - Check the timestamp on the devices and on the server
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**A - Check the timestamp on the devices and on the server**
 
 Timestamp MUST match on both side, the server and the junos devices.
 It's the most common issue.
 
-B - Check that traffic is reaching the Host
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**B - Check that traffic is reaching the Host**
 
 The best solution is to use TCPDUMP on the Host and filter on destination port
 
@@ -47,8 +61,7 @@ The best solution is to use TCPDUMP on the Host and filter on destination port
   On Unix/Mac
   tcpdump -i <ingress interface> -n dst port <dest port number>
 
-C - Check that traffic is reaching the container
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**C - Check that traffic is reaching the container**
 
 The best solution is to use TCPDUMP inside the container
 
@@ -61,9 +74,7 @@ The best solution is to use TCPDUMP inside the container
   If you e.g. use Src IP for which there is no route entry on host OS (Ubuntu
   does RPF check as default), packets would be discarded.
 
-
-D - Check Fluentd
-^^^^^^^^^^^^^^^^^^^^
+**D - Check Fluentd****
 
 Check fluentd logs, inside the container
 
@@ -73,8 +84,7 @@ Check fluentd logs, inside the container
 
 Nothing should be printed if everything is right
 
-E - Check if data is properly reaching the database
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**E - Check if data is properly reaching the database**
 
  - connect on Influxdb management interface with a browser on port 8083
  - Select Juniper as database on top right corner
