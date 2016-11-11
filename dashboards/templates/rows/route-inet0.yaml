@@ -1,0 +1,8 @@
+
+title: Routing Table - inet.0
+height: 250px
+template: row_base.j2
+panels:
+  graphs:
+    - route-inet0-active.yaml
+    - route-inet0-hidden.yaml
