@@ -1,5 +1,5 @@
 
-title: "RE - CPU idle"
+title: "RE - Memory Utilization"
 template: graph-lines-02.j2
 datasource: influxdb
 span: 6
