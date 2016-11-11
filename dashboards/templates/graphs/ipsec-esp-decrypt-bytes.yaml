@@ -1,0 +1,16 @@
+
+template: graph-lines-02.j2
+datasource: influxdb
+title: "ESP Decrypted Bytes"
+span: 6
+
+targets:
+  A:
+    query: >
+      SELECT derivative(mean("value"), 1s)
+      FROM /$host_regex.ipsec-esp-decrypted-bytes/
+      WHERE $timeFilter
+      GROUP BY time($GroupBy)
+
+templatings_used:
+  - host_regex.yaml

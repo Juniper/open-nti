@@ -1,0 +1,32 @@
+
+template: graph-lines-02.j2
+datasource: influxdb
+title: "AH Traffic Bytes"
+span: 6
+
+targets:
+  A:
+    query: >
+      SELECT mean("value")
+      FROM /$host_regex.ipsec-ah-input-bytes/
+      WHERE $timeFilter
+      GROUP BY time($GroupBy)
+  B:
+    query: >
+      SELECT mean("value")
+      FROM /$host_regex.ipsec-ah-output-bytes/
+      WHERE $timeFilter
+      GROUP BY time($GroupBy)
+
+yaxes:
+  - format: bps
+    label: RX / TX
+  - format: short
+
+series_overrides:
+  - alias: "/input/i"
+    transform: "negative-Y"
+
+templatings_used:
+  - host_regex.yaml
+  - group_by.yaml
