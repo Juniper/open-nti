@@ -12,7 +12,7 @@ install:
   - docker pull dgarros/tcpreplay
   - docker pull juniper/open-nti-input-jti
   - docker pull juniper/open-nti-input-syslog
-  - docker build -t juniper/open-nti .
+  - docker build -t juniper/open-nti:unittest .
 
 script:
   - python -m pytest -v --durations=10
