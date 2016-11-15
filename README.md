@@ -22,7 +22,7 @@ Please check the [Install Guide](http://open-nti.readthedocs.io/en/latest/instal
 
 # Documentation
 
-The complete [documentation is avaialable on here](http://open-nti.readthedocs.io/en/latest/)
+The complete [documentation is available here](http://open-nti.readthedocs.io/en/latest/)
 
 # Ask a question or Report an Issue ?
 
