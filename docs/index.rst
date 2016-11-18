@@ -75,7 +75,6 @@ Additional Documentation
    datacollectionagent
    datastreaming
    event
-   parser
 
 .. _dashboards-docs:
 

@@ -33,15 +33,9 @@ graph_dir = "../dashboards/templates/graphs"
 templating_dir = "../dashboards/templates/templatings"
 annotation_dir = "../dashboards/templates/annotations"
 row_dir = "../dashboards/templates/rows"
+template_dir = "_templates"
 
 parsers = { 'parsers': [] }
-
-dashboards = {
-        'graphs': [],
-        'templating': [],
-        'annotation': [],
-        'row': [],
-    }
 
 ############################################
 ## Collect Parsers
@@ -51,7 +45,7 @@ for file in os.listdir(parser_dir):
     if file.endswith(".yaml"):
         parsers['parsers'].append(file)
 
-table_parser_file = open("table-html-parser.j2")
+table_parser_file = open(template_dir + "/table-html-parser.j2")
 table_parser_tpl = Template(table_parser_file.read())
 parser_table_html = table_parser_tpl.render( parsers )
 
@@ -60,16 +54,18 @@ tpl_var['table'] = parser_table_html
 
 # -- Generate RST files based on Jinja file
 
-parser_file = open("parser.rst.j2")
+parser_file = open(template_dir + "/datacollectionagent.rst.j2")
 parser_tpl = Template(parser_file.read())
 parser_rst = parser_tpl.render( tpl_var )
 
-with open("parser.rst", "w") as text_file:
+with open("datacollectionagent.rst", "w") as text_file:
     text_file.write(parser_rst)
 
 ############################################
 ## Collect Dashboard / Graph
 ############################################
+
+graph_var = { 'graphs': [] }
 
 for file in os.listdir(graph_dir):
     if file.endswith(".yaml"):
@@ -79,24 +75,92 @@ for file in os.listdir(graph_dir):
         if 'title' in graph.keys():
 
             tmp = {  'title': graph['title'], 'file': file }
-            dashboards['graphs'].append(tmp)
+            graph_var['graphs'].append(tmp)
 
-            print graph['title'] + " - " + file
+            # print graph['title'] + " - " + file
 
-# pp.pprint(dashboards)
-
-table_graph_file = open("table-html-graph.j2")
+table_graph_file = open(template_dir + "/table-html-graph.j2")
 table_graph_tpl = Template(table_graph_file.read())
-graph_table_html = table_graph_tpl.render( dashboards )
+graph_table_html = table_graph_tpl.render( graph_var )
 
-# pp.pprint(graph_table_html)
+############################################
+## Collect Dashboard / rows
+############################################
+
+row_var = { 'rows': [] }
+print " ---- Rows --------"
+
+for file in os.listdir(row_dir):
+    if file.endswith(".yaml"):
+
+        # Read content of the file to extract info
+        row = yaml.load(open(row_dir + "/" + file).read())
+        if 'title' in row.keys():
+
+            tmp = {  'title': row['title'], 'file': file }
+            row_var['rows'].append(tmp)
+
+            print row['title'] + " - " + file
+
+table_row_file = open(template_dir + "/table-html-row.j2")
+table_row_tpl = Template(table_row_file.read())
+row_table_html = table_row_tpl.render( row_var )
+
+############################################
+## Collect Dashboard / Annotations
+############################################
+
+annotation_var = { 'annotations': [] }
+print " ---- Annotations --------"
+
+for file in os.listdir(annotation_dir):
+    if file.endswith(".yaml"):
+
+        # Read content of the file to extract info
+        annotation = yaml.load(open(annotation_dir + "/" + file).read())
+        if 'name' in annotation.keys():
+
+            tmp = {  'title': annotation['name'], 'file': file }
+            annotation_var['annotations'].append(tmp)
+
+            print annotation['name'] + " - " + file
+
+table_annotation_file = open(template_dir + "/table-html-annotation.j2")
+table_annotation_tpl = Template(table_annotation_file.read())
+annotation_table_html = table_annotation_tpl.render( annotation_var )
+
+############################################
+## Collect Dashboard / Templatings
+############################################
+
+templating_var = { 'templatings': [] }
+print " ---- Templatings --------"
+
+for file in os.listdir(templating_dir):
+    if file.endswith(".yaml"):
+
+        # Read content of the file to extract info
+        templating = yaml.load(open(templating_dir + "/" + file).read())
+        if 'name' in templating.keys():
+
+            tmp = {  'title': templating['name'], 'file': file }
+            templating_var['templatings'].append(tmp)
+
+            print templating['name'] + " - " + file
+
+table_templating_file = open(template_dir + "/table-html-templating.j2")
+table_templating_tpl = Template(table_templating_file.read())
+templating_table_html = table_templating_tpl.render( templating_var )
 
 # -- Generate RST files based on Jinja file
 
 tpl_var = {}
 tpl_var['graphs'] = graph_table_html
+tpl_var['rows'] = row_table_html
+tpl_var['annotations'] = annotation_table_html
+tpl_var['templatings'] = templating_table_html
 
-dashboardlib_file = open("dashboardlib.rst.j2")
+dashboardlib_file = open(template_dir + "/dashboardlib.rst.j2")
 dashboardlib_tpl = Template(dashboardlib_file.read())
 dashboardlib_rst = dashboardlib_tpl.render( tpl_var )
 

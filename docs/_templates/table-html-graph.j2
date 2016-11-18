@@ -6,10 +6,10 @@
         </tr>
       <thead>
       <tbody>
-{% for graph in graphs %}
+{% for item in graphs %}
         <tr>
-          <td class="jnpr-name">{{ graph.title }}</td>
-          <td class="jnpr-desc">{{ graph.file }}</td>
+          <td class="jnpr-name">{{ item.title }}</td>
+          <td class="jnpr-desc">{{ item.file }}</td>
         </tr>
 {% endfor %}
       <tbody>
