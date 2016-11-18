@@ -1,0 +1,16 @@
+    <table style="width:100%;white-space:normal;" border=1 class="docutils jnpr-table" >
+      <thead>
+        <tr>
+           <th class="jnpr-name">Parser</th>
+           <th class="jnpr-desc">Description</th>
+        </tr>
+      <thead>
+      <tbody>
+{% for parser in parsers %}
+        <tr>
+          <td class="jnpr-name">{{ parser }}</td>
+          <td class="jnpr-desc">None</td>
+        </tr>
+{% endfor %}
+      <tbody>
+    </table>

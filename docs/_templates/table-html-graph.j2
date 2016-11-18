@@ -1,0 +1,16 @@
+    <table style="width:100%;white-space:normal;" border=1 class="docutils jnpr-table" >
+      <thead>
+        <tr>
+           <th class="jnpr-name">Graph</th>
+           <th class="jnpr-desc">File</th>
+        </tr>
+      <thead>
+      <tbody>
+{% for item in graphs %}
+        <tr>
+          <td class="jnpr-name">{{ item.title }}</td>
+          <td class="jnpr-desc">{{ item.file }}</td>
+        </tr>
+{% endfor %}
+      <tbody>
+    </table>

@@ -3,9 +3,8 @@ db/*
 logs/*
 
 docs/_build/*
-docs/_static/*
-docs/_templates/*
 
 *.pyc
 
 .cache/v/cache/lastfailed
+dashboards/archive/*
