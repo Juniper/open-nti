@@ -75,6 +75,7 @@ Additional Documentation
    datacollectionagent
    datastreaming
    event
+   parser
 
 .. _dashboards-docs:
 
@@ -83,6 +84,7 @@ Additional Documentation
    :caption: Dashboards
 
    dashboard
+   dashboardlib
 
 .. _troubleshooting-docs:
 

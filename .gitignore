@@ -9,3 +9,4 @@ docs/_templates/*
 *.pyc
 
 .cache/v/cache/lastfailed
+dashboards/archive/*

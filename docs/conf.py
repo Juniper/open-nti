@@ -18,7 +18,90 @@
 #
 import os
 import sys
+import yaml
+import pprint
+from jinja2 import Template
 # sys.path.insert(0, os.path.abspath('.'))
+
+
+pp = pprint.PrettyPrinter(indent=4)
+
+# -----------------Find all Parser ---------------------------------
+
+parser_dir = "../data/junos_parsers"
+graph_dir = "../dashboards/templates/graphs"
+templating_dir = "../dashboards/templates/templatings"
+annotation_dir = "../dashboards/templates/annotations"
+row_dir = "../dashboards/templates/rows"
+
+parsers = { 'parsers': [] }
+
+dashboards = {
+        'graphs': [],
+        'templating': [],
+        'annotation': [],
+        'row': [],
+    }
+
+############################################
+## Collect Parsers
+############################################
+
+for file in os.listdir(parser_dir):
+    if file.endswith(".yaml"):
+        parsers['parsers'].append(file)
+
+table_parser_file = open("table-html-parser.j2")
+table_parser_tpl = Template(table_parser_file.read())
+parser_table_html = table_parser_tpl.render( parsers )
+
+tpl_var = {}
+tpl_var['table'] = parser_table_html
+
+# -- Generate RST files based on Jinja file
+
+parser_file = open("parser.rst.j2")
+parser_tpl = Template(parser_file.read())
+parser_rst = parser_tpl.render( tpl_var )
+
+with open("parser.rst", "w") as text_file:
+    text_file.write(parser_rst)
+
+############################################
+## Collect Dashboard / Graph
+############################################
+
+for file in os.listdir(graph_dir):
+    if file.endswith(".yaml"):
+
+        # Read content of the file to extract info
+        graph = yaml.load(open(graph_dir + "/" + file).read())
+        if 'title' in graph.keys():
+
+            tmp = {  'title': graph['title'], 'file': file }
+            dashboards['graphs'].append(tmp)
+
+            print graph['title'] + " - " + file
+
+# pp.pprint(dashboards)
+
+table_graph_file = open("table-html-graph.j2")
+table_graph_tpl = Template(table_graph_file.read())
+graph_table_html = table_graph_tpl.render( dashboards )
+
+# pp.pprint(graph_table_html)
+
+# -- Generate RST files based on Jinja file
+
+tpl_var = {}
+tpl_var['graphs'] = graph_table_html
+
+dashboardlib_file = open("dashboardlib.rst.j2")
+dashboardlib_tpl = Template(dashboardlib_file.read())
+dashboardlib_rst = dashboardlib_tpl.render( tpl_var )
+
+with open("dashboardlib.rst", "w") as text_file:
+    text_file.write(dashboardlib_rst)
 
 # -- General configuration ------------------------------------------------
 
