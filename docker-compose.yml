@@ -75,8 +75,8 @@ services:
       - ./$LOCAL_DIR_DATA:/opt/open-nti/data
       - /etc/localtime:/etc/localtime
     environment:
-      - SERVICE_NAME: db
-      - SERVICE_TAGS: db
+      - SERVICE_NAME=db
+      - SERVICE_TAGS=db
     ports:
       - "$LOCAL_PORT_STATSD:8125/udp"
       - "$LOCAL_PORT_NGINX:80"
