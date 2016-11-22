@@ -1,43 +1,86 @@
+version: '2'
+services:
 
-input-jti:
-  image: juniper/open-nti-input-jti
-  container_name: opennti_input_jti
-  environment:
-   - "INFLUXDB_ADDR=opennti"
-   - "OUTPUT_INFLUXDB=true"
-   - "OUTPUT_STDOUT=false"
-  ports:
-   - "$LOCAL_PORT_JTI:50000/udp"
-   - "$LOCAL_PORT_ANALYTICSD:50020/udp"
-  volumes:
-   - /etc/localtime:/etc/localtime
-  links:
-   - opennti
+  consul:
+    #build: consul/
+    image: consul
+    container_name: consul
+    command: agent -server -bootstrap-expect=1 -node=open_nti -ui
+    volumes:
+      - /etc/localtime:/etc/localtime:ro 
+      #- ./consul/data:/consul/data
+      #- ./consul/config:/consul/config
+      #- ./consul/ui:/consul/ui
+    environment:
+      CONSUL_LOCAL_CONFIG: '{"skip_leave_on_interrupt": true}'
+      CONSUL_BIND_INTERFACE: eth0
+      CONSUL_CLIENT_INTERFACE: eth0
+      SERVICE_53_IGNORE: 'yes'
+      SERVICE_8300_IGNORE: 'yes'
+      SERVICE_8301_IGNORE: 'yes'
+      SERVICE_8302_IGNORE: 'yes'
+      SERVICE_8400_IGNORE: 'yes'
+      SERVICE_8500_NAME: 'consul-admin_infra'
+    ports:
+      - "8500:8500"
 
-input-syslog:
-  image: juniper/open-nti-input-syslog
-  container_name: opennti_input_syslog
-  environment:
-   - "INFLUXDB_ADDR=opennti"
-   - "OUTPUT_INFLUXDB=true"
-   - "OUTPUT_STDOUT=false"
-  ports:
-   - "$LOCAL_PORT_EVENT:6000/udp"
-  volumes:
-   - /etc/localtime:/etc/localtime
-  links:
-   - opennti
+# Exactly one per physical node
+  registrator:
+    command: "-internal consul://consul:8500"
+    image: gliderlabs/registrator:latest
+    container_name: registrator
+    links:
+      - "consul"
+    volumes:
+      - "/var/run/docker.sock:/tmp/docker.sock"
 
-opennti:
-  image: $IMAGE_NAME
-  container_name: $CONTAINER_NAME
-  volumes:
-   - ./$LOCAL_DIR_DASHBOARD:/src/dashboards
-   - ./$LOCAL_DIR_DATA:/opt/open-nti/data
-   - /etc/localtime:/etc/localtime
-  ports:
-   - "$LOCAL_PORT_STATSD:8125/udp"
-   - "$LOCAL_PORT_NGINX:80"
-   - "$LOCAL_PORT_GRAFANA:3000"
-   - "$LOCAL_PORT_INFLUXDB:8083"
-   - "$LOCAL_PORT_INFLUXDB_API:8086"
+  input-jti:
+    image: juniper/open-nti-input-jti
+    container_name: opennti_input_jti
+    environment:
+      - "INFLUXDB_ADDR=opennti"
+      - "OUTPUT_INFLUXDB=true"
+      - "OUTPUT_STDOUT=false"
+      - SERVICE_NAME=input-jti
+      - SERVICE_TAGS=udp
+    ports:
+      - "$LOCAL_PORT_JTI:50000/udp"
+      - "$LOCAL_PORT_ANALYTICSD:50020/udp"
+    volumes:
+      - /etc/localtime:/etc/localtime
+    links:
+      - opennti
+  
+  input-syslog:
+    image: juniper/open-nti-input-syslog
+    container_name: opennti_input_syslog
+    environment:
+      - "INFLUXDB_ADDR=opennti"
+      - "OUTPUT_INFLUXDB=true"
+      - "OUTPUT_STDOUT=false"
+      - SERVICE_NAME=input-syslog
+      - SERVICE_TAGS=udp
+    ports:
+      - "$LOCAL_PORT_EVENT:6000/udp"
+    volumes:
+      - /etc/localtime:/etc/localtime
+    links:
+      - opennti
+  
+  opennti:
+    image: $IMAGE_NAME
+    container_name: $CONTAINER_NAME
+    volumes:
+      - ./$LOCAL_DIR_DASHBOARD:/src/dashboards
+      - ./$LOCAL_DIR_DATA:/opt/open-nti/data
+      - /etc/localtime:/etc/localtime
+    environment:
+      - SERVICE_NAME: db
+      - SERVICE_TAGS: db
+    ports:
+      - "$LOCAL_PORT_STATSD:8125/udp"
+      - "$LOCAL_PORT_NGINX:80"
+      - "$LOCAL_PORT_GRAFANA:3000"
+      - "$LOCAL_PORT_INFLUXDB:8083"
+      - "$LOCAL_PORT_INFLUXDB_API:8086"
+  
