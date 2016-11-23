@@ -1,0 +1,20 @@
+[tags]
+  dc = "open-nti"
+
+[agent]
+  interval = "10s"
+  round_interval = true
+  flush_interval = "10s"
+  flush_jitter = "0s"
+  debug = false
+  hostname = ""
+
+[[outputs.influxdb]]
+  urls = ["http://{{range service "db-8086" }}{{.Address}}:{{.Port}}{{else}}localhost:8086{{end}}"]
+  database = "telegraf"
+  precision = "s"
+
+[[inputs.cpu]]
+  percpu = true
+  totalcpu = true
+  drop = ["cpu_time*"]
