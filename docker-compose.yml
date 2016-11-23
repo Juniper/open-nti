@@ -47,7 +47,7 @@ services:
       - "$LOCAL_PORT_JTI:50000/udp"
       - "$LOCAL_PORT_ANALYTICSD:50020/udp"
     volumes:
-      - /etc/localtime:/etc/localtime
+      - /etc/localtime:/etc/localtime:ro
     links:
       - opennti
   
@@ -63,7 +63,20 @@ services:
     ports:
       - "$LOCAL_PORT_EVENT:6000/udp"
     volumes:
-      - /etc/localtime:/etc/localtime
+      - /etc/localtime:/etc/localtime:ro
+    links:
+      - opennti
+
+  input-snmp:
+    build: ./open-nti-input-snmp
+    environment:
+      - SERVICE_NAME=input-snmp
+      - SERVICE_TAGS=udp
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./open-nti-input-snmp/config/:/opt/telegraf/config
+    expose:
+      - "162/udp"
     links:
       - opennti
   
@@ -73,7 +86,7 @@ services:
     volumes:
       - ./$LOCAL_DIR_DASHBOARD:/src/dashboards
       - ./$LOCAL_DIR_DATA:/opt/open-nti/data
-      - /etc/localtime:/etc/localtime
+      - /etc/localtime:/etc/localtime:ro
     environment:
       - SERVICE_NAME=db
       - SERVICE_TAGS=db
@@ -83,4 +96,3 @@ services:
       - "$LOCAL_PORT_GRAFANA:3000"
       - "$LOCAL_PORT_INFLUXDB:8083"
       - "$LOCAL_PORT_INFLUXDB_API:8086"
-  
