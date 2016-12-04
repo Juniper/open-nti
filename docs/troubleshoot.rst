@@ -32,11 +32,47 @@ Data Collection Agent
 Q - I configured hosts/credential/commands.yaml files but I'm not seeing anything on the dashboard
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To make sure everything is working as expected, you can run the Data Collection Agent in debug mode
+#1 : Make sure everything is working as expected, you can run the Data Collection Agent in debug mode
 
 .. code-block:: text
 
   make cron-debug TAG=lab
+
+#2 : Check if data is properly reaching the database**
+
+ - connect on Influxdb management interface with a browser on port 8083
+ - Select Juniper as database on top right corner
+ - Run query ```show measurements``` to see what is present
+ - Execute query for ```SELECT * FROM "<measurements>"```
+
+.. NOTE::
+   Destination tables will vary depending of the incoming traffic
+    - For MX > jnpr.jvision
+    - For QFX5100/EX4300 > jnpr.analyticsd
+
+#3 : Check log within the container**
+
+  ./docker.cli.sh
+  
+  Check the log for any Error : /opt/open-nti/log
+
+#4 : Enable log in debug mode **
+
+  /open-nti/data/open-nti-variable.yaml
+  
+  logging_level: 10
+
+    #CRITICAL   50
+    #ERROR      40
+    #WARNING    30
+    #INFO       20
+    #DEBUG      10  
+
+
+  ./docker.cli.sh
+  
+  Check the log for any Error : /opt/open-nti/log
+
 
 Data Streaming Collector
 ------------------------
