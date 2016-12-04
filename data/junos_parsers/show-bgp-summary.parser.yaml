@@ -17,7 +17,18 @@ parser:
         xpath: //bgp-information/down-peer-count
         variable-name:  $host.protocols.bgp.summary.down-peer-count
     -
-        type: single-value
+        type: multi-value
         method: xpath
-        xpath: //bgp-peer[peer-address=$key]/bgp-rib/received-prefix-count
-        variable-name:  $host.protocols.bgp.summary.$key.received-prefix-count
+        xpath: //bgp-information/bgp-peer
+        loop:
+            key: ./peer-address
+            sub-matches:
+              -
+                xpath: ./input-messages
+                variable-name:  $host.protocols.bgp.summary.$key.input-messages
+              -
+                xpath: .output-messages
+                variable-name:  $host.protocols.bgp.summary.$key.output-messages
+              -
+                xpath: ./bgp-rib/received-prefix-count
+                variable-name:  $host.protocols.bgp.summary.$key.received-prefix-count
