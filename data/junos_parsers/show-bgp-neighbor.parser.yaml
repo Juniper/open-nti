@@ -1,0 +1,19 @@
+parser:
+    regex-command: show\s+bgp\s+neighbor\s|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //bgp-information/bgp-peer
+        loop:
+            key: ./peer-address
+            sub-matches:
+            -
+                xpath: ./bgp-rib/recveived-prefix-count
+                variable-name:  $host.protocols.bgp.summary.$key.received-prefix-count
+            -
+                xpath: ./input-messages
+                variable-name:  $host.protocols.bgp.summary.$key.input-messages
+            -
+                xpath: ./output-messages
+                variable-name:  $host.protocols.bgp.summary.$key.output-messages
