@@ -49,18 +49,43 @@ Q - I configured hosts/credential/commands.yaml files but I'm not seeing anythin
    Destination tables will vary depending of the incoming traffic
     - For MX > jnpr.jvision
     - For QFX5100/EX4300 > jnpr.analyticsd
+    
+    Example: 
+    
+      If the pyez command are excuted with any error , you would see table.
+      
+      Command : show chassis routing-engine | display xml
+      
+      Influxdb : (show measurements)
+        
+        Newly added table : 
+          
+          <HOSTNAME>.chassis.routing-engine.0.mastership-state
+        
+        New Query to verify data:
+          
+          select * from <HOSTNAME>.chassis.routing-engine.0.mastership-state
+  
+        ## DATA ###
+        
+        20161102.338446_builder_stable_10"
+        2016-12-04T01:22:10.568116882Z	"N/A"	"<HOSTNAME>"	"1"	"<HOSTNAME>.chassis.routing-engine.0.mastership-state"	        "mx960"	"master"
+      
 
 #3 : Check log within the container**
 
-  ./docker.cli.sh
+    make cli
   
   Check the log for any Error : /opt/open-nti/log
 
 #4 : Enable log in debug mode **
 
-  /open-nti/data/open-nti-variable.yaml
+
+  a) 
   
-  logging_level: 10
+    /open-nti/data/open-nti-variable.yaml
+  
+    logging_level: 10
 
     #CRITICAL   50
     #ERROR      40
@@ -69,9 +94,11 @@ Q - I configured hosts/credential/commands.yaml files but I'm not seeing anythin
     #DEBUG      10  
 
 
-  ./docker.cli.sh
-  
-  Check the log for any Error : /opt/open-nti/log
+  b)
+    
+    make cli
+    
+    Check the log for any Error : /opt/open-nti/log
 
 
 Data Streaming Collector
