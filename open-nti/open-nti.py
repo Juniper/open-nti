@@ -373,7 +373,7 @@ def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tag
                                 logger.debug('[%s]: Looking for a match: %s', host, match["xpath"])
                                 if xml_data.xpath(match["xpath"]):
                                     value_tmp = xml_data.xpath(match["xpath"])[0].text.strip()
-                                    logger.debug('[%s]: Match found for (%s) with value (%s)' host, match["xpath"],value_tmp)
+                                    logger.debug('[%s]: Match found for (%s) with value (%s)', host, match["xpath"],value_tmp)
                                     get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
                                 else:
                                     logger.debug('[%s]: No match found: %s', host, match["xpath"])
