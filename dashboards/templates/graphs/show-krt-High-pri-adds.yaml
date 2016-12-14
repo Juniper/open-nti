@@ -1,0 +1,16 @@
+title: "KRT high-priority-adds"
+template: graph-lines-02.j2
+datasource: influxdb
+span: 6
+
+targets:
+  A:
+    query: >
+      SELECT mean(value)
+      FROM /$host_regex.krtq-high-priority-adds/
+      WHERE $timeFilter
+      GROUP BY time($interval)
+
+templatings_used:
+  - host_regex.yaml
+  - group_by.yaml

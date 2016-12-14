@@ -1,0 +1,17 @@
+
+title: "RE - CPU"
+template: graph-lines-02.j2
+datasource: influxdb
+span: 6
+
+targets:
+  A:
+    query: >
+      SELECT mean(value)
+      FROM /$host_regex.jnxOperatingCPU9.*.object-value/
+      WHERE $timeFilter
+      GROUP BY time($interval)
+
+templatings_used:
+  - host_regex.yaml
+  - group_by.yaml
