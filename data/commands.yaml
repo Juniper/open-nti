@@ -4,7 +4,7 @@
 #       (so please check the output of the command with "| display xml" before building the parser or adding it in this file)
 
 generic_commands:
-   commands: |
+   netconf: |
       show isis statistics | display xml
       show chassis routing-engine | display xml
       show pfe statistics traffic | display xml
@@ -15,8 +15,20 @@ generic_commands:
    tags: generic
 
 lab_commands:
-   commands: |
+   netconf: |
       show route summary | display xml
+   tags: test
+
+lab_snmp:
+   snmp: |
+      .1.2.3.3.5
+      .1.2.3.3.5
+   tags: test
+
+lab_oc:
+   oc: |
+      /bgp/
+      /optic/
    tags: test
 
 # Do not remove this three dashes (“---”) they are used to separate documents
