@@ -1,4 +1,4 @@
-arser:
+parser:
     regex-command: show\s+system\s+resource-monitor\s+summary\s+\|\s+display\s+xml
     matches:
     -
