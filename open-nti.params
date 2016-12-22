@@ -1,8 +1,14 @@
 #! /bin/bash
 
 ## Image and container
-export IMAGE_NAME=juniper/open-nti
-export CONTAINER_NAME=opennti_con
+export MAIN_IMAGE_NAME=juniper/open-nti
+export MAIN_CONTAINER_NAME=opennti_con
+
+export INPUT_JTI_IMAGE_NAME=juniper/open-nti-input-jti
+export INPUT_SYSLOG_IMAGE_NAME=juniper/open-nti-input-syslog
+
+export MAIN_CONTAINER_NAME=opennti_con
+
 export DOCKER_COMPOSE_FILE=docker-compose.yml
 
 ## Local ports that will be redirected to the Open NTI
