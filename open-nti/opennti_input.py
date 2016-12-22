@@ -22,6 +22,7 @@ class OpenNtiInput:
     self.__credentials = {}
     self.__hosts = {}
     self.__commands = {}
+    self.__supported_command_type = ['netconf', 'snmp', 'oc']
 
     ###########################################################
     #  LOAD all credentials in a dict
@@ -64,8 +65,23 @@ class OpenNtiInput:
         logger.error("Error importing commands file: {0}".format(commands_file))
         sys.exit(0)
 
-    # Only save the first one
-    self.__commands = tmp_command[0]
+    # Clean Up commands for all supported Type
+    for type in self.__supported_command_type:
+      for group_command in tmp_command[0].keys():
+        if type in tmp_command[0][group_command].keys():
+          ## If command is a string, convert them to a list
+          if isinstance(tmp_command[0][group_command][type], str):
+            commands_list = tmp_command[0][group_command][type].strip().split("\n")
+            tmp_command[0][group_command][type] = commands_list
+
+          ## Save after cleanup if type is supported
+          ## Delete entry in initial variable
+          self.__commands[group_command] = tmp_command[0][group_command]
+          tmp_command[0].pop(group_command, None)
+
+     ## Go over the list one more time but it should be empty
+      for group_command in tmp_command[0].keys():
+        logger.error("{0} has a non supported type".format(group_command))
 
   def get_tags(self, host=None):
     return self.__hosts[host]
@@ -98,7 +114,7 @@ class OpenNtiInput:
 
   def get_target_commands(self, host='', type=''):
 
-    if type not in ['netconf', 'snmp', 'oc']:
+    if type not in self.__supported_command_type:
       return None
 
     my_host_tags = self.get_tags(host=host)
@@ -109,7 +125,7 @@ class OpenNtiInput:
         for command_tag in self.__commands[group_command]["tags"].split():
           if re.search(my_host_tag, command_tag, re.IGNORECASE):
             if type in self.__commands[group_command].keys():
-              for cmd in self.__commands[group_command][type].strip().split("\n"):
+              for cmd in self.__commands[group_command][type]:
                 my_target_commands[cmd] = 1
 
     return my_target_commands.keys()
