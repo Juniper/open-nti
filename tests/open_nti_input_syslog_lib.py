@@ -24,7 +24,7 @@ pp = pprint.PrettyPrinter(indent=4)
 # Variables initialization
 #############################################
 # Image and container
-IMAGE_NAME = 'juniper/open-nti-input-syslog'
+IMAGE_NAME = 'juniper/open-nti-input-syslog:unittest'
 CONTAINER_NAME = 'open-nti-input-syslog_test'
 TCP_RELAY_CONTAINER_NAME = 'tcpreplay_test'
 
@@ -39,7 +39,7 @@ TEST_PORT_SYSLOG = 16000
 
 # Local directories that will be mapped into the container
 CURRENT_DIR = os.getcwd()
-TESTS_DIR   = CURRENT_DIR + "/tests"
+TESTS_DIR   = CURRENT_DIR + "/tests/input-syslog"
 TESTS_FIXTURES_DIR = TESTS_DIR + "/fixtures"
 
 DOCKER_IP = '127.0.0.1'
@@ -50,7 +50,7 @@ EXTERNAL_IP = ''
 
 ## Open NTI container related information
 OPENNTI_CID = ''
-OPENNTI_IMAGE_NAME = "juniper/open-nti"
+OPENNTI_IMAGE_NAME = "juniper/open-nti:unittest"
 OPENNTI_C_NAME = "open-nti-input-syslog_test_influxdb"
 OPENNTI_API_PORT = 18086
 OPENNTI_INFLUX_PORT = 18083

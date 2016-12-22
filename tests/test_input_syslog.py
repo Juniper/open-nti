@@ -73,14 +73,14 @@ def teardown_module(module):
     global c
     global TCP_RELAY_CONTAINER_NAME
 
-    if not os.getenv('TRAVIS'):
-        # open_nti_input_syslog_lib.stop_fluentd()
-        open_nti_input_syslog_lib.stop_open_nti()
-        open_nti_input_syslog_lib.stop_kafka()
+    # if not os.getenv('TRAVIS'):
+    open_nti_input_syslog_lib.stop_fluentd()
+    open_nti_input_syslog_lib.stop_open_nti()
+    open_nti_input_syslog_lib.stop_kafka()
 
-        try:
-            old_container_id = c.inspect_container(TCP_RELAY_CONTAINER_NAME)['Id']
-            c.stop(container=old_container_id)
-            c.remove_container(container=old_container_id)
-        except:
-            print "Container do not exit"
+    try:
+        old_container_id = c.inspect_container(TCP_RELAY_CONTAINER_NAME)['Id']
+        c.stop(container=old_container_id)
+        c.remove_container(container=old_container_id)
+    except:
+        print "Container do not exit"
