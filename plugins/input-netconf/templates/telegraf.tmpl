@@ -1,0 +1,43 @@
+[tags]
+  dc = "open-nti"
+
+[agent]
+  interval = "1m"
+  round_interval = true
+  flush_interval = "30s"
+  flush_jitter = "0s"
+  debug = true
+  hostname = ""
+
+[[outputs.influxdb]]
+  urls = ["http://172.17.0.2:8086"]
+  database = "juniper"
+  precision = "s"
+
+[[inputs.exec]]
+  # Shell/commands array
+  # compatible with old version
+  # we can still use the old command configuration
+  # command = "/usr/bin/line_protocol_collector"
+  commands = ["/usr/bin/python /data/netconf-collector.py -s --hosts=dev-01.yaml --commands=commands.yaml --credential=credentials.yaml"]
+
+  ## Timeout for each command to complete.
+  timeout = "30s"
+
+  # Data format to consume.
+  # NOTE json only reads numerical measurements, strings and booleans are ignored.
+  data_format = "influx"
+
+[[inputs.exec]]
+  # Shell/commands array
+  # compatible with old version
+  # we can still use the old command configuration
+  # command = "/usr/bin/line_protocol_collector"
+  commands = ["/usr/bin/python /data/netconf-collector.py -s --hosts=dev-02.yaml --commands=commands.yaml --credential=credentials.yaml"]
+
+  ## Timeout for each command to complete.
+  timeout = "30s"
+
+  # Data format to consume.
+  # NOTE json only reads numerical measurements, strings and booleans are ignored.
+  data_format = "influx"
