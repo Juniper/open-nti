@@ -1,20 +1,42 @@
 
 
-
+# Determine the current git Branch and use that for docker
+BRANCH ?= $(shell git rev-parse --abbrev-ref HEAD)
+ifeq ($(BRANCH),master)
+  IMAGE_TAG = latest
+else
+  IMAGE_TAG = $(BRANCH)
+endif
 
 PWD = $(shell pwd)
-VAR_FILE = open-nti.params
-IMAGE_TAG = latest
+VAR_FILE ?= open-nti.params
 DOCKER_FILE = docker-compose.yml
 DOCKER_FILE_P = docker-compose/opennti_persistent.yml
-TIME = 1m
-TAG = all
+TIME ?= 1m
+TAG ?= all
 
 #Load params file with all variables
 include $(VAR_FILE)
 
-build:
-	docker build -t $(IMAGE_NAME):$(IMAGE_TAG) .
+build: build-main build-jti 
+
+build-main:
+	@echo "======================================================================"
+	@echo "Build Docker image - $(MAIN_IMAGE_NAME):$(IMAGE_TAG)"
+	@echo "======================================================================"
+	docker build -t $(MAIN_IMAGE_NAME):$(IMAGE_TAG) .
+
+build-jti:
+	@echo "======================================================================"
+	@echo "Build Docker image - $(INPUT_JTI_IMAGE_NAME):$(IMAGE_TAG)"
+	@echo "======================================================================"
+	docker build -f plugins/input-jti/Dockerfile -t $(INPUT_JTI_IMAGE_NAME):$(IMAGE_TAG) plugins/input-jti
+
+build-syslog:
+	@echo "======================================================================"
+	@echo "Build Docker image - $(INPUT_SYSLOG_IMAGE_NAME):$(IMAGE_TAG)"
+	@echo "======================================================================"
+	docker build -f plugins/input-syslog/Dockerfile -t $(INPUT_SYSLOG_IMAGE_NAME):$(IMAGE_TAG) plugins/input-syslog
 
 test:
 	docker build -t $(IMAGE_NAME):unittest .
@@ -47,7 +69,6 @@ update:
 	docker pull juniper/open-nti-input-jti:latest
 	docker pull juniper/open-nti-input-syslog:latest
 
-
 cron-show:
 	# if [ $(TAG) == "all" ]; then
 	#   docker exec -it $(CONTAINER_NAME) /usr/bin/python /opt/open-nti/startcron.py -a show  -c "$(TAG)"
@@ -61,4 +82,4 @@ cron-delete:
 	docker exec -it $(CONTAINER_NAME) /usr/bin/python /opt/open-nti/startcron.py -a delete  -c "/usr/bin/python /opt/open-nti/open-nti.py -s --tag $(TAG)"
 
 cron-debug:
-	docker exec -it $(CONTAINER_NAME) /usr/bin/python /opt/open-nti/open-nti.py -s -c --tag $(TAG)
+	docker exec -it $(CONTAINER_NAME) /usr/bin/python /opt/open-nti/open-nti.py
