@@ -246,8 +246,9 @@ def check_influxdb_running_database_exist():
     return found_db
 
 def check_kafka_is_running():
-    # Verify we can connect to InfluxDB and DB with a name juniper exists
+    # Verify we can connect to Kafka
 
+    time.sleep(2)
     consumer = KafkaConsumer(bootstrap_servers=get_external_ip()+':'+str(KAFKA_BROKER_PORT),
                              auto_offset_reset='earliest')
 
