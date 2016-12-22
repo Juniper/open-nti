@@ -21,7 +21,7 @@ pp = pprint.PrettyPrinter(indent=4)
 # Variables initialization
 #############################################
 # Image and container
-IMAGE_NAME = 'juniper/open-nti-input-jti'
+IMAGE_NAME = 'juniper/open-nti-input-jti:unittest'
 CONTAINER_NAME = 'open-nti-input-jti_test'
 TCP_RELAY_CONTAINER_NAME = 'tcpreplay_test'
 
@@ -37,7 +37,7 @@ TEST_PORT_ANALYTICSD = 40020
 
 # Local directories that will be mapped into the container
 CURRENT_DIR = os.getcwd()
-TESTS_DIR   = CURRENT_DIR + "/tests"
+TESTS_DIR   = CURRENT_DIR + "/tests/input-jti"
 TESTS_FIXTURES_DIR = TESTS_DIR + "/fixtures"
 
 DOCKER_IP = '127.0.0.1'
@@ -46,7 +46,7 @@ c = ''
 
 ## Open NTI container related information
 OPENNTI_CID = ''
-OPENNTI_IMAGE_NAME = "juniper/open-nti"
+OPENNTI_IMAGE_NAME = "juniper/open-nti:unittest"
 OPENNTI_C_NAME = "open-nti-input-jti_test_influxdb"
 OPENNTI_API_PORT = 18086
 OPENNTI_INFLUX_PORT = 18083
@@ -242,31 +242,6 @@ def test_connect_docker():
     if _platform == "linux" or _platform == "linux2" or _platform == "darwin":
         # linux
         c = Client(base_url='unix://var/run/docker.sock', version='1.20')
-    # elif _platform == "darwin":
-    #     # MAC OS X
-    #     dockerout = subprocess.check_output(
-    #         ['/usr/local/bin/docker-machine ip default'],
-    #         shell=True, stderr=subprocess.STDOUT
-    #     )
-    #
-    #     DOCKER_IP = dockerout.splitlines()[0]
-    #
-    #     CERTS = path.join(
-    #         path.expanduser('~'), '.docker', 'machine',
-    #         'machines', 'default'
-    #     )
-    #
-    #     tls_config = tls.TLSConfig(
-    #         client_cert=(
-    #             path.join(CERTS, 'cert.pem'), path.join(CERTS, 'key.pem')
-    #         ),
-    #         ca_cert=path.join(CERTS, 'ca.pem'),
-    #         assert_hostname=False,
-    #         verify=True
-    #     )
-    #
-    #     url = "https://" + DOCKER_IP + ":2376"
-    #     c = Client(base_url=url, tls=tls_config, version='1.20')
 
     elif _platform == "win32":
         exit
@@ -279,6 +254,19 @@ def test_start_dependancies():
 
     start_open_nti()
     assert check_influxdb_running_database_exist()
+
+def test_influxdb_create_default_RP():
+    # Verify we can connect to InfluxDB and DB with a name juniper exists
+    db = get_influxdb_handle()
+
+    query = 'CREATE RETENTION POLICY "open_nti_test" ON juniper DURATION INF REPLICATION 1 DEFAULT;'
+    result = db.query(query)
+
+    # DROP CONTINUOUS QUERY "four_weeks" ON "juniper"
+    # CREATE RETENTION POLICY open_nti_test ON juniper DURATION INF REPLICATION 1 DEFAULT
+
+    if result:
+        assert 1
 
 def test_jti_structured_ifd_01():
 
@@ -349,13 +337,13 @@ def test_jti_structured_ifd_01():
 def teardown_module(module):
     global c
 
-    if not os.getenv('TRAVIS'):
-        stop_fluentd()
-        stop_open_nti()
+    # if not os.getenv('TRAVIS'):
+    stop_fluentd()
+    stop_open_nti()
 
-        try:
-            old_container_id = c.inspect_container(TCP_RELAY_CONTAINER_NAME)['Id']
-            c.stop(container=old_container_id)
-            c.remove_container(container=old_container_id)
-        except:
-            print "Container do not exit"
+    try:
+        old_container_id = c.inspect_container(TCP_RELAY_CONTAINER_NAME)['Id']
+        c.stop(container=old_container_id)
+        c.remove_container(container=old_container_id)
+    except:
+        print "Container do not exit"
