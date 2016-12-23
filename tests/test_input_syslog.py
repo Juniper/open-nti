@@ -33,8 +33,8 @@ def test_start_dependancies():
     open_nti_input_syslog_lib.start_open_nti()
     assert open_nti_input_syslog_lib.check_influxdb_running_database_exist()
 
-    open_nti_input_syslog_lib.start_kafka()
-    assert open_nti_input_syslog_lib.check_kafka_is_running()
+    # open_nti_input_syslog_lib.start_kafka()
+    # assert open_nti_input_syslog_lib.check_kafka_is_running()
 
 def test_syslog_qfx_influx_01():
     FNAME       = 'test_syslog_qfx_01'
@@ -53,21 +53,21 @@ def test_syslog_qfx_influx_01():
 
     assert len(list(points)) != 0
 
-@timeout(30)
-def test_syslog_qfx_kafka_01():
-
-    FNAME       = 'test_syslog_qfx_01'
-    PCAP_FILE   = FNAME + "/syslog_qfx_01_16000.pcap"
-
-    open_nti_input_syslog_lib.start_fluentd_syslog(output_kafka='true')
-    time.sleep(1)
-    open_nti_input_syslog_lib.replay_file(PCAP_FILE)
-
-    time.sleep(5)
-
-    counter = open_nti_input_syslog_lib.check_kafka_msg()
-
-    assert counter == 100
+# @timeout(30)
+# def test_syslog_qfx_kafka_01():
+#
+#     FNAME       = 'test_syslog_qfx_01'
+#     PCAP_FILE   = FNAME + "/syslog_qfx_01_16000.pcap"
+#
+#     open_nti_input_syslog_lib.start_fluentd_syslog(output_kafka='true')
+#     time.sleep(1)
+#     open_nti_input_syslog_lib.replay_file(PCAP_FILE)
+#
+#     time.sleep(5)
+#
+#     counter = open_nti_input_syslog_lib.check_kafka_msg()
+#
+#     assert counter == 100
 
 def teardown_module(module):
     global c
@@ -76,7 +76,7 @@ def teardown_module(module):
     # if not os.getenv('TRAVIS'):
     open_nti_input_syslog_lib.stop_fluentd()
     open_nti_input_syslog_lib.stop_open_nti()
-    open_nti_input_syslog_lib.stop_kafka()
+    # open_nti_input_syslog_lib.stop_kafka()
 
     try:
         old_container_id = c.inspect_container(TCP_RELAY_CONTAINER_NAME)['Id']
