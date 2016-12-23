@@ -1,0 +1,14 @@
+
+parser:
+    regex-command: show\s+snmp\s+mib\s+walk\s+jnxOperatingCPU.9\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //snmp-object
+        loop:
+            key: ./name
+            sub-matches:
+            -
+                xpath: ./object-value
+                variable-name:  $host.jnxOperatingCPU9.$key.object-value

@@ -5,3 +5,4 @@ docker-py
 requests
 jinja2
 PyYAML
+kafka-python
