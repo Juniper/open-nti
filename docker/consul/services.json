@@ -1,0 +1,26 @@
+{
+  "services": [
+     {
+        "name": "grafana",
+        "tags": ["primary"],
+        "address": "",
+        "port": 3000,
+        "enableTagOverride": false,
+        "check": {
+          "script": "curl localhost:3000 >/dev/null 2>&1",
+          "interval": "10s"
+        }
+      },
+      {
+         "name": "influxdb-api",
+         "tags": ["primary"],
+         "address": "",
+         "port": 8086,
+         "enableTagOverride": false,
+         "check": {
+           "script": "curl localhost:8086/ping >/dev/null 2>&1",
+           "interval": "10s"
+         }
+       }
+  ]
+}
