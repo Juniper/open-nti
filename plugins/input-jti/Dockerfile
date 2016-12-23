@@ -64,7 +64,6 @@ COPY    plugins /fluentd/plugins
 RUN echo "fluent ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 USER fluent
-EXPOSE 24284
 
 ENV OUTPUT_KAFKA=false \
     OUTPUT_INFLUXDB=true \
