@@ -52,6 +52,7 @@ RUN     pip install influxdb && \
         pip install junos-eznc && \
         pip install pytest && \
         pip install mock &&\
+        pip install httplib2 &&\
         pip install cryptography==1.2.1
 
 RUN     mkdir /src
@@ -118,6 +119,21 @@ ADD     open-nti/open-nti.py /opt/open-nti/open-nti.py
 ADD     open-nti/startcron.py /opt/open-nti/startcron.py
 ADD     tests/main/pyez_mock.py /opt/open-nti/pyez_mock.py
 
+### Install fswatch and add scripts to upload data to consul
+RUN     wget https://github.com/emcrisostomo/fswatch/releases/download/1.9.3/fswatch-1.9.3.tar.gz &&\
+        tar -xzf fswatch-1.9.3.tar.gz &&\
+        cd fswatch-1.9.3 &&\
+        ./configure &&\
+        make &&\
+        make install &&\
+        ldconfig
+
+RUN     mkdir /opt/consul
+ADD     docker/consul/load_consul.py /opt/consul/load_consul.py
+ADD     docker/consul/opennti_input.py /opt/consul/opennti_input.py
+
+ADD     docker/consul/watch_dir_and_load.sh /etc/service/consul/run
+
 ### Add test files
 RUN     mkdir /opt/open-nti/tests
 
@@ -128,6 +144,7 @@ RUN     chmod +x /etc/service/nginx/run         &&\
         chmod +x /etc/my_init.d/grafana.init.sh &&\
         chmod +x /etc/service/influxdb/run      &&\
         chmod +x /etc/service/telegraf/run      &&\
+        chmod +x /etc/service/consul/run        &&\
         chmod +x /influxdbrun.sh
 
 WORKDIR /

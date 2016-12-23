@@ -80,7 +80,8 @@ services:
       - opennti
 
   input-netconf:
-    image: juniper/open-nti-input-netconf
+    image: $INPUT_NETCONF_IMAGE_NAME:$IMAGE_TAG
+    container_name: $INPUT_NETCONF_CONTAINER_NAME
     environment:
       - SERVICE_NAME=input-netconf
     volumes:
@@ -106,3 +107,5 @@ services:
       - "$LOCAL_PORT_GRAFANA:3000"
       - "$LOCAL_PORT_INFLUXDB:8083"
       - "$LOCAL_PORT_INFLUXDB_API:8086"
+    links:
+      - consul
