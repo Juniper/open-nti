@@ -9,13 +9,12 @@ services:
 
 install:
   - pip install -r requirements.txt
+  - make test-build
   - docker pull dgarros/tcpreplay
-  - docker pull juniper/open-nti-input-jti
-  - docker pull juniper/open-nti-input-syslog
-  - docker build -t juniper/open-nti .
+  - docker pull spotify/kafka
 
 script:
-  - python -m pytest -v --durations=10
+  - make test-run
   - cd dashboards
   - python gendashboard.py --file data_streaming_collector.yaml
   - python gendashboard.py --file data_collection_agent.yaml

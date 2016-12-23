@@ -18,8 +18,8 @@ RUN     /usr/sbin/enable_insecure_key
 
 # Latest version
 ENV GRAFANA_VERSION 3.1.1-1470047149
-ENV INFLUXDB_VERSION 0.13.0
-ENV TELEGRAF_VERSION 1.0.0-rc1
+ENV INFLUXDB_VERSION 1.0.2
+ENV TELEGRAF_VERSION 1.0.1
 
 RUN     apt-get -y update && \
         apt-get -y install \
@@ -116,7 +116,7 @@ ADD     docker/nginx/run.sh /etc/service/nginx/run
 ### open-nti python scripts (for gathering informatino from server to router)  ###
 ADD     open-nti/open-nti.py /opt/open-nti/open-nti.py
 ADD     open-nti/startcron.py /opt/open-nti/startcron.py
-ADD     tests/pyez_mock.py /opt/open-nti/pyez_mock.py
+ADD     tests/main/pyez_mock.py /opt/open-nti/pyez_mock.py
 
 ### Add test files
 RUN     mkdir /opt/open-nti/tests

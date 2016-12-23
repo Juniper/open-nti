@@ -1,3 +1,5 @@
+.. This file has been automatically generated, from _templates/datacollectionagent.rst.rst.j2. Don't modify it
+
 Data Collection Agent
 =====================
 
@@ -107,3 +109,207 @@ To stop cron job for specific tag:
 .. NOTE::
   If you want to configure the cron job yourself, open-nti use this command:
   ``/usr/bin/python /opt/open-nti/open-nti.py -s --tag <tag>``
+
+Junos Parsers
+-------------
+
+.. raw:: html
+
+    <table style="width:100%;white-space:normal;" border=1 class="docutils jnpr-table" >
+      <thead>
+        <tr>
+           <th class="jnpr-name">Parser</th>
+           <th class="jnpr-desc">Description</th>
+           <th class="jnpr-author">Author</th>
+        </tr>
+      <thead>
+      <tbody>
+
+        <tr>
+          <td class="jnpr-name">rtsockmon.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-bfd-session-summary.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-bgp-neighbor-10.255.0.206.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-bgp-summary.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-chassis-routing-engine.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-firewall.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-interfaces-media.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-isis-statistics.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-mpls-lsp.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-network-access-aaa-radius-servers-detail.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-network-access-aaa-statistics-address-assignment-pool.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-pfe-statistics-traffic.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-pppoe-statistics.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-route-summary.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-services-l2tp-summary.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-services-nat-pool-detail.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-services-rpm-probe-results.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-services-stateful-firewall-flow-analysis.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-services-stateful-firewall-subscriber-analysis.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-services-video-monitoring-mdi-flow-fpc-slot-1.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-snmp-statistics.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-subscribers-summary-port.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-subscribers-summary.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-system-buffers.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-system-processes-extensive.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-system-resource-monitor-summary.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-system-statistics-icmp.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-system-virtual-memory.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-task-accounting.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-task-io.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+        <tr>
+          <td class="jnpr-name">show-version.parser.yaml</td>
+          <td class="jnpr-desc">None</td>
+          <td class="jnpr-author">anomymous</td>
+        </tr>
+
+      <tbody>
+    </table>

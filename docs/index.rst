@@ -83,6 +83,7 @@ Additional Documentation
    :caption: Dashboards
 
    dashboard
+   dashboardlib
 
 .. _troubleshooting-docs:
 

@@ -1,0 +1,53 @@
+@import url("theme.css");
+
+.wy-nav-top {
+  background: #3980F9;
+}
+
+.wy-side-nav-search {
+  background-color: #3980F9;
+}
+
+.wy-nav-content {
+    max-width: 100%;
+}
+
+.jnpr-name {
+  width: 100px !important;
+}
+
+td.jnpr-test, td.jnpr-doc {
+  width: 35px !important;
+}
+
+.jnpr-support {
+  width: 60px !important;
+}
+
+.jnpr-author, .jnpr-support, .jnpr-update {
+  text-align: center !important;
+}
+
+.jnpr-table th {
+  vertical-align: middle !important;
+  white-space: normal !important;
+}
+
+.jnpr-desc {
+  white-space: normal !important;
+}
+
+/* Define picture size */
+td.jnpr-test img, td.jnpr-doc img {
+  height: 30px !important;
+  width: 30px !important;
+}
+
+/*padding-right: 0px !important;
+padding-left: 0px !important;
+padding-top: 0px !important;
+padding-bottom: 0px !important;
+margin-right: 6px;
+margin-left: 6px;
+margin-top: 6px;
+margin-bottom: 6px;*/

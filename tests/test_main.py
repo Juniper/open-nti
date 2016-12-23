@@ -20,16 +20,16 @@ pp = pprint.PrettyPrinter(indent=4)
 # Images and containers
 
 OPENNTI_NAME = 'open-nti_test'
-OPENNTI_IMAGE = 'juniper/open-nti'
+OPENNTI_IMAGE = 'juniper/open-nti:unittest'
 OPENNTI_C = ''
 OPENNTI_IP = ''
 
 OPENNTI_IN_JTI_NAME = 'open-nti_in_jti_test'
-OPENNTI_IN_JTI_IMAGE = 'juniper/open-nti-input-jti'
+OPENNTI_IN_JTI_IMAGE = 'juniper/open-nti-input-jti:unittest'
 OPENNTI_IN_JTI_C = ''
 
 OPENNTI_IN_LOG_NAME = 'open-nti_in_log_test'
-OPENNTI_IN_LOG_IMAGE = 'juniper/open-nti-input-syslog'
+OPENNTI_IN_LOG_IMAGE = 'juniper/open-nti-input-syslog:unittest'
 OPENNTI_IN_LOG_C = ''
 
 TCP_REPLAY_IMAGE = 'dgarros/tcpreplay'
@@ -53,11 +53,12 @@ INFLUXDB_PORT = 8086
 
 # Local directories that will be mapped into the container
 CURRENT_DIR = os.getcwd()
-LOCAL_DIR_DATA = CURRENT_DIR + '/data'
-LOCAL_DIR_LOG = CURRENT_DIR + '/logs'
-LOCAL_DIR_DB = CURRENT_DIR + '/db'
-LOCAL_DIR_TESTS = CURRENT_DIR + '/tests'
-LOCAL_DIR_DASHBOARD = CURRENT_DIR + '/dashboards'
+LOCAL_DIR_DATA = CURRENT_DIR + '/main/data'
+LOCAL_DIR_LOG = CURRENT_DIR + '/main/logs'
+LOCAL_DIR_DB = CURRENT_DIR + '/main/db'
+LOCAL_DIR_TESTS = CURRENT_DIR + '/tests/main'
+LOCAL_DIR_DASHBOARD = CURRENT_DIR + '/main/dashboards'
+
 LOCAL_PCAP_DIR = LOCAL_DIR_TESTS + '/pcap'
 LOCAL_GRAFANA_DIR = LOCAL_DIR_TESTS + '/grafana'
 LOCAL_GRAFANA_FILE = LOCAL_GRAFANA_DIR + '/test.json'
@@ -94,31 +95,6 @@ def test_connect_docker():
     if _platform == "linux" or _platform == "linux2" or _platform == "darwin":
         # linux
         c = Client(base_url='unix://var/run/docker.sock', version='1.20')
-    # elif _platform == "darwin":
-    #     # MAC OS X
-    #     dockerout = subprocess.check_output(
-    #         ['/usr/local/bin/docker-machine ip default'],
-    #         shell=True, stderr=subprocess.STDOUT
-    #     )
-    #
-    #     DOCKER_IP = dockerout.splitlines()[0]
-    #
-    #     CERTS = path.join(
-    #         path.expanduser('~'), '.docker', 'machine',
-    #         'machines', 'default'
-    #     )
-    #
-    #     tls_config = tls.TLSConfig(
-    #         client_cert=(
-    #             path.join(CERTS, 'cert.pem'), path.join(CERTS, 'key.pem')
-    #         ),
-    #         ca_cert=path.join(CERTS, 'ca.pem'),
-    #         assert_hostname=False,
-    #         verify=True
-    #     )
-    #
-    #     url = "https://" + DOCKER_IP + ":2376"
-    #     c = Client(base_url=url, tls=tls_config, version='1.20')
 
     elif _platform == "win32":
         exit
@@ -290,50 +266,62 @@ def test_influxdb_running_database_exist():
         else:
             continue
 
+    # DROP CONTINUOUS QUERY "four_weeks" ON "juniper"
+    # CREATE RETENTION POLICY open_nti_test ON juniper DURATION INF REPLICATION 1 DEFAULT
     if found_db:
         assert 1
     else:
         assert 0
 
-
-def test_collection_agent_01():
-    # Write datapoint using mocked Junos device
-    global OPENNTI_C
-
-    FIXTURES_DIR = "/opt/open-nti/tests/fixtures/test_collection_agent_01/"
-
-    exec_job_id = c.exec_create(
-        container=OPENNTI_C,
-        cmd='/usr/bin/python ' +
-        '/opt/open-nti/open-nti.py -s -t --tag test --input ' + FIXTURES_DIR
-    )
-
-    result = c.exec_start(exec_job_id, stream=True)
-    for line in result:
-        try:
-            stream_line = StreamLineBuildGenerator(line)
-            # Do something with your stream line
-            # ...
-        except ValueError:
-            # If we are not able to deserialize the received line
-            # as JSON object, just print it out
-            print(line)
-            continue
-
+def test_influxdb_create_default_RP():
+    # Verify we can connect to InfluxDB and DB with a name juniper exists
     db = get_handle_db()
 
-    time.sleep(3)
-    query = 'select mean(value) from ' + \
-        '/P1-tf-mx960-1-re0.route-table.summary.inet.0.actives/;'
+    query = 'CREATE RETENTION POLICY "open_nti_test" ON juniper DURATION INF REPLICATION 1 DEFAULT;'
     result = db.query(query)
-    points = list(result.get_points())
 
-    assert len(points) == 1 and points[0]['mean'] == 16
+    # DROP CONTINUOUS QUERY "four_weeks" ON "juniper"
+    # CREATE RETENTION POLICY open_nti_test ON juniper DURATION INF REPLICATION 1 DEFAULT
 
+    if result:
+        assert 1
+
+# def test_collection_agent_01():
+#     # Write datapoint using mocked Junos device
+#     global OPENNTI_C
+#
+#     FIXTURES_DIR = "/opt/open-nti/tests/fixtures/test_collection_agent_01/"
+#
+#     exec_job_id = c.exec_create(
+#         container=OPENNTI_C,
+#         cmd='/usr/bin/python ' +
+#         '/opt/open-nti/open-nti.py -s -t --tag test --input ' + FIXTURES_DIR
+#     )
+#
+#     result = c.exec_start(exec_job_id, stream=True)
+#     for line in result:
+#         try:
+#             stream_line = StreamLineBuildGenerator(line)
+#             # Do something with your stream line
+#             # ...
+#         except ValueError:
+#             # If we are not able to deserialize the received line
+#             # as JSON object, just print it out
+#             print(line)
+#             continue
+#
+#     db = get_handle_db()
+#
+#     time.sleep(3)
+#     query = 'select mean(value) from ' + \
+#         '/P1-tf-mx960-1-re0.route-table.summary.inet.0.actives/;'
+#     result = db.query(query)
+#     points = list(result.get_points())
+#
+#     assert len(points) == 1 and points[0]['mean'] == 16
 
 def test_start_tcpreplay_container():
     global TCP_REPLAY_C
-
 
     # Force Stop and delete existing container if exist
     try:
