@@ -43,10 +43,14 @@ build-syslog:
 	@echo "======================================================================"
 	docker build -f $(INPUT_SYSLOG_DIR)/Dockerfile -t $(INPUT_SYSLOG_IMAGE_NAME):$(IMAGE_TAG) $(INPUT_SYSLOG_DIR)
 
-test:
+test: test-build test-run
+
+test-build:
 	docker build -t $(MAIN_IMAGE_NAME):$(TEST_TAG) .
 	docker build -f $(INPUT_JTI_DIR)/Dockerfile -t $(INPUT_JTI_IMAGE_NAME):$(TEST_TAG) $(INPUT_JTI_DIR)
 	docker build -f $(INPUT_SYSLOG_DIR)/Dockerfile -t $(INPUT_SYSLOG_IMAGE_NAME):$(TEST_TAG) $(INPUT_SYSLOG_DIR)
+
+test-run:
 	python -m pytest -v
 
 cli:

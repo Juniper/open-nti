@@ -9,11 +9,12 @@ services:
 
 install:
   - pip install -r requirements.txt
+  - make test-build
   - docker pull dgarros/tcpreplay
   - docker pull spotify/kafka
 
 script:
-  - make test
+  - make test-run
   - cd dashboards
   - python gendashboard.py --file data_streaming_collector.yaml
   - python gendashboard.py --file data_collection_agent.yaml
