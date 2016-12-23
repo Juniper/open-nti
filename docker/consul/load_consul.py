@@ -6,10 +6,17 @@ import requests
 import httplib2
 import json
 import yaml
+import argparse
 
 # logger = logging.getLogger( 'input' )
 
 if __name__ == "__main__":
+
+    full_parser = argparse.ArgumentParser()
+    full_parser.add_argument("--dir", default="/opt/open-nti/data", help="Directory where to find Yaml file to upload")
+    full_parser.add_argument("--consul", default="consul", help="Address of consul server ")
+
+    args = vars(full_parser.parse_args())
 
     BASE_DIR = ''
     if getattr(sys, 'frozen', False):
@@ -20,9 +27,9 @@ if __name__ == "__main__":
         BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
     Input = opennti_input.OpenNtiInput(
-                hosts_file = BASE_DIR + '/../data/hosts.yaml',
-                credentials_file = BASE_DIR + '/../data/credentials.yaml',
-                commands_file = BASE_DIR + '/../data/commands.yaml'
+                hosts_file = args['dir'] + '/hosts.yaml',
+                credentials_file =  args['dir'] + '/credentials.yaml',
+                commands_file =  args['dir'] + '/commands.yaml'
             )
 
     ############################################################
@@ -31,17 +38,14 @@ if __name__ == "__main__":
     for file in ['hosts', 'credentials', 'commands', 'variables']:
 
       ## TODO Add check to verify that YAML is valid
-      file_addr = BASE_DIR + '/../data/{0}.yaml'.format(file)
+      file_addr =  args['dir'] + '/{0}.yaml'.format(file)
 
       file_yaml = []
       with open(file_addr) as f:
         for document in yaml.load_all(f):
           file_yaml.append(document)
 
-    #   file_content = open(file_addr).read()
-    #   file_yaml = yaml.load_all(file_content)
-
-      url = "http://localhost:8500/v1/kv/parameters/{0}".format(file)
+      url = "http://{0}:8500/v1/kv/parameters/{1}".format(args['consul'], file)
 
       r = requests.put(
         url,
@@ -63,7 +67,7 @@ if __name__ == "__main__":
 
         ## Load commands
         if not commands == []:
-          url = "http://localhost:8500/v1/kv/inputs/{0}/{1}/commands".format(type, host)
+          url = "http://{0}:8500/v1/kv/inputs/{1}/{2}/commands".format(args['consul'], type, host)
           r = requests.put(
             url,
             data=json.dumps(commands),
@@ -71,7 +75,7 @@ if __name__ == "__main__":
 
         ## Load tags
         tags = Input.get_tags(host=host)
-        url = "http://localhost:8500/v1/kv/inputs/{0}/{1}/tags".format(type, host)
+        url = "http://{0}:8500/v1/kv/inputs/{1}/{2}/tags".format(args['consul'], type, host)
         r = requests.put(
             url,
             data=json.dumps(tags),
@@ -79,7 +83,7 @@ if __name__ == "__main__":
 
         ## Load credentials
         if type == 'netconf':
-          url = "http://localhost:8500/v1/kv/inputs/{0}/{1}/credential".format(type, host)
+          url = "http://{0}:8500/v1/kv/inputs/{1}/{2}/credential".format(args['consul'], type, host)
           # print url
           credential = Input.get_target_credential(host=host)
           r = requests.put(
