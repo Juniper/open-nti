@@ -1,6 +1,5 @@
 version: '2'
 services:
-
   consul:
     #build: consul/
     image: consul
@@ -35,8 +34,8 @@ services:
       - "/var/run/docker.sock:/tmp/docker.sock"
 
   input-jti:
-    image: juniper/open-nti-input-jti
-    container_name: opennti_input_jti
+    image: $INPUT_JTI_IMAGE_NAME:$IMAGE_TAG
+    container_name: $INPUT_JTI_CONTAINER_NAME
     environment:
       - "INFLUXDB_ADDR=opennti"
       - "OUTPUT_INFLUXDB=true"
@@ -52,8 +51,8 @@ services:
       - opennti
 
   input-syslog:
-    image: juniper/open-nti-input-syslog
-    container_name: opennti_input_syslog
+    image: $INPUT_SYSLOG_IMAGE_NAME:$IMAGE_TAG
+    container_name: $INPUT_SYSLOG_CONTAINER_NAME
     environment:
       - "INFLUXDB_ADDR=opennti"
       - "OUTPUT_INFLUXDB=true"
@@ -81,7 +80,6 @@ services:
       - opennti
 
   input-netconf:
-    # build: ./plugins/input-netconf
     image: juniper/open-nti-input-netconf
     environment:
       - SERVICE_NAME=input-netconf
@@ -93,8 +91,8 @@ services:
       - opennti
 
   opennti:
-    image: $IMAGE_NAME
-    container_name: $CONTAINER_NAME
+    image: $MAIN_IMAGE_NAME:$IMAGE_TAG
+    container_name: $MAIN_CONTAINER_NAME
     volumes:
       - ./$LOCAL_DIR_DASHBOARD:/src/dashboards
       - ./$LOCAL_DIR_DATA:/opt/open-nti/data
