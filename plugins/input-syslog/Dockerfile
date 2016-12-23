@@ -51,6 +51,9 @@ RUN     mkdir -p /var/lib/consul /usr/share/consul /etc/consul/conf.d &&\
 
 ADD     consul /etc/consul/conf.d
 
+COPY    fluent.conf /fluentd/etc/fluent.conf
+COPY    plugins /fluentd/plugins
+
 USER fluent
 
 RUN   gem install --no-ri --no-rdoc fluent-plugin-newsyslog
