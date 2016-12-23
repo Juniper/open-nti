@@ -195,14 +195,15 @@ def start_fluentd(output_kafka='false', output_influx='false'):
     CONTAINER_ID = c.inspect_container(CONTAINER_NAME)['Id']
     return CONTAINER_ID
 
-def stop_fluentd():
+def stop_fluentd(destroy=True):
     global c
 
     # Force Stop and delete existing container if exist
     try:
         old_container_id = c.inspect_container(CONTAINER_NAME)['Id']
         c.stop(container=old_container_id)
-        c.remove_container(container=old_container_id)
+        if destroy:
+            c.remove_container(container=old_container_id)
     except:
         print "Container do not exit"
 
@@ -267,6 +268,17 @@ def test_influxdb_create_default_RP():
 
     if result:
         assert 1
+
+def test_input_jti_running():
+    global c
+
+    ## Start JTI
+    start_fluentd(output_influx='true')
+
+    ## Check container is running
+    status = c.inspect_container(CONTAINER_NAME)['State']['Status']
+
+    assert status == 'running'
 
 def test_jti_structured_ifd_01():
 
@@ -338,7 +350,7 @@ def teardown_module(module):
     global c
 
     # if not os.getenv('TRAVIS'):
-    stop_fluentd()
+    stop_fluentd(destroy=False)
     stop_open_nti()
 
     try:
