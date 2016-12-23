@@ -51,7 +51,7 @@ test-build:
 	docker build -f $(INPUT_SYSLOG_DIR)/Dockerfile -t $(INPUT_SYSLOG_IMAGE_NAME):$(TEST_TAG) $(INPUT_SYSLOG_DIR)
 
 test-run:
-	python -m pytest -v
+	python -m pytest -v -x
 
 cli:
 	docker exec -i -t $(MAIN_CONTAINER_NAME) /bin/bash
