@@ -1,0 +1,56 @@
+
+template: graph-lines-02.j2
+datasource: influxdb
+title: "Errors"
+span: 6
+
+targets:
+  A:
+    query: >
+      SELECT derivative(mean("value"), 1s)
+      FROM /$host_regex.ipsec-error-ah-authentication-failures/
+      WHERE $timeFilter
+      GROUP BY time($GroupBy)
+  B:
+    query: >
+      SELECT derivative(mean("value"), 1s)
+      FROM /$host_regex.ipsec-error-replay-errors/
+      WHERE $timeFilter
+      GROUP BY time($GroupBy)
+  C:
+    query: >
+      SELECT derivative(mean("value"), 1s)
+      FROM /$host_regex.ipsec-error-authentication-failures/
+      WHERE $timeFilter
+      GROUP BY time($GroupBy)
+  D:
+    query: >
+      SELECT derivative(mean("value"), 1s)
+      FROM /$host_regex.ipsec-error-decryption-failures/
+      WHERE $timeFilter
+      GROUP BY time($GroupBy)
+  E:
+    query: >
+      SELECT derivative(mean("value"), 1s)
+      FROM /$host_regex.ipsec-error-bad-headers/
+      WHERE $timeFilter
+      GROUP BY time($GroupBy)
+  F:
+    query: >
+      SELECT derivative(mean("value"), 1s)
+      FROM /$host_regex.ipsec-error-bad-trailers/
+      WHERE $timeFilter
+      GROUP BY time($GroupBy)
+
+yaxes:
+  - format: bps
+    label: RX / TX
+  - format: short
+
+series_overrides:
+  - alias: "/input/i"
+    transform: "negative-Y"
+
+templatings_used:
+  - host_regex.yaml
+  - group_by.yaml
