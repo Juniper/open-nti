@@ -1,3 +1,5 @@
+![Beta](https://img.shields.io/badge/status-beta-yellowgreen.svg?style=flat "Beta")
+![Community](https://img.shields.io/badge/support-community-blue.svg?style=flat "Community")
 
 # OpenNTI
 
