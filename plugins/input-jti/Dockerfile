@@ -35,6 +35,24 @@ RUN apk --no-cache --update add \
     apk del build-base ruby-dev && \
     rm -rf /tmp/* /var/tmp/* /var/cache/apk/*
 
+RUN apk update &&\
+    apk add ca-certificates wget &&\
+    update-ca-certificates
+
+#############################
+## Install consul agent
+#############################
+RUN     mkdir -p /var/lib/consul /usr/share/consul /etc/consul/conf.d &&\
+        chown -R fluent:fluent /usr/share/consul /var/lib/consul &&\
+        wget https://releases.hashicorp.com/consul/0.7.2/consul_0.7.2_linux_amd64.zip &&\
+        unzip consul_0.7.2_linux_amd64.zip &&\
+        mv consul /usr/local/bin/consul &&\
+        touch /var/log/consul.log &&\
+        chown fluent:fluent /var/log/consul.log &&\
+        chown fluent:fluent /usr/local/bin/consul
+
+ADD     consul /etc/consul/conf.d
+
 # Copy Start script to generate configuration dynamically
 ADD     fluentd-alpine.start.sh   fluentd-alpine.start.sh
 RUN     chown -R fluent:fluent fluentd-alpine.start.sh &&\
@@ -46,7 +64,6 @@ COPY    plugins /fluentd/plugins
 RUN echo "fluent ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 USER fluent
-EXPOSE 24284
 
 ENV OUTPUT_KAFKA=false \
     OUTPUT_INFLUXDB=true \

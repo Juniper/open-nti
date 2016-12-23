@@ -1,0 +1,6 @@
+{
+  "start_join": ["consul"],
+  "data_dir": "/usr/share/consul",
+  "log_level": "INFO",
+  "enable_syslog": true
+}

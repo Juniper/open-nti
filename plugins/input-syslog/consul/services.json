@@ -1,0 +1,15 @@
+{
+  "services": [
+     {
+        "name": "input-syslog",
+        "port": 6000,
+        "enableTagOverride": false,
+        "check": {
+          "id": "Fluentd API",
+          "name": "Fluentd HTTP API on port 24220",
+          "http": "http://localhost:24220/api/plugins",
+          "interval": "10s"
+        }
+      }
+  ]
+}

@@ -17,9 +17,12 @@ RUN     rm -f /etc/service/sshd/down
 RUN     /usr/sbin/enable_insecure_key
 
 # Latest version
-ENV GRAFANA_VERSION 3.1.1-1470047149
-ENV INFLUXDB_VERSION 1.0.2
-ENV TELEGRAF_VERSION 1.0.1
+
+ARG GRAFANA_VERSION=3.1.1-1470047149
+ARG INFLUXDB_VERSION=1.0.2
+ARG TELEGRAF_VERSION=1.0.1
+ARG CONSUL_VERSION=0.7.2
+ARG FSWATCH_VERSION=1.9.3
 
 RUN     apt-get -y update && \
         apt-get -y install \
@@ -38,7 +41,8 @@ RUN     apt-get -y update && \
             snmp \
             zlib1g-dev \
             libffi-dev \
-            libssl-dev && \
+            libssl-dev \
+            unzip &&\
         apt-get clean   &&\
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -56,6 +60,7 @@ RUN     pip install influxdb && \
         pip install cryptography==1.2.1
 
 RUN     mkdir /src
+WORKDIR /src
 
 ########################
 ### Install Grafana
@@ -96,6 +101,8 @@ ADD     docker/telegraf/telegraf.conf /etc/telegraf/telegraf.conf
 RUN     mkdir /etc/service/telegraf
 ADD     docker/telegraf/telegraf.launcher.sh /etc/service/telegraf/run
 
+
+
 ########################
 ### Configuration    ###
 ########################
@@ -120,19 +127,33 @@ ADD     open-nti/startcron.py /opt/open-nti/startcron.py
 ADD     tests/main/pyez_mock.py /opt/open-nti/pyez_mock.py
 
 ### Install fswatch and add scripts to upload data to consul
-RUN     wget https://github.com/emcrisostomo/fswatch/releases/download/1.9.3/fswatch-1.9.3.tar.gz &&\
-        tar -xzf fswatch-1.9.3.tar.gz &&\
-        cd fswatch-1.9.3 &&\
+RUN     wget https://github.com/emcrisostomo/fswatch/releases/download/${FSWATCH_VERSION}/fswatch-${FSWATCH_VERSION}.tar.gz &&\
+        tar -xzf fswatch-${FSWATCH_VERSION}.tar.gz &&\
+        cd fswatch-${FSWATCH_VERSION} &&\
         ./configure &&\
         make &&\
         make install &&\
         ldconfig
 
-RUN     mkdir /opt/consul
-ADD     docker/consul/load_consul.py /opt/consul/load_consul.py
-ADD     docker/consul/opennti_input.py /opt/consul/opennti_input.py
+RUN     mkdir /opt/load_consul
+ADD     docker/load_consul/load_consul.py /opt/load_consul/load_consul.py
+ADD     docker/load_consul/opennti_input.py /opt/load_consul/opennti_input.py
 
-ADD     docker/consul/watch_dir_and_load.sh /etc/service/consul/run
+ADD     docker/load_consul/watch_dir_and_load.sh /etc/service/load_consul/run
+
+########################
+### Install Consul   ###
+########################
+RUN     mkdir -p /var/lib/consul &&\
+        mkdir -p /usr/share/consul &&\
+        mkdir -p /etc/consul/conf.d &&\
+        wget https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip &&\
+        unzip  consul_${CONSUL_VERSION}_linux_amd64.zip &&\
+        mv consul /usr/local/bin/consul
+
+ADD     docker/consul/config.json /etc/consul/conf.d/config.json
+ADD     docker/consul/services.json /etc/consul/conf.d/services.json
+ADD     docker/consul/run.sh /etc/service/consul/run
 
 ### Add test files
 RUN     mkdir /opt/open-nti/tests
@@ -145,6 +166,7 @@ RUN     chmod +x /etc/service/nginx/run         &&\
         chmod +x /etc/service/influxdb/run      &&\
         chmod +x /etc/service/telegraf/run      &&\
         chmod +x /etc/service/consul/run        &&\
+        chmod +x /etc/service/load_consul/run   &&\
         chmod +x /influxdbrun.sh
 
 WORKDIR /

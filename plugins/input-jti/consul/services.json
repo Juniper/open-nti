@@ -1,0 +1,24 @@
+{
+  "services": [
+     {
+        "name": "input-jti-50000",
+        "port": 50000,
+        "check": {
+          "id": "Fluentd API",
+          "name": "Fluentd HTTP API on port 24220",
+          "http": "http://localhost:24220/api/plugins",
+          "interval": "10s"
+        }
+      },
+      {
+         "name": "input-jti-50020",
+         "port": 50020,
+         "check": {
+           "id": "Fluentd API",
+           "name": "Fluentd HTTP API on port 24220",
+           "http": "http://localhost:24220/api/plugins",
+           "interval": "10s"
+         }
+       }
+   ]
+}

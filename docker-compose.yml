@@ -1,15 +1,11 @@
 version: '2'
 services:
   consul:
-    #build: consul/
     image: consul
     container_name: consul
     command: agent -server -bootstrap-expect=1 -node=open_nti -ui
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      #- ./consul/data:/consul/data
-      #- ./consul/config:/consul/config
-      #- ./consul/ui:/consul/ui
     environment:
       CONSUL_LOCAL_CONFIG: '{"skip_leave_on_interrupt": true}'
       CONSUL_BIND_INTERFACE: eth0
@@ -24,14 +20,14 @@ services:
       - "8500:8500"
 
 # Exactly one per physical node
-  registrator:
-    command: "-internal consul://consul:8500"
-    image: gliderlabs/registrator:latest
-    container_name: registrator
-    links:
-      - "consul"
-    volumes:
-      - "/var/run/docker.sock:/tmp/docker.sock"
+  # registrator:
+  #   command: "-internal consul://consul:8500"
+  #   image: gliderlabs/registrator:latest
+  #   container_name: registrator
+  #   links:
+  #     - "consul"
+  #   volumes:
+  #     - "/var/run/docker.sock:/tmp/docker.sock"
 
   input-jti:
     image: $INPUT_JTI_IMAGE_NAME:$IMAGE_TAG
@@ -40,8 +36,6 @@ services:
       - "INFLUXDB_ADDR=opennti"
       - "OUTPUT_INFLUXDB=true"
       - "OUTPUT_STDOUT=false"
-      - SERVICE_NAME=input-jti
-      - SERVICE_TAGS=udp
     ports:
       - "$LOCAL_PORT_JTI:50000/udp"
       - "$LOCAL_PORT_ANALYTICSD:50020/udp"
@@ -49,6 +43,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
     links:
       - opennti
+      - consul
 
   input-syslog:
     image: $INPUT_SYSLOG_IMAGE_NAME:$IMAGE_TAG
@@ -57,20 +52,19 @@ services:
       - "INFLUXDB_ADDR=opennti"
       - "OUTPUT_INFLUXDB=true"
       - "OUTPUT_STDOUT=false"
-      - SERVICE_NAME=input-syslog
-      - SERVICE_TAGS=udp
     ports:
       - "$LOCAL_PORT_EVENT:6000/udp"
     volumes:
       - /etc/localtime:/etc/localtime:ro
     links:
       - opennti
+      - consul
 
   input-snmp:
     build: ./open-nti-input-snmp
-    environment:
-      - SERVICE_NAME=input-snmp
-      - SERVICE_TAGS=udp
+    # environment:
+    #   - SERVICE_NAME=input-snmp
+    #   - SERVICE_TAGS=udp
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./open-nti-input-snmp/config/:/opt/telegraf/config
@@ -78,18 +72,20 @@ services:
       - "162/udp"
     links:
       - opennti
+      - consul
 
   input-netconf:
     image: $INPUT_NETCONF_IMAGE_NAME:$IMAGE_TAG
     container_name: $INPUT_NETCONF_CONTAINER_NAME
-    environment:
-      - SERVICE_NAME=input-netconf
+    # environment:
+    #   - SERVICE_NAME=input-netconf
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./plugins/input-netconf/:/data
       # - ../py-netconf-collector:/source/py-netconf-collector
     links:
       - opennti
+      - consul
 
   opennti:
     image: $MAIN_IMAGE_NAME:$IMAGE_TAG
@@ -98,9 +94,6 @@ services:
       - ./$LOCAL_DIR_DASHBOARD:/src/dashboards
       - ./$LOCAL_DIR_DATA:/opt/open-nti/data
       - /etc/localtime:/etc/localtime:ro
-    environment:
-      - SERVICE_NAME=db
-      - SERVICE_TAGS=db
     ports:
       - "$LOCAL_PORT_STATSD:8125/udp"
       - "$LOCAL_PORT_NGINX:80"
