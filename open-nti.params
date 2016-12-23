@@ -12,6 +12,10 @@ export INPUT_SYSLOG_DIR=plugins/input-syslog
 export INPUT_SYSLOG_IMAGE_NAME=juniper/open-nti-input-syslog
 export INPUT_SYSLOG_CONTAINER_NAME=opennti_input_syslog
 
+export INPUT_NETCONF_DIR=plugins/input-netconf
+export INPUT_NETCONF_IMAGE_NAME=juniper/open-nti-input-netconf
+export INPUT_NETCONF_CONTAINER_NAME=opennti_input_netconf
+
 export MAIN_CONTAINER_NAME=opennti_con
 
 export DOCKER_COMPOSE_FILE=docker-compose.yml
