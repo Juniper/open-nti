@@ -17,15 +17,11 @@
 {{range $key, $pairs := tree "inputs/netconf" | byKey}}
 [[inputs.exec]]
   # Shell/commands array
-  # compatible with old version
-  # we can still use the old command configuration
-  # command = "/usr/bin/line_protocol_collector"
-  commands = ["/usr/bin/python /data/netconf-collector.py -s --host={{$key}} --tag {{ range $index, $element := key (print "inputs/netconf/" $key "/tags") | parseJSON }}{{$element}} {{end}} --commands=commands.yaml --credential=credentials.yaml"]
+  commands = ["/usr/bin/python /source/py-netconf-collector/netconf-collector.py -s --host={{$key}} --tag {{ range $index, $element := key (print "inputs/netconf/" $key "/tags") | parseJSON }}{{$element}} {{end}} --parserdir=/source/py-netconf-collector/parsers --commands=/source/commands.yaml --credential=/source/credentials.yaml"]
 
   ## Timeout for each command to complete.
-  timeout = "30s"
+  timeout = "1m"
 
   # Data format to consume.
-  # NOTE json only reads numerical measurements, strings and booleans are ignored.
   data_format = "influx"
 {{end}}

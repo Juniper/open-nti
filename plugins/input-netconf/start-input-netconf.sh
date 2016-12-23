@@ -7,5 +7,4 @@
                                 -template "/data/templates/commands.tmpl:/source/commands.yaml" \
                                 -template "/data/templates/credentials.tmpl:/source/credentials.yaml" \
                                 -exec "/usr/bin/telegraf --config /opt/telegraf/config/telegraf.conf" \
-                                -wait 2s:10s \
-                                -log-level DEBUG
+                                -log-level INFO
