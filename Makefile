@@ -50,7 +50,7 @@ test:
 	python -m pytest -v
 
 cli:
-	docker exec -it $(CONTAINER_NAME) /bin/bash
+	docker exec -i -t $(MAIN_CONTAINER_NAME) /bin/bash
 
 start:
 	echo "Use docker compose file : $(DOCKER_FILE)"
@@ -80,13 +80,13 @@ cron-show:
 	# if [ $(TAG) == "all" ]; then
 	#   docker exec -it $(CONTAINER_NAME) /usr/bin/python /opt/open-nti/startcron.py -a show  -c "$(TAG)"
 	# else
-	docker exec -it $(CONTAINER_NAME) /usr/bin/python /opt/open-nti/startcron.py -a show  -c "/usr/bin/python /opt/open-nti/open-nti.py -s $(TAG)"
+	docker exec -it $(MAIN_CONTAINER_NAME) /usr/bin/python /opt/open-nti/startcron.py -a show  -c "/usr/bin/python /opt/open-nti/open-nti.py -s $(TAG)"
 
 cron-add:
-	docker exec -it $(CONTAINER_NAME) /usr/bin/python /opt/open-nti/startcron.py -a add -t "$(TIME)" -c "/usr/bin/python /opt/open-nti/open-nti.py -s --tag $(TAG)"
+	docker exec -it $(MAIN_CONTAINER_NAME) /usr/bin/python /opt/open-nti/startcron.py -a add -t "$(TIME)" -c "/usr/bin/python /opt/open-nti/open-nti.py -s --tag $(TAG)"
 
 cron-delete:
-	docker exec -it $(CONTAINER_NAME) /usr/bin/python /opt/open-nti/startcron.py -a delete  -c "/usr/bin/python /opt/open-nti/open-nti.py -s --tag $(TAG)"
+	docker exec -it $(MAIN_CONTAINER_NAME) /usr/bin/python /opt/open-nti/startcron.py -a delete  -c "/usr/bin/python /opt/open-nti/open-nti.py -s --tag $(TAG)"
 
 cron-debug:
-	docker exec -it $(CONTAINER_NAME) /usr/bin/python /opt/open-nti/open-nti.py
+	docker exec -i -t $(MAIN_CONTAINER_NAME) /usr/bin/python /opt/open-nti/open-nti.py -s -c
