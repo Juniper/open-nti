@@ -1,14 +1,14 @@
 
-title: "RE - Memory Utilization"
 template: graph-lines-02.j2
 datasource: influxdb
+title: "Active Routes (bgp.l3vpn.0)"
 span: 6
 
 targets:
   A:
     query: >
       SELECT mean(value)
-      FROM /$host_regex.chassis.routing-engine.*.memory-buffer-utilization/
+      FROM /$host_regex.route-table.summary.bgp.l3vpn.0.actives/
       WHERE $timeFilter
       GROUP BY time($GroupBy)
 

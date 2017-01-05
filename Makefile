@@ -83,7 +83,7 @@ update:
 	@echo "OpenNTI - Update the files from Github"
 	git pull
 	@echo "OpenNTI - Update the containers from Docker Hub"
-	docker pull $(IMAGE_NAME):latest
+	docker pull $(MAIN_IMAGE_NAME):latest
 	docker pull $(INPUT_JTI_IMAGE_NAME):latest
 	docker pull $(INPUT_SYSLOG_IMAGE_NAME):latest
 
