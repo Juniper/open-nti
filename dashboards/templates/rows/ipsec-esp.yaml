@@ -1,0 +1,10 @@
+
+title: IPSec - ESP
+height: 250px
+template: row_base.j2
+panels:
+  graphs:
+    - ipsec-esp-encrypt-bytes.yaml
+    - ipsec-esp-decrypt-bytes.yaml
+    - ipsec-esp-encrypt-packets.yaml
+    - ipsec-esp-decrypt-packets.yaml

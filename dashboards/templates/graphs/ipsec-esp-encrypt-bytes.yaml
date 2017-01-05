@@ -1,17 +1,16 @@
 
-title: "RE - Memory Utilization"
 template: graph-lines-02.j2
 datasource: influxdb
+title: "ESP Encrypted Bytes"
 span: 6
 
 targets:
   A:
     query: >
-      SELECT mean(value)
-      FROM /$host_regex.chassis.routing-engine.*.memory-buffer-utilization/
+      SELECT derivative(mean("value"), 1s)
+      FROM /$host_regex.ipsec-esp-encrypted-bytes/
       WHERE $timeFilter
       GROUP BY time($GroupBy)
 
 templatings_used:
   - host_regex.yaml
-  - group_by.yaml

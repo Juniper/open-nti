@@ -17,6 +17,9 @@ annotations:
 rows:
   - opennti-disclaimer.yaml
   - re-statistics.yaml
+  - route-inet0.yaml
   - re-processes.yaml
   - protocol-isis.yaml
   - protocol-bgp.yaml
+  - ipsec-esp.yaml
+  - ipsec-ah-error.yaml
