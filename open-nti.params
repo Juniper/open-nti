@@ -16,6 +16,10 @@ export INPUT_NETCONF_DIR=plugins/input-netconf
 export INPUT_NETCONF_IMAGE_NAME=juniper/open-nti-input-netconf
 export INPUT_NETCONF_CONTAINER_NAME=opennti_input_netconf
 
+export LB_UDP_DIR=plugins/lb-udp
+export LB_UDP_IMAGE_NAME=juniper/open-nti-lb-udp
+export LB_UDP_CONTAINER_NAME=opennti_lb_udp
+
 export MAIN_CONTAINER_NAME=opennti_con
 
 export DOCKER_COMPOSE_FILE=docker-compose.yml
