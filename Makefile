@@ -95,12 +95,15 @@ update:
 	docker pull $(INPUT_SYSLOG_IMAGE_NAME):latest
 
 scale-input-syslog:
-# @echo "Use docker compose file: $(DOCKER_FILE)"
 	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE) scale input-syslog=$(NBR)
 
 scale-input-jti:
-# @echo "Use docker compose file: $(DOCKER_FILE)"
 	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE) scale input-jti=$(NBR)
+
+show-conf-lb:
+	docker exec -it $(LB_UDP_CONTAINER_NAME) cat /etc/nginx/nginx.conf
+
+
 
 cron-show:
 	# if [ $(TAG) == "all" ]; then
