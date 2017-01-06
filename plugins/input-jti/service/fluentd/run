@@ -1,0 +1,5 @@
+#!/bin/sh
+
+envtpl --keep-template /fluentd/etc/fluent.conf -o /tmp/fluent.conf
+
+fluentd -c /tmp/fluent.conf -p /fluentd/plugins $FLUENTD_OPT
