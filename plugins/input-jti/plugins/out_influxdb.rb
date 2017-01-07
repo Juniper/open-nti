@@ -69,7 +69,11 @@ class Fluent::InfluxdbOutput < Fluent::BufferedOutput
             end
             points << point
         end
-
-        @influxdb.write_points(points)
+        begin
+          @influxdb.write_points(points)
+        rescue Exception => e
+          log.warn("out_influxdb - Exception occurred while trying to send data to influxdb server")
+          log.debug("out_influxdb - Exception #{e}")
+        end
     end
 end
