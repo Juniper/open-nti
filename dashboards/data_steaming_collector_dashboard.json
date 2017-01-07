@@ -96,6 +96,7 @@
   "targets": [
 {
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT mean(\"value\") FROM \"jnpr.analyticsd\" WHERE (\"type\" = 'traffic-stats.rxpps' OR \"type\" = 'traffic-stats.txpps') AND \"device\" =~ /$host_regex/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\", time($GroupBy)",
@@ -106,6 +107,7 @@
     }
 ,{
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT derivative(mean(\"value\"), 1s) FROM \"jnpr.jvision\" WHERE (\"type\" = 'egress_stats.if_packets' OR \"type\" = 'ingress_stats.if_packets') AND \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\", time($GroupBy)",
@@ -116,6 +118,7 @@
     }
 ,{
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT derivative(mean(\"value\"), 1s) FROM \"jnpr.jvision\" WHERE (\"type\" = 'egress_stats.if_pkts' OR \"type\" = 'ingress_stats.if_pkts') AND \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\", time($GroupBy)",
@@ -126,6 +129,7 @@
     }
 ,{
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT  derivative(mean(\"counters/out-packets\"), 1s) AS \"OUT\", derivative(mean(\"counters/in-packets\"), 1s) AS \"IN\" FROM \"openconfig-ifd\" WHERE \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY interface, device, time($GroupBy)",
@@ -136,6 +140,7 @@
     }
 ,{
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT derivative(mean(\"value\"), 1s) FROM \"jnpr.jvision\" WHERE  (\"type\" = 'egress_stats.if_fc_stats.if_packets' OR \"type\" = 'ingress_stats.if_fc_stats.if_packets') AND \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\", \"family\", \"forwarding_class\", time($GroupBy)",
@@ -237,6 +242,7 @@
   "targets": [
 {
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT mean(\"value\") FROM \"jnpr.analyticsd\" WHERE \"type\" = 'traffic-stats.txbps' AND \"device\" =~ /$host_regex/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\", time($GroupBy)",
@@ -247,6 +253,7 @@
     }
 ,{
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT derivative(mean(\"value\"), 1s)*8 FROM \"jnpr.jvision\" WHERE  (\"type\" = 'egress_stats.if_octets' OR \"type\" = 'ingress_stats.if_octets') AND \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\", time($GroupBy)",
@@ -257,6 +264,7 @@
     }
 ,{
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT mean(\"value\") FROM \"jnpr.analyticsd\" WHERE \"type\" = 'traffic-stats.rxbps' AND \"device\" =~ /$host_regex/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\", time($GroupBy)",
@@ -267,6 +275,7 @@
     }
 ,{
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT  derivative(mean(\"counters/out-octets\"), 1s)*8 AS \"OUT\", derivative(mean(\"counters/in-octets\"), 1s)*8 AS \"IN\" FROM \"openconfig-ifd\" WHERE \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY interface, device, time($GroupBy)",
@@ -277,6 +286,7 @@
     }
 ,{
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT derivative(mean(\"value\"), 1s)*8 FROM \"jnpr.jvision\" WHERE  (\"type\" = 'egress_stats.if_fc_stats.if_octets' OR \"type\" = 'ingress_stats.if_fc_stats.if_octets') AND \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\", \"family\", \"forwarding_class\", time($GroupBy)",
@@ -363,6 +373,7 @@
   "targets": [
 {
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT derivative(mean(\"value\"), 1s) FROM \"jnpr.jvision\" WHERE \"type\" = 'egress_queue_info.packets' AND \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"egress_queue\", time($GroupBy)",
@@ -373,6 +384,7 @@
     }
 ,{
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT  derivative(mean(\"counters/out-discards\"), 1s) AS \"Discard out\" FROM \"openconfig-ifd\" WHERE \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY interface, device, time($GroupBy)",
@@ -474,6 +486,7 @@
   "targets": [
 {
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT derivative(\"value\", 1s) FROM \"jnpr.analyticsd\" WHERE ( \"type\" = 'traffic-stats.txmcpkt' OR \"type\" = 'traffic-stats.txucpkt' OR \"type\" = 'traffic-stats.txmcpkt' ) AND \"device\" =~ /$host_regex/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\"",
@@ -484,6 +497,7 @@
     }
 ,{
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT derivative(mean(\"value\"), 1s) FROM \"jnpr.jvision\" WHERE (\"type\" = 'egress_stats.if_uc_pkts' OR \"type\" = 'egress_stats.if_bc_pkts' OR \"type\" = 'ingress_stats.if_mc_pkts') AND \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\", time($GroupBy)",
@@ -494,6 +508,7 @@
     }
 ,{
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT derivative(\"value\", 1s) FROM \"jnpr.analyticsd\" WHERE ( \"type\" = 'traffic-stats.rxmcpkt' OR \"type\" = 'traffic-stats.rxbcpkt' OR \"type\" = 'traffic-stats.rxucpkt' ) AND \"device\" =~ /$host_regex/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\"",
@@ -504,6 +519,7 @@
     }
 ,{
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT  derivative(mean(\"counters/out-unicast-pkts\"), 1s) AS \"Ucast out\", derivative(mean(\"counters/in-unicast-pkts\"), 1s) AS \"Ucast in\" FROM \"openconfig-ifd\" WHERE \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY interface, device, time($GroupBy)",
@@ -514,6 +530,7 @@
     }
 ,{
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT  derivative(mean(\"counters/out-broadcast-pkts\"), 1s) AS \"Bcast out\", derivative(mean(\"counters/in-broadcast-pkts\"), 1s) AS \"Bcast in\" FROM \"openconfig-ifd\" WHERE \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY interface, device, time($GroupBy)",
@@ -524,6 +541,7 @@
     }
 ,{
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT  derivative(mean(\"counters/out-multicast-pkts\"), 1s) AS \"Mcast out\", derivative(mean(\"counters/in-multicast-pkts\"), 1s) AS \"Mcast in\" FROM \"openconfig-ifd\" WHERE \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY interface, device, time($GroupBy)",
@@ -623,6 +641,7 @@
   "targets": [
 {
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT derivative(mean(\"value\"), 1s) FROM \"jnpr.analyticsd\" WHERE  (\"type\" = 'traffic-stats.rxcrcerr' OR \"type\" = 'traffic-stats.rxdroppkt') AND \"device\" =~ /$host_regex/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\", time($GroupBy)",
@@ -633,6 +652,7 @@
     }
 ,{
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT derivative(mean(\"value\"), 1s) FROM \"jnpr.jvision\" WHERE (\"type\" = 'ingress_errors.if_in_discards' OR \"type\" = 'ingress_errors.if_in_errors' OR \"type\" = 'ingress_errors.if_in_frame_errors' OR \"type\" = 'ingress_errors.if_in_l2_mismatch_timeouts' OR \"type\" = 'ingress_errors.if_in_l2chan_errors' OR \"type\" = 'ingress_errors.if_in_l3_incompletes' OR \"type\" = 'ingress_errors.if_in_qdrops' OR \"type\" = 'ingress_errors.if_in_resource_errors' OR \"type\" = 'ingress_errors.if_in_runts') AND \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"device\", \"interface\", \"type\", time($GroupBy)",
@@ -734,6 +754,7 @@
   "targets": [
 {
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT \"value\" FROM \"jnpr.analyticsd\" WHERE \"type\" = 'queue-stats.latency' AND \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY \"interface\", \"device\"",
@@ -822,6 +843,7 @@
   "targets": [
 {
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT mean(\"value\") FROM \"jnpr.analyticsd\" WHERE \"type\" = 'queue-stats.queue-depth' AND \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY time($interval), \"device\", \"interface\"",
@@ -832,6 +854,7 @@
     }
 ,{
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT \"value\" FROM \"jnpr.jvision\" WHERE \"type\" = 'egress_queue_info.cur_buffer_occupancy' AND \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND  $timeFilter GROUP BY \"device\", \"interface\"",
@@ -933,6 +956,7 @@
   "targets": [
 {
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT \"value\"*8 FROM \"jnpr.jvision\" WHERE \"type\" = 'lspstata.byte_rate' AND \"device\" =~ /$host_regex$/ AND $timeFilter GROUP BY \"device\", \"lspname\", \"type\"",
@@ -1019,6 +1043,7 @@
   "targets": [
 {
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT \"value\" FROM \"jnpr.jvision\" WHERE \"type\" = 'lspstata.packet_rate' AND \"device\" =~ /$host_regex$/ AND $timeFilter GROUP BY \"device\", \"lspname\"",
@@ -1118,6 +1143,7 @@
   "targets": [
 {
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT derivative(mean(\"value\"), 1s) FROM \"jnpr.jvision\" WHERE \"type\" = 'filter_counter.bytes' AND \"device\" =~ /$host_regex$/ AND  $timeFilter GROUP BY \"device\", \"interface\", \"filter_counter_name\", time($GroupBy)",
@@ -1206,6 +1232,7 @@
   "targets": [
 {
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT derivative(mean(\"value\"), 1s) FROM \"jnpr.jvision\" WHERE \"type\" = 'filter_counter.packets' AND \"device\" =~ /$host_regex$/ AND  $timeFilter GROUP BY \"device\", \"interface\", \"filter_counter_name\", time($GroupBy)",
@@ -1294,6 +1321,7 @@
   "targets": [
 {
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT mean(\"value\") FROM \"jnpr.jvision\" WHERE \"type\" = 'memory_usage.HEAP' AND \"device\" =~ /$host_regex$/ AND  $timeFilter GROUP BY \"device\", \"interface\", \"filter_name\", time($GroupBy)",
@@ -1395,6 +1423,7 @@
   "targets": [
 {
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT mean(\"value\") FROM \"jnpr.jvision\" WHERE \"type\" = 'cpu_mem.bytes_allocated' AND \"device\" =~ /$host_regex$/ AND  $timeFilter GROUP BY \"device\", \"interface\", time($GroupBy)",
@@ -1483,6 +1512,7 @@
   "targets": [
 {
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT mean(\"value\") FROM \"jnpr.jvision\" WHERE \"type\" = 'cpu_mem.size' AND \"device\" =~ /$host_regex$/ AND  $timeFilter GROUP BY \"device\", \"interface\", time($GroupBy)",
@@ -1571,6 +1601,7 @@
   "targets": [
 {
       "column": "value",
+      "alias": "",
       "dsType": "influxdb",
       "interval": "",
       "query": "SELECT mean(\"value\") FROM \"jnpr.jvision\" WHERE \"type\" = 'cpu_mem.utilization' AND \"device\" =~ /$host_regex$/ AND  $timeFilter GROUP BY \"device\", \"interface\", time($GroupBy)",
