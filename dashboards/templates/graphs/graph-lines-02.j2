@@ -46,6 +46,7 @@
 {% for id, target in targets.iteritems() -%}
     {
       "column": "value",
+      "alias": "{{ target.alias | default("") }}",
       "dsType": "influxdb",
       "interval": "",
       "query": "{{ target.query|replace('"', '\\"')|trim }}",
