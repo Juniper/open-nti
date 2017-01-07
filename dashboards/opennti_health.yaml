@@ -1,0 +1,14 @@
+
+title: Open NTI Performance Monitoring
+template: "dashboard_base.j2"
+
+tags:
+  - opennti
+  - internal
+
+templatings:
+  - group_by.yaml
+
+rows:
+  - opennti-disclaimer.yaml
+  - internal_cpumem.yaml

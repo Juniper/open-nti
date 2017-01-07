@@ -1,0 +1,17 @@
+
+template: graph-lines-02.j2
+datasource: opennti
+title: "CPU"
+span: 6
+
+targets:
+  A:
+    query: >
+      SELECT mean("usage_idle")
+      FROM "cpu"
+      WHERE "cpu" = 'cpu-total' AND $timeFilter
+      GROUP BY time($interval), "host", "role"
+    alias: ($tag_role) $tag_host cpu.idle
+
+templatings_used:
+  - group_by.yaml

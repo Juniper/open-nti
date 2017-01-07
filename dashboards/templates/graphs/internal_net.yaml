@@ -1,0 +1,33 @@
+
+template: graph-lines-02.j2
+datasource: opennti
+title: "Network"
+span: 6
+
+targets:
+  A:
+    query: >
+      SELECT non_negative_derivative(mean("bytes_recv"), 1s)
+      FROM "net"
+      WHERE "interface" = 'eth0' AND $timeFilter
+      GROUP BY time($interval), "host", "role"
+    alias: ($tag_role) $tag_host net.in
+  B:
+    query: >
+      SELECT non_negative_derivative(mean("bytes_sent"), 1s)
+      FROM "net"
+      WHERE "interface" = 'eth0' AND $timeFilter
+      GROUP BY time($interval), "host", "role"
+    alias: ($tag_role) $tag_host net.out
+
+templatings_used:
+  - group_by.yaml
+
+yaxes:
+  - format: bps
+    label: RX / TX
+  - format: short
+
+series_overrides:
+  - alias: "/net.out/i"
+    transform: "negative-Y"

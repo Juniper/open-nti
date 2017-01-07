@@ -1,0 +1,342 @@
+{
+  "id": null,
+  "title": "Open NTI Performance Monitoring",
+  "originalTitle": "Open NTI Performance Monitoring",
+"tags": [
+    "opennti","internal"
+  ],
+  "style": "dark",
+  "timezone": "browser",
+  "editable": true,
+  "hideControls": false,
+  "sharedCrosshair": false,
+  "rows": [
+    {
+  "height": "25px",
+  "editable": true,
+  "collapse": false,
+  
+    "showTitle": true,
+    "title": "Disclaimer",
+  
+  "panels": [
+    {
+      "title": "",
+      "error": false,
+      "span": 12,
+      "editable": true,
+      "type": "text",
+      "isNew": true,
+      "id": 102,
+      "mode": "markdown",
+      "content": "**This dashboard has been automatically generated using the dashboard generator of OpenNTI** - It's very easy to personalize it and create your own.",
+      "links": [],
+      "transparent": true,
+      "height": "10px"
+    }
+  ]
+},{
+  "collapse": true,
+  "editable": true,
+  "height": "250px",
+  "panels": [
+
+    {
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "opennti",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 1,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "alias": "($tag_role) $tag_host cpu.idle",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(\"usage_idle\") FROM \"cpu\" WHERE \"cpu\" = 'cpu-total' AND $timeFilter GROUP BY time($interval), \"host\", \"role\"",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "CPU",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "opennti",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 2,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+    {
+      "alias": "/net.out/i",
+      "transform": "negative-Y"
+    }
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "alias": "($tag_role) $tag_host net.in",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT non_negative_derivative(mean(\"bytes_recv\"), 1s) FROM \"net\" WHERE \"interface\" = 'eth0' AND $timeFilter GROUP BY time($interval), \"host\", \"role\"",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+,{
+      "column": "value",
+      "alias": "($tag_role) $tag_host net.out",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT non_negative_derivative(mean(\"bytes_sent\"), 1s) FROM \"net\" WHERE \"interface\" = 'eth0' AND $timeFilter GROUP BY time($interval), \"host\", \"role\"",
+      "rawQuery": true,
+      "refId": "B",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "Network",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "bps",
+      "label": "RX / TX"
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+}
+
+  ],
+
+  "showTitle": true,
+  "title": "CPU / Memory / Net"
+
+}
+  ],
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {
+    "collapse": false,
+    "enable": true,
+    "notice": false,
+    "now": true,
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "status": "Stable",
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ],
+    "type": "timepicker"
+  },
+
+  "templating": {
+    "enable": true,
+    "list": [
+    {
+   "type": "interval",
+   "datasource": null,
+   "refresh": 1,
+   "name": "GroupBy",
+   "hide": 0,
+   "options": [
+     {
+       "text": "auto",
+       "value": "$__auto_interval",
+       "selected": true
+     },
+     {
+       "text": "1s",
+       "value": "1s",
+       "selected": false
+     },
+     {
+       "text": "10s",
+       "value": "10s",
+       "selected": false
+     },
+     {
+       "text": "30s",
+       "value": "30s",
+       "selected": false
+     },
+     {
+       "text": "1m",
+       "value": "1m",
+       "selected": false
+     },
+     {
+       "text": "5m",
+       "value": "5m",
+       "selected": false
+     }
+   ],
+   "includeAll": false,
+   "multi": false,
+   "query": "1s,10s,30s,1m,5m",
+   "current": {
+     "text": "auto",
+     "value": "$__auto_interval"
+   },
+   "regex": "",
+   "auto": true,
+   "auto_count": 100,
+   "auto_min": "1s"
+ }
+    ]
+  },
+
+
+  "refresh": "1m",
+  "schemaVersion": 12,
+  "version": 0,
+  "links": []
+}
