@@ -1,4 +1,4 @@
-FROM fluent/fluentd:v0.12.24
+FROM fluent/fluentd:v0.12.29
 MAINTAINER Damien Garros <dgarros@gmail.com>
 
 ENV FLUENTD_JUNIPER_VERSION 0.2.11
@@ -32,6 +32,9 @@ RUN apk --no-cache --update add \
 ADD     fluentd-alpine.start.sh         fluentd-alpine.start.sh
 RUN     chown -R fluent:fluent fluentd-alpine.start.sh
 RUN     chmod 777 fluentd-alpine.start.sh
+
+COPY    fluent.conf /fluentd/etc/fluent.conf
+COPY    plugins /fluentd/plugins
 
 USER fluent
 
