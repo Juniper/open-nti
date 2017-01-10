@@ -257,7 +257,7 @@
   ## Setting interfaces will tell it to gather these explicit interfaces,
   ## regardless of status.
   ##
-  # interfaces = ["eth0"]
+  interfaces = ["eth0"]
 
 
 # # TCP or UDP 'ping' given url and collect response time in seconds
