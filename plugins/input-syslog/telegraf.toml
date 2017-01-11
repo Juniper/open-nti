@@ -68,11 +68,11 @@
   # urls = ["udp://localhost:8089"] # UDP endpoint example
   urls = ["http://opennti:8086"] # required
   ## The target database for metrics (telegraf will create it if not exists).
-  database = "opennti" # required
+  database = "opennti_internal" # required
 
   ## Retention policy to write to. Empty string writes to the default rp.
   retention_policy = ""
-  ## Write consistency (clusters only), can be: "any", "one", "quorum", "all"
+  ## Write consistency (cluste`rs only), can be: "any", "one", "quorum", "all"
   write_consistency = "any"
 
   ## Write timeout (for the InfluxDB client), formatted as a string.

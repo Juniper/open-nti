@@ -1,8 +1,8 @@
 
 template: graph-lines-02.j2
-datasource: opennti
+datasource: opennti_internal
 title: "Network"
-span: 6
+span: 4
 
 targets:
   A:
@@ -22,6 +22,11 @@ targets:
 
 templatings_used:
   - group_by.yaml
+
+legend:
+  avg: "true"
+  current: "true"
+  table: "true"
 
 yaxes:
   - format: bps

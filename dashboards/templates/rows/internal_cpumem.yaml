@@ -1,8 +1,0 @@
-
-title: CPU / Memory / Net
-height: 250px
-template: row_base.j2
-panels:
-  graphs:
-    - internal_cpu.yaml
-    - internal_net.yaml

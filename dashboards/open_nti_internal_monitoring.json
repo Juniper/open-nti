@@ -1,7 +1,7 @@
 {
   "id": null,
-  "title": "Open NTI Performance Monitoring",
-  "originalTitle": "Open NTI Performance Monitoring",
+  "title": "Open NTI Internal Monitoring",
+  "originalTitle": "Open NTI Internal Monitoring",
 "tags": [
     "opennti","internal"
   ],
@@ -12,39 +12,15 @@
   "sharedCrosshair": false,
   "rows": [
     {
-  "height": "25px",
-  "editable": true,
-  "collapse": false,
-  
-    "showTitle": true,
-    "title": "Disclaimer",
-  
-  "panels": [
-    {
-      "title": "",
-      "error": false,
-      "span": 12,
-      "editable": true,
-      "type": "text",
-      "isNew": true,
-      "id": 102,
-      "mode": "markdown",
-      "content": "**This dashboard has been automatically generated using the dashboard generator of OpenNTI** - It's very easy to personalize it and create your own.",
-      "links": [],
-      "transparent": true,
-      "height": "10px"
-    }
-  ]
-},{
   "collapse": true,
   "editable": true,
-  "height": "250px",
+  "height": "300px",
   "panels": [
 
     {
   "aliasColors": {},
   "bars": false,
-  "datasource": "opennti",
+  "datasource": "opennti_internal",
   "editable": true,
   "error": false,
   "fill": 0,
@@ -56,13 +32,16 @@
   },
   "id": 1,
   "legend": {
-    "avg": false,
-    "current": false,
+
+    "avg": true,
+    "current": true,
     "max": false,
     "min": false,
-    "show": false,
+    "show": true,
     "total": false,
+    "alignAsTable": true,
     "values": false
+
   },
   "lines": true,
   "linewidth": 1,
@@ -75,7 +54,7 @@
   "seriesOverrides": [
 
   ],
-  "span": 6,
+  "span": 4,
   "stack": false,
   "steppedLine": false,
   "targets": [
@@ -94,7 +73,7 @@
   ],
   "timeFrom": null,
   "timeShift": null,
-  "title": "CPU",
+  "title": "CPU Idle",
   "tooltip": {
     "shared": false,
     "value_type": "cumulative",
@@ -133,7 +112,7 @@
 },{
   "aliasColors": {},
   "bars": false,
-  "datasource": "opennti",
+  "datasource": "opennti_internal",
   "editable": true,
   "error": false,
   "fill": 0,
@@ -145,13 +124,108 @@
   },
   "id": 2,
   "legend": {
-    "avg": false,
-    "current": false,
+
+    "avg": true,
+    "current": true,
     "max": false,
     "min": false,
-    "show": false,
+    "show": true,
     "total": false,
+    "alignAsTable": true,
     "values": false
+
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 4,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "alias": "($tag_role) $tag_host mem.used",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(\"used_percent\") FROM \"mem\" WHERE $timeFilter GROUP BY time($interval), \"host\", \"role\"",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "Memory Used",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "opennti_internal",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 3,
+  "legend": {
+
+    "avg": true,
+    "current": true,
+    "max": false,
+    "min": false,
+    "show": true,
+    "total": false,
+    "alignAsTable": true,
+    "values": false
+
   },
   "lines": true,
   "linewidth": 1,
@@ -169,7 +243,7 @@
     }
 
   ],
-  "span": 6,
+  "span": 4,
   "stack": false,
   "steppedLine": false,
   "targets": [
