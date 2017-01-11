@@ -54,6 +54,9 @@ ADD     consul /etc/consul/conf.d
 COPY    fluent.conf /fluentd/etc/fluent.conf
 COPY    plugins /fluentd/plugins
 
+COPY    fluent.conf /fluentd/etc/fluent.conf
+COPY    plugins /fluentd/plugins
+
 USER fluent
 
 RUN   gem install --no-ri --no-rdoc fluent-plugin-newsyslog
