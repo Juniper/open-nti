@@ -43,6 +43,11 @@ build-syslog:
 	@echo "======================================================================"
 	docker build -f $(INPUT_SYSLOG_DIR)/Dockerfile -t $(INPUT_SYSLOG_IMAGE_NAME):$(IMAGE_TAG) $(INPUT_SYSLOG_DIR)
 
+clean-images:
+	docker rmi $(shell docker images juniper/open-nti -q)
+	docker rmi $(shell docker images juniper/open-nti-input-jti -q)
+	docker rmi $(shell docker images juniper/open-nti-input-syslog -q)
+
 test: test-build test-run
 
 test-build:
