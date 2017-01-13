@@ -77,11 +77,12 @@ class OpenNtiInput:
           ## Save after cleanup if type is supported
           ## Delete entry in initial variable
           self.__commands[group_command] = tmp_command[0][group_command]
-          tmp_command[0].pop(group_command, None)
+          logger.debug("Delete key: {0} from tmp_command[0]".format(group_command))
+          del  tmp_command[0][group_command]
 
-     ## Go over the list one more time but it should be empty
-      for group_command in tmp_command[0].keys():
-        logger.error("{0} has a non supported type".format(group_command))
+    ## Go over the list one more time but it should be empty
+    for group_command in tmp_command[0].keys():
+      logger.error("{0} has a non supported type".format(group_command))
 
   def get_tags(self, host=None):
     return self.__hosts[host]
@@ -133,7 +134,7 @@ class OpenNtiInput:
   def get_target_credential(self, host=''):
 
     my_host_tags = self.get_tags(host=host)
-    print my_host_tags
+    # print my_host_tags
     my_target_credentials = {'username': None,
                              'password': None,
                              'port': 830,
