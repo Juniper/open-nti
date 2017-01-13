@@ -24,3 +24,4 @@ rows:
   - mpls-lsp.yaml
   - firewall.yaml
   - cpumem.yaml
+  - optics.yaml
