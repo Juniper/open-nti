@@ -24,7 +24,7 @@ include $(VAR_FILE)
 # Define run options for Docker-compose
 RUN_OPTIONS = IMAGE_TAG=$(IMAGE_TAG)
 
-build: build-main build-jti build-syslog build-netconf build-lb
+build: build-main build-jti build-syslog build-netconf build-lb build-oc
 
 build-main:
 	@echo "======================================================================"
@@ -50,6 +50,12 @@ build-netconf:
 	@echo "======================================================================"
 	docker build -f $(INPUT_NETCONF_DIR)/Dockerfile -t $(INPUT_NETCONF_IMAGE_NAME):$(IMAGE_TAG) $(INPUT_NETCONF_DIR)
 
+build-oc:
+	@echo "======================================================================"
+	@echo "Build Docker image - $(INPUT_OC_IMAGE_NAME):$(IMAGE_TAG)"
+	@echo "======================================================================"
+	docker build -f $(INPUT_OC_DIR)/Dockerfile -t $(INPUT_OC_IMAGE_NAME):$(IMAGE_TAG) $(INPUT_OC_DIR)
+
 build-lb:
 	@echo "======================================================================"
 	@echo "Build Docker image - $(LB_UDP_IMAGE_NAME):$(IMAGE_TAG)"
@@ -63,6 +69,8 @@ test-build:
 	docker build -f $(INPUT_JTI_DIR)/Dockerfile -t $(INPUT_JTI_IMAGE_NAME):$(TEST_TAG) $(INPUT_JTI_DIR)
 	docker build -f $(INPUT_SYSLOG_DIR)/Dockerfile -t $(INPUT_SYSLOG_IMAGE_NAME):$(TEST_TAG) $(INPUT_SYSLOG_DIR)
 	docker build -f $(INPUT_NETCONF_DIR)/Dockerfile -t $(INPUT_NETCONF_IMAGE_NAME):$(TEST_TAG) $(INPUT_NETCONF_DIR)
+	docker build -f $(INPUT_OC_DIR)/Dockerfile -t $(INPUT_OC_IMAGE_NAME):$(TEST_TAG) $(INPUT_OC_DIR)
+	docker build -f $(LB_UDP_DIR)/Dockerfile -t $(LB_UDP_IMAGE_NAME):$(TEST_TAG) $(LB_UDP_DIR)
 
 test-run:
 	python -m pytest -v -x
@@ -103,7 +111,8 @@ scale-input-jti:
 show-conf-lb:
 	docker exec -it $(LB_UDP_CONTAINER_NAME) cat /etc/nginx/nginx.conf
 
-
+show-conf-oc:
+	docker exec -it $(INPUT_OC_CONTAINER_NAME) cat /opt/telegraf/config/telegraf.conf
 
 cron-show:
 	# if [ $(TAG) == "all" ]; then
