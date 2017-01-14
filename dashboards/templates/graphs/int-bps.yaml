@@ -40,7 +40,7 @@ targets:
     query: >
       SELECT  derivative(mean("counters/out-octets"), 1s)*8 AS "OUT",
       derivative(mean("counters/in-octets"), 1s)*8 AS "IN"
-      FROM "openconfig-ifd"
+      FROM "/junos/system/linecard/interface/"
       WHERE "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
       GROUP BY interface, device, time($GroupBy)
 
