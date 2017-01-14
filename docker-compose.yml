@@ -81,7 +81,7 @@ services:
     #   - SERVICE_NAME=input-netconf
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ./plugins/input-netconf/:/data
+      # - ./plugins/input-netconf/:/data
       # - ../py-netconf-collector:/source/py-netconf-collector
     links:
       - opennti
@@ -94,9 +94,6 @@ services:
     #   - SERVICE_NAME=input-netconf
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      # - ./plugins/input-netconf/:/data
-      # - ../py-netconf-collector:/source/py-netconf-collector
-      - ./plugins/input-oc/config:/opt/telegraf/config
     links:
       - opennti
       - consul
