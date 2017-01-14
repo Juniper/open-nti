@@ -269,7 +269,7 @@
       "column": "value",
       "dsType": "influxdb",
       "interval": "",
-      "query": "SELECT  derivative(mean(\"counters/out-octets\"), 1s)*8 AS \"OUT\", derivative(mean(\"counters/in-octets\"), 1s)*8 AS \"IN\" FROM \"openconfig-ifd\" WHERE \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY interface, device, time($GroupBy)",
+      "query": "SELECT  derivative(mean(\"counters/out-octets\"), 1s)*8 AS \"OUT\", derivative(mean(\"counters/in-octets\"), 1s)*8 AS \"IN\" FROM \"/junos/system/linecard/interface/\" WHERE \"device\" =~ /$host_regex$/ AND \"interface\" =~ /$interface$/ AND $timeFilter GROUP BY interface, device, time($GroupBy)",
       "rawQuery": true,
       "refId": "E",
       "resultFormat": "time_series",
@@ -1625,6 +1625,105 @@
 
   "showTitle": true,
   "title": "CPU / Memory"
+
+},{
+  "collapse": true,
+  "editable": true,
+  "height": "250px",
+  "panels": [
+
+    {
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 16,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(\"module_temp\") FROM \"/junos/system/linecard/optics/\" WHERE $timeFilter GROUP BY time($GroupBy), \"interface\", \"device\"",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "Temperature",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": "Celsius"
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+}
+
+  ],
+
+  "showTitle": true,
+  "title": "Optics"
 
 }
   ],

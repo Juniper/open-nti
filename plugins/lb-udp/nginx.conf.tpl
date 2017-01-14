@@ -10,7 +10,8 @@ stream {
   #######################
   upstream udp_6000 {
     {{range service "input-syslog"}}
-      server {{.Address}}:{{.Port}};{{end}}
+      server {{.Address}}:{{.Port}};{{else}}
+      server localhost:6000 down;{{end}}
   }
 
   server {
@@ -26,7 +27,8 @@ stream {
   #######################
   upstream udp_50000 {
     {{range service "input-jti-50000"}}
-      server {{.Address}}:{{.Port}};{{end}}
+      server {{.Address}}:{{.Port}};{{else}}
+      server localhost:50000 down;{{end}}
   }
 
   server {
@@ -42,7 +44,8 @@ stream {
   #######################
   upstream udp_50020 {
     {{range service "input-jti-50020"}}
-      server {{.Address}}:{{.Port}};{{end}}
+      server {{.Address}}:{{.Port}};{{else}}
+      server localhost:50020 down;{{end}}
   }
 
   server {

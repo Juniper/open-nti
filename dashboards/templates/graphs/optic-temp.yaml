@@ -1,0 +1,22 @@
+
+template: graph-lines-02.j2
+datasource: influxdb
+title: "Temperature"
+span: 6
+
+targets:
+  A:
+    query: >
+      SELECT mean("module_temp")
+      FROM "/junos/system/linecard/optics/"
+      WHERE $timeFilter
+      GROUP BY time($GroupBy), "interface", "device"
+
+yaxes:
+  - format: short
+    label: Celsius
+  - format: short
+
+templatings_used:
+  - host_regex.yaml
+  - group_by.yaml
