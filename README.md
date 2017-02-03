@@ -36,10 +36,16 @@ Contributions are more than welcome, small or big. We love to receive contributi
 If you are planning a big change, please start a discussion first to make sure we'll be able to merge it.
 
 # Contributors
- - Damien Garros
- - Efrain Gonzalez
- - Michael Pergament
+
+### Current
+ - [Ajay Kumar Chintala](https://github.com/ajhai)
+ - [Efrain Gonzalez](https://github.com/3fr61n)
+ - [Ishaan Kumar](https://github.com/eeishaan)
+ - [Michael Pergament](https://github.com/mpergament)
  - Pablo Sagrera Garcia
+ 
+### Former
+ - [Damien Garros](https://github.com/dgarros)
 
 ## Tools used
  - fluentd
