@@ -55,7 +55,11 @@ class Fluent::InfluxdbOutput < Fluent::BufferedOutput
         points = []
         chunk.msgpack_each do |tag, time, record|
             point = {}
-            point[:timestamp] = record.delete('time') || time
+            # Data inserted into influxdb should not contains timestamp, so influx insert it own timestamp
+            # and timezone (UTC)
+            # point[:timestamp] = record.delete('time') || time
+            point[:timestamp] = record.delete('time') 
+            
             point[:series] = tag
 
             if ( tag_keys.empty? && value_keys.empty? )
