@@ -50,6 +50,7 @@ COPY start-input-netconf.sh /source/start-input-netconf.sh
 RUN chmod +x /source/start-input-netconf.sh
 
 RUN mkdir /data
+ADD templates /data/templates/
 WORKDIR /data
 
 CMD ["/source/start-input-netconf.sh"]
