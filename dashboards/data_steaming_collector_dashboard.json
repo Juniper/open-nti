@@ -15,10 +15,10 @@
   "height": "25px",
   "editable": true,
   "collapse": false,
-  
+
     "showTitle": true,
     "title": "Disclaimer",
-  
+
   "panels": [
     {
       "title": "",
@@ -935,7 +935,7 @@
       "column": "value",
       "dsType": "influxdb",
       "interval": "",
-      "query": "SELECT \"value\"*8 FROM \"jnpr.jvision\" WHERE \"type\" = 'lspstata.byte_rate' AND \"device\" =~ /$host_regex$/ AND $timeFilter GROUP BY \"device\", \"lspname\", \"type\"",
+      "query": "SELECT \"value\"*8 FROM \"jnpr.jvision\" WHERE \"type\" = 'lsp_stats.byte_rate' AND \"device\" =~ /$host_regex$/ AND $timeFilter GROUP BY \"device\", \"lspname\", \"type\"",
       "rawQuery": true,
       "refId": "A",
       "resultFormat": "time_series",
@@ -1021,7 +1021,7 @@
       "column": "value",
       "dsType": "influxdb",
       "interval": "",
-      "query": "SELECT \"value\" FROM \"jnpr.jvision\" WHERE \"type\" = 'lspstata.packet_rate' AND \"device\" =~ /$host_regex$/ AND $timeFilter GROUP BY \"device\", \"lspname\"",
+      "query": "SELECT \"value\" FROM \"jnpr.jvision\" WHERE \"type\" = 'lsp_stats.packet_rate' AND \"device\" =~ /$host_regex$/ AND $timeFilter GROUP BY \"device\", \"lspname\"",
       "rawQuery": true,
       "refId": "A",
       "resultFormat": "time_series",

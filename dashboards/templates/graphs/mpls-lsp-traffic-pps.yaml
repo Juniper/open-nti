@@ -11,7 +11,7 @@ targets:
     query: >
       SELECT "value"
       FROM "jnpr.jvision"
-      WHERE "type" = 'lspstata.packet_rate'
+      WHERE "type" = 'lsp_stats.packet_rate'
       AND "device" =~ /$host_regex$/ AND $timeFilter
       GROUP BY "device", "lspname"
 
