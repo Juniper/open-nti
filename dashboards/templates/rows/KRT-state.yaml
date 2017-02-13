@@ -1,0 +1,14 @@
+title: KRT State
+height: 250px
+template: row_base.j2
+panels:
+  graphs:
+    - show-krt-High-MPLS-adds.yaml
+    - show-krt-High-MPLS-changes.yaml
+    - show-krt-High-normal-adds.yaml
+    - show-krt-High-pri-adds.yaml
+    - show-krt-High-pri-changes.yaml
+    - show-krt-High-pri-del.yaml
+    - show-krt-normal-pri-changes.yaml
+    - show-krt-normal-pri-del.yaml
+    - show-krt-ops-queued.yaml

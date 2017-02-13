@@ -1,0 +1,9 @@
+title: System Resources
+height: 250px
+template: row_base.j2
+panels:
+  graphs:
+    - SNMP-RE-CPU.yaml
+    - SNMP-FPC-CPU.yaml
+    - SNMP-FPC-Heap.yaml
+    - SNMP-RE-Kernel.yaml
