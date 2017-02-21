@@ -1,5 +1,5 @@
 parser:
-    regex-command: show\s+security\s+ipsec\s+statistics\s+|\s+display\s+xml
+    regex-command: show\s+security\s+ipsec\s+statistics\s+\|\s+display\s+xml
     matches:
     -
         type: single-value
