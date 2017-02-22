@@ -13,13 +13,25 @@
   },
   "id": {{ id }},
   "legend": {
+{% if legend is defined %}
+    "avg": {{ legend.avg | default("false") }},
+    "current": {{ legend.current | default("false") }},
+    "max": {{ legend.max | default("false") }},
+    "min": {{ legend.min | default("false") }},
+    "show": true,
+    "total": {{ legend.total | default("false") }},
+    "alignAsTable": {{ legend.table | default("false") }},
+    "values": {{ legend.value | default("false") }}
+{% else %}
     "avg": false,
     "current": false,
     "max": false,
     "min": false,
     "show": false,
+    "alignAsTable": false,
     "total": false,
     "values": false
+{% endif%}
   },
   "lines": true,
   "linewidth": 1,
@@ -46,6 +58,7 @@
 {% for id, target in targets.iteritems() -%}
     {
       "column": "value",
+      "alias": "{{ target.alias | default("") }}",
       "dsType": "influxdb",
       "interval": "",
       "query": "{{ target.query|replace('"', '\\"')|trim }}",

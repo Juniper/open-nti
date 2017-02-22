@@ -1,0 +1,13 @@
+
+title: Open NTI Internal Monitoring
+template: "dashboard_base.j2"
+
+tags:
+  - opennti
+  - internal
+
+templatings:
+  - group_by.yaml
+
+rows:
+  - internal/cpumem.yaml

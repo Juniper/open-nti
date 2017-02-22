@@ -2,6 +2,7 @@ FROM fluent/fluentd:v0.12.29
 MAINTAINER Damien Garros <dgarros@gmail.com>
 
 ENV FLUENTD_JUNIPER_VERSION 0.2.11
+ARG TELEGRAF_VERSION=1.1.2
 
 USER root
 WORKDIR /home/fluent
@@ -27,6 +28,25 @@ RUN apk --no-cache --update add \
               bigdecimal && \
     apk del build-base ruby-dev && \
     rm -rf /tmp/* /var/tmp/* /var/cache/apk/*
+
+
+#############################
+## Install Telegraf
+#############################
+RUN apk add --no-cache ca-certificates openssl wget && \
+    update-ca-certificates
+
+RUN wget -q https://dl.influxdata.com/telegraf/releases/telegraf-${TELEGRAF_VERSION}-static_linux_amd64.tar.gz && \
+    mkdir -p /usr/src /etc/telegraf && \
+    tar -C /usr/src -xzf telegraf-${TELEGRAF_VERSION}-static_linux_amd64.tar.gz && \
+    mv /usr/src/telegraf*/telegraf.conf /etc/telegraf/ && \
+    chmod +x /usr/src/telegraf*/* && \
+    cp -a /usr/src/telegraf*/* /usr/bin/ && \
+    rm -rf *.tar.gz* /usr/src /root/.gnupg
+
+COPY telegraf.toml /home/fluent/telegraf.toml
+RUN touch /var/log/telegraf-monitoring.log &&\
+    chmod 777 /var/log/telegraf-monitoring.log
 
 # Copy Start script to generate configuration dynamically
 ADD     fluentd-alpine.start.sh         fluentd-alpine.start.sh

@@ -25,6 +25,10 @@ function waitAndConfigureGrafana
         -X POST -H 'Content-Type: application/json;charset=UTF-8' \
         --data-binary '{"name":"influxdb","type":"influxdb","access":"proxy","url":"http://localhost:8086","password":"juniper","user":"juniper","database":"juniper","basicAuth":false,"isDefault":true}'
 
+    curl 'http://admin:admin@localhost:3000/api/datasources' \
+        -X POST -H 'Content-Type: application/json;charset=UTF-8' \
+        --data-binary '{"name":"opennti_internal","type":"influxdb","access":"proxy","url":"http://localhost:8086","database":"opennti_internal","basicAuth":false,"isDefault":false}'
+
     echo Done configuring Grafana
     exit 0
 }
