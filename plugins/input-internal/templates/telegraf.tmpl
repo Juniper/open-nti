@@ -1,0 +1,50 @@
+#[tags]
+#  dc = "open-nti"
+
+[agent]
+  interval = "1m"
+  round_interval = true
+  flush_interval = "30s"
+  flush_jitter = "0s"
+  debug = true
+  hostname = "open-nti"
+
+[[outputs.influxdb]]
+  urls = ["http://{{range service "influxdb-api" }}{{.Address}}:{{.Port}}{{else}}localhost:8086{{end}}"]
+  database = "docker_internal"
+  precision = "s"
+
+[[inputs.docker]]
+  # Docker Endpoint
+  #   To use TCP, set endpoint = "tcp://[ip]:[port]"
+  #   To use environment variables (ie, docker-machine), set endpoint = "ENV"
+  endpoint = "unix:///var/run/docker.sock"
+  # Only collect metrics for these containers, collect all if empty
+  container_names = []
+
+# Read InfluxDB-formatted JSON metrics from one or more HTTP endpoints
+[[inputs.influxdb]]
+  ## Works with InfluxDB debug endpoints out of the box,
+  ## but other services can use this format too.
+  ## See the influxdb plugin's README for more details.
+
+  ## Multiple URLs from which to read InfluxDB-formatted JSON
+  urls = [
+    {{range service "influxdb-api" }}"http://{{.Address}}:{{.Port}}/debug/vars",{{else}}"http://localhost:8086/debug/vars",{{end}}
+  ]
+
+# Gather health check statuses from services registered in Consul
+[[inputs.consul]]
+  ## Most of these values defaults to the one configured on a Consul's agent level.
+  ## Optional Consul server address (default: "")
+  # address = ""
+  ## Optional URI scheme for the Consul server (default: "")
+  # scheme = ""
+  ## Optional ACL token used in every request (default: "")
+  # token = ""
+  ## Optional username used for request HTTP Basic Authentication (default: "")
+  # username = ""
+  ## Optional password used for HTTP Basic Authentication (default: "")
+  # password = ""
+  ## Optional data centre to query the health checks from (default: "")
+  # datacentre = ""

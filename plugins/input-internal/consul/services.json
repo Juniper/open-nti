@@ -1,0 +1,7 @@
+{
+  "services": [
+     {
+        "name": "input-internal"
+      }
+  ]
+}

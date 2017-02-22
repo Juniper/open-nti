@@ -29,50 +29,50 @@ services:
   #   volumes:
   #     - "/var/run/docker.sock:/tmp/docker.sock"
 
-  input-jti:
-    image: $INPUT_JTI_IMAGE_NAME:$IMAGE_TAG
-    container_name: $INPUT_JTI_CONTAINER_NAME
-    environment:
-      - "INFLUXDB_ADDR=opennti"
-      - "OUTPUT_INFLUXDB=true"
-      - "OUTPUT_STDOUT=false"
-    ports:
-      - "$LOCAL_PORT_JTI:50000/udp"
-      - "$LOCAL_PORT_ANALYTICSD:50020/udp"
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-    links:
-      - opennti
-      - consul
+#  input-jti:
+#    image: $INPUT_JTI_IMAGE_NAME:$IMAGE_TAG
+#    container_name: $INPUT_JTI_CONTAINER_NAME
+#    environment:
+#      - "INFLUXDB_ADDR=opennti"
+#      - "OUTPUT_INFLUXDB=true"
+#      - "OUTPUT_STDOUT=false"
+#    ports:
+#      - "$LOCAL_PORT_JTI:50000/udp"
+#      - "$LOCAL_PORT_ANALYTICSD:50020/udp"
+#    volumes:
+#      - /etc/localtime:/etc/localtime:ro
+#    links:
+#      - opennti
+#      - consul
 
-  input-syslog:
-    image: $INPUT_SYSLOG_IMAGE_NAME:$IMAGE_TAG
-    container_name: $INPUT_SYSLOG_CONTAINER_NAME
-    environment:
-      - "INFLUXDB_ADDR=opennti"
-      - "OUTPUT_INFLUXDB=true"
-      - "OUTPUT_STDOUT=false"
-    ports:
-      - "$LOCAL_PORT_EVENT:6000/udp"
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-    links:
-      - opennti
-      - consul
+#  input-syslog:
+#    image: $INPUT_SYSLOG_IMAGE_NAME:$IMAGE_TAG
+#    container_name: $INPUT_SYSLOG_CONTAINER_NAME
+#    environment:
+#      - "INFLUXDB_ADDR=opennti"
+#      - "OUTPUT_INFLUXDB=true"
+#      - "OUTPUT_STDOUT=false"
+#    ports:
+#      - "$LOCAL_PORT_EVENT:6000/udp"
+#    volumes:
+#      - /etc/localtime:/etc/localtime:ro
+#    links:
+#      - opennti
+#      - consul
 
-  input-snmp:
-    build: ./open-nti-input-snmp
-    # environment:
-    #   - SERVICE_NAME=input-snmp
-    #   - SERVICE_TAGS=udp
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - ./open-nti-input-snmp/config/:/opt/telegraf/config
-    expose:
-      - "162/udp"
-    links:
-      - opennti
-      - consul
+#  input-snmp:
+#    build: ./open-nti-input-snmp
+#    # environment:
+#    #   - SERVICE_NAME=input-snmp
+#    #   - SERVICE_TAGS=udp
+#    volumes:
+#      - /etc/localtime:/etc/localtime:ro
+#      - ./open-nti-input-snmp/config/:/opt/telegraf/config
+#    expose:
+#      - "162/udp"
+#    links:
+#      - opennti
+#      - consul
 
   input-netconf:
     image: $INPUT_NETCONF_IMAGE_NAME:$IMAGE_TAG
@@ -87,13 +87,30 @@ services:
       - opennti
       - consul
 
-  input-oc:
-    image: $INPUT_OC_IMAGE_NAME:$IMAGE_TAG
-    container_name: $INPUT_OC_CONTAINER_NAME
-    # environment:
-    #   - SERVICE_NAME=input-netconf
+#  input-oc:
+#    image: $INPUT_OC_IMAGE_NAME:$IMAGE_TAG
+#    container_name: $INPUT_OC_CONTAINER_NAME
+#    # environment:
+#    #   - SERVICE_NAME=input-netconf
+#    volumes:
+#      - /etc/localtime:/etc/localtime:ro
+#    links:
+#      - opennti
+#      - consul
+
+  input-internal:
+    image: $INPUT_INTERNAL_IMAGE_NAME:$IMAGE_TAG
+    container_name: $INPUT_INTERNAL_CONTAINER_NAME
+    environment:
+      - "HOST_PROC=/rootfs/proc"
+      - "HOST_SYS=/rootfs/sys"
+      - "HOST_ETC=/rootfs/etc"
     volumes:
       - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /sys:/rootfs/sys:ro
+      - /proc:/rootfs/proc:ro
+      - /etc:/rootfs/etc:ro
     links:
       - opennti
       - consul

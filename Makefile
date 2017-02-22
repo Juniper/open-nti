@@ -24,7 +24,7 @@ include $(VAR_FILE)
 # Define run options for Docker-compose
 RUN_OPTIONS = IMAGE_TAG=$(IMAGE_TAG)
 
-build: build-main build-jti build-syslog build-netconf build-lb build-oc
+build: build-main build-jti build-syslog build-netconf build-lb build-oc build-internal
 
 build-main:
 	@echo "======================================================================"
@@ -56,11 +56,19 @@ build-oc:
 	@echo "======================================================================"
 	docker build -f $(INPUT_OC_DIR)/Dockerfile -t $(INPUT_OC_IMAGE_NAME):$(IMAGE_TAG) $(INPUT_OC_DIR)
 
+build-internal:
+	@echo "======================================================================"
+	@echo "Build Docker image - $(INPUT_INTERNAL_IMAGE_NAME):$(IMAGE_TAG)"
+	@echo "======================================================================"
+	docker build -f $(INPUT_INTERNAL_DIR)/Dockerfile -t $(INPUT_INTERNAL_IMAGE_NAME):$(IMAGE_TAG) $(INPUT_INTERNAL_DIR)
+
 build-lb:
 	@echo "======================================================================"
 	@echo "Build Docker image - $(LB_UDP_IMAGE_NAME):$(IMAGE_TAG)"
 	@echo "======================================================================"
 	docker build -f $(LB_UDP_DIR)/Dockerfile -t $(LB_UDP_IMAGE_NAME):$(IMAGE_TAG) $(LB_UDP_DIR)
+
+
 
 test: test-build test-run
 
@@ -70,6 +78,7 @@ test-build:
 	docker build -f $(INPUT_SYSLOG_DIR)/Dockerfile -t $(INPUT_SYSLOG_IMAGE_NAME):$(TEST_TAG) $(INPUT_SYSLOG_DIR)
 	docker build -f $(INPUT_NETCONF_DIR)/Dockerfile -t $(INPUT_NETCONF_IMAGE_NAME):$(TEST_TAG) $(INPUT_NETCONF_DIR)
 	docker build -f $(INPUT_OC_DIR)/Dockerfile -t $(INPUT_OC_IMAGE_NAME):$(TEST_TAG) $(INPUT_OC_DIR)
+	docker build -f $(INPUT_INTERNAL_DIR)/Dockerfile -t $(INPUT_INTERNAL_IMAGE_NAME):$(TEST_TAG) $(INPUT_INTERNAL_DIR)
 	docker build -f $(LB_UDP_DIR)/Dockerfile -t $(LB_UDP_IMAGE_NAME):$(TEST_TAG) $(LB_UDP_DIR)
 
 test-run:
