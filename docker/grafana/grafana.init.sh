@@ -25,6 +25,14 @@ function waitAndConfigureGrafana
         -X POST -H 'Content-Type: application/json;charset=UTF-8' \
         --data-binary '{"name":"influxdb","type":"influxdb","access":"proxy","url":"http://localhost:8086","password":"juniper","user":"juniper","database":"juniper","basicAuth":false,"isDefault":true}'
 
+    curl 'http://admin:admin@localhost:3000/api/datasources' \
+        -X POST -H 'Content-Type: application/json;charset=UTF-8' \
+        --data-binary '{"name":"docker_internal","type":"influxdb","access":"proxy","url":"http://localhost:8086","password":"juniper","user":"juniper","database":"docker_internal","basicAuth":false,"isDefault":false}'
+
+    curl 'http://admin:admin@localhost:3000/api/datasources' \
+        -X POST -H 'Content-Type: application/json;charset=UTF-8' \
+        --data-binary '{"name":"influxdb_internal","type":"influxdb","access":"proxy","url":"http://localhost:8086","password":"juniper","user":"juniper","database":"_internal","basicAuth":false,"isDefault":false}'
+
     echo Done configuring Grafana
     exit 0
 }

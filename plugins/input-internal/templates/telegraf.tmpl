@@ -1,0 +1,27 @@
+#[tags]
+#  dc = "open-nti"
+
+[agent]
+  interval = "1m"
+  round_interval = true
+  flush_interval = "30s"
+  flush_jitter = "0s"
+  debug = true
+  hostname = "open-nti"
+
+[[outputs.influxdb]]
+  urls = ["http://opennti:8086"]
+  database = "docker_internal"
+  precision = "s"
+  retention_policy = ""
+  timeout = "5s"
+
+[[inputs.docker]]
+  # Docker Endpoint
+  #   To use TCP, set endpoint = "tcp://[ip]:[port]"
+  #   To use environment variables (ie, docker-machine), set endpoint = "ENV"
+  endpoint = "unix:///var/run/docker.sock"
+  # Only collect metrics for these containers, collect all if empty
+  container_names = []
+
+
