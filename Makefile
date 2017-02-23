@@ -16,6 +16,7 @@ DOCKER_FILE = docker-compose.yml
 DOCKER_FILE_P = docker-compose/opennti_persistent.yml
 TIME ?= 1m
 TAG ?= all
+NBR ?= 1
 
 #Load params file with all variables
 include $(VAR_FILE)
@@ -23,7 +24,7 @@ include $(VAR_FILE)
 # Define run options for Docker-compose
 RUN_OPTIONS = IMAGE_TAG=$(IMAGE_TAG)
 
-build: build-main build-jti build-syslog
+build: build-main build-jti build-syslog build-internal
 
 build-main:
 	@echo "======================================================================"
@@ -43,10 +44,12 @@ build-syslog:
 	@echo "======================================================================"
 	docker build -f $(INPUT_SYSLOG_DIR)/Dockerfile -t $(INPUT_SYSLOG_IMAGE_NAME):$(IMAGE_TAG) $(INPUT_SYSLOG_DIR)
 
-clean-images:
-	docker rmi $(shell docker images juniper/open-nti -q)
-	docker rmi $(shell docker images juniper/open-nti-input-jti -q)
-	docker rmi $(shell docker images juniper/open-nti-input-syslog -q)
+build-internal:
+	@echo "======================================================================"
+	@echo "Build Docker image - $(INPUT_INTERNAL_IMAGE_NAME):$(IMAGE_TAG)"
+	@echo "======================================================================"
+	docker build -f $(INPUT_INTERNAL_DIR)/Dockerfile -t $(INPUT_INTERNAL_IMAGE_NAME):$(IMAGE_TAG) $(INPUT_INTERNAL_DIR)
+
 
 test: test-build test-run
 
@@ -54,6 +57,7 @@ test-build:
 	docker build -t $(MAIN_IMAGE_NAME):$(TEST_TAG) .
 	docker build -f $(INPUT_JTI_DIR)/Dockerfile -t $(INPUT_JTI_IMAGE_NAME):$(TEST_TAG) $(INPUT_JTI_DIR)
 	docker build -f $(INPUT_SYSLOG_DIR)/Dockerfile -t $(INPUT_SYSLOG_IMAGE_NAME):$(TEST_TAG) $(INPUT_SYSLOG_DIR)
+	docker build -f $(INPUT_INTERNAL_DIR)/Dockerfile -t $(INPUT_INTERNAL_IMAGE_NAME):$(TEST_TAG) $(INPUT_INTERNAL_DIR)
 
 test-run:
 	python -m pytest -v -x
@@ -62,19 +66,19 @@ cli:
 	docker exec -i -t $(MAIN_CONTAINER_NAME) /bin/bash
 
 start:
-	echo "Use docker compose file : $(DOCKER_FILE)"
+	@echo "Use docker compose file: $(DOCKER_FILE)"
 	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE) up -d
 
 start-persistent:
-	echo "Use docker compose file : $(DOCKER_FILE_P)"
+	@echo "Use docker compose file: $(DOCKER_FILE_P)"
 	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE_P) up -d
 
 stop:
-	echo "Use docker compose file : $(DOCKER_FILE)"
+	@echo "Use docker compose file: $(DOCKER_FILE)"
 	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE) down
 
 stop-persistent:
-	echo "Use docker compose file : $(DOCKER_FILE_P)"
+	@echo "Use docker compose file: $(DOCKER_FILE_P)"
 	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE_P) down
 
 update:
@@ -84,6 +88,13 @@ update:
 	docker pull $(MAIN_IMAGE_NAME):latest
 	docker pull $(INPUT_JTI_IMAGE_NAME):latest
 	docker pull $(INPUT_SYSLOG_IMAGE_NAME):latest
+	docker pull $(INPUT_INTERNAL_IMAGE_NAME):latest
+
+scale-input-syslog:
+	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE) scale input-syslog=$(NBR)
+
+scale-input-jti:
+	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE) scale input-jti=$(NBR)
 
 cron-show:
 	# if [ $(TAG) == "all" ]; then

@@ -17,9 +17,9 @@ RUN     rm -f /etc/service/sshd/down
 RUN     /usr/sbin/enable_insecure_key
 
 # Latest version
-ENV GRAFANA_VERSION 3.1.1-1470047149
-ENV INFLUXDB_VERSION 1.0.2
-ENV TELEGRAF_VERSION 1.0.1
+ENV GRAFANA_VERSION 4.1.2-1486989747
+ENV INFLUXDB_VERSION 1.2.0
+ENV TELEGRAF_VERSION 1.2.1
 
 RUN     apt-get -y update && \
         apt-get -y install \

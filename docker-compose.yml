@@ -28,6 +28,22 @@ input-syslog:
   links:
    - opennti
 
+input-internal:
+  image: $INPUT_INTERNAL_IMAGE_NAME:$IMAGE_TAG
+  container_name: $INPUT_INTERNAL_CONTAINER_NAME
+  environment:
+    - "HOST_PROC=/rootfs/proc"
+    - "HOST_SYS=/rootfs/sys"
+    - "HOST_ETC=/rootfs/etc"
+  volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+    - /sys:/rootfs/sys:ro
+    - /proc:/rootfs/proc:ro
+    - /etc:/rootfs/etc:ro
+  links:
+    - opennti
+
 opennti:
   image: $MAIN_IMAGE_NAME:$IMAGE_TAG
   container_name: $MAIN_CONTAINER_NAME
