@@ -69,7 +69,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(value) from /$host_regex.chassis.routing-engine.*.cpu-idle/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).chassis.routing-engine.*.cpu-idle/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -175,7 +175,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.chassis.routing-engine.*.memory-buffer-utilization/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).chassis.routing-engine.*.memory-buffer-utilization/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -281,7 +281,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.re.system.buffers.in_use.current_mbuf/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).re.system.buffers.in_use.current_mbuf/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -387,7 +387,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.re.system.buffers.clusters_in_use.current_mbuf_clusters/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).re.system.buffers.clusters_in_use.current_mbuf_clusters/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -502,7 +502,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.route-table.summary.inet.0.actives/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).route-table.summary.inet.0.actives/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -606,7 +606,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.route-table.summary.inet.3.actives/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).route-table.summary.inet.3.actives/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -710,7 +710,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.route-table.summary.bgp.l3vpn.0.actives/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).route-table.summary.bgp.l3vpn.0.actives/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -814,7 +814,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.route-table.summary.inet.0.hidden/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).route-table.summary.inet.0.hidden/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -918,7 +918,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.route-table.summary.inet.3.hidden/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).route-table.summary.inet.3.hidden/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1022,7 +1022,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.route-table.summary.bgp.l3vpn.0.hidden/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).route-table.summary.bgp.l3vpn.0.hidden/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1135,7 +1135,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.re.memory.rpd-SIZE/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).re.memory.rpd-SIZE/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1239,7 +1239,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.re.memory.cosd-SIZE/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).re.memory.cosd-SIZE/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1343,7 +1343,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.re.memory.dfwd-SIZE/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).re.memory.dfwd-SIZE/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1447,7 +1447,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.re.memory.dcd-SIZE/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).re.memory.dcd-SIZE/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1551,7 +1551,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.re.memory.mib2d-SIZE/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).re.memory.mib2d-SIZE/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1655,7 +1655,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.re.memory.snmpd-SIZE/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).re.memory.snmpd-SIZE/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1759,7 +1759,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.re.memory.smid-SIZE/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).re.memory.smid-SIZE/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1863,7 +1863,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.re.memory.smihelperd-SIZE/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).re.memory.smihelperd-SIZE/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1967,7 +1967,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.re.memory.sampled-SIZE/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).re.memory.sampled-SIZE/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2080,7 +2080,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /$host_regex.pfe-general-stats.aggregated.pfe-local-traffic-stats.pfe-.*-packets/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-local-traffic-stats.pfe-.*-packets/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2184,7 +2184,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /$host_regex.pfe-general-stats.aggregated.pfe-local-traffic-stats.hardware-input-drops/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-local-traffic-stats.hardware-input-drops/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2288,7 +2288,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /$host_regex.pfe-general-stats.aggregated.pfe-local-traffic-stats.software-input-control-drops/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-local-traffic-stats.software-input-control-drops/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2392,7 +2392,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /$host_regex.pfe-general-stats.aggregated.pfe-local-traffic-stats.software-input-high-drops/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-local-traffic-stats.software-input-high-drops/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2496,7 +2496,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /$host_regex.pfe-general-stats.aggregated.pfe-local-traffic-stats.software-input-medium-drops/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-local-traffic-stats.software-input-medium-drops/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2600,7 +2600,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /$host_regex.pfe-general-stats.aggregated.pfe-local-traffic-stats.software-input-low-drops/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-local-traffic-stats.software-input-low-drops/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2714,7 +2714,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.pfe-general-stats.aggregated.pfe-traffic-stats.pfe-.*-packets/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-traffic-stats.pfe-.*-packets/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2819,7 +2819,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(value) from /$host_regex.pfe-general-stats.aggregated.pfe-traffic-stats.*-pps/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).pfe-general-stats.aggregated.pfe-traffic-stats.*-pps/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2924,7 +2924,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.pfe-general-stats.aggregated.pfe-hardware-discards-stats.bits-to-test-discard/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.bits-to-test-discard/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3029,7 +3029,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.pfe-general-stats.aggregated.pfe-hardware-discards-stats.data-error-discard/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.data-error-discard/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3134,7 +3134,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.pfe-general-stats.aggregated.pfe-hardware-discards-stats.stack-underflow-discard/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.stack-underflow-discard/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3239,7 +3239,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.pfe-general-stats.aggregated.pfe-hardware-discards-stats.stack-overflow-discard/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.stack-overflow-discard/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3344,7 +3344,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.pfe-general-stats.aggregated.pfe-hardware-discards-stats.bad-route-discard/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.bad-route-discard/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3449,7 +3449,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex..pfe-general-stats.aggregated.pfe-hardware-discards-stats.nexthop-discard/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex)..pfe-general-stats.aggregated.pfe-hardware-discards-stats.nexthop-discard/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3554,7 +3554,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.pfe-general-stats.aggregated.pfe-hardware-discards-stats.invalid-iif-discard/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.invalid-iif-discard/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3659,7 +3659,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.pfe-general-stats.aggregated.pfe-hardware-discards-stats.info-cell-discard/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.info-cell-discard/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3765,7 +3765,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.pfe-general-stats.aggregated.pfe-hardware-discards-stats.fabric-discard/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.fabric-discard/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3871,7 +3871,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.pfe-general-stats.aggregated.pfe-hardware-discards-stats.timeout-discard/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.timeout-discard/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3976,7 +3976,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.pfe-general-stats.aggregated.pfe-hardware-discards-stats.truncated-key-discard/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.truncated-key-discard/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -4090,7 +4090,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(value) from /$host_regex.fpc.slot.*.resource.used-heap-mem-percent/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).fpc.slot.*.resource.used-heap-mem-percent/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -4195,7 +4195,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(value) from /$host_regex.fpc.slot.*.pfe.*.resource.used-ifl-counter-percent/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).fpc.slot.*.pfe.*.resource.used-ifl-counter-percent/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -4300,7 +4300,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(value) from /$host_regex.fpc.slot.*.pfe.*.resource.used-filter-counter-percent/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).fpc.slot.*.pfe.*.resource.used-filter-counter-percent/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -4413,7 +4413,7 @@
                 }
               ],
               "measurement": "/$host_regex.snmp-.*-packets/",
-              "query": "SELECT mean(\"delta\") FROM /$host_regex.snmp-.*-packets/ WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "query": "SELECT mean(\"delta\") from /($host_regex).snmp-.*-packets/ WHERE $timeFilter GROUP BY time($interval) fill(null)",
               "rawQuery": false,
               "refId": "A",
               "resultFormat": "time_series",
@@ -4516,7 +4516,7 @@
                 }
               ],
               "measurement": "/$host_regex.snmp-input-get-nexts/",
-              "query": "SELECT mean(\"delta\") FROM /$host_regex.snmp-input-get-nexts/ WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "query": "SELECT mean(\"delta\") from /($host_regex).snmp-input-get-nexts/ WHERE $timeFilter GROUP BY time($interval) fill(null)",
               "rawQuery": false,
               "refId": "A",
               "resultFormat": "time_series",
@@ -4629,7 +4629,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.protocols.isis.statistics.Totals.packets-sent/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).protocols.isis.statistics.Totals.packets-sent/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -4734,7 +4734,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.protocols.isis.statistics.Totals.packets-received/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).protocols.isis.statistics.Totals.packets-received/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -4839,7 +4839,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.protocols.isis.statistics.Totals.packets-retransmitted/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).protocols.isis.statistics.Totals.packets-retransmitted/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -4944,7 +4944,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.protocols.isis.statistics.Totals.packets-dropped/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).protocols.isis.statistics.Totals.packets-dropped/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -5049,7 +5049,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.protocols.isis.statistics.Totals.packets-processed/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).protocols.isis.statistics.Totals.packets-processed/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -5154,7 +5154,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.protocols.isis.statistics.general.fragments-rebuilt/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).protocols.isis.statistics.general.fragments-rebuilt/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -5259,7 +5259,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.protocols.isis.statistics.general.spf-runs/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).protocols.isis.statistics.general.spf-runs/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -5364,7 +5364,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.protocols.isis.statistics.general.lsps-regenerated/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).protocols.isis.statistics.general.lsps-regenerated/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -5477,7 +5477,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.protocols.bgp.summary.peer-count/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).protocols.bgp.summary.peer-count/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -5581,7 +5581,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.protocols.bgp.summary.group-count/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).protocols.bgp.summary.group-count/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -5685,7 +5685,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.protocols.bgp.summary.down-peer-count/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).protocols.bgp.summary.down-peer-count/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -5798,7 +5798,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.bng.subscribers.summary.by-port.port-total/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).bng.subscribers.summary.by-port.port-total/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -5902,7 +5902,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.bng.subscribers.summary.l2tp-sessions/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).bng.subscribers.summary.l2tp-sessions/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6006,7 +6006,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.bng.subscribers.summary.l2tp-tunnels/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).bng.subscribers.summary.l2tp-tunnels/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6110,7 +6110,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.bng.subscribers.summary.session-state-init/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).bng.subscribers.summary.session-state-init/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6214,7 +6214,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.bng.subscribers.summary.session-state-configured/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).bng.subscribers.summary.session-state-configured/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6318,7 +6318,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.bng.subscribers.summary.session-state-terminating/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).bng.subscribers.summary.session-state-terminating/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6422,7 +6422,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.bng.subscribers.summary.session-state-terminated/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).bng.subscribers.summary.session-state-terminated/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6536,7 +6536,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.bng.pppoe.statistics.padi-received/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).bng.pppoe.statistics.padi-received/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6641,7 +6641,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.bng.pppoe.statistics.pado-sent/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).bng.pppoe.statistics.pado-sent/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6746,7 +6746,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.bng.pppoe.statistics.padr-received/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).bng.pppoe.statistics.padr-received/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6851,7 +6851,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.bng.pppoe.statistics.pads-sent/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).bng.pppoe.statistics.pads-sent/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6956,7 +6956,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.bng.pppoe.statistics.padt-received/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).bng.pppoe.statistics.padt-received/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -7061,7 +7061,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.bng.pppoe.statistics.padt-sent/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).bng.pppoe.statistics.padt-sent/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -7174,7 +7174,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /$host_regex.bng.aaa.radius-servers-stats.*.authentication-requests/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.authentication-requests/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -7278,7 +7278,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /$host_regex.bng.aaa.radius-servers-stats.*.authentication-rollover-requests/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.authentication-rollover-requests/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -7382,7 +7382,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /$host_regex.bng.aaa.radius-servers-stats.*.authentication-retransmissions/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.authentication-retransmissions/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -7486,7 +7486,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /$host_regex.bng.aaa.radius-servers-stats.*.accepts/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.accepts/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -7590,7 +7590,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /$host_regex.bng.aaa.radius-servers-stats.*.rejects/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.rejects/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -7694,7 +7694,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /$host_regex.bng.aaa.radius-servers-stats.*.authentication-timeouts/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.authentication-timeouts/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -7798,7 +7798,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /$host_regex.bng.aaa.radius-servers-stats.*.authentication-packets-dropped/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.authentication-packets-dropped/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -7911,7 +7911,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /$host_regex.bng.aaa.radius-servers-stats.*.accounting-start-requests/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.accounting-start-requests/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -8015,7 +8015,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /$host_regex.bng.aaa.radius-servers-stats.*.accounting-interim-requests/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.accounting-interim-requests/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -8119,7 +8119,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /$host_regex.bng.aaa.radius-servers-stats.*.accounting-stop-requests/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.accounting-stop-requests/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -8223,7 +8223,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /$host_regex.bng.aaa.radius-servers-stats.*.accounting-rollover-requests/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.accounting-rollover-requests/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -8327,7 +8327,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /$host_regex.bng.aaa.radius-servers-stats.*.accounting-retransmissions/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.accounting-retransmissions/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -8431,7 +8431,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /$host_regex.bng.aaa.radius-servers-stats.*.accounting-interim-response/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.accounting-interim-response/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -8535,7 +8535,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /$host_regex.bng.aaa.radius-servers-stats.*.accounting-stop-response/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.accounting-stop-response/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -8639,7 +8639,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /$host_regex.bng.aaa.radius-servers-stats.*.accounting-timeouts/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.accounting-timeouts/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -8753,7 +8753,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(value) from /$host_regex.bng.aaa.stats.address-assignment.pool.pool-usage/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).bng.aaa.stats.address-assignment.pool.pool-usage/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -8858,7 +8858,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /$host_regex.bng.aaa.stats.address-assignment.pool.out-of-addresses/ where $timeFilter group by time($interval)",
+              "query": "select mean(delta) from /($host_regex).bng.aaa.stats.address-assignment.pool.out-of-addresses/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -8963,7 +8963,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(value) from /$host_regex.bng.aaa.stats.address-assignment.pool.used-addresses/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).bng.aaa.stats.address-assignment.pool.used-addresses/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -9077,7 +9077,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(value) from /$host_regex.cgnat.flow-analysis.*.num-total-flows-active/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).cgnat.flow-analysis.*.num-total-flows-active/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -9182,7 +9182,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(value) from /$host_regex.cgnat.flow-analysis.*.num-created-flows-per-sec/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).cgnat.flow-analysis.*.num-created-flows-per-sec/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -9287,7 +9287,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(value) from /$host_regex.cgnat.flow-analysis.*.num-deleted-flows-per-sec/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).cgnat.flow-analysis.*.num-deleted-flows-per-sec/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -9392,7 +9392,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(value) from /$host_regex.cgnat.subscriber-analysis..*.num-total-subs-active/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).cgnat.subscriber-analysis..*.num-total-subs-active/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -9497,7 +9497,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(value) from /$host_regex.cgnat.subscriber-analysis..*.num-created-subs-per-sec/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).cgnat.subscriber-analysis..*.num-created-subs-per-sec/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -9602,7 +9602,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(value) from /$host_regex.cgnat.subscriber-analysis..*.num-deleted-subs-per-sec/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).cgnat.subscriber-analysis..*.num-deleted-subs-per-sec/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -9657,7 +9657,7 @@
       "title": "CGNAT statistics"
     },
     {
-      "collapse": false,
+      "collapse": true,
       "editable": true,
       "height": "250px",
       "panels": [
@@ -9703,7 +9703,7 @@
               "dsType": "influxdb",
               "groupBy": [],
               "measurement": "/$host_regex$/.rpm.*.max-delay",
-              "query": "select mean(value) from /$host_regex.rpm.*.max-delay/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).rpm.*.max-delay/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -9736,7 +9736,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(value) from /$host_regex.rpm.*.min-delay/ where $timeFilter group by time($interval)",
+              "query": "select mean(value) from /($host_regex).rpm.*.min-delay/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -9832,13 +9832,16 @@
     "list": [
       {
         "allFormat": "glob",
+        "allValue": "",
         "current": {
           "text": "None",
           "value": "",
           "isNone": true
         },
         "datasource": "influxdb",
-        "includeAll": false,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
         "name": "host_regex",
         "options": [
           {
