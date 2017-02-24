@@ -8,7 +8,7 @@ targets:
   A:
     query: >
       SELECT mean(value)
-      FROM /$host_regex.route-table.summary.bgp.l3vpn.0.actives/
+      FROM /($host_regex).route-table.summary.bgp.l3vpn.0.actives/
       WHERE $timeFilter
       GROUP BY time($GroupBy)
 

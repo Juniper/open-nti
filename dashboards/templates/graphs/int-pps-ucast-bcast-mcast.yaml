@@ -11,14 +11,14 @@ targets:
       SELECT derivative("value", 1s)
       FROM "jnpr.analyticsd"
       WHERE ( "type" = 'traffic-stats.txmcpkt' OR "type" = 'traffic-stats.txucpkt' OR "type" = 'traffic-stats.txmcpkt' )
-      AND "device" =~ /$host_regex/ AND "interface" =~ /$interface$/ AND $timeFilter
+      AND "device" =~ /($host_regex)/ AND "interface" =~ /$interface$/ AND $timeFilter
       GROUP BY "device", "interface", "type"
   B:
     query: >
       SELECT derivative("value", 1s)
       FROM "jnpr.analyticsd"
       WHERE ( "type" = 'traffic-stats.rxmcpkt' OR "type" = 'traffic-stats.rxbcpkt' OR "type" = 'traffic-stats.rxucpkt' )
-      AND "device" =~ /$host_regex/ AND "interface" =~ /$interface$/ AND $timeFilter
+      AND "device" =~ /($host_regex)/ AND "interface" =~ /$interface$/ AND $timeFilter
       GROUP BY "device", "interface", "type"
 
   C:
@@ -26,7 +26,7 @@ targets:
       SELECT derivative(mean("value"), 1s)
       FROM "jnpr.jvision"
       WHERE ("type" = 'egress_stats.if_uc_pkts' OR "type" = 'egress_stats.if_bc_pkts' OR "type" = 'ingress_stats.if_mc_pkts')
-      AND "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
+      AND "device" =~ /($host_regex)$/ AND "interface" =~ /$interface$/ AND $timeFilter
       GROUP BY "device", "interface", "type", time($GroupBy)
 
 ## Queries for gRPC / openconfig_telemetry
@@ -35,7 +35,7 @@ targets:
       SELECT  derivative(mean("counters/out-broadcast-pkts"), 1s) AS "Bcast out",
       derivative(mean("counters/in-broadcast-pkts"), 1s) AS "Bcast in"
       FROM "openconfig-ifd"
-      WHERE "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
+      WHERE "device" =~ /($host_regex)$/ AND "interface" =~ /$interface$/ AND $timeFilter
       GROUP BY interface, device, time($GroupBy)
 
   E:
@@ -43,7 +43,7 @@ targets:
       SELECT  derivative(mean("counters/out-unicast-pkts"), 1s) AS "Ucast out",
       derivative(mean("counters/in-unicast-pkts"), 1s) AS "Ucast in"
       FROM "openconfig-ifd"
-      WHERE "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
+      WHERE "device" =~ /($host_regex)$/ AND "interface" =~ /$interface$/ AND $timeFilter
       GROUP BY interface, device, time($GroupBy)
 
   F:
@@ -51,7 +51,7 @@ targets:
       SELECT  derivative(mean("counters/out-multicast-pkts"), 1s) AS "Mcast out",
       derivative(mean("counters/in-multicast-pkts"), 1s) AS "Mcast in"
       FROM "openconfig-ifd"
-      WHERE "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
+      WHERE "device" =~ /($host_regex)$/ AND "interface" =~ /$interface$/ AND $timeFilter
       GROUP BY interface, device, time($GroupBy)
 
 #TODO Check if more counters are available on MX

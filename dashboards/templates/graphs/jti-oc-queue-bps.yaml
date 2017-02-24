@@ -11,7 +11,7 @@ targets:
       SELECT mean("value")
       FROM "jnpr.openconfig"
       WHERE ( "type" = 'rx_q_traffic_bytes' OR "type" = 'tx_q_traffic_bytes' )
-      AND "device" =~ /$host_regex/ AND "interface" =~ /$interface$/ AND $timeFilter
+      AND "device" =~ /($host_regex)/ AND "interface" =~ /$interface$/ AND $timeFilter
       GROUP BY time($interval), "device", "interface", "type", "queue"
 
 yaxes:

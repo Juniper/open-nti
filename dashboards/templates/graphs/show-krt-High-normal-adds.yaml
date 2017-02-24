@@ -7,7 +7,7 @@ targets:
   A:
     query: >
       SELECT mean(value)
-      FROM /$host_regex.krtq-normal-priority-adds/
+      FROM /($host_regex).krtq-normal-priority-adds/
       WHERE $timeFilter
       GROUP BY time($interval)
 

@@ -11,7 +11,7 @@ targets:
       SELECT derivative(mean("value"), 1s)
       FROM "jnpr.jvision"
       WHERE "type" = 'filter_counter.packets'
-      AND "device" =~ /$host_regex$/ AND  $timeFilter
+      AND "device" =~ /($host_regex)$/ AND  $timeFilter
       GROUP BY "device", "interface", "filter_counter_name", time($GroupBy)
 
 templatings_used:

@@ -8,7 +8,7 @@ targets:
   A:
     query: >
       SELECT mean(value)
-      FROM /$host_regex.jnxOperatingCPU9.*.object-value/
+      FROM /($host_regex).jnxOperatingCPU9.*.object-value/
       WHERE $timeFilter
       GROUP BY time($interval)
 

@@ -8,7 +8,7 @@ targets:
   A:
     query: >
       SELECT mean(delta)
-      FROM /$host_regex.protocols.isis.statistics.Totals.packets-received/
+      FROM /($host_regex).protocols.isis.statistics.Totals.packets-received/
       WHERE $timeFilter
       GROUP BY time($GroupBy)
 

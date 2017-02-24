@@ -7,7 +7,7 @@ targets:
   A:
     query: >
       SELECT mean(value)
-      FROM /$host_regex.krtq-high-priority-deletes/
+      FROM /($host_regex).krtq-high-priority-deletes/
       WHERE $timeFilter
       GROUP BY time($interval)
 

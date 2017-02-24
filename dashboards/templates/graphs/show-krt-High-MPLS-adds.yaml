@@ -7,7 +7,7 @@ targets:
   A:
     query: >
       SELECT mean(value)
-      FROM /$host_regex.mpls-adds.krtq-high-mpls-adds/
+      FROM /($host_regex).mpls-adds.krtq-high-mpls-adds/
       WHERE $timeFilter
       GROUP BY time($interval)
 

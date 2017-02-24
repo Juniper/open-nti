@@ -11,7 +11,7 @@ targets:
       SELECT mean("value")
       FROM "jnpr.jvision"
       WHERE "type" = 'cpu_mem.utilization'
-      AND "device" =~ /$host_regex$/ AND  $timeFilter
+      AND "device" =~ /($host_regex)$/ AND  $timeFilter
       GROUP BY "device", "interface", time($GroupBy)
 
 templatings_used:
