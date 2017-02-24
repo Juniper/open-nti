@@ -29,7 +29,8 @@ input-syslog:
    - opennti
 
 input-internal:
-  image: $INPUT_INTERNAL_IMAGE_NAME:$IMAGE_TAG
+#  image: $INPUT_INTERNAL_IMAGE_NAME:$IMAGE_TAG
+  build: $INPUT_INTERNAL_DIR
   container_name: $INPUT_INTERNAL_CONTAINER_NAME
   environment:
     - "HOST_PROC=/rootfs/proc"
