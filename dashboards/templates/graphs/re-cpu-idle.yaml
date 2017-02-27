@@ -8,7 +8,7 @@ targets:
   A:
     query: >
       SELECT mean(value)
-      FROM /$host_regex.chassis.routing-engine.*.cpu-idle/
+      FROM /($host_regex).chassis.routing-engine.*.cpu-idle/
       WHERE $timeFilter
       GROUP BY time($GroupBy)
 

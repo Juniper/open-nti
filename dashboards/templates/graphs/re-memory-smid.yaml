@@ -8,7 +8,7 @@ targets:
   A:
     query: >
       SELECT mean(value)
-      FROM /$host_regex.re.memory.smid-SIZE/
+      FROM /($host_regex).re.memory.smid-SIZE/
       WHERE $timeFilter
       GROUP BY time($GroupBy)
 

@@ -11,7 +11,7 @@ targets:
       SELECT "value"
       FROM "jnpr.analyticsd"
       WHERE "type" = 'queue-stats.latency'
-      AND "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
+      AND "device" =~ /($host_regex)$/ AND "interface" =~ /$interface$/ AND $timeFilter
       GROUP BY "interface", "device"
 
 templatings_used:

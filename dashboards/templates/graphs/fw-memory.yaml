@@ -11,7 +11,7 @@ targets:
       SELECT mean("value")
       FROM "jnpr.jvision"
       WHERE "type" = 'memory_usage.HEAP'
-      AND "device" =~ /$host_regex$/ AND  $timeFilter
+      AND "device" =~ /($host_regex)$/ AND  $timeFilter
       GROUP BY "device", "interface", "filter_name", time($GroupBy)
 
 templatings_used:

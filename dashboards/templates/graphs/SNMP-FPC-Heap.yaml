@@ -7,7 +7,7 @@ targets:
   A:
     query: >
       SELECT mean(value)
-      FROM /$host_regex.LC.heap.*.memory-heap-utilization/
+      FROM /($host_regex).LC.heap.*.memory-heap-utilization/
       WHERE $timeFilter
       GROUP BY time($interval)
 

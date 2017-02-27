@@ -11,7 +11,7 @@ targets:
       SELECT sum("value")
       FROM "jnpr.analyticsd"
       WHERE ("type" = 'traffic-stats.rxpps' OR "type" = 'traffic-stats.txpps')
-      AND "device" =~ /$host_regex/ AND $timeFilter
+      AND "device" =~ /($host_regex)/ AND $timeFilter
       GROUP BY time($interval), "device", "type"
 
   B:
@@ -19,7 +19,7 @@ targets:
       SELECT sum("value")
       FROM "jnpr.jvision"
       WHERE ("type" = 'egress_stats.if_1sec_pkts' OR "type" = 'ingress_stats.if_1sec_pkts')
-      AND "device" =~ /$host_regex/ AND $timeFilter
+      AND "device" =~ /($host_regex)/ AND $timeFilter
       GROUP BY time($interval), "device", "type"
 
 yaxes:

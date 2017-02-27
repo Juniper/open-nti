@@ -8,13 +8,13 @@ targets:
   A:
     query: >
       SELECT mean("value")
-      FROM /$host_regex.ipsec-ah-input-bytes/
+      FROM /($host_regex).ipsec-ah-input-bytes/
       WHERE $timeFilter
       GROUP BY time($GroupBy)
   B:
     query: >
       SELECT mean("value")
-      FROM /$host_regex.ipsec-ah-output-bytes/
+      FROM /($host_regex).ipsec-ah-output-bytes/
       WHERE $timeFilter
       GROUP BY time($GroupBy)
 

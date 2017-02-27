@@ -7,7 +7,7 @@ targets:
   A:
     query: >
       SELECT mean(value)
-      FROM /$host_regex.krtq-operations-queued/
+      FROM /($host_regex).krtq-operations-queued/
       WHERE $timeFilter
       GROUP BY time($interval)
 

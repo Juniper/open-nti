@@ -11,7 +11,7 @@ targets:
       SELECT mean("value")
       FROM "jnpr.analyticsd"
       WHERE "type" = 'queue-stats.queue-depth'
-      AND "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND $timeFilter
+      AND "device" =~ /($host_regex)$/ AND "interface" =~ /$interface$/ AND $timeFilter
       GROUP BY time($interval), "device", "interface"
 
   B:
@@ -19,7 +19,7 @@ targets:
       SELECT "value"
       FROM "jnpr.jvision"
       WHERE "type" = 'egress_queue_info.cur_buffer_occupancy'
-      AND "device" =~ /$host_regex$/ AND "interface" =~ /$interface$/ AND  $timeFilter
+      AND "device" =~ /($host_regex)$/ AND "interface" =~ /$interface$/ AND  $timeFilter
       GROUP BY "device", "interface"
 
 templatings_used:
