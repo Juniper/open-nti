@@ -1,0 +1,13 @@
+parser:
+    regex-command: show\s+chassis\s+fpc\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //fpc
+        loop:
+            key: ./slot
+            sub-matches:
+            -
+                xpath: ./cpu-total
+                variable-name:  $host.fpc.slot$key.resource.used-cpu-percent
