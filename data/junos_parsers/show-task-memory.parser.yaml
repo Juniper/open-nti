@@ -1,0 +1,15 @@
+parser:
+    regex-command: show\s+task\s+memory\s+\|\s+display\s+xml
+    matches:
+    -
+        type: single-value
+        method: xpath
+        xpath: //task-memory-in-use-size
+        variable-name:  $host.task.memory.current-size
+        default-if-missing: 0
+    -
+        type: single-value
+        method: xpath
+        xpath: //task-memory-in-use-avail
+        variable-name:  $host.task.memory.current-percent
+        default-if-missing: 0
