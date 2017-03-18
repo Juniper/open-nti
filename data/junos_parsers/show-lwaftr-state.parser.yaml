@@ -1,0 +1,25 @@
+parser:
+    regex-command: show\s+lwaftr\s+state\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //*[local-name() = 'instance']
+        loop:
+            key: ./*[local-name() = 'id']
+            sub-matches:
+            -
+                xpath: ./*[local-name() = 'breaths']
+                variable-name:  $host.snabb.$key.breaths
+            -
+                xpath: ./*[local-name() = 'rxdrop']
+                variable-name:  $host.snabb.$key.rxdrop
+            -
+                xpath: ./*[local-name() = 'txdrop']
+                variable-name:  $host.snabb.$key.txdrop
+            -
+                xpath: ./*[local-name() = 'rxpackets']
+                variable-name:  $host.snabb.$key.rxpackets
+            -
+                xpath: ./*[local-name() = 'txpackets']
+                variable-name:  $host.snabb.$key.txpackets
