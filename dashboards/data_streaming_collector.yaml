@@ -1,5 +1,5 @@
 
-title: Data Steaming Collector Dashboard
+title: Data Streaming Collector Dashboard
 template: "dashboard_base.j2"
 
 tags:

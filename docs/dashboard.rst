@@ -23,7 +23,7 @@ To generate a dashboard you need to create a yaml file that indicate: the title,
 
 .. code-block:: yaml
 
-  title: Data Steaming Collector ALPHA
+  title: Data Streaming Collector ALPHA
   template: "dashboard_base.j2"
 
   tags:
