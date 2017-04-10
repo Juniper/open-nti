@@ -1,0 +1,37 @@
+parser:
+    regex-command: show\s+lwaftr\s+statisti\s*s\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //*[local-name() = 'statistics']
+        loop:
+            key: ./*[local-name() = 'id']
+            sub-matches:
+            -
+                xpath: ./*[local-name() = 'breaths']
+                variable-name:  $host.lwaftr.statistics.$key.breaths
+            -
+                xpath: ./*[local-name() = 'in-ipv4-bytes']
+                variable-name:  $host.lwaftr.statistics.$key.in-ipv4-bytes
+            -
+                xpath: ./*[local-name() = 'out-ipv4-bytes']
+                variable-name:  $host.lwaftr.statistics.$key.out-ipv4-bytes
+            -
+                xpath: ./*[local-name() = 'in-ipv4-packets']
+                variable-name:  $host.lwaftr.statistics.$key.in-ipv4-packets
+            -
+                xpath: ./*[local-name() = 'out-ipv4-packets']
+                variable-name:  $host.lwaftr.statistics.$key.out-ipv4-packets
+            -
+                xpath: ./*[local-name() = 'in-ipv6-bytes']
+                variable-name:  $host.lwaftr.statistics.$key.in-ipv6-bytes
+            -
+                xpath: ./*[local-name() = 'out-ipv6-bytes']
+                variable-name:  $host.lwaftr.statistics.$key.out-ipv6-bytes
+            -
+                xpath: ./*[local-name() = 'in-ipv6-packets']
+                variable-name:  $host.lwaftr.statistics.$key.in-ipv6-packets
+            -
+                xpath: ./*[local-name() = 'out-ipv6-packets']
+                variable-name:  $host.lwaftr.statistics.$key.out-ipv6-packets
