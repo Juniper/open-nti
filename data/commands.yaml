@@ -19,5 +19,14 @@ lab_commands:
       show route summary | display xml
    tags: test
 
+# Commands to query vmx-docker-lwaftr Container running vMX for lightweight 4 over 6.
+# Note: The space in 'statisti s' is required until PR-1236994 is fixed in Junos.
+
+lwaftr_commands:
+   commands: |
+      show lwaftr statisti s | display xml
+      show lwaftr state | display xml
+   tags: lwaftr
+
 # Do not remove this three dashes (“---”) they are used to separate documents
 ---
