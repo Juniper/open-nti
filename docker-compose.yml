@@ -30,11 +30,6 @@ input-snmp:
   container_name: $INPUT_SNMP_CONTAINER_NAME
   volumes:
     - /etc/localtime:/etc/localtime:ro
-
-input-snmp:
-  build: $INPUT_SNMP_DIR
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
     - $INPUT_SNMP_DIR/templates/:/opt/telegraf/config
   ports:
    - "$LOCAL_PORT_SNMP:162/udp"
