@@ -11,6 +11,8 @@ input-jti:
    - "$LOCAL_PORT_ANALYTICSD:50020/udp"
   volumes:
    - /etc/localtime:/etc/localtime
+  links:
+    - opennti
 
 input-syslog:
   image: $INPUT_SYSLOG_IMAGE_NAME:$IMAGE_TAG
@@ -23,6 +25,8 @@ input-syslog:
    - "$LOCAL_PORT_EVENT:6000/udp"
   volumes:
    - /etc/localtime:/etc/localtime
+  links:
+    - opennti
 
 input-snmp:
 #  image: $INPUT_SNMP_IMAGE_NAME:$IMAGE_TAG
@@ -30,9 +34,10 @@ input-snmp:
   container_name: $INPUT_SNMP_CONTAINER_NAME
   volumes:
     - /etc/localtime:/etc/localtime:ro
-    - $INPUT_SNMP_DIR/templates/:/opt/telegraf/config
   ports:
    - "$LOCAL_PORT_SNMP:162/udp"
+  links:
+    - opennti
 
 input-internal:
 #  image: $INPUT_INTERNAL_IMAGE_NAME:$IMAGE_TAG
@@ -48,7 +53,9 @@ input-internal:
     - /sys:/rootfs/sys:ro
     - /proc:/rootfs/proc:ro
     - /etc:/rootfs/etc:ro
-
+  links:
+    - opennti
+    
 opennti:
   image: $MAIN_IMAGE_NAME:$IMAGE_TAG
   container_name: $MAIN_CONTAINER_NAME
