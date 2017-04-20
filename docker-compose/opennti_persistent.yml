@@ -27,6 +27,15 @@ input-syslog:
    - /etc/localtime:/etc/localtime
   links:
    - opennti
+   
+input-snmp:
+#  image: $INPUT_SNMP_IMAGE_NAME:$IMAGE_TAG
+  build: $INPUT_SNMP_DIR
+  container_name: $INPUT_SNMP_CONTAINER_NAME
+  volumes:
+    - /etc/localtime:/etc/localtime:ro
+  links:
+    - opennti
 
 input-internal:
   image: $INPUT_INTERNAL_IMAGE_NAME:$IMAGE_TAG

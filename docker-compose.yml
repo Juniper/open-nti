@@ -12,7 +12,7 @@ input-jti:
   volumes:
    - /etc/localtime:/etc/localtime
   links:
-   - opennti
+    - opennti
 
 input-syslog:
   image: $INPUT_SYSLOG_IMAGE_NAME:$IMAGE_TAG
@@ -26,7 +26,18 @@ input-syslog:
   volumes:
    - /etc/localtime:/etc/localtime
   links:
-   - opennti
+    - opennti
+
+input-snmp:
+#  image: $INPUT_SNMP_IMAGE_NAME:$IMAGE_TAG
+  build: $INPUT_SNMP_DIR
+  container_name: $INPUT_SNMP_CONTAINER_NAME
+  volumes:
+    - /etc/localtime:/etc/localtime:ro
+  ports:
+   - "$LOCAL_PORT_SNMP:162/udp"
+  links:
+    - opennti
 
 input-internal:
 #  image: $INPUT_INTERNAL_IMAGE_NAME:$IMAGE_TAG
@@ -44,7 +55,7 @@ input-internal:
     - /etc:/rootfs/etc:ro
   links:
     - opennti
-
+    
 opennti:
   image: $MAIN_IMAGE_NAME:$IMAGE_TAG
   container_name: $MAIN_CONTAINER_NAME

@@ -20,6 +20,10 @@ export INPUT_OC_DIR=plugins/input-oc
 export INPUT_OC_IMAGE_NAME=juniper/open-nti-input-oc
 export INPUT_OC_CONTAINER_NAME=opennti_input_oc
 
+export INPUT_SNMP_DIR=plugins/input-snmp
+export INPUT_SNMP_IMAGE_NAME=juniper/open-nti-input-snmp
+export INPUT_SNMP_CONTAINER_NAME=opennti_input_snmp
+
 export INPUT_INTERNAL_DIR=plugins/input-internal
 export INPUT_INTERNAL_IMAGE_NAME=juniper/open-nti-input-internal
 export INPUT_INTERNAL_CONTAINER_NAME=opennti_input_internal
@@ -38,6 +42,7 @@ export LOCAL_PORT_JTI=50000
 export LOCAL_PORT_NA=50010
 export LOCAL_PORT_ANALYTICSD=50020
 export LOCAL_PORT_STATSD=8125
+export LOCAL_PORT_SNMP=162
 export LOCAL_PORT_EVENT=6000
 export LOCAL_PORT_GRAFANA=3000
 export LOCAL_PORT_INFLUXDB=8083

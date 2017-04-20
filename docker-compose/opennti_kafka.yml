@@ -97,6 +97,7 @@ input-analyticsd:
    - /etc/localtime:/etc/localtime
   links:
    - kafka
+   - opennti
 
 opennti-input-syslog:
   image: juniper/open-nti-input-syslog
@@ -115,6 +116,16 @@ opennti-input-syslog:
    - kafka
    - opennti
 
+input-snmp:
+#  image: $INPUT_SNMP_IMAGE_NAME:$IMAGE_TAG
+  build: $INPUT_SNMP_DIR
+  container_name: $INPUT_SNMP_CONTAINER_NAME
+  volumes:
+    - /etc/localtime:/etc/localtime:ro
+  links:
+    - kafka
+    - opennti
+
 input-internal:
   image: $INPUT_INTERNAL_IMAGE_NAME:$IMAGE_TAG
   container_name: $INPUT_INTERNAL_CONTAINER_NAME
@@ -129,6 +140,7 @@ input-internal:
     - /proc:/rootfs/proc:ro
     - /etc:/rootfs/etc:ro
   links:
+    - kafka
     - opennti
 
 ##########################################################
