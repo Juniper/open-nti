@@ -9,7 +9,8 @@ Data can be collected from different sources:
  - **Data Collection Agent** : Collect data on devices using CLI/Shell or Netconf
  - **Data Streaming Collector** : Take all data streamed by Juniper devices as Input (JTI, Analyticsd, soon Openconfig with gRPC)
  - **Statsd interface** : Accept any Statsd packets
-
+ - **SNMP Collection Agent** : Collect data on devices using SNMP
+ 
 It's pre-configured with all tools and with a default dashboard ..
 **Send it data, it will graph it**
 
