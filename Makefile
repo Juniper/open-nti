@@ -97,11 +97,34 @@ update:
 	docker pull $(INPUT_SNMP_IMAGE_NAME):latest
 	docker pull $(INPUT_INTERNAL_IMAGE_NAME):latest
 
+
+
+restart: restart-main restart-jti restart-syslog restart-snmp restart-internal
+
+restart-main:
+	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE) restart opennti
+
+restart-jti:
+	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE) restart input-jti
+
+restart-syslog:
+	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE) restart input-syslog
+
+restart-snmp:
+	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE) restart input-snmp
+
+restart-internal:
+	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE) restart input-internal
+
+
 scale-input-syslog:
 	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE) scale input-syslog=$(NBR)
 
 scale-input-jti:
 	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE) scale input-jti=$(NBR)
+
+scale-input-snmp:
+	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE) scale input-snmp=$(NBR)
 
 cron-show:
 	# if [ $(TAG) == "all" ]; then
