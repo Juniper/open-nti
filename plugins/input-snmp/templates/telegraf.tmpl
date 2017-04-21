@@ -1,0 +1,68 @@
+#[tags]
+#  dc = "open-nti"
+
+[agent]
+  interval = "5m"
+  round_interval = true
+  flush_interval = "30s"
+  flush_jitter = "0s"
+  debug = true
+  hostname = "open-nti-input-snmp"
+
+[[outputs.influxdb]]
+  urls = ["http://opennti:8086"]
+  database = "snmp"
+  precision = "s"
+  retention_policy = ""
+  timeout = "5s"
+
+[[inputs.snmp]]
+  agents = [ "172.30.137.90:161","172.30.137.93:161" ]
+  version = 2
+  community = "public"
+
+  name = "system"
+  [[inputs.snmp.field]]
+    name = "hostname"
+    oid = ".1.3.6.1.2.1.1.5.0"
+    is_tag = true
+  [[inputs.snmp.field]]
+    name = "uptime"
+    oid = ".1.3.6.1.2.1.1.3.0"
+  [[inputs.snmp.field]]
+    name = "sysObjectID"
+    oid = ".1.3.6.1.2.1.1.2.0"
+  [[inputs.snmp.table]]
+    name = "interface_statistics"
+    inherit_tags = [ "hostname" ]
+    [inputs.snmp.tagpass]
+      ifName = ["[g|x]e-","ae"]
+    [[inputs.snmp.table.field]]
+      name = "ifName"
+      oid = ".1.3.6.1.2.1.31.1.1.1.1"
+      is_tag = true
+    [[inputs.snmp.table.field]]
+      name = "ifHCInOctets"
+      oid = ".1.3.6.1.2.1.31.1.1.1.6"
+    [[inputs.snmp.table.field]]
+      name = "ifHCOutOctets"
+      oid = ".1.3.6.1.2.1.31.1.1.1.10"
+    [[inputs.snmp.table.field]]
+      name = "ifHCInMulticastPkts"
+      oid = ".1.3.6.1.2.1.31.1.1.1.8"
+    [[inputs.snmp.table.field]]
+      name = "ifHCOutMulticastPkts"
+      oid = ".1.3.6.1.2.1.31.1.1.1.12"
+    [[inputs.snmp.table.field]]
+      name = "ifHCInBroadcastPkts"
+      oid = ".1.3.6.1.2.1.31.1.1.1.9"
+    [[inputs.snmp.table.field]]
+      name = "ifHCOutBroadcastPkts"
+      oid = ".1.3.6.1.2.1.31.1.1.1.13"  
+    [[inputs.snmp.table.field]]
+      name = "ifHCOutUcastPkts"
+      oid = ".1.3.6.1.2.1.31.1.1.1.11"
+    [[inputs.snmp.table.field]]
+      name = "ifHCInUcastPkts"
+      oid = ".1.3.6.1.2.1.31.1.1.1.7"  
+
