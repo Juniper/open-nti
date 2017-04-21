@@ -75,6 +75,7 @@ Additional Documentation
    datacollectionagent
    datastreaming
    event
+   snmpcollectionagent
 
 .. _dashboards-docs:
 
