@@ -2,6 +2,7 @@
 input-jti:
   image: $INPUT_JTI_IMAGE_NAME:$IMAGE_TAG
   container_name: $INPUT_JTI_CONTAINER_NAME
+  restart: always
   environment:
    - "INFLUXDB_ADDR=opennti"
    - "OUTPUT_INFLUXDB=true"
@@ -17,6 +18,7 @@ input-jti:
 input-syslog:
   image: $INPUT_SYSLOG_IMAGE_NAME:$IMAGE_TAG
   container_name: $INPUT_SYSLOG_CONTAINER_NAME
+  restart: always
   environment:
    - "INFLUXDB_ADDR=opennti"
    - "OUTPUT_INFLUXDB=true"
@@ -56,6 +58,7 @@ input-internal:
 opennti:
   image: $MAIN_IMAGE_NAME:$IMAGE_TAG
   container_name: $MAIN_CONTAINER_NAME
+  restart: always
   volumes:
    - ../$LOCAL_DIR_DASHBOARD:/src/dashboards
    - ../$LOCAL_DIR_DATA:/opt/open-nti/data
