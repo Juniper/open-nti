@@ -31,8 +31,8 @@ input-syslog:
    - opennti
    
 input-snmp:
-#  image: $INPUT_SNMP_IMAGE_NAME:$IMAGE_TAG
-  build: $INPUT_SNMP_DIR
+  image: $INPUT_SNMP_IMAGE_NAME:$IMAGE_TAG
+  #build: $INPUT_SNMP_DIR
   container_name: $INPUT_SNMP_CONTAINER_NAME
   volumes:
     - /etc/localtime:/etc/localtime:ro
