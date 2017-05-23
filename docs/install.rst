@@ -31,7 +31,9 @@ OpenNTI is available on DockerCloud_ and this project provide scripts to easily 
   make start
 
 .. NOTE::
-  On Ubuntu, you'll have to add "sudo" before the last command
+  - On Ubuntu, you'll have to add "sudo" before the last command
+
+  - In case of have internet access through a proxy, before executing 'make start', edit all Dockeriles (those in the main directory and in the plugins directory), and include the lines ENV http_proxy <http_proxy> and ENV https_proxy <https_proxy>
 
 By default it will start 3 containers and it's working in **non-persistent mode**, once you stop it all data are gone.
 It's possible to start the main container in **persistent mode** to save the database outside the container, b
