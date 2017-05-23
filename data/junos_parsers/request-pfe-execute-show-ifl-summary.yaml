@@ -1,0 +1,20 @@
+parser:
+    regex-command: request\s+pfe\s+execute\s+command\s+"show\s+ifl\s+summary"\s+target\s+fpc\d
+    matches:
+    -
+        type: single-value
+        method: regex
+        regex: \s*GOT:\s+ifl\s+count\s+=\s+(\d+)$
+        variables:
+        -
+            variable-name:  $host.ifl.count.total
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*GOT:\s+Next\s+Hop\s+\w+\s+\d+\s+(\d+)\s+\d+%\s+\d+\s+\d+%$
+        regex: \s*GOT:\s+ifl\s+up\s+count\s+=\s+(\d+)$
+        variables:
+        -
+            variable-name:  $host.ifl.count.up
+            variable-type:  integer
