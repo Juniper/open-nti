@@ -14,7 +14,6 @@ parser:
                 tags:
                 -
                     table: $key
-                    test: delete_me
             -
                 xpath: ./total-route-count
                 variable-name:  $host.route-table.summary.$key.routes
@@ -36,6 +35,25 @@ parser:
             -
                 xpath: ./hidden-route-count
                 variable-name:  $host.route-table.summary.$key.hidden
+                tags:
+                -
+                    table: $key
+    -
+        type: multi-value
+        method: xpath
+        xpath: //route-table[table-name='inet.0']/protocols
+        loop:
+            key: ./protocol-name
+            sub-matches:
+            -
+                xpath: ./protocol-route-count
+                variable-name:  $host.inet.0.protocols.$key.routes
+                tags:
+                -
+                    table: $key
+            -
+                xpath: ./active-route-count
+                variable-name:  $host.inet.0.protocols.$key.actives
                 tags:
                 -
                     table: $key
@@ -110,6 +128,25 @@ parser:
             -
                 xpath: ./hidden-route-count
                 variable-name:  $host.route-table.summary.$key.hidden
+                tags:
+                -
+                    table: $key
+    -
+        type: multi-value
+        method: xpath
+        xpath: //route-table[table-name='inet6.0']/protocols
+        loop:
+            key: ./protocol-name
+            sub-matches:
+            -
+                xpath: ./protocol-route-count
+                variable-name:  $host.inet6.0.protocols.$key.routes
+                tags:
+                -
+                    table: $key
+            -
+                xpath: ./active-route-count
+                variable-name:  $host.inet6.0.protocols.$key.actives
                 tags:
                 -
                     table: $key
