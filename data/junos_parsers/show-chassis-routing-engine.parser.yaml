@@ -21,5 +21,17 @@ parser:
                 xpath: ./up-time
                 variable-name:  $host.chassis.routing-engine.$key.up-time-date
             -
+                xpath: ./cpu-user
+                variable-name:  $host.chassis.routing-engine.$key.cpu-user
+            -
+                xpath: ./cpu-background
+                variable-name:  $host.chassis.routing-engine.$key.cpu-background
+            -
+                xpath: ./cpu-system
+                variable-name:  $host.chassis.routing-engine.$key.cpu-system
+            -
+                xpath: ./cpu-interrupt
+                variable-name:  $host.chassis.routing-engine.$key.cpu-interrupt
+            -
                 xpath: ./cpu-idle
                 variable-name:  $host.chassis.routing-engine.$key.cpu-idle
