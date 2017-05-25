@@ -1,0 +1,130 @@
+parser:
+    regex-command: show\s+igmp\s+snooping\s+statistics\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //mgm-snooping-statistics[bridge-domain]
+        loop:
+            key: ./bridge-domain
+            sub-matches:
+            -
+                xpath: ./mgm-statistics-group/mgm-statistic[statistic-name='Membership Query']/received-count
+                variable-name:  $host.igmp.snooping.statistics.bridge_domain.$key.membership_query.received-count
+            -
+                xpath: ./mgm-statistics-group/mgm-statistic[statistic-name='Membership Query']/sent-count
+                variable-name:  $host.igmp.snooping.statistics.bridge_domain.$key.membership_query.sent-count
+            -
+                xpath: ./mgm-statistics-group/mgm-statistic[statistic-name='Membership Query']/error-count
+                variable-name:  $host.igmp.snooping.statistics.bridge_domain.$key.membership_query.error-count
+            -
+                xpath: ./mgm-statistics-group/mgm-statistic[statistic-name='V1 Membership Report']/received-count
+                variable-name:  $host.igmp.snooping.statistics.bridge_domain.$key.membership_report_v1.received-count
+            -
+                xpath: ./mgm-statistics-group/mgm-statistic[statistic-name='V1 Membership Report']/sent-count
+                variable-name:  $host.igmp.snooping.statistics.bridge_domain.$key.membership_report_v1.sent-count
+            -
+                xpath: ./mgm-statistics-group/mgm-statistic[statistic-name='V1 Membership Report']/error-count
+                variable-name:  $host.igmp.snooping.statistics.bridge_domain.$key.membership_report_v1.error-count
+            -
+                xpath: ./mgm-statistics-group/mgm-statistic[statistic-name='V2 Membership Report']/received-count
+                variable-name:  $host.igmp.snooping.statistics.bridge_domain.$key.membership_report_v2.received-count
+            -
+                xpath: ./mgm-statistics-group/mgm-statistic[statistic-name='V2 Membership Report']/sent-count
+                variable-name:  $host.igmp.snooping.statistics.bridge_domain.$key.membership_report_v2.sent-count
+            -
+                xpath: ./mgm-statistics-group/mgm-statistic[statistic-name='V2 Membership Report']/error-count
+                variable-name:  $host.igmp.snooping.statistics.bridge_domain.$key.membership_report_v2.error-count
+            -
+                xpath: ./mgm-statistics-group/mgm-statistic[statistic-name='Group Leave']/received-count
+                variable-name:  $host.igmp.snooping.statistics.bridge_domain.$key.group_leave.received-count
+            -
+                xpath: ./mgm-statistics-group/mgm-statistic[statistic-name='Group Leave']/sent-count
+                variable-name:  $host.igmp.snooping.statistics.bridge_domain.$key.group_leave.sent-count
+            -
+                xpath: ./mgm-statistics-group/mgm-statistic[statistic-name='Group Leave']/error-count
+                variable-name:  $host.igmp.snooping.statistics.bridge_domain.$key.group_leave.error-count
+            -
+                xpath: ./mgm-statistics-group/mgm-statistic[statistic-name='V3 Membership Report']/received-count
+                variable-name:  $host.igmp.snooping.statistics.bridge_domain.$key.membership_report_v3.received-count
+            -
+                xpath: ./mgm-statistics-group/mgm-statistic[statistic-name='V3 Membership Report']/sent-count
+                variable-name:  $host.igmp.snooping.statistics.bridge_domain.$key.membership_report_v3.sent-count
+            -
+                xpath: ./mgm-statistics-group/mgm-statistic[statistic-name='V3 Membership Report']/error-count
+                variable-name:  $host.igmp.snooping.statistics.bridge_domain.$key.membership_report_v3.error-count
+    -
+        type: single-value
+        method: xpath
+        xpath: //mgm-snooping-statistics[mgm-snooping-instance-all]/mgm-statistics-group/mgm-statistic[statistic-name='Membership Query']/received-count
+        variable-name:  $host.igmp.snooping.statistics.all_instances.membership_query.received-count
+    -
+        type: single-value
+        method: xpath        
+        xpath: //mgm-snooping-statistics[mgm-snooping-instance-all]/mgm-statistics-group/mgm-statistic[statistic-name='Membership Query']/sent-count
+        variable-name:  $host.igmp.snooping.statistics.all_instances.membership_query.sent-count
+    -
+        type: single-value
+        method: xpath        
+        xpath: //mgm-snooping-statistics[mgm-snooping-instance-all]/mgm-statistics-group/mgm-statistic[statistic-name='Membership Query']/error-count
+        variable-name:  $host.igmp.snooping.statistics.all_instances.membership_query.error-count
+    -
+        type: single-value
+        method: xpath        
+        xpath: //mgm-snooping-statistics[mgm-snooping-instance-all]/mgm-statistics-group/mgm-statistic[statistic-name='V1 Membership Report']/received-count
+        variable-name:  $host.igmp.snooping.statistics.all_instances.membership_report_v1.received-count
+    -
+        type: single-value
+        method: xpath       
+        xpath: //mgm-snooping-statistics[mgm-snooping-instance-all]/mgm-statistics-group/mgm-statistic[statistic-name='V1 Membership Report']/sent-count
+        variable-name:  $host.igmp.snooping.statistics.all_instances.membership_report_v1.sent-count
+    -
+        type: single-value
+        method: xpath        
+        xpath: //mgm-snooping-statistics[mgm-snooping-instance-all]/mgm-statistics-group/mgm-statistic[statistic-name='V1 Membership Report']/error-count
+        variable-name:  $host.igmp.snooping.statistics.all_instances.membership_report_v1.error-count
+    -
+        type: single-value
+        method: xpath        
+        xpath: //mgm-snooping-statistics[mgm-snooping-instance-all]/mgm-statistics-group/mgm-statistic[statistic-name='V2 Membership Report']/received-count
+        variable-name:  $host.igmp.snooping.statistics.all_instances.membership_report_v2.received-count
+    -
+        type: single-value
+        method: xpath        
+        xpath: //mgm-snooping-statistics[mgm-snooping-instance-all]/mgm-statistics-group/mgm-statistic[statistic-name='V2 Membership Report']/sent-count
+        variable-name:  $host.igmp.snooping.statistics.all_instances.membership_report_v2.sent-count
+    -
+        type: single-value
+        method: xpath        
+        xpath: //mgm-snooping-statistics[mgm-snooping-instance-all]/mgm-statistics-group/mgm-statistic[statistic-name='V2 Membership Report']/error-count
+        variable-name:  $host.igmp.snooping.statistics.all_instances.membership_report_v2.error-count
+    -
+        type: single-value
+        method: xpath        
+        xpath: //mgm-snooping-statistics[mgm-snooping-instance-all]/mgm-statistics-group/mgm-statistic[statistic-name='Group Leave']/received-count
+        variable-name:  $host.igmp.snooping.statistics.all_instances.group_leave.received-count
+    -
+        type: single-value
+        method: xpath        
+        xpath: //mgm-snooping-statistics[mgm-snooping-instance-all]/mgm-statistics-group/mgm-statistic[statistic-name='Group Leave']/sent-count
+        variable-name:  $host.igmp.snooping.statistics.all_instances.group_leave.sent-count
+    -
+        type: single-value
+        method: xpath        
+        xpath: //mgm-snooping-statistics[mgm-snooping-instance-all]/mgm-statistics-group/mgm-statistic[statistic-name='Group Leave']/error-count
+        variable-name:  $host.igmp.snooping.statistics.all_instances.group_leave.error-count
+    -
+        type: single-value
+        method: xpath        
+        xpath: //mgm-snooping-statistics[mgm-snooping-instance-all]/mgm-statistics-group/mgm-statistic[statistic-name='V3 Membership Report']/received-count
+        variable-name:  $host.igmp.snooping.statistics.all_instances.membership_report_v3.received-count
+    -
+        type: single-value
+        method: xpath        
+        xpath: //mgm-snooping-statistics[mgm-snooping-instance-all]/mgm-statistics-group/mgm-statistic[statistic-name='V3 Membership Report']/sent-count
+        variable-name:  $host.igmp.snooping.statistics.all_instances.membership_report_v3.sent-count
+    -
+        type: single-value
+        method: xpath        
+        xpath: //mgm-snooping-statistics[mgm-snooping-instance-all]/mgm-statistics-group/mgm-statistic[statistic-name='V3 Membership Report']/error-count
+        variable-name:  $host.igmp.snooping.statistics.all_instances.membership_report_v3.error-count
