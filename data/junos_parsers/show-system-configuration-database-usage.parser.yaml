@@ -1,0 +1,19 @@
+parser:
+    regex-command: show\s+system\s+configuration\s+database\s+usage\s+\|\s+display\s+xml
+    matches:
+    -
+        type: single-value
+        method: regex
+        regex: actual-usage\S(\S+) 
+        variables:
+        -
+            variable-name:  $host.system.configuration.database.usage.actual
+            variable-type:  integer 
+    -
+        type: single-value
+        method: regex
+        regex: available-space\S(\S+)
+        variables:
+        -
+            variable-name:  $host.system.configuration.database.usage.available
+            variable-type:  integer
