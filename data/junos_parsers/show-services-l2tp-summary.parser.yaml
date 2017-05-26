@@ -10,4 +10,4 @@ parser:
         type: single-value
         method: xpath
         xpath: //l2tp-summary-table/l2tp-sessions
-        variable-name:  $host.bng.subscriber.summary.l2tp-sessions
+        variable-name:  $host.bng.subscribers.summary.l2tp-sessions
