@@ -5,7 +5,7 @@ parser:
         type: single-value
         method: xpath
         xpath: //l2tp-summary-table/l2tp-tunnels
-        variable-name:  $host.bng.subscriber.summary.l2tp-tunnels
+        variable-name:  $host.bng.subscribers.summary.l2tp-tunnels
     -
         type: single-value
         method: xpath
