@@ -4,7 +4,7 @@ parser:
     -
         type: multi-value
         method: xpath
-        xpath: //resource-monitor-summary-information-summary
+        xpath: //resource-monitor-summary-fpc-information-summary
         loop:
             key: ./fpc-slot
             sub-matches:
@@ -12,14 +12,26 @@ parser:
                 xpath: ./used-heap-mem-percent
                 variable-name:  $host.fpc.slot$key.resource.used-heap-mem-percent
             -
-                xpath: ./pfe-num[text()="0"]/following-sibling::used-filter-counter-percent[1]
+                xpath: ./resource-monitor-summary-pfe-information-summary[pfe-num='0']/used-filter-counter-percent
                 variable-name:  $host.fpc.slot$key.pfe0.resource.used-filter-counter-percent
             -
-                xpath: ./pfe-num[text()="0"]/following-sibling::used-ifl-counter-percent[1]
+                xpath: ./resource-monitor-summary-pfe-information-summary[pfe-num='0']/used-ifl-counter-percent
                 variable-name:  $host.fpc.slot$key.pfe0.resource.used-ifl-counter-percent
             -
-                xpath: ./pfe-num[text()="1"]/following-sibling::used-filter-counter-percent[1]
+                xpath: ./resource-monitor-summary-pfe-information-summary[pfe-num='1']/used-filter-counter-percent
                 variable-name:  $host.fpc.slot$key.pfe1.resource.used-filter-counter-percent
             -
-                xpath: ./pfe-num[text()="1"]/following-sibling::used-ifl-counter-percent[1]
+                xpath: ./resource-monitor-summary-pfe-information-summary[pfe-num='1']/used-ifl-counter-percent
                 variable-name:  $host.fpc.slot$key.pfe1.resource.used-ifl-counter-percent
+            -
+                xpath: ./resource-monitor-summary-pfe-information-summary[pfe-num='2']/used-filter-counter-percent
+                variable-name:  $host.fpc.slot$key.pfe2.resource.used-filter-counter-percent
+            -
+                xpath: ./resource-monitor-summary-pfe-information-summary[pfe-num='2']/used-ifl-counter-percent
+                variable-name:  $host.fpc.slot$key.pfe2.resource.used-ifl-counter-percent
+            -
+                xpath: ./resource-monitor-summary-pfe-information-summary[pfe-num='3']/used-filter-counter-percent
+                variable-name:  $host.fpc.slot$key.pfe3.resource.used-filter-counter-percent
+            -
+                xpath: ./resource-monitor-summary-pfe-information-summary[pfe-num='3']/used-ifl-counter-percent
+                variable-name:  $host.fpc.slot$key1.pfe3.resource.used-ifl-counter-percent
