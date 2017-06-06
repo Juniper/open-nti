@@ -18,8 +18,32 @@ parser:
                 xpath: ./pfe-num[text()="0"]/following-sibling::used-ifl-counter-percent[1]
                 variable-name:  $host.fpc.slot$key.pfe0.resource.used-ifl-counter-percent
             -
+                xpath: ./pfe-num[text()="0"]/following-sibling::used-expansion-memory-percent[1]
+                variable-name:  $host.fpc.slot$key.pfe0.resource.used-expansion-memory-percent
+            -
                 xpath: ./pfe-num[text()="1"]/following-sibling::used-filter-counter-percent[1]
                 variable-name:  $host.fpc.slot$key.pfe1.resource.used-filter-counter-percent
             -
                 xpath: ./pfe-num[text()="1"]/following-sibling::used-ifl-counter-percent[1]
                 variable-name:  $host.fpc.slot$key.pfe1.resource.used-ifl-counter-percent
+            -
+                xpath: ./pfe-num[text()="0"]/following-sibling::used-expansion-memory-percent[1]
+                variable-name:  $host.fpc.slot$key.pfe1.resource.used-expansion-memory-percent
+            -
+                xpath: ./pfe-num[text()="2"]/following-sibling::used-filter-counter-percent[1]
+                variable-name:  $host.fpc.slot$key.pfe1.resource.used-filter-counter-percent
+            -
+                xpath: ./pfe-num[text()="2"]/following-sibling::used-ifl-counter-percent[1]
+                variable-name:  $host.fpc.slot$key.pfe1.resource.used-ifl-counter-percent
+            -
+                xpath: ./pfe-num[text()="2"]/following-sibling::used-expansion-memory-percent[1]
+                variable-name:  $host.fpc.slot$key.pfe1.resource.used-expansion-memory-percent
+            -
+                xpath: ./pfe-num[text()="3"]/following-sibling::used-filter-counter-percent[1]
+                variable-name:  $host.fpc.slot$key.pfe1.resource.used-filter-counter-percent
+            -
+                xpath: ./pfe-num[text()="3"]/following-sibling::used-ifl-counter-percent[1]
+                variable-name:  $host.fpc.slot$key.pfe1.resource.used-ifl-counter-percent
+            -
+                xpath: ./pfe-num[text()="3"]/following-sibling::used-expansion-memory-percent[1]
+                variable-name:  $host.fpc.slot$key.pfe1.resource.used-expansion-memory-percent
