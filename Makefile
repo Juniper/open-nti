@@ -56,7 +56,6 @@ build-oc:
 	@echo "======================================================================"
 	docker build -f $(INPUT_OC_DIR)/Dockerfile -t $(INPUT_OC_IMAGE_NAME):$(IMAGE_TAG) $(INPUT_OC_DIR)
 
-
 build-internal:
 	@echo "======================================================================"
 	@echo "Build Docker image - $(INPUT_INTERNAL_IMAGE_NAME):$(IMAGE_TAG)"
@@ -108,7 +107,7 @@ update:
 
 
 
-restart: restart-main restart-jti restart-syslog restart-snmp restart-internal
+restart: restart-main restart-jti restart-syslog restart-snmp restart-oc restart-internal
 
 restart-main:
 	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE) restart opennti
