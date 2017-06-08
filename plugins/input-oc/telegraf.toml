@@ -1,0 +1,162 @@
+# Telegraf Configuration
+#
+# Telegraf is entirely plugin driven. All metrics are gathered from the
+# declared inputs, and sent to the declared outputs.
+#
+# Plugins must be declared in here to be active.
+# To deactivate a plugin, comment out the name and any variables.
+#
+# Use 'telegraf -config telegraf.conf -test' to see what metrics a config
+# file would generate.
+#
+# Environment variables can be used anywhere in this config file, simply prepend
+# them with $. For strings the variable must be within quotes (ie, "$STR_VAR"),
+# for numbers and booleans they should be plain (ie, $INT_VAR, $BOOL_VAR)
+
+
+# Global tags can be specified here in key="value" format.
+[global_tags]
+  # dc = "us-east-1" # will tag all metrics with dc=us-east-1
+  # rack = "1a"
+  ## Environment variables can be used as tags, and throughout the config file
+  # user = "$USER"
+
+
+# Configuration for telegraf agent
+[agent]
+  ## Default data collection interval for all inputs
+  # interval = "10s"
+  ## Rounds collection interval to 'interval'
+  ## ie, if interval="10s" then always collect on :00, :10, :20, etc.
+  round_interval = true
+
+  ## Telegraf will send metrics to outputs in batches of at
+  ## most metric_batch_size metrics.
+  metric_batch_size = 1000
+  ## For failed writes, telegraf will cache metric_buffer_limit metrics for each
+  ## output, and will flush this buffer on a successful write. Oldest metrics
+  ## are dropped first when this buffer fills.
+  metric_buffer_limit = 10000
+
+  ## Collection jitter is used to jitter the collection by a random amount.
+  ## Each plugin will sleep for a random time within jitter before collecting.
+  ## This can be used to avoid many plugins querying things like sysfs at the
+  ## same time, which can have a measurable effect on the system.
+  collection_jitter = "0s"
+
+  ## Default flushing interval for all outputs. You shouldn't set this below
+  ## interval. Maximum flush_interval will be flush_interval + flush_jitter
+  flush_interval = "5s"
+  ## Jitter the flush interval by a random amount. This is primarily to avoid
+  ## large write spikes for users running a large number of telegraf instances.
+  ## ie, a jitter of 5s and interval 10s means flushes will happen every 10-15s
+  flush_jitter = "0s"
+
+  ## Run telegraf in debug mode
+  debug = false
+  ## Run telegraf in quiet mode
+  quiet = false
+  ## Override default hostname, if empty use os.Hostname()
+  hostname = ""
+  ## If set to true, do no set the "host" tag in the telegraf agent.
+  omit_hostname = false
+
+
+###############################################################################
+#                            OUTPUT PLUGINS                                   #
+###############################################################################
+
+# Configuration for influxdb server to send metrics to
+[[outputs.influxdb]]
+  ## The full HTTP or UDP endpoint URL for your InfluxDB instance.
+  ## Multiple urls can be specified as part of the same cluster,
+  ## this means that only ONE of the urls will be written to each interval.
+  # urls = ["udp://localhost:8089"] # UDP endpoint example
+  urls = ["http://opennti:8086"]
+  ## The target database for metrics (telegraf will create it if not exists).
+  database = "juniper" # required
+  ## Precision of writes, valid values are "ns", "us" (or "µs"), "ms", "s", "m", "h".
+  ## note: using "s" precision greatly improves InfluxDB compression.
+  precision = "s"
+
+  ## Retention policy to write to.
+  # retention_policy = "default"
+
+  ## Write consistency (clusters only), can be: "any", "one", "quorom", "all"
+  write_consistency = "any"
+
+  ## Write timeout (for the InfluxDB client), formatted as a string.
+  ## If not provided, will default to 5s. 0s means no timeout (not recommended).
+  timeout = "5s"
+  username = "juniper"
+  password = "juniper"
+  ## Set the user agent for HTTP POSTs (can be useful for log differentiation)
+  # user_agent = "telegraf"
+  ## Set UDP payload size, defaults to InfluxDB UDP Client default (512 bytes)
+  # udp_payload = 512
+
+###############################################################################
+#                            INPUT PLUGINS                                    #
+###############################################################################
+
+# Read OpenConfig Telemetry from listed sensors
+
+[[inputs.openconfig_telemetry]]
+
+  server = "{{$key}}:50051"
+
+  ## Frequency to get data in millisecond
+  sampleFrequency = 15000
+
+  ## Sensors to subscribe for
+  ## A identifier for each sensor can be provided in path by separating with space
+  ## Else sensor path will be used as identifier
+  sensors = [
+   "/junos/system/linecard/interface/",
+   "/junos/system/cpu/memory/",
+   "/junos/system/linecard/packet/usage/",
+   "/junos/system/linecard/fabric/",
+   "/lacp",
+   "/lldp",
+   "/bgp"
+  ]
+
+  ## Each data format has it's own unique set of configuration options, read
+  ## more about them here:
+  ## https://github.com/influxdata/telegraf/blob/master/docs/DATA_FORMATS_INPUT.md
+  data_format = "influx"
+
+
+## Not working on Dec 1st 2016
+# "oc-bgp-neighbors /bgp/neighbors/neighbor/",
+
+# "/junos/system/linecard/interface/",
+# "/junos/system/cpu/memory/",
+#  "/junos/system/linecard/packet/usage/",
+#  "/junos/system/linecard/interface/",
+#  "/interfaces/interface/subinterfaces/",
+#  "/junos/system/linecard/optics/",
+#  "/junos/system/linecard/cpu/memory/",
+#  "/junos/system/linecard/services/inline-jflow/",
+#  "/components/",
+#  "/interfaces/interface[name='fxp0']/",
+#  "/interfaces/interface[name='em0']/",
+#  "/interfaces/interface[name='em1']/",
+#  "/interfaces/interface[name='em0']/",
+#  "/interfaces/interface[name='ixlv0']/",
+#  "/interfaces/interface[name='ixlv1']/",
+#  "/interfaces/interface[name='em0']/",
+#  "/interfaces/interface[name='ixgbe0']/",
+#  "/interfaces/interface[name='ixgbe1’]/",
+#  "/junos/rsvp-interface-information/",
+#  "/bgp/neighbors/neighbor/",
+#  "/junos/task-memory-information/",
+#  "/arp-information/",
+#  "/nd6-information/",
+#  "/ipv6-ra/",
+#  "/lldp/",
+#  "/lacp/",
+#  "/junos/system/linecard/fabric/"
+#  "oc-interfaces /interfaces/interface/",
+#  "oc-components /components/",
+#]
