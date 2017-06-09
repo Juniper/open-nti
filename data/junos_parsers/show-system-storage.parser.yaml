@@ -1,0 +1,13 @@
+parser:
+    regex-command: show\s+system\s+storage\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //filesystem
+        loop:
+            key: ./filesystem-name
+            sub-matches:
+            -
+                xpath: ./used-percent
+                variable-name:  $host.system.storage.$key.used-percent
