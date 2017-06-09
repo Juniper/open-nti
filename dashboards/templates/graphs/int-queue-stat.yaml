@@ -1,5 +1,4 @@
 
-
 title: "Interface Queue Stats"
 template: graph-lines-02.j2
 datasource: influxdb
@@ -9,27 +8,13 @@ targets:
   A:
     query: >
       SELECT derivative(mean("value"), 1s)
-      FROM "jnpr.analyticsd"
-      WHERE  ("type" = 'traffic-stats.rxcrcerr' OR "type" = 'traffic-stats.rxdroppkt')
-      AND "device" =~ /($host_regex)/ AND "interface" =~ /$interface$/ AND $timeFilter
-      GROUP BY "device", "interface", "type", time($GroupBy)
-
-  B:
-    query: >
-      SELECT derivative(mean("value"), 1s)
       FROM "jnpr.jvision"
-      WHERE ("type" = 'ingress_errors.if_in_discards'
-      OR "type" = 'ingress_errors.if_in_errors'
-      OR "type" = 'ingress_errors.if_in_frame_errors'
-      OR "type" = 'ingress_errors.if_in_l2_mismatch_timeouts'
-      OR "type" = 'ingress_errors.if_in_l2chan_errors'
-      OR "type" = 'ingress_errors.if_in_l3_incompletes'
-      OR "type" = 'ingress_errors.if_in_qdrops'
-      OR "type" = 'ingress_errors.if_in_resource_errors'
-      OR "type" = 'ingress_errors.if_in_runts')
+      WHERE "type" = 'egress_queue_info.packets'
       AND "device" =~ /($host_regex)$/ AND "interface" =~ /$interface$/ AND $timeFilter
-      GROUP BY "device", "interface", "type", time($GroupBy)
+      GROUP BY "device", "interface", "egress_queue", time($GroupBy)
+
 
 templatings_used:
   - host_regex.yaml
   - interface.yaml
+  - group_by.yaml
