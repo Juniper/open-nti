@@ -4,7 +4,7 @@
 source ./open-nti.params
 echo "$(tput setaf 5)this script (docker.stop.persistent.sh) is deprecated, it's been replaced with 'make stop-persistent' $(tput sgr0)"
 
-DOCKER_COMPOSE_FILE="docker-compose/opennti_persistent.yml"
+DOCKER_COMPOSE_FILE="docker-compose-persistent.yml"
 
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
