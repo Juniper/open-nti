@@ -54,5 +54,7 @@ export LOCAL_PORT_SSH=22222
 export LOCAL_DIR_DATA=data
 export LOCAL_DIR_LOG=logs
 export LOCAL_DIR_DB=db
+export LOCAL_DIR_DB_DATA=${LOCAL_DIR_DB}/data
+export LOCAL_DIR_DB_VAR=${LOCAL_DIR_DB}/influxdb
 export LOCAL_DIR_TESTS=tests
 export LOCAL_DIR_DASHBOARD=dashboards
