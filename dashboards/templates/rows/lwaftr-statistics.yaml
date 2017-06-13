@@ -1,0 +1,14 @@
+title: LWAFTR Statistics
+height: 250px
+template: row_base.j2
+panels:
+  graphs:
+    - lwaftr-statistics-breaths.yaml
+    - lwaftr-statistics-in-ipv4-bytes.yaml
+    - lwaftr-statistics-out-ipv4-bytes.yaml
+    - lwaftr-statistics-in-ipv4-packets.yaml
+    - lwaftr-statistics-out-ipv4-packets.yaml
+    - lwaftr-statistics-in-ipv6-bytes.yaml
+    - lwaftr-statistics-out-ipv6-bytes.yaml
+    - lwaftr-statistics-in-ipv6-packets.yaml
+    - lwaftr-statistics-out-ipv6-packets.yaml

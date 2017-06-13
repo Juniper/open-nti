@@ -1,0 +1,15 @@
+template: graph-lines-02.j2
+datasource: influxdb
+title: "lwaftr out-ipv4-bytes (delta)"
+span: 6
+
+targets:
+  A:
+    query: >
+      SELECT mean(delta)
+      FROM /($host_regex).lwaftr.statistics..*.out-ipv4-bytes/
+      WHERE $timeFilter
+      GROUP BY time($GroupBy)
+templatings_used:
+  - host_regex.yaml
+  - group_by.yaml

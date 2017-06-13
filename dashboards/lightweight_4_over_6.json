@@ -1,0 +1,1437 @@
+{
+  "id": null,
+  "title": "Lightweight 4 over 6 (Alpha)",
+  "originalTitle": "Lightweight 4 over 6 (Alpha)",
+"tags": [
+    "juniper","netconf","opennti"
+  ],
+  "style": "dark",
+  "timezone": "browser",
+  "editable": true,
+  "hideControls": false,
+  "sharedCrosshair": false,
+  "rows": [
+    {
+  "height": "25px",
+  "editable": true,
+  "collapse": false,
+  
+    "showTitle": true,
+    "title": "Disclaimer",
+  
+  "panels": [
+    {
+      "title": "",
+      "error": false,
+      "span": 12,
+      "editable": true,
+      "type": "text",
+      "isNew": true,
+      "id": 102,
+      "mode": "markdown",
+      "content": "**This dashboard has been automatically generated using the dashboard generator of OpenNTI** - It's very easy to personalize it and create your own.",
+      "links": [],
+      "transparent": true,
+      "height": "10px"
+    }
+  ]
+},{
+  "collapse": true,
+  "editable": true,
+  "height": "250px",
+  "panels": [
+
+    {
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 1,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(delta) FROM /($host_regex).snabb.$key.breaths/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "snabb breaths (delta)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 2,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(delta) FROM /($host_regex).snabb.$key.rxpackets/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "snabb rxpackets (delta)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 3,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(delta) FROM /($host_regex).snabb.$key.txpackets/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "snabb txpackets (delta)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 4,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(delta) FROM /($host_regex).snabb.$key.rxdrop/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "snabb rxdrop (delta)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 5,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(delta) FROM /($host_regex).snabb.$key.txdrop/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "snabb txdrop (delta)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+}
+
+  ],
+
+  "showTitle": true,
+  "title": "LWAFTR State"
+
+},{
+  "collapse": true,
+  "editable": true,
+  "height": "250px",
+  "panels": [
+
+    {
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 6,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(delta) FROM /($host_regex).lwaftr.statistics..*.breaths/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "lwaftr breaths (delta)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 7,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(delta) FROM /($host_regex).lwaftr.statistics..*.in-ipv4-bytes/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "lwaftr in-ipv4-bytes (delta)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 8,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(delta) FROM /($host_regex).lwaftr.statistics..*.out-ipv4-bytes/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "lwaftr out-ipv4-bytes (delta)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 9,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(delta) FROM /($host_regex).lwaftr.statistics..*.in-ipv4-packets/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "lwaftr in-ipv4-packets (delta)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 10,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(delta) FROM /($host_regex).lwaftr.statistics..*.out-ipv4-packets/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "lwaftr out-ipv4-packets (delta)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 11,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(delta) FROM /($host_regex).lwaftr.statistics..*.in-ipv6-bytes/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "lwaftr in-ipv6-bytes (delta)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 12,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(delta) FROM /($host_regex).lwaftr.statistics..*.out-ipv6-bytes/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "lwaftr out-ipv6-bytes (delta)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 13,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(delta) FROM /($host_regex).lwaftr.statistics..*.in-ipv6-packets/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "lwaftr in-ipv6-packets (delta)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+},{
+  "aliasColors": {},
+  "bars": false,
+  "datasource": "influxdb",
+  "editable": true,
+  "error": false,
+  "fill": 0,
+  "grid": {
+    "threshold1": null,
+    "threshold1Color": "rgba(216, 200, 27, 0.27)",
+    "threshold2": null,
+    "threshold2Color": "rgba(234, 112, 112, 0.22)"
+  },
+  "id": 14,
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": false,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "percentage": false,
+  "pointradius": 1,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [
+
+  ],
+  "span": 6,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+{
+      "column": "value",
+      "dsType": "influxdb",
+      "interval": "",
+      "query": "SELECT mean(delta) FROM /($host_regex).lwaftr.statistics..*.out-ipv6-packets/ WHERE $timeFilter GROUP BY time($GroupBy)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "policy": "default"
+    }
+
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "lwaftr out-ipv6-packets (delta)",
+  "tooltip": {
+    "shared": false,
+    "value_type": "cumulative",
+    "msResolution": false
+  },
+  "type": "graph",
+  "yaxes": [
+
+
+
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+,
+
+    {
+      "show": true,
+      "min": null,
+      "max": null,
+      "logBase": 1,
+      "format": "short",
+      "label": ""
+    }
+
+
+  ],
+  "xaxis": {
+    "show": true
+  }
+}
+
+  ],
+
+  "showTitle": true,
+  "title": "LWAFTR Statistics"
+
+}
+  ],
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {
+    "collapse": false,
+    "enable": true,
+    "notice": false,
+    "now": true,
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "status": "Stable",
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ],
+    "type": "timepicker"
+  },
+
+  "templating": {
+    "enable": true,
+    "list": [
+    {
+  "allFormat": "regex wildcard",
+  "current": {
+    "text": "All",
+    "value": ".*"
+  },
+  "datasource": "influxdb",
+  "includeAll": true,
+  "name": "host_regex",
+  "options": [
+    {
+      "text": "None",
+      "value": "",
+      "isNone": true,
+      "selected": true
+    }
+  ],
+  "query": "SHOW TAG VALUES WITH KEY = \"device\"",
+  "refresh": 1,
+  "multi": false,
+  "multiFormat": "regex values",
+  "refresh_on_load": false,
+  "regex": "",
+  "type": "query"
+},{
+   "type": "interval",
+   "datasource": null,
+   "refresh": 1,
+   "name": "GroupBy",
+   "hide": 0,
+   "options": [
+     {
+       "text": "auto",
+       "value": "$__auto_interval",
+       "selected": true
+     },
+     {
+       "text": "1s",
+       "value": "1s",
+       "selected": false
+     },
+     {
+       "text": "10s",
+       "value": "10s",
+       "selected": false
+     },
+     {
+       "text": "30s",
+       "value": "30s",
+       "selected": false
+     },
+     {
+       "text": "1m",
+       "value": "1m",
+       "selected": false
+     },
+     {
+       "text": "5m",
+       "value": "5m",
+       "selected": false
+     }
+   ],
+   "includeAll": false,
+   "multi": false,
+   "query": "1s,10s,30s,1m,5m",
+   "current": {
+     "text": "auto",
+     "value": "$__auto_interval"
+   },
+   "regex": "",
+   "auto": true,
+   "auto_count": 100,
+   "auto_min": "1s"
+ }
+    ]
+  },
+
+
+  "annotations": {
+    "list": [
+      {
+  "datasource": "influxdb",
+  "enable": true,
+  "iconColor": "#C0C6BE",
+  "iconSize": 13,
+  "lineColor": "rgba(47, 60, 207, 0.59)",
+  "name": "Commit",
+  "query": "SELECT * FROM events WHERE event = 'UI_COMMIT_COMPLETED' AND $timeFilter",
+  "showLine": "True",
+  "tagsColumn": "device",
+  "textColumn": "message",
+  "titleColumn": "events"
+}
+    ]
+  },
+
+  "refresh": "1m",
+  "schemaVersion": 12,
+  "version": 0,
+  "links": []
+}

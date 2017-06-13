@@ -1,0 +1,15 @@
+template: graph-lines-02.j2
+datasource: influxdb
+title: "snabb txdrop (delta)"
+span: 6
+
+targets:
+  A:
+    query: >
+      SELECT mean(delta)
+      FROM /($host_regex).snabb.$key.txdrop/
+      WHERE $timeFilter
+      GROUP BY time($GroupBy)
+templatings_used:
+  - host_regex.yaml
+  - group_by.yaml

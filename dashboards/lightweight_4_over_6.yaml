@@ -1,0 +1,19 @@
+title: Lightweight 4 over 6 (Alpha) 
+template: "dashboard_base.j2"
+
+tags:
+  - juniper
+  - netconf
+  - opennti
+
+templatings:
+  - host_regex.yaml
+  - group_by.yaml
+
+annotations:
+  - commit.yaml
+
+rows:
+  - opennti-disclaimer.yaml
+  - lwaftr-state.yaml
+  - lwaftr-statistics.yaml

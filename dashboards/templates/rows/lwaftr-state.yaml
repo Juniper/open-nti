@@ -1,0 +1,10 @@
+title: LWAFTR State
+height: 250px
+template: row_base.j2
+panels:
+  graphs:
+    - lwaftr-state-snabb-breaths.yaml
+    - lwaftr-state-snabb-rxpackets.yaml
+    - lwaftr-state-snabb-txpackets.yaml
+    - lwaftr-state-snabb-rxdrop.yaml
+    - lwaftr-state-snabb-txdrop.yaml
