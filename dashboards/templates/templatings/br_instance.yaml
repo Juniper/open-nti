@@ -1,0 +1,6 @@
+
+template: templating_base.j2
+
+name: br_instance 
+query: SHOW MEASUREMENTS with MEASUREMENT =~ /snabb/
+regex: /snabb\\.(.*?)\\.breaths/

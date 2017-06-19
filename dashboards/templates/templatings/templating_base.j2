@@ -20,6 +20,6 @@
   "multi": false,
   "multiFormat": "regex values",
   "refresh_on_load": false,
-  "regex": "",
+  "regex": "{{ regex|replace('"', '\\"')|trim }}",
   "type": "query"
 }

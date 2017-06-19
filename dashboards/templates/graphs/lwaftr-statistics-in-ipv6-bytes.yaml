@@ -7,10 +7,11 @@ targets:
   A:
     query: >
       SELECT mean(delta)
-      FROM /($host_regex).lwaftr.statistics..*.in-ipv6-bytes/
+      FROM /($host_regex).lwaftr.statistics.($br_instance).in-ipv6-bytes/
       WHERE $timeFilter
       GROUP BY time($GroupBy)
 templatings_used:
   - host_regex.yaml
+  - br_instance.yaml
   - group_by.yaml
 

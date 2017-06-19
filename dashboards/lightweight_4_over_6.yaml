@@ -8,6 +8,7 @@ tags:
 
 templatings:
   - host_regex.yaml
+  - br_instance.yaml
   - group_by.yaml
 
 annotations:

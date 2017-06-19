@@ -7,9 +7,10 @@ targets:
   A:
     query: >
       SELECT mean(delta)
-      FROM /($host_regex).snabb.$key.rxdrop/
+      FROM /($host_regex).snabb.($br_instance).rxdrop/
       WHERE $timeFilter
       GROUP BY time($GroupBy)
 templatings_used:
   - host_regex.yaml
+  - br_instance.yaml
   - group_by.yaml
