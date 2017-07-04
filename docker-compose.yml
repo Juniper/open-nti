@@ -59,6 +59,11 @@ input-internal:
 opennti:
   image: $MAIN_IMAGE_NAME:$IMAGE_TAG
   container_name: $MAIN_CONTAINER_NAME
+# Uncomment environment to allow anonymous grafana access
+# and disable user sign up
+#  environment:
+#   - "GF_USERS_ALLOW_SIGN_UP=false"
+#   - "GF_AUTH_ANONYMOUS_ENABLED=true"
   volumes:
    - ./$LOCAL_DIR_DASHBOARD:/src/dashboards
    - ./$LOCAL_DIR_DATA:/opt/open-nti/data
