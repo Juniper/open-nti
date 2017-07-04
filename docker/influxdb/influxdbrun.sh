@@ -130,7 +130,7 @@ if [ -n "${PRE_CREATE_DB}" ]; then
               echo "=> Creating database: ${x}"
               influx -host=${INFLUX_HOST} -port=${INFLUX_API_PORT} -username=${ADMIN_USER} -password="${PASS}" -execute="create database ${x}"
               influx -host=${INFLUX_HOST} -port=${INFLUX_API_PORT} -username=${ADMIN_USER} -password="${PASS}" -execute="grant all PRIVILEGES on ${x} to ${ADMIN_USER}"
-              influx -host=${INFLUX_HOST} -port=${INFLUX_API_PORT} -username=${ADMIN_USER} -password="${PASS}" -execute="CREATE RETENTION POLICY four_weeks ON ${x} DURATION 4w REPLICATION 1 DEFAULT"
+              influx -host=${INFLUX_HOST} -port=${INFLUX_API_PORT} -username=${ADMIN_USER} -password="${PASS}" -execute="CREATE RETENTION POLICY a_year ON ${x} DURATION 52w REPLICATION 1 DEFAULT"
           done
           echo ""
         else
