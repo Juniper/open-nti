@@ -27,9 +27,10 @@ RUN apk --no-cache --update add \
               influxdb \
               statsd-ruby \
               dogstatsd-ruby \
-              ruby-kafka yajl ltsv zookeeper \
+              yajl ltsv zookeeper \
               bigdecimal && \
-    gem install --prerelease protobuf &&\
+    gem install ruby-kafka -v 0.3.17 && \
+    gem install --prerelease protobuf && \
     gem install --no-ri --no-rdoc \
                 fluent-plugin-juniper-telemetry -v ${FLUENTD_JUNIPER_VERSION} &&\
     apk del build-base ruby-dev && \
