@@ -23,7 +23,6 @@ RUN apk --no-cache --update add \
     gem install --no-ri --no-rdoc \
               yajl ltsv zookeeper \
               influxdb \
-              fluent-plugin-kafka \
               bigdecimal && \
     gem install ruby-kafka -v 0.3.17 && \
     apk del build-base ruby-dev && \
