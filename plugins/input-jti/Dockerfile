@@ -63,6 +63,7 @@ ENV OUTPUT_KAFKA=false \
     KAFKA_ADDR=localhost \
     KAFKA_PORT=9092 \
     KAFKA_DATA_TYPE=json \
+    KAFKA_COMPRESSION_CODEC=none \
     KAFKA_TOPIC=jnpr.jvision
 
 CMD /home/fluent/fluentd-alpine.start.sh
