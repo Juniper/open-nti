@@ -60,7 +60,7 @@
   "hideControls": false,
   "id": null,
   "links": [],
-  "refresh": false,
+  "refresh": "30s",
   "rows": [
     {
       "collapse": true,
@@ -2170,6 +2170,7 @@
           "steppedLine": false,
           "targets": [
             {
+              "alias": "Successful atempts",
               "dsType": "influxdb",
               "groupBy": [
                 {
@@ -2210,72 +2211,9 @@
                   "value": "collection-successful"
                 }
               ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Netconf Collector - Successful Collection",
-          "tooltip": {
-            "shared": false,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
             },
             {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
-        },
-        {
-          "aliasColors": {},
-          "bars": true,
-          "datasource": "${DS_INFLUXDB}",
-          "fill": 0,
-          "id": 27,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": false,
-            "total": false,
-            "values": false
-          },
-          "lines": false,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 1,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "span": 6,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
+              "alias": "Collection attempts",
               "dsType": "influxdb",
               "groupBy": [
                 {
@@ -2286,9 +2224,40 @@
                 },
                 {
                   "params": [
-                    "device"
+                    "null"
                   ],
-                  "type": "tag"
+                  "type": "fill"
+                }
+              ],
+              "measurement": "base-info",
+              "policy": "default",
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value_str"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "count"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "Failed atempts",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "10m"
+                  ],
+                  "type": "time"
                 },
                 {
                   "params": [
@@ -2299,7 +2268,7 @@
               ],
               "measurement": "open-nti-stats",
               "policy": "default",
-              "refId": "A",
+              "refId": "C",
               "resultFormat": "time_series",
               "select": [
                 [
@@ -2311,7 +2280,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "sum"
                   }
                 ]
               ],
@@ -2327,121 +2296,9 @@
           "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Netconf Collector - Successful Collection",
+          "title": "Netconf Collector - Collection attempts and results",
           "tooltip": {
-            "shared": false,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
-        },
-        {
-          "aliasColors": {},
-          "bars": true,
-          "datasource": "${DS_INFLUXDB}",
-          "fill": 0,
-          "id": 28,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": false,
-            "total": false,
-            "values": false
-          },
-          "lines": false,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 1,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "span": 6,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "10m"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "device"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "open-nti-stats",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "stats",
-                  "operator": "=",
-                  "value": "collection-failure"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Netconf Collector - Successful Collection",
-          "tooltip": {
-            "shared": false,
+            "shared": true,
             "sort": 0,
             "value_type": "individual"
           },
@@ -2539,8 +2396,8 @@
     ]
   },
   "time": {
-    "from": "2017-08-15T20:25:17.801Z",
-    "to": "2017-08-23T08:24:50.950Z"
+    "from": "now-2d",
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -2569,5 +2426,5 @@
   },
   "timezone": "browser",
   "title": "OpenNTI internal - beta (draft)",
-  "version": 1
+  "version": 3
 }
