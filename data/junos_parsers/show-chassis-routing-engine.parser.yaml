@@ -14,9 +14,9 @@ parser:
             -
                 xpath: ./memory-buffer-utilization
                 variable-name:  $host.chassis.routing-engine.$key.memory-buffer-utilization
-#            -
-#                xpath: ./up-time/@seconds
-#                variable-name:  $host.chassis.routing-engine.$key.up-time-msec
+            -
+                xpath: ./up-time/@seconds
+                variable-name:  $host.chassis.routing-engine.$key.up-time-sec
             -
                 xpath: ./up-time
                 variable-name:  $host.chassis.routing-engine.$key.up-time-date

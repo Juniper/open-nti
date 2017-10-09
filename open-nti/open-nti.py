@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python
 # coding: utf-8
 # Authors: efrain@juniper.net psagrera@juniper.net
@@ -424,7 +425,15 @@ def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tag
                                                     logger.debug('[%s]: No matches found for regex: %s', host, regex)
 
                                             else:
-                                                value_tmp = node.xpath(sub_match["xpath"])[0].text.strip()
+                                                # xpath Attributes with attributes need to be special attention
+                                                attributes_matches =  re.search('@',sub_match["xpath"])
+                                                value_tmp=""
+                                                if attributes_matches:
+                                                    value_tmp = node.xpath(sub_match["xpath"])[0]
+                                                    logger.debug('[%s]: Submatch found for (%s) with value (%s)', host, sub_match["xpath"],value_tmp)
+                                                else:
+                                                    value_tmp = node.xpath(sub_match["xpath"])[0].text.strip()
+                                                    logger.debug('[%s]: Submatch found for (%s) with value (%s)', host, sub_match["xpath"],value_tmp)
                                                 get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags,keys=keys)
                                         else:
                                             logger.debug('[%s]: No match found: %s', host, match["xpath"])
@@ -835,3 +844,4 @@ if __name__ == "__main__":
         # Ensure all of the threads have finished
         for j in jobs:
             j.join()
+
