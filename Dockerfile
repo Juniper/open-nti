@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.18
+FROM phusion/baseimage:0.9.22
 MAINTAINER Damien Garros <dgarros@gmail.com>
 
 RUN     apt-get -y update && \
@@ -17,7 +17,7 @@ RUN     rm -f /etc/service/sshd/down
 RUN     /usr/sbin/enable_insecure_key
 
 # Latest version
-ENV GRAFANA_VERSION 4.1.2-1486989747
+ENV GRAFANA_VERSION 4.2.0
 ENV INFLUXDB_VERSION 1.2.0
 ENV TELEGRAF_VERSION 1.2.1
 
@@ -25,7 +25,6 @@ RUN     apt-get -y update && \
         apt-get -y install \
             build-essential \
             python-simplejson \
-            python-support \
             python-dev \
             python-yaml \
             python-pip \
@@ -42,6 +41,9 @@ RUN     apt-get -y update && \
         apt-get clean   &&\
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+
+RUN     pip install --upgrade setuptools
+
 # # Install some python modules
 RUN     pip install influxdb && \
         pip install xmltodict && \
@@ -49,10 +51,11 @@ RUN     pip install influxdb && \
         easy_install pysnmp && \
         pip install lxml && \
         pip install python-crontab && \
-        pip install junos-eznc && \
         pip install pytest && \
-        pip install mock &&\
-        pip install cryptography==1.2.1
+        pip install mock && \
+        pip install cryptography==2.1.2 && \
+        pip install junos-eznc==2.1.7 && \
+        pip install enum
 
 RUN     mkdir /src
 
