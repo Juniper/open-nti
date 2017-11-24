@@ -1,5 +1,4 @@
-FROM golang:1.7.6-wheezy
-
+FROM golang:1.8.5-jessie
 RUN mkdir /go/src/github.com
 RUN mkdir /go/src/github.com/influxdata
 WORKDIR /go/src/github.com/influxdata
