@@ -39,7 +39,7 @@ COPY    plugins /fluentd/plugins
 USER fluent
 
 RUN   gem install --no-ri --no-rdoc fluent-plugin-newsyslog
-RUN   gem install --no-ri --no-rdoc fluent-plugin-rewrite-tag-filter
+RUN   gem install --no-ri --no-rdoc fluent-plugin-rewrite-tag-filter -v 1.6.0
 EXPOSE 24220
 
 ENV OUTPUT_KAFKA=false \
