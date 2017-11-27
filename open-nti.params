@@ -49,6 +49,7 @@ export LOCAL_PORT_INFLUXDB=8083
 export LOCAL_PORT_INFLUXDB_API=8086
 export LOCAL_PORT_NGINX=80
 export LOCAL_PORT_SSH=22222
+export LOCAL_PORT_OC=50051
 
 ## Local directories that will be mapped into the container
 export LOCAL_DIR_DATA=data
