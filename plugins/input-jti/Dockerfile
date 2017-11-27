@@ -1,4 +1,4 @@
-FROM fluent/fluentd:v0.12.29
+FROM fluent/fluentd:v0.12.41
 MAINTAINER Damien Garros <dgarros@gmail.com>
 
 ENV FLUENTD_JUNIPER_VERSION 0.3.0
@@ -37,16 +37,13 @@ RUN apk --no-cache --update add \
     rm -rf /tmp/* /var/tmp/* /var/cache/apk/*
 
 # Copy Start script to generate configuration dynamically
+
 ADD     fluentd-alpine.start.sh   fluentd-alpine.start.sh
-RUN     chown -R fluent:fluent fluentd-alpine.start.sh &&\
-        chmod 777 fluentd-alpine.start.sh
+RUN     chmod 777 fluentd-alpine.start.sh
 
 COPY    fluent.conf /fluentd/etc/fluent.conf
 COPY    plugins /fluentd/plugins
 
-RUN echo "fluent ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-
-USER fluent
 EXPOSE 24284
 
 ENV OUTPUT_KAFKA=false \
@@ -67,3 +64,4 @@ ENV OUTPUT_KAFKA=false \
     KAFKA_TOPIC=jnpr.jvision
 
 CMD /home/fluent/fluentd-alpine.start.sh
+
