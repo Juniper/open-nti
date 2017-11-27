@@ -39,6 +39,18 @@ input-snmp:
   links:
     - opennti
 
+input-oc:
+#  image: $INPUT_SNMP_IMAGE_NAME:$IMAGE_TAG
+  build: $INPUT_OC_DIR
+  container_name: $INPUT_OC_CONTAINER_NAME
+  volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - ./$INPUT_OC_DIR/telegraf.tmpl:/source/telegraf.tmpl
+  ports:
+    - "$LOCAL_PORT_OC:50051/udp"
+  links:
+    - opennti
+
 input-internal:
 #  image: $INPUT_INTERNAL_IMAGE_NAME:$IMAGE_TAG
   build: $INPUT_INTERNAL_DIR
