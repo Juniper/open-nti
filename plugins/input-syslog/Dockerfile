@@ -21,10 +21,10 @@ RUN apk --no-cache --update add \
                             ruby-dev && \
     echo 'gem: --no-document' >> /etc/gemrc && \
     gem install --no-ri --no-rdoc \
-              ruby-kafka yajl ltsv zookeeper \
+              yajl ltsv zookeeper \
               influxdb \
-              fluent-plugin-kafka \
               bigdecimal && \
+    gem install ruby-kafka -v 0.3.17 && \
     apk del build-base ruby-dev && \
     rm -rf /tmp/* /var/tmp/* /var/cache/apk/*
 
@@ -39,7 +39,7 @@ COPY    plugins /fluentd/plugins
 USER fluent
 
 RUN   gem install --no-ri --no-rdoc fluent-plugin-newsyslog
-RUN   gem install --no-ri --no-rdoc fluent-plugin-rewrite-tag-filter
+RUN   gem install --no-ri --no-rdoc fluent-plugin-rewrite-tag-filter -v 1.6.0
 EXPOSE 24220
 
 ENV OUTPUT_KAFKA=false \
