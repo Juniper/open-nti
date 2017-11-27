@@ -1,5 +1,3 @@
-
-
 # Determine the current git Branch and use that for docker
 BRANCH ?= $(shell git rev-parse --abbrev-ref HEAD)
 ifeq ($(BRANCH),master)
@@ -24,7 +22,7 @@ include $(VAR_FILE)
 # Define run options for Docker-compose
 RUN_OPTIONS = IMAGE_TAG=$(IMAGE_TAG)
 
-build: build-main build-jti build-syslog build-snmp build-internal
+build: build-main build-jti build-syslog build-snmp build-oc build-internal
 
 build-main:
 	@echo "======================================================================"
@@ -49,6 +47,12 @@ build-snmp:
 	@echo "Build Docker image - $(INPUT_SNMP_IMAGE_NAME):$(IMAGE_TAG)"
 	@echo "======================================================================"
 	docker build -f $(INPUT_SNMP_DIR)/Dockerfile -t $(INPUT_SNMP_IMAGE_NAME):$(IMAGE_TAG) $(INPUT_SNMP_DIR)
+
+build-oc:
+	@echo "======================================================================"
+	@echo "Build Docker image - $(INPUT_OC_IMAGE_NAME):$(IMAGE_TAG)"
+	@echo "======================================================================"
+	docker build -f $(INPUT_OC_DIR)/Dockerfile -t $(INPUT_OC_IMAGE_NAME):$(IMAGE_TAG) $(INPUT_OC_DIR)
 
 build-internal:
 	@echo "======================================================================"
@@ -98,7 +102,6 @@ update:
 	docker pull $(INPUT_INTERNAL_IMAGE_NAME):latest
 
 
-
 restart: restart-main restart-jti restart-syslog restart-snmp restart-internal
 
 restart-main:
@@ -113,9 +116,11 @@ restart-syslog:
 restart-snmp:
 	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE) restart input-snmp
 
+restart-oc:
+	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE) restart input-oc
+
 restart-internal:
 	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE) restart input-internal
-
 
 scale-input-syslog:
 	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE) scale input-syslog=$(NBR)
@@ -127,7 +132,7 @@ scale-input-snmp:
 	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE) scale input-snmp=$(NBR)
 
 cron-show:
-	docker exec -it $(MAIN_CONTAINER_NAME) /usr/bin/python /opt/open-nti/startcron.py -a show  -c "/usr/bin/python /opt/open-nti/open-nti.py -s" 
+	docker exec -it $(MAIN_CONTAINER_NAME) /usr/bin/python /opt/open-nti/startcron.py -a show  -c "/usr/bin/python /opt/open-nti/open-nti.py -s"
 
 cron-add:
 ifeq ($(TAG), all)
