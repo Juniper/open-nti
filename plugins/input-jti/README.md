@@ -55,7 +55,8 @@ To start
 docker-compose up -d
 ```
 
-If you want to increase or decrease the number of netflow container, you can use `docker-compose scale`
+If you want to increase or decrease the number of input-jti container, you can use `docker-compose scale`
 ```
 docker-compose scale open-nti-input-jti=5
 ```
+Note:  A load balance service is recommended to work when mulitple input-jti instances are created
