@@ -103,34 +103,39 @@
 
 [[inputs.jti_openconfig_telemetry]]
 
-  server = "oc_agent:50051"
+  servers = ["oc_agent:50051"]
 
   ## Frequency to get data in millisecond
-  sampleFrequency = 15000
+  sampleFrequency = 1000
 
   ## Sensors to subscribe for
   ## A identifier for each sensor can be provided in path by separating with space
   ## Else sensor path will be used as identifier
-  sensors = [
-   "/junos/system/linecard/interface/",
-   "/junos/system/cpu/memory/",
-   "/junos/system/linecard/packet/usage/",
-   "/junos/system/linecard/fabric/",
-   "/lacp",
-   "/lldp",
-   "/bgp"
-  ]
+  #sensors = [
+  # "/junos/system/linecard/interface/",
+  # "/junos/system/cpu/memory/",
+  # "/junos/system/linecard/packet/usage/",
+  # "/junos/system/linecard/fabric/",
+  # "/lacp",
+  # "/lldp",
+  # "/bgp"
+  #]
 
+  sensors = [
+   "1000ms customReporting /interfaces /lldp",
+   "2000ms collection /components",
+   "/interfaces","/lacp","/junos/services/label-switched-path/",
+  ]
   ## Each data format has it's own unique set of configuration options, read
   ## more about them here:
   ## https://github.com/influxdata/telegraf/blob/master/docs/DATA_FORMATS_INPUT.md
-  data_format = "influx"
+  #data_format = "influx"
 
-
+str_as_tags = false
 ## Not working on Dec 1st 2016
 # "oc-bgp-neighbors /bgp/neighbors/neighbor/",
 
-# "/junos/system/linecard/interface/",
+# "/junos/system/linecard/interface/",15000
 # "/junos/system/cpu/memory/",
 #  "/junos/system/linecard/packet/usage/",
 #  "/junos/system/linecard/interface/",
