@@ -98,8 +98,6 @@ update:
 	docker pull $(MAIN_IMAGE_NAME):latest
 	docker pull $(INPUT_JTI_IMAGE_NAME):latest
 	docker pull $(INPUT_SYSLOG_IMAGE_NAME):latest
-	docker pull $(INPUT_SNMP_IMAGE_NAME):latest
-	docker pull $(INPUT_INTERNAL_IMAGE_NAME):latest
 
 
 restart: restart-main restart-jti restart-syslog restart-snmp restart-internal
