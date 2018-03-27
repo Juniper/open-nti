@@ -76,23 +76,23 @@ def check_db_status():
         logger.error('Error querying open-nti database: %s', e)
         return False
 
-def get_latest_datapoints(**kwargs):
-
-    dbclient = InfluxDBClient(db_server, db_port, db_admin, db_admin_password)
-    dbclient.switch_database(db_name)
-    results = {}
-    if db_schema == 1:
-        query = "select * from /%s\./ ORDER BY time DESC limit 1 " % (kwargs['host'])
-    elif db_schema == 2:
-        query = "select * from \"%s\" WHERE device = '%s' GROUP BY * ORDER BY time DESC limit 1 " % ('jnpr.collector',kwargs['host'])
-    elif db_schema == 3:
-        query = "select * from // WHERE device = '%s' GROUP BY * ORDER BY time DESC limit 1 " % (kwargs['host'])
-    else:
-        logger.error("ERROR: Unknown db_schema: <%s>", db_schema)
-        return results
-
-    results = dbclient.query(query)
-    return results
+#def get_latest_datapoints(**kwargs):
+#
+#    dbclient = InfluxDBClient(db_server, db_port, db_admin, db_admin_password)
+#    dbclient.switch_database(db_name)
+#    results = {}
+#    if db_schema == 1:
+#        query = "select * from /%s\./ ORDER BY time DESC limit 1 " % (kwargs['host'])
+#    elif db_schema == 2:
+#        query = "select * from \"%s\" WHERE device = '%s' GROUP BY * ORDER BY time DESC limit 1 " % ('jnpr.collector',kwargs['host'])
+#    elif db_schema == 3:
+#        query = "select * from // WHERE device = '%s' GROUP BY * ORDER BY time DESC limit 1 " % (kwargs['host'])
+#    else:
+#        logger.error("ERROR: Unknown db_schema: <%s>", db_schema)
+#        return results
+#
+#    results = dbclient.query(query)
+#    return results
 
 def get_target_hosts():
     my_target_hosts = {}
@@ -267,7 +267,7 @@ def get_metadata_and_add_datapoint(datapoints,**kwargs):
 
     value_tmp  = kwargs['value_tmp']
     host = kwargs['host']
-    latest_datapoints=kwargs['latest_datapoints']
+    #latest_datapoints=kwargs['latest_datapoints']
 
     match={}
     if 'match' in kwargs.keys():
@@ -296,36 +296,36 @@ def get_metadata_and_add_datapoint(datapoints,**kwargs):
     variable_name, kpi_tags['kpi'] = eval_variable_name(match["variable-name"],host=host,keys=keys)
 
     # Calculating delta values (only applies for numeric values)
-    delta = 0
-    latest_value = ''
-    if (type (value) != str):
-
-        points=[]
-        if (db_schema == 1):
-            points = list(latest_datapoints.get_points(measurement = variable_name))
-        elif (db_schema == 2):
-            points = list(latest_datapoints.get_points(measurement = 'jnpr.collector', tags=kpi_tags))
-        elif (db_schema == 3):
-            points = list(latest_datapoints.get_points(measurement = kpi_tags['kpi'], tags=kpi_tags))
-        else:
-            logger.error("ERROR: Unknown db_schema: <%s>", db_schema)
-
-        if len(points) == 1:
-            latest_value = points[0]['value']
-            delta = value - convert_variable_type(latest_value)
-            logger.debug("Delta found : points <%s> latest_value <%s>", points,latest_value)
-        elif len(points) == 0:
-            delta = value
-            logger.debug("No latest datapoint found for <%s>", kpi_tags)
-        else:
-            logger.error("ERROR: Latest datapoint query returns more than one match : <%s>", points)
-
-        if type (value) == int:
-            delta = int(delta)
-        elif type (value) == float:
-            delta = float(delta)
-    else:
-        delta = 'N/A'
+    #delta = 0
+    #latest_value = ''
+    #if (type (value) != str):
+    #
+    #    points=[]
+    #    if (db_schema == 1):
+    #        points = list(latest_datapoints.get_points(measurement = variable_name))
+    #    elif (db_schema == 2):
+    #        points = list(latest_datapoints.get_points(measurement = 'jnpr.collector', tags=kpi_tags))
+    #    elif (db_schema == 3):
+    #        points = list(latest_datapoints.get_points(measurement = kpi_tags['kpi'], tags=kpi_tags))
+    #    else:
+    #        logger.error("ERROR: Unknown db_schema: <%s>", db_schema)
+    #
+    #    if len(points) == 1:
+    #        latest_value = points[0]['value']
+    #        delta = value - convert_variable_type(latest_value)
+    #        logger.debug("Delta found : points <%s> latest_value <%s>", points,latest_value)
+    #    elif len(points) == 0:
+    #        delta = value
+    #        logger.debug("No latest datapoint found for <%s>", kpi_tags)
+    #    else:
+    #        logger.error("ERROR: Latest datapoint query returns more than one match : <%s>", points)
+    #
+    #    if type (value) == int:
+    #        delta = int(delta)
+    #    elif type (value) == float:
+    #        delta = float(delta)
+    #else:
+    #    delta = 'N/A'
 
     # Getting all tags related to the kpi
     #    if 'tags' in match.keys():
@@ -341,7 +341,7 @@ def get_metadata_and_add_datapoint(datapoints,**kwargs):
             "measurement": variable_name,
             "fields": {
                 "value": value,
-                "delta": delta
+                #"delta": delta
             }
         }
     else:
@@ -349,14 +349,16 @@ def get_metadata_and_add_datapoint(datapoints,**kwargs):
             "measurement": variable_name,
             "fields": {
                 "value_str": value,
-                "delta_str": delta
+                #"delta_str": delta
             }
         }
 
     kpi["tags"] = kpi_tags
     datapoints.append(copy.deepcopy(kpi))
 
-def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tags):
+#def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tags):
+def parse_result(host,target_command,result,datapoints,kpi_tags):
+
     parser_found = False
     for junos_parser in junos_parsers:
         regex_command = junos_parser["parser"]["regex-command"]
@@ -375,13 +377,16 @@ def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tag
                                 if xml_data.xpath(match["xpath"]):
                                     value_tmp = xml_data.xpath(match["xpath"])[0].text.strip()
                                     logger.debug('[%s]: Match found for (%s) with value (%s)', host, match["xpath"],value_tmp)
-                                    get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
+                                    #get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
+                                    get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,host=host,kpi_tags=kpi_tags)
                                 else:
                                     logger.debug('[%s]: No match found: %s', host, match["xpath"])
                                     if 'default-if-missing' in match.keys():
                                         logger.debug('Inserting default-if-missing value: %s', match["default-if-missing"])
                                         value_tmp = match["default-if-missing"]
-                                        get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
+                                        #get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
+                                        get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,host=host,kpi_tags=kpi_tags)
+
                             except Exception, e:
                                 logger.info('[%s]: Exception found.', host)
                                 logging.exception(e)
@@ -418,7 +423,8 @@ def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tag
                                                             # Begin function  (pero pendiente de ver si variable-type existe y su valor)
                                                             if "variable-type" in sub_match["variables"][i]:
                                                                 value_tmp = eval_variable_value(value_tmp, type=sub_match["variables"][i]["variable-type"])
-                                                            get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match["variables"][i],value_tmp=value_tmp,host=host,latest_datapoints=latest_datapoints,kpi_tags=kpi_tags,keys=keys)
+                                                            #get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match["variables"][i],value_tmp=value_tmp,host=host,latest_datapoints=latest_datapoints,kpi_tags=kpi_tags,keys=keys)
+                                                            get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match["variables"][i],value_tmp=value_tmp,host=host,kpi_tags=kpi_tags,keys=keys)
                                                     else:
                                                         logger.error('[%s]: More matches found on regex than variables especified on parser: %s', host, regex_command)
                                                 else:
@@ -434,13 +440,16 @@ def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tag
                                                 else:
                                                     value_tmp = node.xpath(sub_match["xpath"])[0].text.strip()
                                                     logger.debug('[%s]: Submatch found for (%s) with value (%s)', host, sub_match["xpath"],value_tmp)
-                                                get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags,keys=keys)
+                                                #get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags,keys=keys)
+                                                get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match,value_tmp=value_tmp,host=host,kpi_tags=kpi_tags,keys=keys)
+
                                         else:
                                             logger.debug('[%s]: No match found: %s', host, match["xpath"])
                                             if 'default-if-missing' in sub_match.keys():
                                                 logger.debug('Inserting default-if-missing value: %s', sub_match["default-if-missing"])
                                                 value_tmp = sub_match["default-if-missing"]
-                                                get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags,keys=keys)
+                                                #get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags,keys=keys)
+                                                get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match,value_tmp=value_tmp,host=host,kpi_tags=kpi_tags,keys=keys)
                                     except Exception, e:
                                         logger.info('[%s]: Exception found.', host)
                                         logging.exception(e)
@@ -461,7 +470,8 @@ def parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tag
                                         # Begin function  (pero pendiente de ver si variable-type existe y su valor)
                                         if "variable-type" in match["variables"][i]:
                                             value_tmp = eval_variable_value(value_tmp, type=match["variables"][i]["variable-type"])
-                                        get_metadata_and_add_datapoint(datapoints=datapoints,match=match["variables"][i],value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
+                                        #get_metadata_and_add_datapoint(datapoints=datapoints,match=match["variables"][i],value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
+                                        get_metadata_and_add_datapoint(datapoints=datapoints,match=match["variables"][i],value_tmp=value_tmp,host=host,kpi_tags=kpi_tags)
                                 else:
                                     logger.error('[%s]: More matches found on regex than variables especified on parser: %s', host, regex_command)
                             else:
@@ -484,12 +494,12 @@ def collector(**kwargs):
 
     for host in kwargs["host_list"]:
         kpi_tags={}
-        latest_datapoints={}
+        #latest_datapoints={}
 #        if ((db_schema == 1) and (not(use_hostname))):
-        if (not(use_hostname)):
-            latest_datapoints = get_latest_datapoints(host=host)
-            logger.debug("Latest Datapoints are:")
-            logger.debug(pformat(latest_datapoints))
+        #if (not(use_hostname)):
+        #    latest_datapoints = get_latest_datapoints(host=host)
+        #    logger.debug("Latest Datapoints are:")
+        #    logger.debug(pformat(latest_datapoints))
 
         #    kpi_tags = get_host_base_tags(host=host)
         # Check host tag to identify what kind of connections will be used (ej junos / others  / etc)
@@ -568,9 +578,9 @@ def collector(**kwargs):
 #                            latest_datapoints = get_latest_datapoints(host=host)
 #                            logger.info("Latest Datapoints are:")
 #                            logger.info(pformat(latest_datapoints))
-                        latest_datapoints = get_latest_datapoints(host=host)
-                        logger.debug("Latest Datapoints are:")
-                        logger.debug(pformat(latest_datapoints))
+                        #latest_datapoints = get_latest_datapoints(host=host)
+                        #logger.debug("Latest Datapoints are:")
+                        #logger.debug(pformat(latest_datapoints))
                     else:
                         logger.info('[%s]: Host will be referenced as : %s', host, host)
 
@@ -580,7 +590,8 @@ def collector(**kwargs):
                     match={}
                     match["variable-name"]="base-info"
                     # We'll add a dummy kpi in oder to have at least one fixed kpi with version/platform data.
-                    get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
+                    #get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
+                    get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,host=host,kpi_tags=kpi_tags)
 
                 # Now we have all hosts tags that all host kpis will inherit
                 # For each target_command execute it, parse it, and insert values into DB
@@ -591,7 +602,8 @@ def collector(**kwargs):
                     result = execute_command(jdev,target_command)
                     if result:
                         logger.debug('[%s]: Parsing command: %s', host, target_command)
-                        parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tags)
+                        #parse_result(host,target_command,result,datapoints,latest_datapoints,kpi_tags)
+                        parse_result(host,target_command,result,datapoints,kpi_tags)
                         time.sleep(delay_between_commands)
 
                 try:
@@ -613,7 +625,8 @@ def collector(**kwargs):
                 match["variable-name"]="open-nti-stats"
                 value_tmp =collection_time
                 # We'll add a dummy kpi in oder to have at least one fixed kpi with version/platform data.
-                get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
+                #get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
+                get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,host=host,kpi_tags=kpi_tags)
 
                 #kpi_tags['device']=host
                 kpi_tags['stats']="collection-successful"
@@ -621,7 +634,9 @@ def collector(**kwargs):
                 match["variable-name"]="open-nti-stats"
                 value_tmp = 1
                 # We'll add a dummy kpi in oder to have at least one fixed kpi with version/platform data.
-                get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
+                #get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
+                get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,host=host,kpi_tags=kpi_tags)
+
 
 
 
@@ -634,7 +649,7 @@ def collector(**kwargs):
                 logger.error('[%s]: Skipping host due connectivity issue', host)
 
                 datapoints = []
-                latest_datapoints = get_latest_datapoints(host=host)
+                #latest_datapoints = get_latest_datapoints(host=host)
                 # By default execute show version in order to get version and platform as default tags for all kpi related to this host
                 kpi_tags['device']=host
                 kpi_tags['stats']="collection-failure"
@@ -642,7 +657,8 @@ def collector(**kwargs):
                 match["variable-name"]="open-nti-stats"
                 value_tmp = 1
                 # We'll add a dummy kpi in oder to have at least one fixed kpi with version/platform data.
-                get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
+                #get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
+                get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,host=host,kpi_tags=kpi_tags)
 
                 if datapoints:   # Only insert datapoints if there is any :)
                     insert_datapoints(datapoints)

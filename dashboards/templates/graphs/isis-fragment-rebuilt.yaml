@@ -1,13 +1,13 @@
 
 template: graph-lines-02.j2
 datasource: influxdb
-title: "ISIS fragments-rebuilt (delta)"
+title: "ISIS fragments-rebuilt (delta/sec)"
 span: 6
 
 targets:
   A:
     query: >
-      SELECT mean(delta)
+      SELECT non_negative_derivative(mean(value),1s)
       FROM /($host_regex).protocols.isis.statistics.general.fragments-rebuilt/
       WHERE $timeFilter
       GROUP BY time($GroupBy)
