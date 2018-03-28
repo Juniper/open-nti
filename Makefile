@@ -22,7 +22,8 @@ include $(VAR_FILE)
 # Define run options for Docker-compose
 RUN_OPTIONS = IMAGE_TAG=$(IMAGE_TAG)
 
-build: build-main build-jti build-syslog build-snmp build-oc build-internal
+#build: build-main build-jti build-syslog build-snmp build-oc build-internal
+build: build-main build-jti build-syslog build-oc build-internal
 
 build-main:
 	@echo "======================================================================"
@@ -100,7 +101,8 @@ update:
 	docker pull $(INPUT_SYSLOG_IMAGE_NAME):latest
 
 
-restart: restart-main restart-jti restart-syslog restart-snmp restart-internal
+#restart: restart-main restart-jti restart-syslog restart-snmp restart-internal
+restart: restart-main restart-jti restart-syslog restart-internal
 
 restart-main:
 	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE) restart opennti

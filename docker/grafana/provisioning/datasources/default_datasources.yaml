@@ -1,0 +1,69 @@
+# config file version
+apiVersion: 1
+
+## list of datasources that should be deleted from the database
+#deleteDatasources:
+#  - name: Graphite
+#    orgId: 1
+
+datasources:
+- name: influxdb
+  type: influxdb
+  access: proxy
+  orgId: 1
+  url: http://localhost:8086
+  password: juniper
+  user: juniper
+  database: juniper
+  basicAuth: false
+  basicAuthUser:
+  basicAuthPassword:
+  withCredentials:
+  isDefault: true
+  editable: true
+
+- name: docker_internal
+  type: influxdb
+  access: proxy
+  orgId: 1
+  url: http://localhost:8086
+  password: juniper
+  user: juniper
+  database: docker_internal
+  basicAuth: false
+  basicAuthUser:
+  basicAuthPassword:
+  withCredentials:
+  isDefault: false
+  editable: true
+
+- name: influxdb_internal
+  type: influxdb
+  access: proxy
+  orgId: 1
+  url: http://localhost:8086
+  password: juniper
+  user: juniper
+  database: _internal
+  basicAuth: false
+  basicAuthUser:
+  basicAuthPassword:
+  withCredentials:
+  isDefault: false
+  editable: true
+
+- name: snmp
+  type: influxdb
+  access: proxy
+  orgId: 1
+  url: http://localhost:8086
+  password: juniper
+  user: juniper
+  database: snmp
+  basicAuth: false
+  basicAuthUser:
+  basicAuthPassword:
+  withCredentials:
+  isDefault: false
+  editable: true
+
