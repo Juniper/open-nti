@@ -57,7 +57,18 @@ input-internal:
     - /etc:/rootfs/etc:ro
   links:
     - opennti
-
+input-oc:
+#  image: $INPUT_OC_IMAGE_NAME:$IMAGE_TAG
+  build: $INPUT_OC_DIR
+  container_name: $INPUT_OC_CONTAINER_NAME
+  volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - ./$INPUT_OC_DIR/telegraf.tmpl:/source/telegraf.tmpl
+  ports:
+    - "$LOCAL_PORT_OC:50051/udp"
+  links:
+    - opennti
+    
 opennti:
   image: $MAIN_IMAGE_NAME:$IMAGE_TAG
   container_name: $MAIN_CONTAINER_NAME
