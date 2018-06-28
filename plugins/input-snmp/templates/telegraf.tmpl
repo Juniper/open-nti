@@ -17,11 +17,11 @@
   timeout = "5s"
 
 [[inputs.snmp]]
-  agents = [ "172.30.137.90:161","172.30.137.93:161" ]
+  agents = [ "172.30.137.90:161", "172.30.137.93:161" ]
   version = 2
   community = "public"
-
   name = "system"
+
   [[inputs.snmp.field]]
     name = "hostname"
     oid = ".1.3.6.1.2.1.1.5.0"
@@ -32,11 +32,10 @@
   [[inputs.snmp.field]]
     name = "sysObjectID"
     oid = ".1.3.6.1.2.1.1.2.0"
+
   [[inputs.snmp.table]]
     name = "interface_statistics"
     inherit_tags = [ "hostname" ]
-    [inputs.snmp.tagpass]
-      ifName = ["[g|x]e-","ae"]
     [[inputs.snmp.table.field]]
       name = "ifName"
       oid = ".1.3.6.1.2.1.31.1.1.1.1"
@@ -58,11 +57,13 @@
       oid = ".1.3.6.1.2.1.31.1.1.1.9"
     [[inputs.snmp.table.field]]
       name = "ifHCOutBroadcastPkts"
-      oid = ".1.3.6.1.2.1.31.1.1.1.13"  
+      oid = ".1.3.6.1.2.1.31.1.1.1.13"
     [[inputs.snmp.table.field]]
       name = "ifHCOutUcastPkts"
       oid = ".1.3.6.1.2.1.31.1.1.1.11"
     [[inputs.snmp.table.field]]
       name = "ifHCInUcastPkts"
-      oid = ".1.3.6.1.2.1.31.1.1.1.7"  
+      oid = ".1.3.6.1.2.1.31.1.1.1.7"
 
+  [inputs.snmp.tagpass]
+    ifName = [ "[g|x]e-*", "ae*" ]

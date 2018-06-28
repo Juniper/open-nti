@@ -1,5 +1,5 @@
 pytest
-influxdb==2.11.0
+influxdb
 pytest-cov
 docker-py
 requests

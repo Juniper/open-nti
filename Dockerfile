@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.22
+FROM phusion/baseimage:0.10.1
 MAINTAINER Damien Garros <dgarros@gmail.com>
 
 RUN     apt-get -y update && \
@@ -17,9 +17,9 @@ RUN     rm -f /etc/service/sshd/down
 RUN     /usr/sbin/enable_insecure_key
 
 # Latest version
-ENV GRAFANA_VERSION 5.0.3
-ENV INFLUXDB_VERSION 1.5.1
-ENV TELEGRAF_VERSION 1.5.3-1
+ENV GRAFANA_VERSION 5.2.0
+ENV INFLUXDB_VERSION 1.5.4
+ENV TELEGRAF_VERSION 1.7.0-1
 
 RUN     apt-get -y update && \
         apt-get -y install \
@@ -62,10 +62,11 @@ RUN     mkdir /src
 ########################
 ### Install Grafana
 ########################
-RUN     mkdir /src/grafana                                                                                    &&\
-        mkdir /opt/grafana                                                                                    &&\
-        wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-${GRAFANA_VERSION}.linux-x64.tar.gz -O /src/grafana.tar.gz &&\
-        tar -xzf /src/grafana.tar.gz -C /opt/grafana --strip-components=1                                     &&\
+
+RUN     mkdir /src/grafana && \
+        mkdir /opt/grafana && \
+        wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-${GRAFANA_VERSION}.linux-amd64.tar.gz -O /src/grafana.tar.gz && \
+        tar -xzf /src/grafana.tar.gz -C /opt/grafana --strip-components=1 && \
         rm /src/grafana.tar.gz
 
 RUN     /opt/grafana/bin/grafana-cli plugins install grafana-piechart-panel

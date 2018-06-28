@@ -1,4 +1,4 @@
-FROM juniper/pyez:2.0.1
+FROM juniper/pyez:2.1.8
 
 WORKDIR /source
 USER root
@@ -8,7 +8,7 @@ RUN apk add --no-cache ca-certificates && \
     update-ca-certificates
 RUN apk add --no-cache wget git
 
-ARG TELEGRAF_VERSION=1.2.1
+ARG TELEGRAF_VERSION=1.7.0
 
 #############################
 ## Install Telegraf
