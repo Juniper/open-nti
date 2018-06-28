@@ -1,4 +1,4 @@
-FROM fluent/fluentd:v0.12.41
+FROM fluent/fluentd:v0.12.42
 MAINTAINER Damien Garros <dgarros@gmail.com>
 
 ENV FLUENTD_JUNIPER_VERSION 0.3.0
@@ -27,9 +27,10 @@ RUN apk --no-cache --update add \
               influxdb \
               statsd-ruby \
               dogstatsd-ruby \
-              yajl ltsv zookeeper \
+              ltsv zookeeper \
               bigdecimal && \
-    gem install ruby-kafka -v 0.3.17 && \
+    gem install yajl-ruby -v 1.3.1 && \
+    gem install ruby-kafka -v 0.5.3 && \
     gem install --prerelease protobuf && \
     gem install --no-ri --no-rdoc \
                 fluent-plugin-juniper-telemetry -v ${FLUENTD_JUNIPER_VERSION} &&\
