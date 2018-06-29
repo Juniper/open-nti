@@ -2080,7 +2080,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-local-traffic-stats.pfe-.*-packets/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).pfe-general-stats.aggregated.pfe-local-traffic-stats.pfe-.*-packets/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2104,7 +2104,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "pfe-local-traffic-stats.pfe-packets (delta)",
+          "title": "pfe-local-traffic-stats.pfe-packets (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -2184,7 +2184,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-local-traffic-stats.hardware-input-drops/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).pfe-general-stats.aggregated.pfe-local-traffic-stats.hardware-input-drops/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2208,7 +2208,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "hardware-input-drops (delta)",
+          "title": "hardware-input-drops (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -2288,7 +2288,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-local-traffic-stats.software-input-control-drops/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).pfe-general-stats.aggregated.pfe-local-traffic-stats.software-input-control-drops/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2312,7 +2312,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "software-input-control-drops (delta)",
+          "title": "software-input-control-drops (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -2392,7 +2392,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-local-traffic-stats.software-input-high-drops/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).pfe-general-stats.aggregated.pfe-local-traffic-stats.software-input-high-drops/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2416,7 +2416,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "software-input-high-drops (delta)",
+          "title": "software-input-high-drops (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -2496,7 +2496,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-local-traffic-stats.software-input-medium-drops/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).pfe-general-stats.aggregated.pfe-local-traffic-stats.software-input-medium-drops/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2520,7 +2520,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "software-input-medium-drops (delta)",
+          "title": "software-input-medium-drops (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -2600,7 +2600,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-local-traffic-stats.software-input-low-drops/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).pfe-general-stats.aggregated.pfe-local-traffic-stats.software-input-low-drops/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2624,7 +2624,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "software-input-low-drops (delta)",
+          "title": "software-input-low-drops (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -2714,7 +2714,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-traffic-stats.pfe-.*-packets/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).pfe-general-stats.aggregated.pfe-traffic-stats.pfe-.*-packets/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2738,7 +2738,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "pfe-packets (delta)",
+          "title": "pfe-packets (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "individual"
@@ -2843,7 +2843,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "pfe-pps (delta)",
+          "title": "pfe-pps (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "individual"
@@ -2924,7 +2924,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.bits-to-test-discard/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.bits-to-test-discard/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2948,7 +2948,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "PFE bits-to-test-discards (delta)",
+          "title": "PFE bits-to-test-discards (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "individual"
@@ -3029,7 +3029,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.data-error-discard/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.data-error-discard/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3053,7 +3053,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "PFE data-error-discard (delta)",
+          "title": "PFE data-error-discard (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "individual"
@@ -3134,7 +3134,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.stack-underflow-discard/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.stack-underflow-discard/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3158,7 +3158,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "PFE stack-underflow-discard (delta)",
+          "title": "PFE stack-underflow-discard (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "individual"
@@ -3239,7 +3239,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.stack-overflow-discard/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.stack-overflow-discard/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3263,7 +3263,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "PFE stack-overflow-discard (delta)",
+          "title": "PFE stack-overflow-discard (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "individual"
@@ -3344,7 +3344,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.bad-route-discard/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.bad-route-discard/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3368,7 +3368,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "PFE bad-route-discards (delta)",
+          "title": "PFE bad-route-discards (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "individual"
@@ -3449,7 +3449,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex)..pfe-general-stats.aggregated.pfe-hardware-discards-stats.nexthop-discard/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex)..pfe-general-stats.aggregated.pfe-hardware-discards-stats.nexthop-discard/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3473,7 +3473,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "PFE nexthop-discard (delta)",
+          "title": "PFE nexthop-discard (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "individual"
@@ -3554,7 +3554,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.invalid-iif-discard/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.invalid-iif-discard/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3578,7 +3578,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "PFE invalid-iif-discards (delta)",
+          "title": "PFE invalid-iif-discards (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "individual"
@@ -3659,7 +3659,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.info-cell-discard/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.info-cell-discard/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3683,7 +3683,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "PFE info-cell-discards (delta)",
+          "title": "PFE info-cell-discards (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "individual"
@@ -3765,7 +3765,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.fabric-discard/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.fabric-discard/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3790,7 +3790,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "PFE fabric-discards (delta)",
+          "title": "PFE fabric-discards (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "individual"
@@ -3871,7 +3871,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.timeout-discard/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.timeout-discard/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3895,7 +3895,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "PFE timeout-discads (delta)",
+          "title": "PFE timeout-discads (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "individual"
@@ -3976,7 +3976,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.truncated-key-discard/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).pfe-general-stats.aggregated.pfe-hardware-discards-stats.truncated-key-discard/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -4000,7 +4000,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "PFE truncated-key-discard (delta)",
+          "title": "PFE truncated-key-discard (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "individual"
@@ -4629,7 +4629,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).protocols.isis.statistics.Totals.packets-sent/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).protocols.isis.statistics.Totals.packets-sent/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -4653,7 +4653,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "ISIS Total packets-sent (delta)",
+          "title": "ISIS Total packets-sent (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -4734,7 +4734,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).protocols.isis.statistics.Totals.packets-received/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).protocols.isis.statistics.Totals.packets-received/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -4758,7 +4758,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "ISIS Total packets-received (delta)",
+          "title": "ISIS Total packets-received (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -4839,7 +4839,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).protocols.isis.statistics.Totals.packets-retransmitted/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).protocols.isis.statistics.Totals.packets-retransmitted/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -4863,7 +4863,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "ISIS Total packets-retransmitted (delta)",
+          "title": "ISIS Total packets-retransmitted (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -4944,7 +4944,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).protocols.isis.statistics.Totals.packets-dropped/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).protocols.isis.statistics.Totals.packets-dropped/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -4968,7 +4968,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "ISIS Total packets-dropped (delta)",
+          "title": "ISIS Total packets-dropped (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -5049,7 +5049,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).protocols.isis.statistics.Totals.packets-processed/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).protocols.isis.statistics.Totals.packets-processed/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -5073,7 +5073,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "ISIS Total packets-processed (delta)",
+          "title": "ISIS Total packets-processed (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -5154,7 +5154,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).protocols.isis.statistics.general.fragments-rebuilt/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).protocols.isis.statistics.general.fragments-rebuilt/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -5178,7 +5178,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "ISIS fragments-rebuilt (delta)",
+          "title": "ISIS fragments-rebuilt (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -5259,7 +5259,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).protocols.isis.statistics.general.spf-runs/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).protocols.isis.statistics.general.spf-runs/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -5283,7 +5283,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "ISIS spf-runs (delta)",
+          "title": "ISIS spf-runs (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -5364,7 +5364,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).protocols.isis.statistics.general.lsps-regenerated/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).protocols.isis.statistics.general.lsps-regenerated/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -5388,7 +5388,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "ISIS LSP regenerations (delta)",
+          "title": "ISIS LSP regenerations (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -6536,7 +6536,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).bng.pppoe.statistics.padi-received/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).bng.pppoe.statistics.padi-received/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6560,7 +6560,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "padi-received (delta)",
+          "title": "padi-received (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -6641,7 +6641,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).bng.pppoe.statistics.pado-sent/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).bng.pppoe.statistics.pado-sent/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6665,7 +6665,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "pado-sent (delta)",
+          "title": "pado-sent (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -6746,7 +6746,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).bng.pppoe.statistics.padr-received/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).bng.pppoe.statistics.padr-received/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6770,7 +6770,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "padr-received (delta)",
+          "title": "padr-received (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -6851,7 +6851,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).bng.pppoe.statistics.pads-sent/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).bng.pppoe.statistics.pads-sent/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6875,7 +6875,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "pads-sent (delta)",
+          "title": "pads-sent (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -6956,7 +6956,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).bng.pppoe.statistics.padt-received/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).bng.pppoe.statistics.padt-received/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6980,7 +6980,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "padt-received (delta)",
+          "title": "padt-received (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -7061,7 +7061,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).bng.pppoe.statistics.padt-sent/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).bng.pppoe.statistics.padt-sent/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -7085,7 +7085,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "padt-sent (delta)",
+          "title": "padt-sent (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -7174,7 +7174,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.authentication-requests/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).bng.aaa.radius-servers-stats.*.authentication-requests/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -7198,7 +7198,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "authentication-requests (delta)",
+          "title": "authentication-requests (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -7278,7 +7278,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.authentication-rollover-requests/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).bng.aaa.radius-servers-stats.*.authentication-rollover-requests/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -7302,7 +7302,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "authentication-rollover-requests (delta)",
+          "title": "authentication-rollover-requests (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -7382,7 +7382,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.authentication-retransmissions/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).bng.aaa.radius-servers-stats.*.authentication-retransmissions/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -7406,7 +7406,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "authentication-retransmissions (delta)",
+          "title": "authentication-retransmissions (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -7486,7 +7486,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.accepts/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).bng.aaa.radius-servers-stats.*.accepts/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -7510,7 +7510,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "authentication - accepts (delta)",
+          "title": "authentication - accepts (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -7590,7 +7590,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.rejects/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).bng.aaa.radius-servers-stats.*.rejects/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -7614,7 +7614,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "authentication rejects (delta)",
+          "title": "authentication rejects (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -7694,7 +7694,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.authentication-timeouts/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).bng.aaa.radius-servers-stats.*.authentication-timeouts/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -7718,7 +7718,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "authentication-timeouts (delta)",
+          "title": "authentication-timeouts (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -7798,7 +7798,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.authentication-packets-dropped/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).bng.aaa.radius-servers-stats.*.authentication-packets-dropped/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -7822,7 +7822,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "authentication-packets-dropped (delta)",
+          "title": "authentication-packets-dropped (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -7911,7 +7911,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.accounting-start-requests/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).bng.aaa.radius-servers-stats.*.accounting-start-requests/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -7935,7 +7935,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "accounting-start-requests (delta)",
+          "title": "accounting-start-requests (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -8015,7 +8015,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.accounting-interim-requests/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).bng.aaa.radius-servers-stats.*.accounting-interim-requests/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -8039,7 +8039,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "accounting-interim-requests (delta)",
+          "title": "accounting-interim-requests (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -8119,7 +8119,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.accounting-stop-requests/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).bng.aaa.radius-servers-stats.*.accounting-stop-requests/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -8143,7 +8143,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "accounting-stop-requests (delta)",
+          "title": "accounting-stop-requests (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -8223,7 +8223,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.accounting-rollover-requests/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).bng.aaa.radius-servers-stats.*.accounting-rollover-requests/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -8247,7 +8247,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "accounting-rollover-requests (delta)",
+          "title": "accounting-rollover-requests (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -8327,7 +8327,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.accounting-retransmissions/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).bng.aaa.radius-servers-stats.*.accounting-retransmissions/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -8351,7 +8351,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "accounting-retransmissions (delta)",
+          "title": "accounting-retransmissions (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -8431,7 +8431,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.accounting-interim-response/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).bng.aaa.radius-servers-stats.*.accounting-interim-response/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -8455,7 +8455,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "accounting-interim-response (delta)",
+          "title": "accounting-interim-response (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -8535,7 +8535,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.accounting-stop-response/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).bng.aaa.radius-servers-stats.*.accounting-stop-response/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -8559,7 +8559,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "accounting-stop-response (delta)",
+          "title": "accounting-stop-response (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -8639,7 +8639,7 @@
                   "type": "fill"
                 }
               ],
-              "query": "select mean(delta) from /($host_regex).bng.aaa.radius-servers-stats.*.accounting-timeouts/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).bng.aaa.radius-servers-stats.*.accounting-timeouts/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -8663,7 +8663,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "accounting-timeouts (delta)",
+          "title": "accounting-timeouts (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"
@@ -8858,7 +8858,7 @@
                 }
               ],
               "interval": "",
-              "query": "select mean(delta) from /($host_regex).bng.aaa.stats.address-assignment.pool.out-of-addresses/ where $timeFilter group by time($interval)",
+              "query": "SELECT non_negative_derivative(mean(value),1s) from /($host_regex).bng.aaa.stats.address-assignment.pool.out-of-addresses/ where $timeFilter group by time($interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -8882,7 +8882,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "pool.out-of-addresses (delta)",
+          "title": "pool.out-of-addresses (delta/sec)",
           "tooltip": {
             "shared": false,
             "value_type": "cumulative"

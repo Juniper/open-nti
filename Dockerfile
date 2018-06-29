@@ -17,9 +17,9 @@ RUN     rm -f /etc/service/sshd/down
 RUN     /usr/sbin/enable_insecure_key
 
 # Latest version
-ENV GRAFANA_VERSION 4.2.0
-ENV INFLUXDB_VERSION 1.2.0
-ENV TELEGRAF_VERSION 1.2.1
+ENV GRAFANA_VERSION 5.0.3
+ENV INFLUXDB_VERSION 1.5.1
+ENV TELEGRAF_VERSION 1.5.3-1
 
 RUN     apt-get -y update && \
         apt-get -y install \
@@ -64,7 +64,7 @@ RUN     mkdir /src
 ########################
 RUN     mkdir /src/grafana                                                                                    &&\
         mkdir /opt/grafana                                                                                    &&\
-        wget https://grafanarel.s3.amazonaws.com/builds/grafana-${GRAFANA_VERSION}.linux-x64.tar.gz -O /src/grafana.tar.gz &&\
+        wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-${GRAFANA_VERSION}.linux-x64.tar.gz -O /src/grafana.tar.gz &&\
         tar -xzf /src/grafana.tar.gz -C /opt/grafana --strip-components=1                                     &&\
         rm /src/grafana.tar.gz
 
@@ -105,12 +105,12 @@ ADD     docker/telegraf/telegraf.launcher.sh /etc/service/telegraf/run
 ### Configure Grafana ###
 ADD     docker/grafana/custom.ini /opt/grafana/conf/custom.ini
 ADD     docker/grafana/run.sh /etc/service/grafana/run
-ADD     docker/grafana/grafana.init.sh /etc/my_init.d/grafana.init.sh
+#ADD     docker/grafana/grafana.init.sh /etc/my_init.d/grafana.init.sh
 
-# Add the default dashboards
-RUN     mkdir /src/dashboards && \
-        mkdir /opt/grafana/data && \
-        chown -R www-data /opt/grafana/data
+## Add the default dashboards
+#RUN     mkdir /src/dashboards && \
+RUN      mkdir /opt/grafana/data && \
+         chown -R www-data /opt/grafana/data
 
 ### Configure nginx ###
 ADD     docker/nginx/nginx.conf /etc/nginx/nginx.conf
@@ -128,7 +128,7 @@ RUN     mkdir /opt/open-nti/tests
 
 RUN     chmod +x /etc/service/nginx/run         &&\
         chmod +x /etc/service/grafana/run       &&\
-        chmod +x /etc/my_init.d/grafana.init.sh &&\
+        #chmod +x /etc/my_init.d/grafana.init.sh &&\
         chmod +x /etc/service/influxdb/run      &&\
         chmod +x /etc/service/telegraf/run      &&\
         chmod +x /influxdbrun.sh
