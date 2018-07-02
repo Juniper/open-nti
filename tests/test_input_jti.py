@@ -269,34 +269,34 @@ def test_influxdb_create_default_RP():
     if result:
         assert 1
 
-def test_input_jti_running():
-    global c
-
-    ## Start JTI
-    start_fluentd(output_influx='true')
-
-    ## Check container is running
-    status = c.inspect_container(CONTAINER_NAME)['State']['Status']
-
-    assert status == 'running'
-
-def test_jti_structured_ifd_01():
-
-    FNAME       = sys._getframe().f_code.co_name
-    PCAP_FILE   = FNAME + "/jti.pcap"
-
-    start_fluentd(output_influx='true')
-    replay_file(PCAP_FILE)
-
-    time.sleep(3)
-
-    db = get_influxdb_handle()
-    query = 'SELECT * FROM "jnpr.jvision"'
-    result = db.query(query)
-    points = result.get_points()
-    print result
-    print points
-    assert len(list(points)) == 112
+#def test_input_jti_running():
+#    global c
+#
+#    ## Start JTI
+#    start_fluentd(output_influx='true')
+#
+#    ## Check container is running
+#    status = c.inspect_container(CONTAINER_NAME)['State']['Status']
+#
+#    assert status == 'running'
+#
+#def test_jti_structured_ifd_01():
+#
+#    FNAME       = sys._getframe().f_code.co_name
+#    PCAP_FILE   = FNAME + "/jti.pcap"
+#
+#    start_fluentd(output_influx='true')
+#    replay_file(PCAP_FILE)
+#
+#    time.sleep(3)
+#
+#    db = get_influxdb_handle()
+#    query = 'SELECT * FROM "jnpr.jvision"'
+#    result = db.query(query)
+#    points = result.get_points()
+#    print result
+#    print points
+#    assert len(list(points)) == 112
 
 # def test_analyticsd_structured_ifd_01():
 #     CONFIG_FILE = 'fluent_structured.conf'
@@ -359,3 +359,4 @@ def teardown_module(module):
         c.remove_container(container=old_container_id)
     except:
         print "Container do not exit"
+

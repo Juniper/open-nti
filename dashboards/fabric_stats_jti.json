@@ -1,0 +1,1940 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "$$hashKey": "object:15732",
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      },
+      {
+        "$$hashKey": "object:15733",
+        "datasource": "influxdb",
+        "enable": true,
+        "iconColor": "#C0C6BE",
+        "iconSize": 13,
+        "lineColor": "rgba(47, 60, 207, 0.59)",
+        "name": "Commit",
+        "query": "SELECT * FROM events WHERE event = 'UI_COMMIT_COMPLETED' AND $timeFilter",
+        "showLine": "True",
+        "tagsColumn": "device",
+        "textColumn": "message",
+        "titleColumn": "events"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 4,
+  "iteration": 1529480013951,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 114,
+      "panels": [
+        {
+          "content": "**This dashboard has been automatically generated using the dashboard generator of OpenNTI** - It's very easy to personalize it and create your own.",
+          "editable": true,
+          "error": false,
+          "gridPos": {
+            "h": 3,
+            "w": 24,
+            "x": 0,
+            "y": 1
+          },
+          "height": "10px",
+          "id": 102,
+          "links": [],
+          "mode": "markdown",
+          "title": "",
+          "transparent": true,
+          "type": "text"
+        }
+      ],
+      "repeat": null,
+      "title": "Disclaimer",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 115,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": null,
+          "fill": 1,
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 2
+          },
+          "id": 103,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 1,
+          "points": true,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "[[tag_device]]-src-type:[[tag_edges.source_type]]-src-slot:[[tag_edges.source_slot]]-src-pfe:[[tag_edges.source_pfe]]-dst-slot:[[tag_edges.destination_slot]]-dst-pfe:[[tag_edges.destination_pfe]]-dst-type[[tag_edges.destination_type]]",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "device"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "edges.source_slot"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "edges.destination_slot"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "edges.source_pfe"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "edges.destination_pfe"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "edges.source_type"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "edges.destination_type"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "juniperNetworks.fabricMessageExt",
+              "policy": "default",
+              "query": "SELECT non_negative_derivative(mean(\"edges.class_stats.transmit_counts.bytes\"), 1s)*8  FROM \"juniperNetworks.fabricMessageExt\" WHERE \"device\" =~ /^$host_regex/ AND \"edges.destination_slot\" =~ /^$dest_slot$/ AND \"edges.source_pfe\" =~ /^$src_pfe$/ AND \"edges.destination_pfe\" =~ /^$dst_pfe$/ AND \"edges.source_slot\" =~ /^$src_slot$/ AND \"edges.source_type\" =~ /^$src_type$/ AND \"edges.destination_type\" =~ /^$dst_type$/ AND $timeFilter GROUP BY time($__interval), \"device\", \"edges.source_slot\", \"edges.destination_slot\", \"edges.source_pfe\", \"edges.destination_pfe\", \"edges.source_type\", \"edges.destination_type\" fill(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "edges.class_stats.transmit_counts.bytes"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1s"
+                    ],
+                    "type": "non_negative_derivative"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "device",
+                  "operator": "=~",
+                  "value": "/^$host_regex$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "edges.destination_slot",
+                  "operator": "=~",
+                  "value": "/^$dest_slot$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "edges.source_pfe",
+                  "operator": "=~",
+                  "value": "/^$src_pfe$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "edges.destination_pfe",
+                  "operator": "=~",
+                  "value": "/^$dst_pfe$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "edges.source_slot",
+                  "operator": "=~",
+                  "value": "/^$src_slot$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "edges.source_type",
+                  "operator": "=~",
+                  "value": "/^$src_type$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "edges.destination_type",
+                  "operator": "=~",
+                  "value": "/^$dst_type$/"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "FABRIC traffic stats - bytes (delta)",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "decbytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": null,
+          "fill": 1,
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 2
+          },
+          "id": 105,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 1,
+          "points": true,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "[[tag_device]]-src-type:[[tag_edges.source_type]]-src-slot:[[tag_edges.source_slot]]-src-pfe:[[tag_edges.source_pfe]]-dst-slot:[[tag_edges.destination_slot]]-dst-pfe:[[tag_edges.destination_pfe]]-dst-type[[tag_edges.destination_type]]",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "policy": "default",
+              "query": "SELECT non_negative_derivative(mean(\"edges.class_stats.transmit_counts.packets\"), 1s) FROM \"juniperNetworks.fabricMessageExt\" WHERE \"device\" =~ /^$host_regex/ AND \"edges.destination_slot\" =~ /^$dest_slot$/ AND \"edges.source_pfe\" =~ /^$src_pfe$/ AND \"edges.destination_pfe\" =~ /^$dst_pfe$/ AND \"edges.source_slot\" =~ /^$src_slot$/ AND \"edges.source_type\" =~ /^$src_type$/ AND \"edges.destination_type\" =~ /^$dst_type$/ AND $timeFilter GROUP BY time($__interval), \"device\", \"edges.source_slot\", \"edges.destination_slot\", \"edges.source_pfe\", \"edges.destination_pfe\", \"edges.source_type\", \"edges.destination_type\" fill(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "FABRIC traffic stats - packets (delta)",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": null,
+          "fill": 1,
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 10
+          },
+          "id": 104,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 1,
+          "points": true,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "[[tag_device]]-src-type:[[tag_edges.source_type]]-src-slot:[[tag_edges.source_slot]]-src-pfe:[[tag_edges.source_pfe]]-dst-slot:[[tag_edges.destination_slot]]-dst-pfe:[[tag_edges.destination_pfe]]-dst-type[[tag_edges.destination_type]]",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "auto"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "device"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "edges.destination_pfe"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "edges.destination_slot"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "edges.destination_type"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "edges.source_pfe"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "edges.source_slot"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "edges.source_type"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "juniperNetworks.fabricMessageExt",
+              "policy": "default",
+              "query": "SELECT \"edges.class_stats.transmit_counts.bytes_per_second\" FROM \"juniperNetworks.fabricMessageExt\" WHERE \"device\" =~ /^$host_regex/ AND \"edges.source_type\" =~ /^$src_type$/ AND \"edges.source_slot\" =~ /^$src_slot$/ AND \"edges.source_pfe\" =~ /^$src_pfe$/ AND \"edges.destination_pfe\" =~ /^$dst_pfe$/ AND \"edges.destination_slot\" =~ /^$dest_slot$/ AND \"edges.destination_type\" =~ /^$dst_type$/ AND $timeFilter GROUP BY  \"device\", \"edges.destination_pfe\", \"edges.destination_slot\", \"edges.destination_type\", \"edges.source_pfe\", \"edges.source_slot\", \"edges.source_type\" fill(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "edges.class_stats.transmit_counts.bytes_per_second"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1s"
+                    ],
+                    "type": "non_negative_derivative"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "device",
+                  "operator": "=~",
+                  "value": "/^$host_regex$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "edges.source_type",
+                  "operator": "=~",
+                  "value": "/^$src_type$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "edges.source_slot",
+                  "operator": "=~",
+                  "value": "/^$src_slot$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "edges.source_pfe",
+                  "operator": "=~",
+                  "value": "/^$src_pfe$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "edges.destination_pfe",
+                  "operator": "=~",
+                  "value": "/^$dst_pfe$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "edges.destination_slot",
+                  "operator": "=~",
+                  "value": "/^$dest_slot$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "edges.destination_type",
+                  "operator": "=~",
+                  "value": "/^$dst_type$/"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "FABRIC traffic stats - Bps",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "Bps",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": null,
+          "fill": 1,
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 10
+          },
+          "id": 106,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 1,
+          "points": true,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "[[tag_device]]-src-type:[[tag_edges.source_type]]-src-slot:[[tag_edges.source_slot]]-src-pfe:[[tag_edges.source_pfe]]-dst-slot:[[tag_edges.destination_slot]]-dst-pfe:[[tag_edges.destination_pfe]]-dst-type[[tag_edges.destination_type]]",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "policy": "default",
+              "query": "SELECT \"edges.class_stats.transmit_counts.packets_per_second\" FROM \"juniperNetworks.fabricMessageExt\" WHERE \"device\" =~ /^$host_regex/ AND \"edges.source_type\" =~ /^$src_type$/ AND \"edges.source_slot\" =~ /^$src_slot$/ AND \"edges.source_pfe\" =~ /^$src_pfe$/ AND \"edges.destination_pfe\" =~ /^$dst_pfe$/ AND \"edges.destination_slot\" =~ /^$dest_slot$/ AND \"edges.destination_type\" =~ /^$dst_type$/ AND $timeFilter GROUP BY  \"device\", \"edges.destination_pfe\", \"edges.destination_slot\", \"edges.destination_type\", \"edges.source_pfe\", \"edges.source_slot\", \"edges.source_type\" fill(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "FABRIC traffic stats - pps",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        }
+      ],
+      "repeat": null,
+      "title": "FABRIC traffic stats",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 2
+      },
+      "id": 116,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": null,
+          "fill": 1,
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 3
+          },
+          "id": 107,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 1,
+          "points": true,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "[[tag_device]]-src-type:[[tag_edges.source_type]]-src-slot:[[tag_edges.source_slot]]-src-pfe:[[tag_edges.source_pfe]]-dst-slot:[[tag_edges.destination_slot]]-dst-pfe:[[tag_edges.destination_pfe]]-dst-type[[tag_edges.destination_type]]",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "policy": "default",
+              "query": "SELECT non_negative_derivative(mean(\"edges.class_stats.transmit_counts.drop_bytes\"), 1s)*8  FROM \"juniperNetworks.fabricMessageExt\" WHERE \"device\" =~ /^$host_regex/ AND \"edges.destination_slot\" =~ /^$dest_slot$/ AND \"edges.source_pfe\" =~ /^$src_pfe$/ AND \"edges.destination_pfe\" =~ /^$dst_pfe$/ AND \"edges.source_slot\" =~ /^$src_slot$/ AND \"edges.source_type\" =~ /^$src_type$/ AND \"edges.destination_type\" =~ /^$dst_type$/ AND $timeFilter GROUP BY time($__interval), \"device\", \"edges.source_slot\", \"edges.destination_slot\", \"edges.source_pfe\", \"edges.destination_pfe\", \"edges.source_type\", \"edges.destination_type\" fill(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "FABRIC drop stats - bytes (delta)",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "bytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": null,
+          "fill": 1,
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 3
+          },
+          "id": 108,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 1,
+          "points": true,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "[[tag_device]]-src-type:[[tag_edges.source_type]]-src-slot:[[tag_edges.source_slot]]-src-pfe:[[tag_edges.source_pfe]]-dst-slot:[[tag_edges.destination_slot]]-dst-pfe:[[tag_edges.destination_pfe]]-dst-type[[tag_edges.destination_type]]",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "policy": "default",
+              "query": "SELECT non_negative_derivative(mean(\"edges.class_stats.transmit_counts.drop_packets\"), 1s) FROM \"juniperNetworks.fabricMessageExt\" WHERE \"device\" =~ /^$host_regex/ AND \"edges.destination_slot\" =~ /^$dest_slot$/ AND \"edges.source_pfe\" =~ /^$src_pfe$/ AND \"edges.destination_pfe\" =~ /^$dst_pfe$/ AND \"edges.source_slot\" =~ /^$src_slot$/ AND \"edges.source_type\" =~ /^$src_type$/ AND \"edges.destination_type\" =~ /^$dst_type$/ AND $timeFilter GROUP BY time($__interval), \"device\", \"edges.source_slot\", \"edges.destination_slot\", \"edges.source_pfe\", \"edges.destination_pfe\", \"edges.source_type\", \"edges.destination_type\" fill(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "FABRIC drop stats - packets (delta)",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": null,
+          "fill": 1,
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 10
+          },
+          "id": 109,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 1,
+          "points": true,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "[[tag_device]]-src-type:[[tag_edges.source_type]]-src-slot:[[tag_edges.source_slot]]-src-pfe:[[tag_edges.source_pfe]]-dst-slot:[[tag_edges.destination_slot]]-dst-pfe:[[tag_edges.destination_pfe]]-dst-type[[tag_edges.destination_type]]",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "policy": "default",
+              "query": "SELECT \"edges.class_stats.transmit_counts.drop_bytes_per_second\" FROM \"juniperNetworks.fabricMessageExt\" WHERE \"device\" =~ /^$host_regex/ AND \"edges.source_type\" =~ /^$src_type$/ AND \"edges.source_slot\" =~ /^$src_slot$/ AND \"edges.source_pfe\" =~ /^$src_pfe$/ AND \"edges.destination_pfe\" =~ /^$dst_pfe$/ AND \"edges.destination_slot\" =~ /^$dest_slot$/ AND \"edges.destination_type\" =~ /^$dst_type$/ AND $timeFilter GROUP BY  \"device\", \"edges.destination_pfe\", \"edges.destination_slot\", \"edges.destination_type\", \"edges.source_pfe\", \"edges.source_slot\", \"edges.source_type\" fill(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "FABRIC drops stats - bps",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "Bps",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": null,
+          "fill": 1,
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 12,
+            "y": 10
+          },
+          "id": 110,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 1,
+          "points": true,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "[[tag_device]]-src-type:[[tag_edges.source_type]]-src-slot:[[tag_edges.source_slot]]-src-pfe:[[tag_edges.source_pfe]]-dst-slot:[[tag_edges.destination_slot]]-dst-pfe:[[tag_edges.destination_pfe]]-dst-type[[tag_edges.destination_type]]",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "policy": "default",
+              "query": "SELECT \"edges.class_stats.transmit_counts.drop_packets_per_second\" FROM \"juniperNetworks.fabricMessageExt\" WHERE \"device\" =~ /^$host_regex/ AND \"edges.source_type\" =~ /^$src_type$/ AND \"edges.source_slot\" =~ /^$src_slot$/ AND \"edges.source_pfe\" =~ /^$src_pfe$/ AND \"edges.destination_pfe\" =~ /^$dst_pfe$/ AND \"edges.destination_slot\" =~ /^$dest_slot$/ AND \"edges.destination_type\" =~ /^$dst_type$/ AND $timeFilter GROUP BY  \"device\", \"edges.destination_pfe\", \"edges.destination_slot\", \"edges.destination_type\", \"edges.source_pfe\", \"edges.source_slot\", \"edges.source_type\" fill(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "FABRIC drops stats - pps",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        }
+      ],
+      "repeat": null,
+      "title": "FABRIC drop/error stats",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 3
+      },
+      "id": 117,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "fill": 1,
+          "gridPos": {
+            "h": 7,
+            "w": 8,
+            "x": 0,
+            "y": 19
+          },
+          "id": 111,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 1,
+          "points": true,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "[[tag_device]]-src-type:[[tag_edges.source_type]]-src-slot:[[tag_edges.source_slot]]-src-pfe:[[tag_edges.source_pfe]]-dst-slot:[[tag_edges.destination_slot]]-dst-pfe:[[tag_edges.destination_pfe]]-dst-type[[tag_edges.destination_type]]",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "policy": "default",
+              "query": "SELECT \"edges.class_stats.transmit_counts.queue_depth_current\" FROM \"juniperNetworks.fabricMessageExt\" WHERE \"device\" =~ /^$host_regex/ AND \"edges.source_type\" =~ /^$src_type$/ AND \"edges.source_slot\" =~ /^$src_slot$/ AND \"edges.source_pfe\" =~ /^$src_pfe$/ AND \"edges.destination_pfe\" =~ /^$dst_pfe$/ AND \"edges.destination_slot\" =~ /^$dest_slot$/ AND \"edges.destination_type\" =~ /^$dst_type$/ AND $timeFilter GROUP BY  \"device\", \"edges.destination_pfe\", \"edges.destination_slot\", \"edges.destination_type\", \"edges.source_pfe\", \"edges.source_slot\", \"edges.source_type\" fill(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "FABRIC queue stats - depth (current)",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "fill": 1,
+          "gridPos": {
+            "h": 7,
+            "w": 8,
+            "x": 8,
+            "y": 19
+          },
+          "id": 112,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 1,
+          "points": true,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "[[tag_device]]-src-type:[[tag_edges.source_type]]-src-slot:[[tag_edges.source_slot]]-src-pfe:[[tag_edges.source_pfe]]-dst-slot:[[tag_edges.destination_slot]]-dst-pfe:[[tag_edges.destination_pfe]]-dst-type[[tag_edges.destination_type]]",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "policy": "default",
+              "query": "SELECT \"edges.class_stats.transmit_counts.queue_depth_peak\" FROM \"juniperNetworks.fabricMessageExt\" WHERE \"device\" =~ /^$host_regex/ AND \"edges.source_type\" =~ /^$src_type$/ AND \"edges.source_slot\" =~ /^$src_slot$/ AND \"edges.source_pfe\" =~ /^$src_pfe$/ AND \"edges.destination_pfe\" =~ /^$dst_pfe$/ AND \"edges.destination_slot\" =~ /^$dest_slot$/ AND \"edges.destination_type\" =~ /^$dst_type$/ AND $timeFilter GROUP BY  \"device\", \"edges.destination_pfe\", \"edges.destination_slot\", \"edges.destination_type\", \"edges.source_pfe\", \"edges.source_slot\", \"edges.source_type\" fill(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "FABRIC queue stats - depth (average)",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "fill": 1,
+          "gridPos": {
+            "h": 7,
+            "w": 8,
+            "x": 16,
+            "y": 19
+          },
+          "id": 113,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 1,
+          "points": true,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "[[tag_device]]-src-type:[[tag_edges.source_type]]-src-slot:[[tag_edges.source_slot]]-src-pfe:[[tag_edges.source_pfe]]-dst-slot:[[tag_edges.destination_slot]]-dst-pfe:[[tag_edges.destination_pfe]]-dst-type[[tag_edges.destination_type]]",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "policy": "default",
+              "query": "SELECT \"edges.class_stats.transmit_counts.queue_depth_peak\" FROM \"juniperNetworks.fabricMessageExt\" WHERE \"device\" =~ /^$host_regex/ AND \"edges.source_type\" =~ /^$src_type$/ AND \"edges.source_slot\" =~ /^$src_slot$/ AND \"edges.source_pfe\" =~ /^$src_pfe$/ AND \"edges.destination_pfe\" =~ /^$dst_pfe$/ AND \"edges.destination_slot\" =~ /^$dest_slot$/ AND \"edges.destination_type\" =~ /^$dst_type$/ AND $timeFilter GROUP BY  \"device\", \"edges.destination_pfe\", \"edges.destination_slot\", \"edges.destination_type\", \"edges.source_pfe\", \"edges.source_slot\", \"edges.source_type\" fill(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "FABRIC queue stats - depth (peak)",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "title": "FABRIC queue stats",
+      "type": "row"
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 16,
+  "style": "dark",
+  "tags": [
+    "juniper",
+    "jti",
+    "opennti",
+    "streaming"
+  ],
+  "templating": {
+    "list": [
+      {
+        "allFormat": "regex wildcard",
+        "allValue": null,
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "influxdb",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": false,
+        "multiFormat": "regex values",
+        "name": "host_regex",
+        "options": [],
+        "query": "SHOW TAG VALUES WITH KEY = \"device\"",
+        "refresh": 1,
+        "refresh_on_load": false,
+        "regex": "/(.*?):.*/",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "auto": true,
+        "auto_count": 100,
+        "auto_min": "1s",
+        "current": {
+          "text": "auto",
+          "value": "$__auto_interval_GroupBy"
+        },
+        "datasource": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "",
+        "multi": false,
+        "name": "GroupBy",
+        "options": [
+          {
+            "selected": true,
+            "text": "auto",
+            "value": "$__auto_interval_GroupBy"
+          },
+          {
+            "selected": false,
+            "text": "1s",
+            "value": "1s"
+          },
+          {
+            "selected": false,
+            "text": "10s",
+            "value": "10s"
+          },
+          {
+            "selected": false,
+            "text": "30s",
+            "value": "30s"
+          },
+          {
+            "selected": false,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "5m",
+            "value": "5m"
+          }
+        ],
+        "query": "1s,10s,30s,1m,5m",
+        "refresh": 2,
+        "regex": "",
+        "type": "interval"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "influxdb",
+        "hide": 0,
+        "includeAll": true,
+        "label": "src_Type 1:SF 2:LC",
+        "multi": true,
+        "name": "src_type",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "1",
+            "value": "1"
+          },
+          {
+            "selected": false,
+            "text": "2",
+            "value": "2"
+          }
+        ],
+        "query": "SHOW TAG VALUES FROM \"juniperNetworks.fabricMessageExt\" WITH KEY = \"edges.source_type\" WHERE \"device\" =~ /$host_regex/",
+        "refresh": 0,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "influxdb",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "src_slot",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "0",
+            "value": "0"
+          },
+          {
+            "selected": false,
+            "text": "1",
+            "value": "1"
+          },
+          {
+            "selected": false,
+            "text": "2",
+            "value": "2"
+          },
+          {
+            "selected": false,
+            "text": "3",
+            "value": "3"
+          },
+          {
+            "selected": false,
+            "text": "7",
+            "value": "7"
+          }
+        ],
+        "query": "SHOW TAG VALUES FROM \"juniperNetworks.fabricMessageExt\" WITH KEY = \"edges.source_slot\" WHERE \"device\" =~ /$host_regex/",
+        "refresh": 0,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "influxdb",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "dest_slot",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "0",
+            "value": "0"
+          },
+          {
+            "selected": false,
+            "text": "1",
+            "value": "1"
+          },
+          {
+            "selected": false,
+            "text": "2",
+            "value": "2"
+          },
+          {
+            "selected": false,
+            "text": "3",
+            "value": "3"
+          },
+          {
+            "selected": false,
+            "text": "7",
+            "value": "7"
+          }
+        ],
+        "query": "SHOW TAG VALUES FROM \"juniperNetworks.fabricMessageExt\" WITH KEY = \"edges.destination_slot\" WHERE \"device\" =~ /$host_regex/",
+        "refresh": 0,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "influxdb",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "src_pfe",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "0",
+            "value": "0"
+          },
+          {
+            "selected": false,
+            "text": "1",
+            "value": "1"
+          }
+        ],
+        "query": "SHOW TAG VALUES FROM \"juniperNetworks.fabricMessageExt\" WITH KEY = \"edges.source_pfe\" WHERE \"device\" =~ /$host_regex/",
+        "refresh": 0,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "influxdb",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "dst_pfe",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "0",
+            "value": "0"
+          },
+          {
+            "selected": false,
+            "text": "1",
+            "value": "1"
+          }
+        ],
+        "query": "SHOW TAG VALUES FROM \"juniperNetworks.fabricMessageExt\" WITH KEY = \"edges.destination_pfe\" WHERE \"device\" =~ /$host_regex/",
+        "refresh": 0,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "influxdb",
+        "hide": 0,
+        "includeAll": true,
+        "label": "dst_Type 1:SF 2:LC",
+        "multi": true,
+        "name": "dst_type",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "1",
+            "value": "1"
+          },
+          {
+            "selected": false,
+            "text": "2",
+            "value": "2"
+          }
+        ],
+        "query": "SHOW TAG VALUES FROM \"juniperNetworks.fabricMessageExt\" WITH KEY = \"edges.destination_type\"  WHERE  \"device\" =~ /$host_regex/",
+        "refresh": 0,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {
+    "collapse": false,
+    "enable": true,
+    "notice": false,
+    "now": true,
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "status": "Stable",
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ],
+    "type": "timepicker"
+  },
+  "timezone": "browser",
+  "title": "JTI - Fabric statistics",
+  "uid": "PbOwdcNiz",
+  "version": 3
+}

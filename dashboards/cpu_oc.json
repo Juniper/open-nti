@@ -1,0 +1,610 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "$$hashKey": "object:5952",
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 1,
+  "iteration": 1529580767166,
+  "links": [],
+  "panels": [
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fill": 1,
+      "gridPos": {
+        "h": 14,
+        "w": 23,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "connected",
+      "percentage": false,
+      "pointradius": 0.5,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "$$hashKey": "object:8588",
+          "alias": "[[tag_device]]-[[tag_/components/component/properties/property/@name]]",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"/components/component/properties/property/value\" FROM \"/junos/system/linecard/cpu/memory/\" WHERE \"device\" =~ /$host_regex/ AND \"/components/component/properties/property/@name\" =~ /$app/ AND \"/components/component/properties/property/@name\" =~ /$operation_type$/ AND $timeFilter GROUP BY device,\"/components/component/properties/property/@name\"",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "CPU / Memory",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transparent": false,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:8724",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:8725",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    }
+  ],
+  "schemaVersion": 16,
+  "style": "dark",
+  "tags": [
+    "juniper",
+    "OC",
+    "opennti",
+    "streaming"
+  ],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "influxdb",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Device",
+        "multi": true,
+        "name": "host_regex",
+        "options": [
+          {
+            "$$hashKey": "object:1445",
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "$$hashKey": "object:1446",
+            "selected": false,
+            "text": "10.49.240.156",
+            "value": "10.49.240.156"
+          }
+        ],
+        "query": "SHOW TAG VALUES FROM \"/junos/system/linecard/cpu/memory/\" WITH KEY = \"device\"",
+        "refresh": 0,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "tags": [],
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "influxdb",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "app",
+        "options": [
+          {
+            "$$hashKey": "object:8610",
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "$$hashKey": "object:8611",
+            "selected": false,
+            "text": "(null)",
+            "value": "(null)"
+          },
+          {
+            "$$hashKey": "object:8612",
+            "selected": false,
+            "text": "802-1br",
+            "value": "802-1br"
+          },
+          {
+            "$$hashKey": "object:8613",
+            "selected": false,
+            "text": "agent",
+            "value": "agent"
+          },
+          {
+            "$$hashKey": "object:8614",
+            "selected": false,
+            "text": "class",
+            "value": "class"
+          },
+          {
+            "$$hashKey": "object:8615",
+            "selected": false,
+            "text": "cos",
+            "value": "cos"
+          },
+          {
+            "$$hashKey": "object:8616",
+            "selected": false,
+            "text": "cos-halp",
+            "value": "cos-halp"
+          },
+          {
+            "$$hashKey": "object:8617",
+            "selected": false,
+            "text": "counters",
+            "value": "counters"
+          },
+          {
+            "$$hashKey": "object:8618",
+            "selected": false,
+            "text": "features-bd-e",
+            "value": "features-bd-e"
+          },
+          {
+            "$$hashKey": "object:8619",
+            "selected": false,
+            "text": "features-default",
+            "value": "features-default"
+          },
+          {
+            "$$hashKey": "object:8620",
+            "selected": false,
+            "text": "features-exception",
+            "value": "features-exception"
+          },
+          {
+            "$$hashKey": "object:8621",
+            "selected": false,
+            "text": "features-iff",
+            "value": "features-iff"
+          },
+          {
+            "$$hashKey": "object:8622",
+            "selected": false,
+            "text": "features-iif",
+            "value": "features-iif"
+          },
+          {
+            "$$hashKey": "object:8623",
+            "selected": false,
+            "text": "features-ktree",
+            "value": "features-ktree"
+          },
+          {
+            "$$hashKey": "object:8624",
+            "selected": false,
+            "text": "features-nh",
+            "value": "features-nh"
+          },
+          {
+            "$$hashKey": "object:8625",
+            "selected": false,
+            "text": "features-nh-ingress",
+            "value": "features-nh-ingress"
+          },
+          {
+            "$$hashKey": "object:8626",
+            "selected": false,
+            "text": "features-off",
+            "value": "features-off"
+          },
+          {
+            "$$hashKey": "object:8627",
+            "selected": false,
+            "text": "features-oif",
+            "value": "features-oif"
+          },
+          {
+            "$$hashKey": "object:8628",
+            "selected": false,
+            "text": "features-stream",
+            "value": "features-stream"
+          },
+          {
+            "$$hashKey": "object:8629",
+            "selected": false,
+            "text": "filter",
+            "value": "filter"
+          },
+          {
+            "$$hashKey": "object:8630",
+            "selected": false,
+            "text": "filter-halp",
+            "value": "filter-halp"
+          },
+          {
+            "$$hashKey": "object:8631",
+            "selected": false,
+            "text": "fpb",
+            "value": "fpb"
+          },
+          {
+            "$$hashKey": "object:8632",
+            "selected": false,
+            "text": "fpb-syms",
+            "value": "fpb-syms"
+          },
+          {
+            "$$hashKey": "object:8633",
+            "selected": false,
+            "text": "fpdl",
+            "value": "fpdl"
+          },
+          {
+            "$$hashKey": "object:8634",
+            "selected": false,
+            "text": "hash",
+            "value": "hash"
+          },
+          {
+            "$$hashKey": "object:8635",
+            "selected": false,
+            "text": "ifd",
+            "value": "ifd"
+          },
+          {
+            "$$hashKey": "object:8636",
+            "selected": false,
+            "text": "ifd-halp",
+            "value": "ifd-halp"
+          },
+          {
+            "$$hashKey": "object:8637",
+            "selected": false,
+            "text": "iff",
+            "value": "iff"
+          },
+          {
+            "$$hashKey": "object:8638",
+            "selected": false,
+            "text": "iff-halp",
+            "value": "iff-halp"
+          },
+          {
+            "$$hashKey": "object:8639",
+            "selected": false,
+            "text": "ifl",
+            "value": "ifl"
+          },
+          {
+            "$$hashKey": "object:8640",
+            "selected": false,
+            "text": "ifl-halp",
+            "value": "ifl-halp"
+          },
+          {
+            "$$hashKey": "object:8641",
+            "selected": false,
+            "text": "iftable",
+            "value": "iftable"
+          },
+          {
+            "$$hashKey": "object:8642",
+            "selected": false,
+            "text": "igmp",
+            "value": "igmp"
+          },
+          {
+            "$$hashKey": "object:8643",
+            "selected": false,
+            "text": "inline-ka",
+            "value": "inline-ka"
+          },
+          {
+            "$$hashKey": "object:8644",
+            "selected": false,
+            "text": "ipsec",
+            "value": "ipsec"
+          },
+          {
+            "$$hashKey": "object:8645",
+            "selected": false,
+            "text": "ktree",
+            "value": "ktree"
+          },
+          {
+            "$$hashKey": "object:8646",
+            "selected": false,
+            "text": "l2-halp",
+            "value": "l2-halp"
+          },
+          {
+            "$$hashKey": "object:8647",
+            "selected": false,
+            "text": "l2pd-ifd",
+            "value": "l2pd-ifd"
+          },
+          {
+            "$$hashKey": "object:8648",
+            "selected": false,
+            "text": "l2pfd-ifl",
+            "value": "l2pfd-ifl"
+          },
+          {
+            "$$hashKey": "object:8649",
+            "selected": false,
+            "text": "nh",
+            "value": "nh"
+          },
+          {
+            "$$hashKey": "object:8650",
+            "selected": false,
+            "text": "nh-halp",
+            "value": "nh-halp"
+          },
+          {
+            "$$hashKey": "object:8651",
+            "selected": false,
+            "text": "pppoe",
+            "value": "pppoe"
+          },
+          {
+            "$$hashKey": "object:8652",
+            "selected": false,
+            "text": "rt",
+            "value": "rt"
+          },
+          {
+            "$$hashKey": "object:8653",
+            "selected": false,
+            "text": "rt-halp",
+            "value": "rt-halp"
+          },
+          {
+            "$$hashKey": "object:8654",
+            "selected": false,
+            "text": "rt-mac",
+            "value": "rt-mac"
+          },
+          {
+            "$$hashKey": "object:8655",
+            "selected": false,
+            "text": "rtt",
+            "value": "rtt"
+          },
+          {
+            "$$hashKey": "object:8656",
+            "selected": false,
+            "text": "table",
+            "value": "table"
+          },
+          {
+            "$$hashKey": "object:8657",
+            "selected": false,
+            "text": "toe-lu-stats",
+            "value": "toe-lu-stats"
+          },
+          {
+            "$$hashKey": "object:8658",
+            "selected": false,
+            "text": "vbf",
+            "value": "vbf"
+          },
+          {
+            "$$hashKey": "object:8659",
+            "selected": false,
+            "text": "vbf-halp",
+            "value": "vbf-halp"
+          }
+        ],
+        "query": "SHOW TAG VALUES FROM \"/junos/system/linecard/cpu/memory/\" WITH KEY = \"/components/component/properties/property/@name\" WHERE \"device\" =~ /$host_regex/",
+        "refresh": 0,
+        "regex": "/.*-kernel-(\\w+\\-\\w+\\-\\w+|\\w+\\-\\w+|\\w+|\\(\\w+\\)|\\w+\\-\\w+\\-\\w+)-(?:allocations|bytes|frees)/",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "tags": [],
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "influxdb",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "operation_type",
+        "options": [
+          {
+            "$$hashKey": "object:5970",
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "$$hashKey": "object:5971",
+            "selected": false,
+            "text": "allocations",
+            "value": "allocations"
+          },
+          {
+            "$$hashKey": "object:5972",
+            "selected": false,
+            "text": "allocations-failed",
+            "value": "allocations-failed"
+          },
+          {
+            "$$hashKey": "object:5973",
+            "selected": false,
+            "text": "bytes-allocated",
+            "value": "bytes-allocated"
+          },
+          {
+            "$$hashKey": "object:5974",
+            "selected": false,
+            "text": "frees",
+            "value": "frees"
+          }
+        ],
+        "query": "SHOW TAG VALUES FROM \"/junos/system/linecard/cpu/memory/\" WITH KEY = \"/components/component/properties/property/@name\"  WHERE \"device\" =~ /$host_regex/ ",
+        "refresh": 0,
+        "regex": "/.*-kernel-(?:\\w+\\-\\w+\\-\\w+|\\w+\\-\\w+|\\w+|\\(\\w+\\)|\\w+\\-\\w+\\-\\w+)-(allocations$|allocations-failed|bytes-allocated|frees)/",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-5m",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "OC - CPU / Memory",
+  "uid": "0O_u4JHmz",
+  "version": 1
+}
