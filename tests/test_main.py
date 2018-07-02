@@ -160,53 +160,53 @@ def test_start_opennti_container():
 
     assert c.inspect_container(OPENNTI_NAME)["State"]["Running"]
 
-def test_start_opennti_in_jti_container():
-    global OPENNTI_IN_JTI_C
-
-    # Force Stop and delete existing container if exist
-    try:
-        old_container_id = c.inspect_container(OPENNTI_IN_JTI_NAME)['Id']
-        c.stop(container=old_container_id)
-        c.remove_container(container=old_container_id)
-    except:
-        print "Container do not exit"
-
-    # Create new  container
-    container = c.create_container(
-        image=OPENNTI_IN_JTI_IMAGE,
-        name=OPENNTI_IN_JTI_NAME,
-        detach=True,
-        ports=[
-            (50000, 'udp'),
-            (50020, 'udp')
-        ],
-        environment=[
-            "PORT_JTI=50000",
-            "PORT_ANALYTICSD=50020",
-            "INFLUXDB_PORT="+str(INFLUXDB_PORT),
-            "INFLUXDB_DB="+str(DATABASE_NAME),
-            "INFLUXDB_USER=juniper",
-            "INFLUXDB_PWD=juniper",
-            "INFLUXDB_ADDR="+OPENNTI_IP,
-            "INFLUXDB_FLUSH_INTERVAL=1"
-            "OUTPUT_INFLUXDB=true",
-            "OUTPUT_STDOUT=true"
-        ],
-        host_config=c.create_host_config(
-            port_bindings={
-                '50000/udp': TEST_PORT_JTI,
-                '50020/udp': TEST_PORT_ANALYTICSD
-            }
-        )
-    )
-
-    c.start(container)
-    OPENNTI_IN_JTI_C = c.inspect_container(OPENNTI_IN_JTI_NAME)['Id']
-
-    # Wait few sec for the container to start
-    time.sleep(1)
-
-    assert c.inspect_container(OPENNTI_IN_JTI_NAME)["State"]["Running"]
+#def test_start_opennti_in_jti_container():
+#    global OPENNTI_IN_JTI_C
+#
+#    # Force Stop and delete existing container if exist
+#    try:
+#        old_container_id = c.inspect_container(OPENNTI_IN_JTI_NAME)['Id']
+#        c.stop(container=old_container_id)
+#        c.remove_container(container=old_container_id)
+#    except:
+#        print "Container do not exit"
+#
+#    # Create new  container
+#    container = c.create_container(
+#        image=OPENNTI_IN_JTI_IMAGE,
+#        name=OPENNTI_IN_JTI_NAME,
+#        detach=True,
+#        ports=[
+#            (50000, 'udp'),
+#            (50020, 'udp')
+#        ],
+#        environment=[
+#            "PORT_JTI=50000",
+#            "PORT_ANALYTICSD=50020",
+#            "INFLUXDB_PORT="+str(INFLUXDB_PORT),
+#            "INFLUXDB_DB="+str(DATABASE_NAME),
+#            "INFLUXDB_USER=juniper",
+#            "INFLUXDB_PWD=juniper",
+#            "INFLUXDB_ADDR="+OPENNTI_IP,
+#            "INFLUXDB_FLUSH_INTERVAL=1"
+#            "OUTPUT_INFLUXDB=true",
+#            "OUTPUT_STDOUT=true"
+#        ],
+#        host_config=c.create_host_config(
+#            port_bindings={
+#                '50000/udp': TEST_PORT_JTI,
+#                '50020/udp': TEST_PORT_ANALYTICSD
+#            }
+#        )
+#    )
+#
+#    c.start(container)
+#    OPENNTI_IN_JTI_C = c.inspect_container(OPENNTI_IN_JTI_NAME)['Id']
+#
+#    # Wait few sec for the container to start
+#    time.sleep(1)
+#
+#    assert c.inspect_container(OPENNTI_IN_JTI_NAME)["State"]["Running"]
 
 def test_start_opennti_in_log_container():
     global OPENNTI_IN_LOG_C
@@ -356,15 +356,15 @@ def test_start_tcpreplay_container():
     assert c.inspect_container(TCP_REPLAY_NAME)["State"]["Running"]
 
 
-def test_jti_agent():
-    db = get_handle_db()
-
-    query = 'SELECT "value" FROM "jnpr.jvision" WHERE  ' + \
-        '"type" = \'egress_stats.if_pkts\';'
-    result = db.query(query)
-    points = list(result.get_points())
-
-    assert len(points) >= 1
+#def test_jti_agent():
+#    db = get_handle_db()
+#
+#    query = 'SELECT "value" FROM "jnpr.jvision" WHERE  ' + \
+#        '"type" = \'egress_stats.if_pkts\';'
+#    result = db.query(query)
+#    points = list(result.get_points())
+#
+#    assert len(points) >= 1
 
 
 def test_grafana_running():
