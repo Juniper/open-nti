@@ -42,7 +42,7 @@ If you are planning a big change, please start a discussion first to make sure w
  - [Efrain Gonzalez](https://github.com/3fr61n)
  - [Ishaan Kumar](https://github.com/eeishaan)
  - [Michael Pergament](https://github.com/mpergament)
- - Pablo Sagrera Garcia
+ - [Pablo Sagrera Garcia](https://github.com/psagrera)
  
 ### Former
  - [Damien Garros](https://github.com/dgarros)
