@@ -1,4 +1,3 @@
-
 input-jti:
   image: $INPUT_JTI_IMAGE_NAME:$IMAGE_TAG
   container_name: $INPUT_JTI_CONTAINER_NAME
@@ -40,19 +39,18 @@ input-syslog:
 #    - opennti
 
 input-oc:
-#  image: $INPUT_OC_IMAGE_NAME:$IMAGE_TAG
+  #image: telegraf:1.5
   build: $INPUT_OC_DIR
   container_name: $INPUT_OC_CONTAINER_NAME
   volumes:
+    - /etc/localtime:/etc/localtime:ro
     - ./$INPUT_OC_DIR/telegraf.tmpl:/source/telegraf.tmpl
   ports:
     - "$LOCAL_PORT_OC:50051/udp"
-  volumes:
-   - /etc/localtime:/etc/localtime
   links:
     - opennti
 
-    
+
 opennti:
   image: $MAIN_IMAGE_NAME:$IMAGE_TAG
   container_name: $MAIN_CONTAINER_NAME
@@ -73,3 +71,5 @@ opennti:
    - "$LOCAL_PORT_GRAFANA:3000"
    - "$LOCAL_PORT_INFLUXDB:8083"
    - "$LOCAL_PORT_INFLUXDB_API:8086"
+
+
