@@ -19,7 +19,6 @@ script:
   - python gendashboard.py --file data_streaming_collector.yaml
   - python gendashboard.py --file data_collection_agent.yaml
   - docker logs open-nti_test
-  - docker logs open-nti_in_jti_test
   - docker logs open-nti_in_log_test
   - docker logs tcpreplay_test
 
