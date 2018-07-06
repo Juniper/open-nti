@@ -34,6 +34,10 @@ export LB_UDP_CONTAINER_NAME=opennti_lb_udp
 
 export MAIN_CONTAINER_NAME=opennti_con
 
+export KAPACITOR_CONTAINER_NAME=kapacitor_con
+export CHRONOGRAF_CONTAINER_NAME=chronograf_con
+
+
 export DOCKER_COMPOSE_FILE=docker-compose.yml
 
 ## Local ports that will be redirected to the Open NTI
@@ -60,3 +64,4 @@ export LOCAL_DIR_DB_VAR=${LOCAL_DIR_DB}/influxdb
 export LOCAL_DIR_GF_PROVISIONING=docker/grafana/provisioning
 export LOCAL_DIR_TESTS=tests
 export LOCAL_DIR_DASHBOARD=dashboards
+
