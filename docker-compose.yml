@@ -27,16 +27,16 @@ input-syslog:
   links:
     - opennti
 
-#input-snmp:
-#  image: $INPUT_SNMP_IMAGE_NAME:$IMAGE_TAG
-#  build: $INPUT_SNMP_DIR
-#  container_name: $INPUT_SNMP_CONTAINER_NAME
-#  ports:
-#   - "$LOCAL_PORT_SNMP:162/udp"
-#  volumes:
-#   - /etc/localtime:/etc/localtime
-#  links:
-#    - opennti
+input-snmp:
+  image: $INPUT_SNMP_IMAGE_NAME:$IMAGE_TAG
+  #build: $INPUT_SNMP_DIR
+  container_name: $INPUT_SNMP_CONTAINER_NAME
+  ports:
+   - "$LOCAL_PORT_SNMP:162/udp"
+  volumes:
+   - /etc/localtime:/etc/localtime
+  links:
+    - opennti
 
 input-oc:
   #image: telegraf:1.5
