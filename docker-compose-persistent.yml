@@ -1,4 +1,3 @@
-
 input-jti:
   image: $INPUT_JTI_IMAGE_NAME:$IMAGE_TAG
   container_name: $INPUT_JTI_CONTAINER_NAME
@@ -29,17 +28,17 @@ input-syslog:
    - /etc/localtime:/etc/localtime
   links:
    - opennti
-   
-#input-snmp:
+
+input-snmp:
 ##  image: $INPUT_SNMP_IMAGE_NAME:$IMAGE_TAG
-#  build: $INPUT_SNMP_DIR
-#  container_name: $INPUT_SNMP_CONTAINER_NAME
-#  volumes:
-#    - /etc/localtime:/etc/localtime:ro
-#  ports:
-#   - "$LOCAL_PORT_SNMP:162/udp"
-#  links:
-#    - opennti
+  build: $INPUT_SNMP_DIR
+  container_name: $INPUT_SNMP_CONTAINER_NAME
+  volumes:
+    - /etc/localtime:/etc/localtime:ro
+  ports:
+   - "$LOCAL_PORT_SNMP:162/udp"
+  links:
+    - opennti
 
 input-internal:
 #  image: $INPUT_INTERNAL_IMAGE_NAME:$IMAGE_TAG
@@ -68,7 +67,28 @@ input-oc:
     - "$LOCAL_PORT_OC:50051/udp"
   links:
     - opennti
-    
+kapacitor:
+    image: kapacitor:1.5.0
+    container_name: kapacitor
+    environment:
+      KAPACITOR_HOSTNAME: $KAPACITOR_CONTAINER_NAME
+      KAPACITOR_INFLUXDB_0_URLS_0: http://opennti_con:8086/
+    ports:
+      - "9092:9092"
+    links:
+      - opennti
+
+chronograf:
+    image: quay.io/influxdb/chronograf:1.5.0.1
+    container_name: $CHRONOGRAF_CONTAINER_NAME
+    environment:
+      INFLUXDB_URL: http://opennti_con:8086/
+      KAPACITOR_URL: http://kapacitor:9092/
+    ports:
+      - "8888:8888"
+    links:
+      - opennti
+
 opennti:
   image: $MAIN_IMAGE_NAME:$IMAGE_TAG
   container_name: $MAIN_CONTAINER_NAME
@@ -93,3 +113,4 @@ opennti:
    - "$LOCAL_PORT_GRAFANA:3000"
    - "$LOCAL_PORT_INFLUXDB:8083"
    - "$LOCAL_PORT_INFLUXDB_API:8086"
+
