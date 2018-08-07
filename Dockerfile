@@ -17,7 +17,7 @@ RUN     rm -f /etc/service/sshd/down
 RUN     /usr/sbin/enable_insecure_key
 
 # Latest version
-ENV GRAFANA_VERSION 5.0.3
+ENV GRAFANA_VERSION 5.1.3
 ENV INFLUXDB_VERSION 1.5.1
 ENV TELEGRAF_VERSION 1.5.3-1
 
