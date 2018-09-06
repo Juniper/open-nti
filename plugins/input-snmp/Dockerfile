@@ -25,7 +25,8 @@ COPY start-input-snmp.sh /source/start-input-snmp.sh
 RUN chmod +x /source/start-input-snmp.sh
 
 RUN mkdir /data
-ADD templates /data/templates/
+RUN mkdir /data/templates
+#ADD templates /data/templates/
 WORKDIR /data
 
 CMD ["/source/start-input-snmp.sh"]
