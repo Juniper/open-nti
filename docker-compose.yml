@@ -35,6 +35,7 @@ input-snmp:
    - "$LOCAL_PORT_SNMP:162/udp"
   volumes:
    - /etc/localtime:/etc/localtime
+   - ./$INPUT_SNMP_DIR/templates/telegraf.tmpl:/data/templates/telegraf.tmpl
   links:
     - opennti
 
