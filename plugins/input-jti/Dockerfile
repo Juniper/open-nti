@@ -1,4 +1,4 @@
-FROM psagrera/fluent-jti:analytics
+FROM psagrera/fluent-jti:analytics-1.0
 
 ENV FLUENTD_OPT=""
 
