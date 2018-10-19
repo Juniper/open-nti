@@ -38,15 +38,16 @@ If you are planning a big change, please start a discussion first to make sure w
 # Contributors
 
 ### Current
- - [Ajay Kumar Chintala](https://github.com/ajhai)
+ 
  - [Efrain Gonzalez](https://github.com/3fr61n)
- - [Ishaan Kumar](https://github.com/eeishaan)
- - [Michael Pergament](https://github.com/mpergament)
  - [Pablo Sagrera Garcia](https://github.com/psagrera)
+ - [Michael Pergament](https://github.com/mpergament)
+ - [Ishaan Kumar](https://github.com/eeishaan)
  
 ### Former
  - [Damien Garros](https://github.com/dgarros)
-
+ - [Ajay Kumar Chintala](https://github.com/ajhai)
+ 
 ## Tools used
  - fluentd
  - influxdb
