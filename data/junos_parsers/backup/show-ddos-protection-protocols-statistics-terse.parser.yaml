@@ -1,0 +1,23 @@
+parser:
+    regex-command: show\s+ddos\-protection\s+protocols\s+statistics\s+terse\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //*[local-name() = 'ddos-protocol']/*[local-name() = 'ddos-system-statistics']
+        loop:
+            group_name: ./*[local-name() = 'group-name']
+            packet_type: ./*[local-name() = 'packet-type']
+            sub-matches:
+            -
+                xpath: ./*[local-name() = 'packet-received']
+                variable-name:  $host.ddos.protocols.statistics.$group_name.$packet_type.packet-received
+            -
+                xpath: ./*[local-name() = 'packet-dropped']
+                variable-name:  $host.ddos.protocols.statistics.$group_name.$packet_type.packet-dropped
+            -
+                xpath: ./*[local-name() = 'packet-arrival-rate']
+                variable-name:  $host.ddos.protocols.statistics.$group_name.$packet_type.packet-arrival-rate
+            -
+                xpath: ./*[local-name() = 'policer-violation-count']
+                variable-name:  $host.ddos.protocols.statistics.$group_name.$packet_type.policer-violation-count

@@ -12,6 +12,7 @@ PWD = $(shell pwd)
 VAR_FILE ?= open-nti.params
 DOCKER_FILE = docker-compose.yml
 DOCKER_FILE_P = docker-compose-persistent.yml
+DOCKER_FILE_MAIN = docker-compose-persistent-main.yml
 TIME ?= 1m
 TAG ?= all
 NBR ?= 1
@@ -83,6 +84,9 @@ start:
 start-persistent:
 	@echo "Use docker compose file: $(DOCKER_FILE_P)"
 	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE_P) up -d
+
+start-main:
+	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE_MAIN) up -d
 
 stop:
 	@echo "Use docker compose file: $(DOCKER_FILE)"

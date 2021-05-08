@@ -1,0 +1,23 @@
+parser:
+    regex-command: show\s+system\s+virtual-memory\s+\|\s+display\s+xml
+    matches:
+    -
+        type: single-value
+        method: xpath
+        xpath: //vmstat-sumstat/swap-pageins
+        variable-name:  $host.system.virtual-memory.swap-pageins
+    -
+        type: single-value
+        method: xpath
+        xpath: //vmstat-sumstat/swap-pagedin
+        variable-name:  $host.system.virtual-memory.swap-pagedin
+    -
+        type: single-value
+        method: xpath
+        xpath: //vmstat-sumstat/swap-pageouts
+        variable-name:  $host.system.virtual-memory.swap-pageouts
+    -
+        type: single-value
+        method: xpath
+        xpath: //vmstat-sumstat/swap-pagedout
+        variable-name:  $host.system.virtual-memory.swap-pagedout

@@ -1,0 +1,75 @@
+parser:
+    regex-command: show\s+isis\s+statistics\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //isis-pdu-statistics
+        loop:
+            key: ./isis-pdu-type
+            sub-matches:
+            -
+                xpath: ./packets-received
+                variable-name:  $host.protocols.isis.statistics.$key.packets-received
+            -
+                xpath: ./packets-processed
+                variable-name:  $host.protocols.isis.statistics.$key.packets-processed
+            -
+                xpath: ./packets-dropped
+                variable-name:  $host.protocols.isis.statistics.$key.packets-dropped
+            -
+                xpath: ./packets-sent
+                variable-name:  $host.protocols.isis.statistics.$key.packets-sent
+            -
+                xpath: ./packets-retransmitted
+                variable-name:  $host.protocols.isis.statistics.$key.packets-retransmitted
+    -
+        type: single-value
+        method: xpath
+        xpath: //isis-statistics/totals-information/packets-received
+        variable-name:  $host.protocols.isis.statistics.general.packets-received
+    -
+        type: single-value
+        method: xpath
+        xpath: //isis-statistics/totals-information/packets-sent
+        variable-name:  $host.protocols.isis.statistics.general.packets-sent
+    -
+        type: single-value
+        method: xpath
+        xpath: //isis-statistics/snp-queue-length
+        variable-name:  $host.protocols.isis.statistics.general.snp-queue-length
+    -
+        type: single-value
+        method: xpath
+        xpath: //isis-statistics/snp-queue-drops
+        variable-name:  $host.protocols.isis.statistics.general.snp-queue-drops
+    -
+        type: single-value
+        method: xpath
+        xpath: //isis-statistics/lsp-queue-length
+        variable-name:  $host.protocols.isis.statistics.general.lsp-queue-length
+    -
+        type: single-value
+        method: xpath
+        xpath: //isis-statistics/lsp-queue-drops
+        variable-name:  $host.protocols.isis.statistics.general.lsp-queue-drops
+    -
+        type: single-value
+        method: xpath
+        xpath: //isis-statistics/spf-runs
+        variable-name:  $host.protocols.isis.statistics.general.spf-runs
+    -
+        type: single-value
+        method: xpath
+        xpath: //isis-statistics/fragments-rebuilt
+        variable-name:  $host.protocols.isis.statistics.general.fragments-rebuilt
+    -
+        type: single-value
+        method: xpath
+        xpath: //isis-statistics/fragments-rebuilt
+        variable-name:  $host.protocols.isis.statistics.general.lsps-regenerated
+    -
+        type: single-value
+        method: xpath
+        xpath: //isis-statistics/fragments-rebuilt
+        variable-name:  $host.protocols.isis.statistics.general.purges-initiated

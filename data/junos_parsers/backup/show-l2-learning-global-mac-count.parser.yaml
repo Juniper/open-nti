@@ -1,0 +1,8 @@
+parser:
+    regex-command: show\s+l2-learning\s+global-mac-count\s+\|\s+display\s+xml
+    matches:
+    -
+        type: single-value
+        method: xpath
+        xpath: //global-mac-count
+        variable-name:  $host.global.mac.count

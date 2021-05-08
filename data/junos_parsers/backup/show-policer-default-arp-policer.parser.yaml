@@ -1,0 +1,13 @@
+parser:
+    regex-command: show\s+policer\s+__default_arp_policer__\s+\|\s+display\s+xml
+    matches:
+    -
+        type: single-value
+        method: xpath
+        xpath: //policer[policer-name='__default_arp_policer__']/packet-count
+        variable-name:  $host.policer.default_arp_policer.packet-count
+    -
+        type: single-value
+        method: xpath
+        xpath: //policer[policer-name='__default_arp_policer__']/byte-count
+        variable-name:  $host.policer.default_arp_policer.byte-count

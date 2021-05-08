@@ -242,18 +242,39 @@ def eval_tag_name(variable,**kwargs):
         variable = variable.replace("$"+key,kwargs[key])
     return variable
 
+# Code added by Haofeng to deal with humman readable bytes, esp for Linux Based EVO system
+# on 5/7/2021
 def eval_variable_value(value,**kwargs):
-
+    #logger.info('Get value %s', value)
     if (kwargs["type"] == "integer"):
-        value =  re.sub('G','000000000',value)
-        value =  re.sub('M','000000',value)
-        value =  re.sub('K','000',value)
-        return(int(float(value)))
+        if value[-1] == "g":
+            temp = int(float(value[0:-1])*1000000000)
+            return int(float(value[0:-1])*1000000000)
+        elif value[-1] == "m":
+            return int(float(value[0:-1])*1000000)
+        elif value[-1] == "k":
+            return int(float(value[0:-1])*1000)
+        else:
+            return int(float(value))
     elif kwargs["type"] == "string":
         return value
     else:
         logger.error('An unkown variable-type found: %s', kwargs["type"])
         return value
+
+# This code won't work 
+# def eval_variable_value(value,**kwargs):
+
+#     if (kwargs["type"] == "integer"):
+#         value =  re.sub('G','000000000',value)
+#         value =  re.sub('M','000000',value)
+#         value =  re.sub('K','000',value)
+#         return(int(float(value)))
+#     elif kwargs["type"] == "string":
+#         return value
+#     else:
+#         logger.error('An unkown variable-type found: %s', kwargs["type"])
+#         return value
 
 def insert_datapoints(datapoints):
 
@@ -475,7 +496,7 @@ def parse_result(host,target_command,result,datapoints,kpi_tags):
                                 else:
                                     logger.error('[%s]: More matches found on regex than variables especified on parser: %s', host, regex_command)
                             else:
-                                logger.debug('[%s]: No matches found for regex: %s', host, regex)
+                                logger.info('[%s]: No matches found for regex: %s', host, regex)
                         else:
                             logger.error('[%s]: An unkown match-type found in parser with regex: %s', host, regex_command)
                     else:
@@ -550,7 +571,9 @@ def collector(**kwargs):
                 # By default execute show version in order to get version and platform as default tags for all kpi related to this host
                 kpi_tags = {}
                 target_command = 'show version | display xml'
-                version_xpath = "//package-information/comment"
+                #version_xpath = "//package-information/comment"
+                #by Haofeng, this //junos-version will work for both JUNOS and EVO
+                version_xpath = "//junos-version"
                 product_model_xpath = "//product-model"
                 logger.info('[%s]: Executing command: %s', host, target_command)
                 result = execute_command(jdev,target_command)

@@ -1,0 +1,9 @@
+parser:
+    regex-command: file\s+list\s+detail\s+/var/rundb/juniper.eph_iceaaa\s+\|\s+display\s+xml
+    matches:
+    -
+        type: single-value
+        method: xpath
+        xpath: //file-size
+        variable-name:  $host.bng.iceaaa.edb-size
+        default-if-missing: 0

@@ -1,0 +1,16 @@
+parser:
+    regex-command: show\s+firewall\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //counter
+        loop:
+            key: ./counter-name
+            sub-matches:
+            -
+                xpath: ./packet-count
+                variable-name:  $host.firewall.$key.packets
+            -
+                xpath: ./byte-count
+                variable-name:  $host.firewall.$key.bytes

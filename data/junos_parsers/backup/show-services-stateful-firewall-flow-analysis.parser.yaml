@@ -1,0 +1,19 @@
+parser:
+    regex-command: show\s+services\s+stateful-firewall\s+flow-analysis\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //service-flow-analysis-information/service-flow-analysis-entry
+        loop:
+            key: ./flow-analysis-statistics-pic-info/pic-name
+            sub-matches:
+            -
+                xpath: ./flow-analysis-statistics-entry/num-total-flows-active
+                variable-name:  $host.cgnat.flow-analysis.$key.num-total-flows-active
+            -
+                xpath: ./flow-analysis-statistics-entry/num-created-flows-per-sec
+                variable-name:  $host.cgnat.flow-analysis.$key.num-created-flows-per-sec
+            -
+                xpath: ./flow-analysis-statistics-entry/num-deleted-flows-per-sec
+                variable-name:  $host.cgnat.flow-analysis.$key.num-deleted-flows-per-sec

@@ -1,0 +1,13 @@
+parser:
+    regex-command: show\s+services\s+nat\s+pool\s+detail\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //service-nat-pool
+        loop:
+            key: ./pool-name
+            sub-matches:
+            -
+                xpath: ./port-blocks-in-use
+                variable-name:  $host.services.nat.pool.$key.port-blocks-in-use

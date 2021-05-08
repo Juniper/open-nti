@@ -1,0 +1,27 @@
+parser:
+    regex-command: show\s+bfd\s+session\s+summary\s+\|\s+display\s+xml
+    matches:
+    -
+        type: single-value
+        method: xpath
+        xpath: //bfd-session-information/sessions
+        variable-name:  $host.bfd.sessions.summary.sessions
+        default-if-missing: 0
+    -
+        type: single-value
+        method: xpath
+        xpath: //bfd-session-information/clients
+        variable-name:  $host.bfd.sessions.summary.clients
+        default-if-missing: 0
+    -
+        type: single-value
+        method: xpath
+        xpath: //bfd-session-information/cumulative-transmission-rate
+        variable-name:  $host.bfd.sessions.summary.cumulative-transmission-rate
+        default-if-missing: 0
+    -
+        type: single-value
+        method: xpath
+        xpath: //bfd-session-information/cumulative-reception-rate
+        variable-name:  $host.bfd.sessions.summary.cumulative-reception-rate
+        default-if-missing: 0

@@ -1,0 +1,99 @@
+parser:
+    regex-command: show\s+security\s+ipsec\s+statistics\s+\|\s+display\s+xml
+    matches:
+    -
+        type: single-value
+        method: xpath
+        xpath: //esp-statistics/esp-encrypted-bytes
+        variable-name:  $host.ipsec-esp-encrypted-bytes
+    -
+        type: single-value
+        method: xpath
+        xpath: //esp-statistics/esp-decrypted-bytes
+        variable-name:  $host.ipsec-esp-decrypted-bytes
+    -
+        type: single-value
+        method: xpath
+        xpath: //esp-statistics/esp-encrypted-packets
+        variable-name:  $host.ipsec-esp-encrypted-packets
+    -
+        type: single-value
+        method: xpath
+        xpath: //esp-statistics/esp-decrypted-packets
+        variable-name:  $host.ipsec-esp-decrypted-packets
+
+#### AH #######
+    -
+        type: single-value
+        method: xpath
+        xpath: //ah-statistics/ah-input-bytes
+        variable-name:  $host.ipsec-ah-input-bytes
+    -
+        type: single-value
+        method: xpath
+        xpath: //ah-statistics/ah-output-bytes
+        variable-name:  $host.ipsec-ah-output-bytes
+    -
+        type: single-value
+        method: xpath
+        xpath: //ah-statistics/ah-input-packets
+        variable-name:  $host.ipsec-ah-input-packets
+    -
+        type: single-value
+        method: xpath
+        xpath: //ah-statistics/ah-output-packets
+        variable-name:  $host.ipsec-ah-output-packets
+
+##### Error ######
+    -
+        type: single-value
+        method: xpath
+        xpath: //error-statistics/ah-authentication-failures
+        variable-name:  $host.ipsec-error-ah-authentication-failures
+    -
+        type: single-value
+        method: xpath
+        xpath: //error-statistics/replay-errors
+        variable-name:  $host.ipsec-error-replay-errors
+    -
+        type: single-value
+        method: xpath
+        xpath: //error-statistics/esp-authentication-failures
+        variable-name:  $host.ipsec-error-authentication-failures
+    -
+        type: single-value
+        method: xpath
+        xpath: //error-statistics/esp-decryption-failures
+        variable-name:  $host.ipsec-error-decryption-failures
+    -
+        type: single-value
+        method: xpath
+        xpath: //error-statistics/bad-headers
+        variable-name:  $host.ipsec-error-bad-headers
+    -
+        type: single-value
+        method: xpath
+        xpath: //error-statistics/bad-trailers
+        variable-name:  $host.ipsec-error-bad-trailers
+
+
+  # <esp-statistics>
+  #     <esp-encrypted-bytes>1329544</esp-encrypted-bytes>
+  #     <esp-decrypted-bytes>1202146</esp-decrypted-bytes>
+  #     <esp-encrypted-packets>9115</esp-encrypted-packets>
+  #     <esp-decrypted-packets>9304</esp-decrypted-packets>
+  # </esp-statistics>
+  # <ah-statistics>
+  #     <ah-input-bytes>0</ah-input-bytes>
+  #     <ah-output-bytes>0</ah-output-bytes>
+  #     <ah-input-packets>0</ah-input-packets>
+  #     <ah-output-packets>0</ah-output-packets>
+  # </ah-statistics>
+  # <error-statistics>
+  #     <ah-authentication-failures>0</ah-authentication-failures>
+  #     <replay-errors>0</replay-errors>
+  #     <esp-authentication-failures>0</esp-authentication-failures>
+  #     <esp-decryption-failures>0</esp-decryption-failures>
+  #     <bad-headers>0</bad-headers>
+  #     <bad-trailers>0</bad-trailers>
+  # </error-statistics>

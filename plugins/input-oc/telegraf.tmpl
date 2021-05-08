@@ -53,7 +53,7 @@
   flush_jitter = "0s"
 
   ## Run telegraf in debug mode
-  debug = false
+  debug = true
   ## Run telegraf in quiet mode
   quiet = false
   ## Override default hostname, if empty use os.Hostname()
@@ -72,9 +72,9 @@
   ## Multiple urls can be specified as part of the same cluster,
   ## this means that only ONE of the urls will be written to each interval.
   # urls = ["udp://localhost:8089"] # UDP endpoint example
-  urls = ["http://opennti:8086"]
+  urls = ["http://172.17.0.1:8086"]
   ## The target database for metrics (telegraf will create it if not exists).
-  database = "juniper" # required
+  database = "msee" # required
   ## Precision of writes, valid values are "ns", "us" (or "µs"), "ms", "s", "m", "h".
   ## note: using "s" precision greatly improves InfluxDB compression.
   precision = "s"
@@ -103,10 +103,10 @@
 
 [[inputs.jti_openconfig_telemetry]]
 
-  servers = ["oc_agent:50051"]
+  servers = ["10.102.140.17:50051"]
 
   ## Frequency to get data in millisecond
-  sample_frequency = "1000ms"
+  sample_frequency = "2000ms"
 
   ## Sensors to subscribe for
   ## A identifier for each sensor can be provided in path by separating with space
@@ -122,9 +122,7 @@
   #]
 
   sensors = [
-   "1000ms customReporting /interfaces /lldp",
-   "2000ms collection /components",
-   "/interfaces","/lacp","/junos/services/label-switched-path/",
+   "2000ms /junos/system/linecard/interface/traffic/",
   ]
   ## Each data format has it's own unique set of configuration options, read
   ## more about them here:

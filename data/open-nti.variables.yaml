@@ -9,7 +9,7 @@ default_junos_rpc_timeout: 600
 max_collector_threads: 45
 delay_between_commands: 3
 max_connection_retries: 5
-use_hostname: True
+use_hostname: False
 # db_schema options, 1-  measurement per kpi per host, 2- one measurement for all kpi, 3- one measurement per kpi
 # NOTE: For option 2, all gathered values MUST be the same type.
 db_schema: 1

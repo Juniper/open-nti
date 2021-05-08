@@ -1,8 +1,12 @@
 #! /bin/bash
 
 ## Image and container
-export MAIN_IMAGE_NAME=juniper/open-nti
-export MAIN_CONTAINER_NAME=opennti_con
+export MAIN_IMAGE_NAME=juniper/open-nti-v2
+export MAIN_CONTAINER_NAME=opennti_con_v2
+
+## Original name
+# export MAIN_IMAGE_NAME=juniper/open-nti
+# export MAIN_CONTAINER_NAME=opennti_con
 
 export INPUT_JTI_DIR=plugins/input-jti
 export INPUT_JTI_IMAGE_NAME=juniper/open-nti-input-jti

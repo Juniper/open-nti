@@ -1,0 +1,22 @@
+parser:
+    regex-command: show\s+task\s+io
+    matches:
+    -
+        type: single-value
+        method: regex
+        regex: \s+SNMP\s+.*?\s+(\d+)\s+\d+\s+\d+\s+\d+\s+\d+$
+        variables:
+        -
+            variable-name:  $host.re.task.io.snmp
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s+KRT Request\s+.*?\s+\d+\s+\d+\s+(\d+)\s+(\d+)\s+\d+$
+        variables:
+        -
+            variable-name:  $host.re.task.io.krt-request.rcvd
+            variable-type:  integer
+        -
+            variable-name:  $host.re.task.io.krt-request.sent
+            variable-type:  integer

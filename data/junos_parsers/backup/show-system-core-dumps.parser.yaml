@@ -1,0 +1,9 @@
+parser:
+    regex-command: show\s+system\s+core\-dumps\s+\|\s+display\s+xml
+    matches:
+    -
+        type: single-value
+        method: xpath
+        xpath: //total-files
+        variable-name:  $host.system.core-dumps
+        default-if-missing: 0

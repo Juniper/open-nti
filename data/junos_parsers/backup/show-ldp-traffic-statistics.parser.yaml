@@ -1,0 +1,16 @@
+parser:
+    regex-command: show\s+ldp\s+traffic\-statistics\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //*[local-name() = 'ldp-traffic-statistics-information']/*[local-name() = 'ldp-traffic-statistics']
+        loop:
+            key: ./*[local-name() = 'ldp-prefix']
+            sub-matches:
+            -
+                xpath: ./ldp-traffic-statistics-packet-count
+                variable-name:  $host.ldp.traffic-statistics.$key.packet-count
+            -
+                xpath: ./ldp-traffic-statistics-byte-count
+                variable-name:  $host.ldp.traffic-statistics.$key.byte-count
