@@ -36,8 +36,7 @@ OpenNTI is available on DockerCloud_ and this project provide scripts to easily 
   - In case of have internet access through a proxy, before executing 'make start', edit all Dockeriles (those in the main directory and in the plugins directory), and include the lines ENV http_proxy <http_proxy> and ENV https_proxy <https_proxy>
 
 By default it will start 3 containers and it's working in **non-persistent mode**, once you stop it all data are gone.
-It's possible to start the main container in **persistent mode** to save the database outside the container, b
-y using the startup script ``make start-persistent``.
+It's possible to start the main container in **persistent mode** to save the database outside the container, by using the startup script ``make start-persistent``.
 `Persistent mode on Mac OS requires at least v1.12`
 
 How to update
