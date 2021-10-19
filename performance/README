@@ -1,3 +1,9 @@
-It's a DEV branch
-Collect Python script to calculate OCST testing KPI Data. 
-Oct 16 2019: added gNMI support
+Streaming Telemetry Performance Measurements
+- Payload Size
+- Packet Delay
+- Streaming wrap time
+- Internal Latency
+
+Support:
+- JUNOS and EVO
+- OC and gNMI
