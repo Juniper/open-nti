@@ -1,5 +1,3 @@
-Measure Streaming Telemetry Performance
-- Packet Size
-- Packet Delay
-- Streaming Data Wrap Time
-- Internet Latency
+It's a DEV branch
+Collect Python script to calculate OCST testing KPI Data. 
+Oct 16 2019: added gNMI support
