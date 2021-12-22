@@ -1,0 +1,69 @@
+root@host2-geo4-vm:~/# python all-kpis-nodb.py scapa_204_R1_5.log
+Clean up local directories
+*** KPI data will be written in local file: KPI_result_20201204_145853.csv      ***
+*** Sensor data raw log:     'ocst-logs' ***
+*** Sensor Init Sync data:   'ocst-init' ***
+*** Sensor KPI results:      'ocst-result'   ***
+*** Please copy above files/folders to local PC for analysis                     ***
+Processing collected data
+Time spent: 3.66591978073 seconds
+Processing log data for each sensor
+Time spent: 0.981933832169 seconds
+Processing Init_Sync Packets
+Write to result files
+Processing sensor: sensor_1017:/network-instances/network-instance/mpls/lsps/constrained-path/tunnels/tunnel/:/network-instances/network-instance/mpls/lsps/constrained-path/tunnels/tunnel/:rpd_65535
+Processing sensor: sensor_1019:/network-instances/network-instance/mpls/signaling-protocols/rsvp-te/interface-attributes/interface/:/network-instances/network-instance/mpls/signaling-protocols/rsvp-te/interface-attributes/interface/:rpd_65535
+Processing sensor: sensor_1013:/lldp/interfaces/interface/state/:/lldp/interfaces/interface/state/:l2cpd_65535
+Processing sensor: sensor_1014:/lldp/state/:/lldp/state/:l2cpd_65535
+Processing sensor: sensor_1015:/lldp/interfaces/interface/neighbors/neighbor/state/:/lldp/interfaces/interface/neighbors/neighbor/state/:l2cpd_65535
+Processing sensor: sensor_1020:/network-instances/network-instance/mpls/signaling-protocols/rsvp-te/sessions/session/state/session-name/:/network-instances/network-instance/mpls/signaling-protocols/rsvp-te/sessions/session/state/session-name/:rpd_65535
+Processing sensor: sensor_1021:/network-instances/network-instance/mpls/signaling-protocols/rsvp-te/sessions/session/explicit-route-objects/:/network-instances/network-instance/mpls/signaling-protocols/rsvp-te/sessions/session/explicit-route-objects/:rpd_65535
+Processing sensor: sensor_1022:/network-instances/network-instance/mpls/signaling-protocols/rsvp-te/sessions/session/record-route-objects/:/network-instances/network-instance/mpls/signaling-protocols/rsvp-te/sessions/session/record-route-objects/:rpd_65535
+Processing sensor: sensor_1023:/network-instances/network-instance/mpls/signaling-protocols/rsvp-te/sessions/session/state/type/:/network-instances/network-instance/mpls/signaling-protocols/rsvp-te/sessions/session/state/type/:rpd_65535
+Processing sensor: sensor_1024:/network-instances/network-instance/protocols/protocol/bgp/neighbors/:/network-instances/network-instance/protocols/protocol/bgp/neighbors/:rpd_65535
+Processing sensor: sensor_1025:/network-instances/network-instance/protocols/protocol/isis/:/network-instances/network-instance/protocols/protocol/isis/:rpd_65535
+Processing sensor: sensor_1018:/network-instances/network-instance/mpls/signaling-protocols/rsvp-te/global/state/:/network-instances/network-instance/mpls/signaling-protocols/rsvp-te/global/state/:rpd_65535
+Processing sensor: sensor_1000:/interfaces/interface/state/:/interfaces/interface/state/:mgmt-ethd_65535
+Processing sensor: sensor_1000:/interfaces/interface/state/:/interfaces/interface/state/:mgmt-ethd_65534
+Processing sensor: sensor_1012:/lacp/interfaces/interface/members/member/state/:/lacp/interfaces/interface/members/member/state/:lacpd_65535
+Processing sensor: sensor_1003:/arp-information/ipv4/neighbors/neighbor/state/:/arp-information/ipv4/neighbors/neighbor/state/:arpd_65535
+Processing sensor: sensor_1004:/components/component/properties/property/state/value/:/components/component/properties/property/state/value/:hwdre_65535
+Processing sensor: sensor_1000:/junos/system/linecard/interface/:/interfaces/interface/state/:picd_0
+Processing sensor: sensor_1005:/components/component/state/:/components/component/state/:hwdre_65535
+Processing sensor: sensor_1016:/nd6-information/ipv6/neighbors/neighbor/state/:/nd6-information/ipv6/neighbors/neighbor/state/:ndp_65535
+Processing sensor: sensor_1000:/junos/system/linecard/interface/:/interfaces/interface/state/:evo-aftmand-bt_0
+Processing sensor: sensor_1000:/junos/system/linecard/interface/:/interfaces/interface/state/:picd_5
+Processing sensor: sensor_1000:/junos/system/linecard/interface/:/interfaces/interface/state/:picd_2
+Processing sensor: sensor_1000:/junos/system/linecard/interface/:/interfaces/interface/state/:evo-aftmand-bt_5
+Processing sensor: sensor_1004:/components/component/properties/property/state/value/:/components/component/properties/property/state/value/:hwdre_65534
+Processing sensor: sensor_1005:/components/component/state/:/components/component/state/:hwdre_65534
+Processing sensor: sensor_1000:/junos/system/linecard/interface/:/interfaces/interface/state/:evo-aftmand-bt_2
+Processing sensor: sensor_1011:/junos/task-memory-information/task-memory-overall-report/:/junos/task-memory-information/task-memory-overall-report/:xmlproxyd_65535
+Processing sensor: sensor_1026:/junos/alarm-information/:/junos/alarm-information/:xmlproxyd_65535
+Processing sensor: sensor_1027:/junos/cos-forwarding-class-information/:/junos/cos-forwarding-class-information/:xmlproxyd_65535
+Processing sensor: sensor_1028:/junos/krt-state-information/:/junos/krt-state-information/:xmlproxyd_65535
+Processing sensor: sensor_1002:/interfaces/interface/subinterfaces/subinterface/state/:/interfaces/interface/subinterfaces/subinterface/state/:mib2d_65535
+Processing sensor: sensor_1000:/interfaces/interface/state/:/interfaces/interface/state/:mib2d_65535
+Processing sensor: sensor_1002:/interfaces/interface/subinterfaces/subinterface/state/:/interfaces/interface/subinterfaces/subinterface/state/:mgmt-ethd_65535
+Processing sensor: sensor_1002:/interfaces/interface/subinterfaces/subinterface/state/:/interfaces/interface/subinterfaces/subinterface/state/:mgmt-ethd_65534
+Processing sensor: sensor_1030:/junos/system/linecard/npu/utilization/:/junos/system/linecard/npu/utilization/:evo-cda-bt_0
+Processing sensor: sensor_1030:/junos/system/linecard/npu/utilization/:/junos/system/linecard/npu/utilization/:evo-cda-bt_5
+Processing sensor: sensor_1030:/junos/system/linecard/npu/utilization/:/junos/system/linecard/npu/utilization/:evo-cda-bt_2
+Processing sensor: sensor_1009:/junos/system/linecard/optics/:/junos/system/linecard/optics/:picd_0
+Processing sensor: sensor_1007:/junos/system/linecard/firewall/:/junos/system/linecard/firewall/:evo-aftmand-bt_0
+Processing sensor: sensor_1007:/junos/system/linecard/firewall/:/junos/system/linecard/firewall/:evo-aftmand-bt_5
+Processing sensor: sensor_1009:/junos/system/linecard/optics/:/junos/system/linecard/optics/:picd_2
+Processing sensor: sensor_1008:/junos/system/linecard/npu/memory/:/junos/system/linecard/npu/memory/:evo-aftmand-bt_5
+Processing sensor: sensor_1009:/junos/system/linecard/optics/:/junos/system/linecard/optics/:picd_5
+Processing sensor: sensor_1008:/junos/system/linecard/npu/memory/:/junos/system/linecard/npu/memory/:evo-aftmand-bt_0
+Processing sensor: sensor_1010:/junos/system/linecard/packet/usage/:/junos/system/linecard/packet/usage/:evo-aftmand-bt_5
+Processing sensor: sensor_1010:/junos/system/linecard/packet/usage/:/junos/system/linecard/packet/usage/:evo-aftmand-bt_0
+Processing sensor: sensor_1031:/junos/system/linecard/interface/queue/:/junos/system/linecard/interface/queue/:evo-aftmand-bt_0
+Processing sensor: sensor_1031:/junos/system/linecard/interface/queue/:/junos/system/linecard/interface/queue/:evo-aftmand-bt_5
+Processing sensor: sensor_1007:/junos/system/linecard/firewall/:/junos/system/linecard/firewall/:evo-aftmand-bt_2
+Processing sensor: sensor_1008:/junos/system/linecard/npu/memory/:/junos/system/linecard/npu/memory/:evo-aftmand-bt_2
+Processing sensor: sensor_1031:/junos/system/linecard/interface/queue/:/junos/system/linecard/interface/queue/:evo-aftmand-bt_2
+Write KPI-1 Packet Size Data
+Write KPI-4 internal Latency Data
+Write KPI-3 sensor wrap time Data
+Write KPI-7 sensor Init Sync time Data
