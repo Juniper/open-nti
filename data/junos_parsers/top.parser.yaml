@@ -46,7 +46,7 @@ parser:
     -
         type: single-value
         method: regex
-        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+mib2d\r\n
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+mib2d
         variables:
         -
             variable-name:  $host.re.memory.mib2d-SIZE
@@ -270,7 +270,7 @@ parser:
     -    
         type: single-value
         method: regex                               
-        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+distributord\r\n
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+distribut
         variables:
         -
             variable-name:  $host.re.memory.distributord-SIZE
@@ -298,7 +298,7 @@ parser:
     -
         type: single-value
         method: regex
-        regex: \s*([0-9]+)\s+\w+\s+([0-9]+)\s+\S+\s+\d*\S*\s+(\d*\S*)\s+(\d+\S*)\s+\S+\s+\S+\s+\S+\s+(\S+)\s+EvoAftMan-main\r\n
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+EvoAftMan
         variables:
         -
             variable-name:  $host.\r\npid.memory.EvoAftManBt-mai-SIZE
@@ -340,7 +340,7 @@ parser:
     -
         type: single-value
         method: regex
-        regex: \s*([0-9]+)\s+\w+\s+([0-9]+)\s+\S+\s+\d*\S*\s+(\d*\S*)\s+(\d+\S*)\s+\S+\s+\S+\s+\S+\s+(\S+)\s+msvcd\r\n
+        regex: \s*([0-9]+)\s+\w+\s+([0-9]+)\s+\S+\s+\d*\S*\s+(\d*\S*)\s+(\d+\S*)\s+\S+\s+\S+\s+\S+\s+(\S+)\s+msvcsd\r\n
         variables:
         -
             variable-name:  $host.\r\npid.memory.msvcd-SIZE

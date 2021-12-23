@@ -2634,7 +2634,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select mean(value)  from /($host_regex).re.memory.cosd-SIZE/ where $timeFilter group by time($interval)",
+          "query": "select mean(value)  from /($host_regex).re.memory.EvoAftManBt-mai-SIZE/ where $timeFilter group by time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2652,14 +2652,14 @@
               }
             ]
           ],
-          "series": "/$host_regex.re.memory.cosd-SIZE/",
+          "series": "/$host_regex.re.memory.EvoAftManBt-mai-SIZE/",
           "tags": []
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "COSD SIZE",
+      "title": "EvoAftMan SIZE",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -2747,7 +2747,7 @@
             }
           ],
           "policy": "default",
-          "query": "select mean(value) from /($host_regex).re.memory.cosd-CPU/ where $timeFilter group by time($interval)",
+          "query": "select mean(value) from /($host_regex).re.memory.EvoAftManBt-mai-CPU/ where $timeFilter group by time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2771,7 +2771,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "COSD CPU Usage",
+      "title": "EvoAftMan CPU Usage",
       "tooltip": {
         "shared": true,
         "sort": 0,
