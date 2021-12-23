@@ -301,13 +301,13 @@ parser:
         regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+EvoAftMan
         variables:
         -
-            variable-name:  $host.\r\npid.memory.EvoAftManBt-mai-SIZE
+            variable-name:  $host.re.memory.EvoAftManBt-mai-SIZE
             variable-type:  integer
         -
-            variable-name:  $host.\r\npid.memory.EvoAftManBt-mai-RES
+            variable-name:  $host.re.memory.EvoAftManBt-mai-RES
             variable-type:  integer
         -
-            variable-name:  $host.\r\npid.memory.EvoAftManBt-mai-CPU
+            variable-name:  $host.re.memory.EvoAftManBt-mai-CPU
             variable-type:  integer
     -
         type: single-value
@@ -315,13 +315,13 @@ parser:
         regex: \s*([0-9]+)\s+\w+\s+([0-9]+)\s+\S+\s+\d*\S*\s+(\d*\S*)\s+(\d+\S*)\s+\S+\s+\S+\s+\S+\s+(\S+)\s+fibtd\r\n
         variables:
         -
-            variable-name:  $host.\r\npid.memory.fibtd-SIZE
+            variable-name:  $host.re.memory.fibtd-SIZE
             variable-type:  integer
         -
-            variable-name:  $host.\r\npid.memory.fibtd-RES
+            variable-name:  $host.re.memory.fibtd-RES
             variable-type:  integer
         -
-            variable-name:  $host.\r\npid.memory.fibtd-CPU
+            variable-name:  $host.re.memory.fibtd-CPU
             variable-type:  integer
     -
         type: single-value
@@ -329,13 +329,13 @@ parser:
         regex: \s*([0-9]+)\s+\w+\s+([0-9]+)\s+\S+\s+\d*\S*\s+(\d*\S*)\s+(\d+\S*)\s+\S+\s+\S+\s+\S+\s+(\S+)\s+fibd\r\n
         variables:
         -
-            variable-name:  $host.\r\npid.memory.fibd-SIZE
+            variable-name:  $host.re.memory.fibd-SIZE
             variable-type:  integer
         -
-            variable-name:  $host.\r\npid.memory.fibd-RES
+            variable-name:  $host.re.memory.fibd-RES
             variable-type:  integer
         -
-            variable-name:  $host.\r\npid.memory.fibd-CPU
+            variable-name:  $host.re.memory.fibd-CPU
             variable-type:  integer
     -
         type: single-value
@@ -343,13 +343,13 @@ parser:
         regex: \s*([0-9]+)\s+\w+\s+([0-9]+)\s+\S+\s+\d*\S*\s+(\d*\S*)\s+(\d+\S*)\s+\S+\s+\S+\s+\S+\s+(\S+)\s+msvcsd\r\n
         variables:
         -
-            variable-name:  $host.\r\npid.memory.msvcd-SIZE
+            variable-name:  $host.re.memory.msvcd-SIZE
             variable-type:  integer
         -
-            variable-name:  $host.\r\npid.memory.msvcd-RES
+            variable-name:  $host.re.memory.msvcd-RES
             variable-type:  integer
         -
-            variable-name:  $host.\r\npid.memory.msvcd-CPU
+            variable-name:  $host.re.memory.msvcd-CPU
             variable-type:  integer
     -
         type: single-value
@@ -357,13 +357,13 @@ parser:
         regex: \s*([0-9]+)\s+\w+\s+([0-9]+)\s+\S+\s+\d*\S*\s+(\d*\S*)\s+(\d+\S*)\s+\S+\s+\S+\s+\S+\s+(\S+)\s+fabtokend\r\n
         variables:
         -
-            variable-name:  $host.\r\npid.memory.fabtokend-SIZE
+            variable-name:  $host.re.memory.fabtokend-SIZE
             variable-type:  integer
         -
-            variable-name:  $host.\r\npid.memory.fabtokend-RES
+            variable-name:  $host.re.memory.fabtokend-RES
             variable-type:  integer
         -
-            variable-name:  $host.\r\npid.memory.fabtokend-CPU
+            variable-name:  $host.re.memory.fabtokend-CPU
             variable-type:  integer
     -
         type: single-value
@@ -371,11 +371,11 @@ parser:
         regex: \s*([0-9]+)\s+\w+\s+([0-9]+)\s+\S+\s+\d*\S*\s+(\d*\S*)\s+(\d+\S*)\s+\S+\s+\S+\s+\S+\s+(\S+)\s+l2ald-agent\r\n
         variables:
         -
-            variable-name:  $host.\r\npid.memory.l2ald-agent-SIZE
+            variable-name:  $host.re.memory.l2ald-agent-SIZE
             variable-type:  integer
         -
-            variable-name:  $host.\r\npid.memory.l2ald-agent-RES
+            variable-name:  $host.re.memory.l2ald-agent-RES
             variable-type:  integer
         -
-            variable-name:  $host.\r\npid.memory.l2ald-agent-CPU
+            variable-name:  $host.re.memory.l2ald-agent-CPU
             variable-type:  integer
