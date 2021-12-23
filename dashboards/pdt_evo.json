@@ -615,7 +615,7 @@
             }
           ],
           "policy": "default",
-          "query": "select mean(value) from /($host_regex).route-table.summary.inet.0.hidden/ where $timeFilter group by time($interval)",
+          "query": "select mean(value) from /($host_regex).route-table.summary.inet.0.routes/ where $timeFilter group by time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -633,14 +633,14 @@
               }
             ]
           ],
-          "series": "/$host_regex.route-table.summary.inet.0.hidden/",
+          "series": "/$host_regex.route-table.summary.inet.0.routes/",
           "tags": []
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Hidden routes (inet.0)",
+      "title": "Total routes (inet.0)",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -751,7 +751,7 @@
               }
             ]
           ],
-          "series": "/$host_regex.route-table.summary.inet.3.hidden/",
+          "series": "/$host_regex.route-table.summary.inet.3.routes/",
           "tags": []
         }
       ],
@@ -851,7 +851,7 @@
             }
           ],
           "policy": "default",
-          "query": "select mean(value) from /($host_regex).route-table.summary.inet6.0.hidden/ where $timeFilter group by time($interval)",
+          "query": "select mean(value) from /($host_regex).route-table.summary.inet6.0.routes/ where $timeFilter group by time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -869,14 +869,14 @@
               }
             ]
           ],
-          "series": "/$host_regex.route-table.summary.bgp.l3vpn.0.hidden/",
+          "series": "/$host_regex.route-table.summary.bgp.l3vpn.0.routes/",
           "tags": []
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Hidden routes (inet6.0)",
+      "title": "Total routes (inet6.0)",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -1087,7 +1087,7 @@
             }
           ],
           "policy": "default",
-          "query": "select mean(value) from /($host_regex).route-table.summary.bgp.l3vpn.0.hidden/ where $timeFilter group by time($interval)",
+          "query": "select mean(value) from /($host_regex).route-table.summary.bgp.l3vpn.0.routes/ where $timeFilter group by time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1105,14 +1105,14 @@
               }
             ]
           ],
-          "series": "/$host_regex.route-table.summary.bgp.l3vpn.0.hidden/",
+          "series": "/$host_regex.route-table.summary.bgp.l3vpn.0.routes/",
           "tags": []
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Hidden routes (bgp.l3vpn.0)",
+      "title": "Total routes (bgp.l3vpn.0)",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -1323,7 +1323,7 @@
             }
           ],
           "policy": "default",
-          "query": "select mean(value) from /($host_regex).route-table.summary.inet.3.hidden/ where $timeFilter group by time($interval)",
+          "query": "select mean(value) from /($host_regex).route-table.summary.inet.3.routes/ where $timeFilter group by time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1341,14 +1341,14 @@
               }
             ]
           ],
-          "series": "/$host_regex.route-table.summary.inet.3.hidden/",
+          "series": "/$host_regex.route-table.summary.inet.3.routes/",
           "tags": []
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Hidden routes (inet.3)",
+      "title": "Total routes (inet.3)",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -1459,7 +1459,7 @@
               }
             ]
           ],
-          "series": "/$host_regex.route-table.summary.inet.3.hidden/",
+          "series": "/$host_regex.route-table.summary.inet.3.routes/",
           "tags": []
         }
       ],
@@ -1559,7 +1559,7 @@
             }
           ],
           "policy": "default",
-          "query": "select mean(value) from /($host_regex).route-table.summary.mpls.0.hidden/ where $timeFilter group by time($interval)",
+          "query": "select mean(value) from /($host_regex).route-table.summary.mpls.0.routes/ where $timeFilter group by time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1577,14 +1577,14 @@
               }
             ]
           ],
-          "series": "/$host_regex.route-table.summary.bgp.l3vpn.0.hidden/",
+          "series": "/$host_regex.route-table.summary.bgp.l3vpn.0.routes/",
           "tags": []
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Hidden routes (mpls.0)",
+      "title": "Total routes (mpls.0)",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -1695,7 +1695,7 @@
               }
             ]
           ],
-          "series": "/$host_regex.route-table.summary.inet.3.hidden/",
+          "series": "/$host_regex.route-table.summary.inet.3.routes/",
           "tags": []
         }
       ],
@@ -1795,7 +1795,7 @@
             }
           ],
           "policy": "default",
-          "query": "select mean(value) from /($host_regex).route-table.summary.inetcolor.0.hidden/ where $timeFilter group by time($interval)",
+          "query": "select mean(value) from /($host_regex).route-table.summary.inetcolor.0.routes/ where $timeFilter group by time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1813,14 +1813,14 @@
               }
             ]
           ],
-          "series": "/$host_regex.route-table.summary.bgp.l3vpn.0.hidden/",
+          "series": "/$host_regex.route-table.summary.bgp.l3vpn.0.routes/",
           "tags": []
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Hidden routes (inetcolor.0)",
+      "title": "Total routes (inetcolor.0)",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -1931,7 +1931,7 @@
               }
             ]
           ],
-          "series": "/$host_regex.route-table.summary.inet.3.hidden/",
+          "series": "/$host_regex.route-table.summary.inet.3.routes/",
           "tags": []
         }
       ],
@@ -2031,7 +2031,7 @@
             }
           ],
           "policy": "default",
-          "query": "select mean(value) from /($host_regex).route-table.summary.inet6color.0.hidden/ where $timeFilter group by time($interval)",
+          "query": "select mean(value) from /($host_regex).route-table.summary.inet6color.0.routes/ where $timeFilter group by time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2049,14 +2049,14 @@
               }
             ]
           ],
-          "series": "/$host_regex.route-table.summary.bgp.l3vpn.0.hidden/",
+          "series": "/$host_regex.route-table.summary.bgp.l3vpn.0.routes/",
           "tags": []
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Hidden routes (inet6color.0)",
+      "title": "Total routes (inet6color.0)",
       "tooltip": {
         "shared": false,
         "sort": 0,

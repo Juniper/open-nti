@@ -3,11 +3,18 @@
 # coding: utf-8
 # Authors: efrain@juniper.net psagrera@juniper.net
 # Version 2.0  20160124
+# root@ocst-2-geo:/opt/open-nti# make cron-show
+# docker exec -it opennti_con /usr/bin/python /opt/open-nti/startcron.py -a show  -c "/usr/bin/python /opt/open-nti/open-nti.py -s"
+# * * * * * /usr/bin/python /opt/open-nti/open-nti.py -s --tag evo
+
+# Version 2.1
+# add RE shell output support:
+# top -b -n 1 | shell
 
 from datetime import datetime # In order to retreive time and timespan
 from datetime import timedelta # In order to retreive time and timespan
 from influxdb import InfluxDBClient
-from pyez_mock import mocked_device, rpc_reply_dict
+#from pyez_mock import mocked_device, rpc_reply_dict
 from jnpr.junos import *
 from jnpr.junos import Device
 from jnpr.junos.exception import *
@@ -164,6 +171,13 @@ def execute_command(jdevice,command):
     elif re.search("\| count", command, re.IGNORECASE):
         format = "txt-filtered"
         command_tmp = command.split("|")[0]
+    elif re.search("\| shell", command, re.IGNORECASE):
+        # This is the shell commmand supposed to run on RE Linux shell
+        ss = StartShell(jdevice)
+        ss.open()
+        command_tmp = command.split("|")[0]
+        command_result = ss.run(command_tmp)
+        return command_result[1]
     try:
         # Remember... all rpc must have format=xml at execution time,
         command_result = jdevice.rpc.cli(command_tmp, format="xml")
@@ -250,13 +264,16 @@ def eval_tag_name(variable,**kwargs):
 def eval_variable_value(value,**kwargs):
     #logger.info('Get value %s', value)
     if (kwargs["type"] == "integer"):
-        if value[-1] == "g":
-            temp = int(float(value[0:-1])*1000000000)
-            return int(float(value[0:-1])*1000000000)
+        if value[-1] == "t":
+            temp = int(float(value[0:-1])*1099511627776)
+            return int(float(value[0:-1])*1099511627776)
+        elif value[-1] == "g":
+            temp = int(float(value[0:-1])*1073741824)
+            return int(float(value[0:-1])*1073741824)
         elif value[-1] == "m":
-            return int(float(value[0:-1])*1000000)
+            return int(float(value[0:-1])*1048576)
         elif value[-1] == "k":
-            return int(float(value[0:-1])*1000)
+            return int(float(value[0:-1])*1024)
         else:
             return int(float(value))
     elif kwargs["type"] == "string":
@@ -586,7 +603,7 @@ def collector(**kwargs):
                 _rpc_reply_dict = rpc_reply_dict()
                 _rpc_reply_dict['dir'] = BASE_DIR_INPUT
 
-                jdev = mocked_device(_rpc_reply_dict)
+                #jdev = mocked_device(_rpc_reply_dict)
                 # First collect all kpi in datapoints {} then at the end we insert them into DB (performance improvement)
                 connected = True
             else:
