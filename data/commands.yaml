@@ -30,12 +30,11 @@ evo_commands:
       show route summary | display xml
       show pfe statistics traffic | display xml
       show version | display xml
-      show system processes extensive node re0
       show chassis fpc | display xml
       show mpls lsp terse | display xml
       show task memory | display xml
       show bgp summary | display xml
-      show system alarms | display xml
+      top -b -n 1 | shell
    tags: evo
 
 generic_commands:

@@ -3,6 +3,7 @@ data_dir: data
 junos_parsers_dir: data/junos_parsers
 pfe_parsers_dir: data/pfe_parsers
 hosts_file: hosts.yaml
+test_hosts_file: evo_hosts.yaml
 commands_file: commands.yaml
 credentials_file: credentials.yaml
 default_junos_rpc_timeout: 600

@@ -74,7 +74,7 @@
   # urls = ["udp://localhost:8089"] # UDP endpoint example
   urls = ["http://172.17.0.1:8086"]
   ## The target database for metrics (telegraf will create it if not exists).
-  database = "msee" # required
+  database = "evo" # required
   ## Precision of writes, valid values are "ns", "us" (or "µs"), "ms", "s", "m", "h".
   ## note: using "s" precision greatly improves InfluxDB compression.
   precision = "s"
@@ -103,7 +103,11 @@
 
 [[inputs.jti_openconfig_telemetry]]
 
-  servers = ["10.102.140.17:50051"]
+  servers = ["10.48.60.90:10162"]
+
+  username = "regress"
+  password = "MaRtInI"
+  client_id = "telegraf"
 
   ## Frequency to get data in millisecond
   sample_frequency = "2000ms"
@@ -123,6 +127,8 @@
 
   sensors = [
    "2000ms /junos/system/linecard/interface/traffic/",
+   "4000ms /components/",
+   "10000ms /junos/system/linecard/optics/"
   ]
   ## Each data format has it's own unique set of configuration options, read
   ## more about them here:
