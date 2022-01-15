@@ -65,7 +65,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1607419745631,
+  "iteration": 1642187849920,
   "links": [],
   "panels": [
     {
@@ -615,7 +615,7 @@
             }
           ],
           "policy": "default",
-          "query": "select mean(value) from /($host_regex).route-table.summary.inet.0.hidden/ where $timeFilter group by time($interval)",
+          "query": "select mean(value) from /($host_regex).route-table.summary.inet.0.routes/ where $timeFilter group by time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -633,14 +633,14 @@
               }
             ]
           ],
-          "series": "/$host_regex.route-table.summary.inet.0.hidden/",
+          "series": "/$host_regex.route-table.summary.inet.0.routes/",
           "tags": []
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Hidden routes (inet.0)",
+      "title": "Total routes (inet.0)",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -751,7 +751,7 @@
               }
             ]
           ],
-          "series": "/$host_regex.route-table.summary.inet.3.hidden/",
+          "series": "/$host_regex.route-table.summary.inet.3.routes/",
           "tags": []
         }
       ],
@@ -851,7 +851,7 @@
             }
           ],
           "policy": "default",
-          "query": "select mean(value) from /($host_regex).route-table.summary.inet6.0.hidden/ where $timeFilter group by time($interval)",
+          "query": "select mean(value) from /($host_regex).route-table.summary.inet6.0.routes/ where $timeFilter group by time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -869,14 +869,14 @@
               }
             ]
           ],
-          "series": "/$host_regex.route-table.summary.bgp.l3vpn.0.hidden/",
+          "series": "/$host_regex.route-table.summary.bgp.l3vpn.0.routes/",
           "tags": []
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Hidden routes (inet6.0)",
+      "title": "Total routes (inet6.0)",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -1087,7 +1087,7 @@
             }
           ],
           "policy": "default",
-          "query": "select mean(value) from /($host_regex).route-table.summary.bgp.l3vpn.0.hidden/ where $timeFilter group by time($interval)",
+          "query": "select mean(value) from /($host_regex).route-table.summary.bgp.l3vpn.0.routes/ where $timeFilter group by time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1105,14 +1105,14 @@
               }
             ]
           ],
-          "series": "/$host_regex.route-table.summary.bgp.l3vpn.0.hidden/",
+          "series": "/$host_regex.route-table.summary.bgp.l3vpn.0.routes/",
           "tags": []
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Hidden routes (bgp.l3vpn.0)",
+      "title": "Total routes (bgp.l3vpn.0)",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -1323,7 +1323,7 @@
             }
           ],
           "policy": "default",
-          "query": "select mean(value) from /($host_regex).route-table.summary.inet.3.hidden/ where $timeFilter group by time($interval)",
+          "query": "select mean(value) from /($host_regex).route-table.summary.inet.3.routes/ where $timeFilter group by time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1341,14 +1341,14 @@
               }
             ]
           ],
-          "series": "/$host_regex.route-table.summary.inet.3.hidden/",
+          "series": "/$host_regex.route-table.summary.inet.3.routes/",
           "tags": []
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Hidden routes (inet.3)",
+      "title": "Total routes (inet.3)",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -1459,7 +1459,7 @@
               }
             ]
           ],
-          "series": "/$host_regex.route-table.summary.inet.3.hidden/",
+          "series": "/$host_regex.route-table.summary.inet.3.routes/",
           "tags": []
         }
       ],
@@ -1559,7 +1559,7 @@
             }
           ],
           "policy": "default",
-          "query": "select mean(value) from /($host_regex).route-table.summary.mpls.0.hidden/ where $timeFilter group by time($interval)",
+          "query": "select mean(value) from /($host_regex).route-table.summary.mpls.0.routes/ where $timeFilter group by time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1577,14 +1577,14 @@
               }
             ]
           ],
-          "series": "/$host_regex.route-table.summary.bgp.l3vpn.0.hidden/",
+          "series": "/$host_regex.route-table.summary.bgp.l3vpn.0.routes/",
           "tags": []
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Hidden routes (mpls.0)",
+      "title": "Total routes (mpls.0)",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -1695,7 +1695,7 @@
               }
             ]
           ],
-          "series": "/$host_regex.route-table.summary.inet.3.hidden/",
+          "series": "/$host_regex.route-table.summary.inet.3.routes/",
           "tags": []
         }
       ],
@@ -1795,7 +1795,7 @@
             }
           ],
           "policy": "default",
-          "query": "select mean(value) from /($host_regex).route-table.summary.inetcolor.0.hidden/ where $timeFilter group by time($interval)",
+          "query": "select mean(value) from /($host_regex).route-table.summary.inetcolor.0.routes/ where $timeFilter group by time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1813,14 +1813,14 @@
               }
             ]
           ],
-          "series": "/$host_regex.route-table.summary.bgp.l3vpn.0.hidden/",
+          "series": "/$host_regex.route-table.summary.bgp.l3vpn.0.routes/",
           "tags": []
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Hidden routes (inetcolor.0)",
+      "title": "Total routes (inetcolor.0)",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -1931,7 +1931,7 @@
               }
             ]
           ],
-          "series": "/$host_regex.route-table.summary.inet.3.hidden/",
+          "series": "/$host_regex.route-table.summary.inet.3.routes/",
           "tags": []
         }
       ],
@@ -2031,7 +2031,7 @@
             }
           ],
           "policy": "default",
-          "query": "select mean(value) from /($host_regex).route-table.summary.inet6color.0.hidden/ where $timeFilter group by time($interval)",
+          "query": "select mean(value) from /($host_regex).route-table.summary.inet6color.0.routes/ where $timeFilter group by time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2049,14 +2049,14 @@
               }
             ]
           ],
-          "series": "/$host_regex.route-table.summary.bgp.l3vpn.0.hidden/",
+          "series": "/$host_regex.route-table.summary.bgp.l3vpn.0.routes/",
           "tags": []
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Hidden routes (inet6color.0)",
+      "title": "Total routes (inet6color.0)",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -2634,7 +2634,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select mean(value)  from /($host_regex).re.memory.cosd-SIZE/ where $timeFilter group by time($interval)",
+          "query": "select mean(value)  from /($host_regex).re.memory.EvoAftManBt-mai-SIZE/ where $timeFilter group by time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2652,14 +2652,14 @@
               }
             ]
           ],
-          "series": "/$host_regex.re.memory.cosd-SIZE/",
+          "series": "/$host_regex.re.memory.EvoAftManBt-mai-SIZE/",
           "tags": []
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "COSD SIZE",
+      "title": "EvoAftMan SIZE",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -2747,7 +2747,7 @@
             }
           ],
           "policy": "default",
-          "query": "select mean(value) from /($host_regex).re.memory.cosd-CPU/ where $timeFilter group by time($interval)",
+          "query": "select mean(value) from /($host_regex).re.memory.EvoAftManBt-mai-CPU/ where $timeFilter group by time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2771,7 +2771,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "COSD CPU Usage",
+      "title": "EvoAftMan CPU Usage",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -4740,7 +4740,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select mean(value)  from /($host_regex).re.memory.fabspokedfchip-SIZE/ where $timeFilter group by time($interval)",
+          "query": "select mean(value)  from /($host_regex).re.memory.msvcsd-SIZE/ where $timeFilter group by time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -4765,7 +4765,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "fabspokedfchip SIZE",
+      "title": "msvcsd SIZE",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -4854,7 +4854,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select mean(value) from /($host_regex).re.memory.fabspokedfchip-CPU/ where $timeFilter group by time($interval)",
+          "query": "select mean(value) from /($host_regex).re.memory.msvcsd-CPU/ where $timeFilter group by time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -4878,7 +4878,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "fabspokedfchip CPU Usage",
+      "title": "msvcsd CPU Usage",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -6156,7 +6156,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select mean(value)  from /($host_regex).re.memory.snmpdsubagent-SIZE/ where $timeFilter group by time($interval)",
+          "query": "select mean(value)  from /($host_regex).re.memory.fibd-SIZE/ where $timeFilter group by time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -6181,7 +6181,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "snmpdsubagent SIZE",
+      "title": "fibd SIZE",
       "tooltip": {
         "shared": false,
         "sort": 0,
@@ -6270,7 +6270,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select mean(value) from /($host_regex).re.memory.snmpdsubagent-CPU/ where $timeFilter group by time($interval)",
+          "query": "select mean(value) from /($host_regex).re.memory.fibd-CPU/ where $timeFilter group by time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -6294,7 +6294,7 @@
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "snmpdsubagent CPU Usage",
+      "title": "fibd CPU Usage",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -6347,6 +6347,241 @@
         "w": 12,
         "x": 0,
         "y": 191
+      },
+      "id": 166,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "connected",
+      "percentage": false,
+      "pointradius": 1,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "column": "value",
+          "dsType": "influxdb",
+          "function": "mean",
+          "groupBy": [
+            {
+              "params": [
+                "$interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "select mean(value)  from /($host_regex).re.memory.fibtd-SIZE/ where $timeFilter group by time($interval)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "series": "/$host_regex.re.memory.sampled-SIZE/",
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "fibtd SIZE",
+      "tooltip": {
+        "shared": false,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "decbytes",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "influxdb",
+      "fill": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 191
+      },
+      "id": 167,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "connected",
+      "percentage": false,
+      "pointradius": 1,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "$interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "select mean(value) from /($host_regex).re.memory.fibtd-CPU/ where $timeFilter group by time($interval)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "fibtd CPU Usage",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transparent": false,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "percent",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "influxdb",
+      "editable": true,
+      "error": false,
+      "fill": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 198
       },
       "id": 164,
       "legend": {
@@ -6462,7 +6697,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 191
+        "y": 198
       },
       "id": 165,
       "legend": {
@@ -6573,7 +6808,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 198
+        "y": 205
       },
       "id": 144,
       "panels": [],
@@ -6595,7 +6830,7 @@
         "h": 13,
         "w": 12,
         "x": 0,
-        "y": 199
+        "y": 206
       },
       "id": 94,
       "legend": {
@@ -6717,7 +6952,7 @@
         "h": 13,
         "w": 12,
         "x": 12,
-        "y": 199
+        "y": 206
       },
       "id": 92,
       "legend": {
@@ -6838,7 +7073,7 @@
         "h": 10,
         "w": 12,
         "x": 0,
-        "y": 212
+        "y": 219
       },
       "id": 93,
       "legend": {
@@ -6950,7 +7185,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 222
+        "y": 229
       },
       "id": 147,
       "panels": [],
@@ -6972,7 +7207,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 223
+        "y": 230
       },
       "id": 63,
       "legend": {
@@ -7090,7 +7325,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 223
+        "y": 230
       },
       "id": 65,
       "legend": {
@@ -7200,7 +7435,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 230
+        "y": 237
       },
       "id": 149,
       "panels": [],
@@ -7221,7 +7456,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 231
+        "y": 238
       },
       "id": 64,
       "legend": {
@@ -7339,7 +7574,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 231
+        "y": 238
       },
       "id": 129,
       "legend": {
@@ -7457,7 +7692,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 238
+        "y": 245
       },
       "id": 137,
       "legend": {
@@ -7632,7 +7867,7 @@
     "type": "timepicker"
   },
   "timezone": "browser",
-  "title": "PDT-EVO",
+  "title": "PDT-EVO2",
   "uid": "Zev_hWJGk",
-  "version": 17
+  "version": 10
 }
