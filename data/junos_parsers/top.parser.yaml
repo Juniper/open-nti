@@ -312,7 +312,7 @@ parser:
     -
         type: single-value
         method: regex
-        regex: \s*([0-9]+)\s+\w+\s+([0-9]+)\s+\S+\s+\d*\S*\s+(\d*\S*)\s+(\d+\S*)\s+\S+\s+\S+\s+\S+\s+(\S+)\s+fibtd\r\n
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+fibtd\r\n
         variables:
         -
             variable-name:  $host.re.memory.fibtd-SIZE
@@ -326,7 +326,7 @@ parser:
     -
         type: single-value
         method: regex
-        regex: \s*([0-9]+)\s+\w+\s+([0-9]+)\s+\S+\s+\d*\S*\s+(\d*\S*)\s+(\d+\S*)\s+\S+\s+\S+\s+\S+\s+(\S+)\s+fibd\r\n
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+fibd
         variables:
         -
             variable-name:  $host.re.memory.fibd-SIZE
@@ -340,21 +340,21 @@ parser:
     -
         type: single-value
         method: regex
-        regex: \s*([0-9]+)\s+\w+\s+([0-9]+)\s+\S+\s+\d*\S*\s+(\d*\S*)\s+(\d+\S*)\s+\S+\s+\S+\s+\S+\s+(\S+)\s+msvcsd\r\n
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+msvcsd
         variables:
         -
-            variable-name:  $host.re.memory.msvcd-SIZE
+            variable-name:  $host.re.memory.msvcsd-SIZE
             variable-type:  integer
         -
-            variable-name:  $host.re.memory.msvcd-RES
+            variable-name:  $host.re.memory.msvcsd-RES
             variable-type:  integer
         -
-            variable-name:  $host.re.memory.msvcd-CPU
+            variable-name:  $host.re.memory.msvcsd-CPU
             variable-type:  integer
     -
         type: single-value
         method: regex
-        regex: \s*([0-9]+)\s+\w+\s+([0-9]+)\s+\S+\s+\d*\S*\s+(\d*\S*)\s+(\d+\S*)\s+\S+\s+\S+\s+\S+\s+(\S+)\s+fabtokend\r\n
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+fabtokend\r\n
         variables:
         -
             variable-name:  $host.re.memory.fabtokend-SIZE
@@ -368,7 +368,7 @@ parser:
     -
         type: single-value
         method: regex
-        regex: \s*([0-9]+)\s+\w+\s+([0-9]+)\s+\S+\s+\d*\S*\s+(\d*\S*)\s+(\d+\S*)\s+\S+\s+\S+\s+\S+\s+(\S+)\s+l2ald-agent\r\n
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+l2ald-agent\r\n
         variables:
         -
             variable-name:  $host.re.memory.l2ald-agent-SIZE
