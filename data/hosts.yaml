@@ -1,12 +1,2 @@
-sup-tb4-geodc-1-scapa: tb4 evo
-sup-tb4-geodc-1-scapa1: tb4 evo
-sup-tb4-geodc-2-brackla: tb4 evo
-sup-tb6-geodc-1-scapa: tb6 evo
-sup-tb6-geodc-1-scapa1: tb6 evo
-scapa-12: ptx1000 evo
-sp-bowmore-1-q: sp evo
-sp-scapa8-1-w: sp evo
-sup-tb2-geodc-1-ptx10k: ptx1000 evo
-sup-tb7-geodc-1-brackla: tb7 evo
-waggle: ptx10001 evo
-sp-t1scapa-1-b: tb1 evo
+sup-tb4-geodc-1-scapa.englab.juniper.net: tb4 evo
+sup-tb4-geodc-2-brackla.englab.juniper.net: tb4 evo
