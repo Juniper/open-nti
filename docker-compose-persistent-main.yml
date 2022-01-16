@@ -27,8 +27,8 @@ opennti:
 # and disable user sign up
   environment:
     - "GF_PATHS_PROVISIONING=/src/provisioning"
-#   - "GF_USERS_ALLOW_SIGN_UP=false"
-#   - "GF_AUTH_ANONYMOUS_ENABLED=true"
+    - "GF_USERS_ALLOW_SIGN_UP=false"
+    - "GF_AUTH_ANONYMOUS_ENABLED=true"
   restart: always
   volumes:
    - ./$LOCAL_DIR_GF_PROVISIONING:/src/provisioning
