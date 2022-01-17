@@ -1,5 +1,5 @@
 parser:
-    regex-command: top\s
+    regex-command: top.*?shell\sre
     matches:
     -
         type: single-value

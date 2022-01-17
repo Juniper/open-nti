@@ -1,0 +1,101 @@
+parser:
+    regex-command: top.*?shell\s(fpc\d+)
+    matches:
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+evo-cda-bt
+        variables:
+        -
+            variable-name:  $host.$fpc.memory.evo-cda-bt-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.$fpc.memory.evo-cda-bt-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.$fpc.memory.evo-cda-bt-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+EvoAftManBt
+        variables:
+        -
+            variable-name:  $host.$fpc.memory.EvoAftManBt-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.$fpc.memory.EvoAftManBt-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.$fpc.memory.EvoAftManBt-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+msvcsd
+        variables:
+        -
+            variable-name:  $host.$fpc.memory.msvcsd-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.$fpc.memory.msvcsd-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.$fpc.memory.msvcsd-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+packetio
+        variables:
+        -
+            variable-name:  $host.$fpc.memory.packetio-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.$fpc.memory.packetio-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.$fpc.memory.packetio-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+distributord
+        variables:
+        -
+            variable-name:  $host.$fpc.memory.distributord-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.$fpc.memory.distributord-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.$fpc.memory.distributord-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+evoaft-jvisiond
+        variables:
+        -
+            variable-name:  $host.$fpc.memory.evoaft-jvisiond-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.$fpc.memory.evoaft-jvisiond-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.$fpc.memory.evoaft-jvisiond-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+hwdfpc
+        variables:
+        -
+            variable-name:  $host.$fpc.memory.hwdfpc-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.$fpc.memory.hwdfpc-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.$fpc.memory.hwdfpc-CPU
+            variable-type:  integer

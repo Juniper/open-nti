@@ -171,11 +171,21 @@ def execute_command(jdevice,command):
     elif re.search("\| count", command, re.IGNORECASE):
         format = "txt-filtered"
         command_tmp = command.split("|")[0]
-    elif re.search("\| shell", command, re.IGNORECASE):
+    elif re.search("\| shell re", command, re.IGNORECASE):
         # This is the shell commmand supposed to run on RE Linux shell
         ss = StartShell(jdevice)
         ss.open()
         command_tmp = command.split("|")[0]
+        command_result = ss.run(command_tmp)
+        return command_result[1]
+    elif re.search("\| shell fpc", command, re.IGNORECASE):
+        # This is the shell commmand supposed to run on FPC Linux shell
+        ss = StartShell(jdevice)
+        ss.open()
+        command_tmp = command.split("|")[0]
+        fpc_slot = command.split()[-1]
+        fpc_shell = 'chvrf iri ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@' + fpc_slot
+        command_result = ss.run(fpc_shell)
         command_result = ss.run(command_tmp)
         return command_result[1]
     try:
@@ -249,6 +259,9 @@ def eval_variable_name(variable,**kwargs):
             variable = variable.replace("$"+key,keys[key])
         variable = variable.replace("$host",kwargs['host'])
 
+        if 'fpc' in kwargs.keys():
+            variable = variable.replace("$fpc",kwargs['fpc'])
+
         if 'pid' in kwargs.keys():
             variable = variable.replace("$pid",kwargs['pid'])
         # the host replacement should be move it to other place
@@ -300,8 +313,8 @@ def insert_datapoints(datapoints):
 
     dbclient = InfluxDBClient(db_server, db_port, db_admin, db_admin_password)
     dbclient.switch_database(db_name)
-    logger.info('Inserting into database the following datapoints:')
-    logger.info(pformat(datapoints))
+    # logger.info('Inserting into database the following datapoints:')
+    # logger.info(pformat(datapoints))
     response = dbclient.write_points(datapoints)
 
 def get_metadata_and_add_datapoint(datapoints,**kwargs):
@@ -334,7 +347,10 @@ def get_metadata_and_add_datapoint(datapoints,**kwargs):
 
     # Resolving the variable name
     value = convert_variable_type(value_tmp)
-    variable_name, kpi_tags['kpi'] = eval_variable_name(match["variable-name"],host=host,keys=keys)
+    if 'fpc' in kwargs.keys():
+        variable_name, kpi_tags['kpi'] = eval_variable_name(match["variable-name"],host=host,fpc=kwargs["fpc"],keys=keys)
+    else:
+        variable_name, kpi_tags['kpi'] = eval_variable_name(match["variable-name"],host=host,keys=keys)
 
     # Calculating delta values (only applies for numeric values)
     #delta = 0
@@ -403,10 +419,12 @@ def parse_result(host,target_command,result,datapoints,kpi_tags):
     parser_found = False
     for junos_parser in junos_parsers:
         regex_command = junos_parser["parser"]["regex-command"]
-        if re.search(regex_command, target_command, re.IGNORECASE):
+        regex_match = re.search(regex_command, target_command, re.IGNORECASE)
+        if regex_match:
             parser_found = True
             matches = junos_parser["parser"]["matches"]
             timestamp = str(int(datetime.today().strftime('%s')))
+
             for match in matches:
                 try:
                     if match["method"] == "xpath":
@@ -465,7 +483,12 @@ def parse_result(host,target_command,result,datapoints,kpi_tags):
                                                             if "variable-type" in sub_match["variables"][i]:
                                                                 value_tmp = eval_variable_value(value_tmp, type=sub_match["variables"][i]["variable-type"])
                                                             #get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match["variables"][i],value_tmp=value_tmp,host=host,latest_datapoints=latest_datapoints,kpi_tags=kpi_tags,keys=keys)
-                                                            get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match["variables"][i],value_tmp=value_tmp,host=host,kpi_tags=kpi_tags,keys=keys)
+                                                            # deal with top command output from FPC. Get the FPC slot from target_command
+                                                            if 'shell fpc' in target_command:
+                                                                fpc_slot = regex_match.group(1)
+                                                                get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match["variables"][i],value_tmp=value_tmp,host=host,fpc=fpc_slot,kpi_tags=kpi_tags,keys=keys)
+                                                            else:
+                                                                get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match["variables"][i],value_tmp=value_tmp,host=host,kpi_tags=kpi_tags,keys=keys)
                                                     else:
                                                         logger.error('[%s]: More matches found on regex than variables especified on parser: %s', host, regex_command)
                                                 else:
@@ -514,7 +537,11 @@ def parse_result(host,target_command,result,datapoints,kpi_tags):
                                         if "variable-type" in match["variables"][i]:
                                             value_tmp = eval_variable_value(value_tmp, type=match["variables"][i]["variable-type"])
                                         #get_metadata_and_add_datapoint(datapoints=datapoints,match=match["variables"][i],value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
-                                        get_metadata_and_add_datapoint(datapoints=datapoints,match=match["variables"][i],value_tmp=value_tmp,host=host,kpi_tags=kpi_tags)
+                                        if 'shell fpc' in target_command:
+                                            fpc_slot = regex_match.group(1)
+                                            get_metadata_and_add_datapoint(datapoints=datapoints,match=match["variables"][i],value_tmp=value_tmp,host=host,fpc=fpc_slot,kpi_tags=kpi_tags)
+                                        else:
+                                            get_metadata_and_add_datapoint(datapoints=datapoints,match=match["variables"][i],value_tmp=value_tmp,host=host,kpi_tags=kpi_tags)
                                 else:
                                     logger.error('[%s]: More matches found on regex than variables especified on parser: %s', host, regex_command)
                             else:

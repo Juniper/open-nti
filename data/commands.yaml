@@ -34,7 +34,8 @@ evo_commands:
       show mpls lsp terse | display xml
       show task memory | display xml
       show bgp summary | display xml
-      top -b -n 1 | shell
+      top -b -n 1 | shell re
+      top -bn 1 | shell fpc0
    tags: evo
 
 generic_commands:
