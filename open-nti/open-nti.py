@@ -186,6 +186,9 @@ def execute_command(jdevice,command):
         fpc_slot = command.split()[-1]
         fpc_shell = 'chvrf iri ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@' + fpc_slot
         command_result = ss.run(fpc_shell)
+        if 'No route to host' in command_result[1]:
+            logger.error("Error when login to FPC shell: "+fpc_slot)
+            return False
         command_result = ss.run(command_tmp)
         return command_result[1]
     try:
