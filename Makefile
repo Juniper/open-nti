@@ -136,25 +136,25 @@ scale-input-snmp:
 	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE) scale input-snmp=$(NBR)
 
 cron-show:
-	docker exec -it $(MAIN_CONTAINER_NAME) /usr/bin/python /opt/open-nti/startcron.py -a show  -c "/usr/bin/python /opt/open-nti/open-nti.py -s"
+	docker exec -it $(MAIN_CONTAINER_NAME) /usr/bin/python3 /opt/open-nti/startcron.py -a show  -c "/usr/bin/python /opt/open-nti/open-nti.py -s"
 
 cron-add:
 ifeq ($(TAG), all)
-	docker exec -it $(MAIN_CONTAINER_NAME) /usr/bin/python /opt/open-nti/startcron.py -a add -t "$(TIME)" -c "/usr/bin/python /opt/open-nti/open-nti.py -s"
+	docker exec -it $(MAIN_CONTAINER_NAME) /usr/bin/python3 /opt/open-nti/startcron.py -a add -t "$(TIME)" -c "/usr/bin/python /opt/open-nti/open-nti.py -s"
 else
-	docker exec -it $(MAIN_CONTAINER_NAME) /usr/bin/python /opt/open-nti/startcron.py -a add -t "$(TIME)" -c "/usr/bin/python /opt/open-nti/open-nti.py -s --tag $(TAG)"
+	docker exec -it $(MAIN_CONTAINER_NAME) /usr/bin/python3 /opt/open-nti/startcron.py -a add -t "$(TIME)" -c "/usr/bin/python /opt/open-nti/open-nti.py -s --tag $(TAG)"
 endif
 
 cron-delete:
 ifeq ($(TAG), all)
-	docker exec -it $(MAIN_CONTAINER_NAME) /usr/bin/python /opt/open-nti/startcron.py -a delete -c "/usr/bin/python /opt/open-nti/open-nti.py -s"
+	docker exec -it $(MAIN_CONTAINER_NAME) /usr/bin/python3 /opt/open-nti/startcron.py -a delete -c "/usr/bin/python /opt/open-nti/open-nti.py -s"
 else
-	docker exec -it $(MAIN_CONTAINER_NAME) /usr/bin/python /opt/open-nti/startcron.py -a delete -c "/usr/bin/python /opt/open-nti/open-nti.py -s --tag $(TAG)"
+	docker exec -it $(MAIN_CONTAINER_NAME) /usr/bin/python3 /opt/open-nti/startcron.py -a delete -c "/usr/bin/python /opt/open-nti/open-nti.py -s --tag $(TAG)"
 endif
 
 cron-debug:
 ifeq ($(TAG), all)
-	docker exec -i -t $(MAIN_CONTAINER_NAME) /usr/bin/python /opt/open-nti/open-nti.py -s -c
+	docker exec -i -t $(MAIN_CONTAINER_NAME) /usr/bin/python3 /opt/open-nti/open-nti.py -s -c
 else
-	docker exec -i -t $(MAIN_CONTAINER_NAME) /usr/bin/python /opt/open-nti/open-nti.py -s -c --tag $(TAG)
+	docker exec -i -t $(MAIN_CONTAINER_NAME) /usr/bin/python3 /opt/open-nti/open-nti.py -s -c --tag $(TAG)
 endif
