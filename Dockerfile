@@ -1,4 +1,4 @@
-FROM juniper/open-nti:latest
+FROM zhanghaofeng3672/open-nti-evo:latest
 MAINTAINER Haofeng Zhang <hfzhang.cn@gmail.com>
 
 ### Remove Grafana login
