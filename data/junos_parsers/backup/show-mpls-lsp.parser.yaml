@@ -1,0 +1,19 @@
+parser:
+    regex-command: show\s+mpls\s+lsp\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //rsvp-session-data
+        loop:
+            key: ./session-type
+            sub-matches:
+            -
+                xpath: ./display-count
+                variable-name:  $host.mpls.lsp.$key.display-count
+            -
+                xpath: ./up-count
+                variable-name:  $host.mpls.lsp.$key.up-count
+            -
+                xpath: ./down-count
+                variable-name:  $host.mpls.lsp.$key.down-count

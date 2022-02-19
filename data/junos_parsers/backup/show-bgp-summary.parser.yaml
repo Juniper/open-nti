@@ -1,0 +1,108 @@
+parser:
+    regex-command: show\s+bgp\s+summary\s+\|\s+display\s+xml
+    matches:
+    -
+        type: single-value
+        method: xpath
+        xpath: //bgp-information/group-count
+        variable-name:  $host.protocols.bgp.summary.group-count
+    -
+        type: single-value
+        method: xpath
+        xpath: //bgp-information/peer-count
+        variable-name:  $host.protocols.bgp.summary.peer-count
+    -
+        type: single-value
+        method: xpath
+        xpath: //bgp-information/down-peer-count
+        variable-name:  $host.protocols.bgp.summary.down-peer-count
+    -
+        type: single-value
+        method: xpath
+        xpath: //bgp-peer[peer-address='10.255.0.201']/bgp-rib/received-prefix-count
+        variable-name:  $host.protocols.bgp.summary.10.255.0.201.received-prefix-count
+    -
+        type: single-value
+        method: xpath
+        xpath: //bgp-peer[peer-address='10.255.0.201']/input-messages
+        variable-name:  $host.protocols.bgp.summary.10.255.0.201.input-messages
+    -
+        type: single-value
+        method: xpath
+        xpath: //bgp-peer[peer-address='10.255.0.201']/output-messages
+        variable-name:  $host.protocols.bgp.summary.10.255.0.201.output-messages
+    -
+        type: single-value
+        method: xpath
+        xpath: //bgp-peer[peer-address='10.255.0.202']/bgp-rib/received-prefix-count
+        variable-name:  $host.protocols.bgp.summary.10.255.0.202.received-prefix-count
+    -
+        type: single-value
+        method: xpath
+        xpath: //bgp-peer[peer-address='10.255.0.202']/input-messages
+        variable-name:  $host.protocols.bgp.summary.10.255.0.202.input-messages
+    -
+        type: single-value
+        method: xpath
+        xpath: //bgp-peer[peer-address='10.255.0.202']/output-messages
+        variable-name:  $host.protocols.bgp.summary.10.255.0.202.output-messages
+    -
+        type: single-value
+        method: xpath
+        xpath: //bgp-peer[peer-address='10.255.0.205']/bgp-rib/received-prefix-count
+        variable-name:  $host.protocols.bgp.summary.10.255.0.205.received-prefix-count
+    -
+        type: single-value
+        method: xpath
+        xpath: //bgp-peer[peer-address='10.255.0.205']/input-messages
+        variable-name:  $host.protocols.bgp.summary.10.255.0.205.input-messages
+    -
+        type: single-value
+        method: xpath
+        xpath: //bgp-peer[peer-address='10.255.0.205']/output-messages
+        variable-name:  $host.protocols.bgp.summary.10.255.0.205.output-messages
+    -
+        type: single-value
+        method: xpath
+        xpath: //bgp-peer[peer-address='10.255.0.206']/bgp-rib/received-prefix-count
+        variable-name:  $host.protocols.bgp.summary.10.255.0.206.received-prefix-count
+    -
+        type: single-value
+        method: xpath
+        xpath: //bgp-peer[peer-address='10.255.0.206']/input-messages
+        variable-name:  $host.protocols.bgp.summary.10.255.0.206.input-messages
+    -
+        type: single-value
+        method: xpath
+        xpath: //bgp-peer[peer-address='10.255.0.206']/output-messages
+        variable-name:  $host.protocols.bgp.summary.10.255.0.206.output-messages
+    -
+        type: single-value
+        method: xpath
+        xpath: //bgp-peer[peer-address='10.255.0.5']/bgp-rib/received-prefix-count
+        variable-name:  $host.protocols.bgp.summary.10.255.0.5.received-prefix-count
+    -
+        type: single-value
+        method: xpath
+        xpath: //bgp-peer[peer-address='10.255.0.5']/input-messages
+        variable-name:  $host.protocols.bgp.summary.10.255.0.5.input-messages
+    -
+        type: single-value
+        method: xpath
+        xpath: //bgp-peer[peer-address='10.255.0.5']/output-messages
+        variable-name:  $host.protocols.bgp.summary.10.255.0.5.output-messages
+    -
+        type: single-value
+        method: xpath
+        xpath: //bgp-peer[peer-address='10.255.0.6']/bgp-rib/received-prefix-count
+        variable-name:  $host.protocols.bgp.summary.10.255.0.6.received-prefix-count
+    -
+        type: single-value
+        method: xpath
+        xpath: //bgp-peer[peer-address='10.255.0.6']/input-messages
+        variable-name:  $host.protocols.bgp.summary.10.255.0.6.input-messages
+    -
+        type: single-value
+        method: xpath
+        xpath: //bgp-peer[peer-address='10.255.0.6']/output-messages
+        variable-name:  $host.protocols.bgp.summary.10.255.0.6.output-messages

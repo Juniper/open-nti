@@ -1,0 +1,100 @@
+parser:
+    regex-command: show\s+lwaftr\s+statisti\s*s\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //*[local-name() = 'statistics']
+        loop:
+            key: ./*[local-name() = 'id']
+            sub-matches:
+            -
+                xpath: ./*[local-name() = 'breaths']
+                variable-name:  $host.lwaftr.statistics.$key.breaths
+            -
+                xpath: ./*[local-name() = 'in-ipv4-bytes']
+                variable-name:  $host.lwaftr.statistics.$key.in-ipv4-bytes
+            -
+                xpath: ./*[local-name() = 'out-ipv4-bytes']
+                variable-name:  $host.lwaftr.statistics.$key.out-ipv4-bytes
+            -
+                xpath: ./*[local-name() = 'in-ipv4-packets']
+                variable-name:  $host.lwaftr.statistics.$key.in-ipv4-packets
+            -
+                xpath: ./*[local-name() = 'out-ipv4-packets']
+                variable-name:  $host.lwaftr.statistics.$key.out-ipv4-packets
+            -
+                xpath: ./*[local-name() = 'in-ipv6-bytes']
+                variable-name:  $host.lwaftr.statistics.$key.in-ipv6-bytes
+            -
+                xpath: ./*[local-name() = 'out-ipv6-bytes']
+                variable-name:  $host.lwaftr.statistics.$key.out-ipv6-bytes
+            -
+                xpath: ./*[local-name() = 'in-ipv6-packets']
+                variable-name:  $host.lwaftr.statistics.$key.in-ipv6-packets
+            -
+                xpath: ./*[local-name() = 'out-ipv6-packets']
+                variable-name:  $host.lwaftr.statistics.$key.out-ipv6-packets
+            -
+                xpath: ./*[local-name() = 'drop-all-ipv4-iface-bytes']
+                variable-name:  $host.lwaftr.statistics.$key.drop-all-ipv4-iface-bytes
+            -
+                xpath: ./*[local-name() = 'drop-all-ipv4-iface-packets']
+                variable-name:  $host.lwaftr.statistics.$key.drop-all-ipv4-iface-packets
+            -
+                xpath: ./*[local-name() = 'drop-all-ipv6-iface-bytes']
+                variable-name:  $host.lwaftr.statistics.$key.drop-all-ipv6-iface-bytes
+            -
+                xpath: ./*[local-name() = 'drop-all-ipv6-iface-packets']
+                variable-name:  $host.lwaftr.statistics.$key.drop-all-ipv6-iface-packets
+            -
+                xpath: ./*[local-name() = 'drop-no-dest-softwire-ipv4-bytes']
+                variable-name:  $host.lwaftr.statistics.$key.drop-no-dest-softwire-ipv4-bytes
+            -
+                xpath: ./*[local-name() = 'drop-no-dest-softwire-ipv4-packets']
+                variable-name:  $host.lwaftr.statistics.$key.drop-no-dest-softwire-ipv4-packets
+            -
+                xpath: ./*[local-name() = 'drop-no-source-softwire-ipv6-bytes']
+                variable-name:  $host.lwaftr.statistics.$key.drop-no-source-softwire-ipv6-bytes
+            -
+                xpath: ./*[local-name() = 'drop-no-source-softwire-ipv6-packets']
+                variable-name:  $host.lwaftr.statistics.$key.drop-no-source-softwire-ipv6-packets
+            -
+                xpath: ./*[local-name() = 'drop-bad-checksum-icmpv4-bytes']
+                variable-name:  $host.lwaftr.statistics.$key.drop-bad-checksum-icmpv4-bytes
+            -
+                xpath: ./*[local-name() = 'drop-bad-checksum-icmpv4-packets']
+                variable-name:  $host.lwaftr.statistics.$key.drop-bad-checksum-icmpv4-packets
+            -
+                xpath: ./*[local-name() = 'drop-in-by-policy-icmpv4-packets']
+                variable-name:  $host.lwaftr.statistics.$key.drop-in-by-policy-icmpv4-packets
+            -
+                xpath: ./*[local-name() = 'drop-in-by-policy-icmpv6-packets']
+                variable-name:  $host.lwaftr.statistics.$key.drop-in-by-policy-icmpv6-packets
+            -
+                xpath: ./*[local-name() = 'drop-in-by-rfc7596-icmpv4-packets']
+                variable-name:  $host.lwaftr.statistics.$key.drop-in-by-rfc7596-icmpv4-packets
+            -
+                xpath: ./*[local-name() = 'drop-out-by-policy-icmpv4-packets']
+                variable-name:  $host.lwaftr.statistics.$key.drop-out-by-policy-icmpv4-packets
+            -
+                xpath: ./*[local-name() = 'drop-out-by-policy-icmpv6-packets']
+                variable-name:  $host.lwaftr.statistics.$key.drop-out-by-policy-icmpv6-packets
+            -
+                xpath: ./*[local-name() = 'in-ipv4-frag-needs-reassembly']
+                variable-name:  $host.lwaftr.statistics.$key.in-ipv4-frag-needs-reassembly
+            -
+                xpath: ./*[local-name() = 'in-ipv4-frag-reassembled']
+                variable-name:  $host.lwaftr.statistics.$key.in-ipv4-frag-reassembled
+            -
+                xpath: ./*[local-name() = 'in-ipv4-frag-reassembly-unneeded']
+                variable-name:  $host.lwaftr.statistics.$key.in-ipv4-frag-reassembly-unneeded
+            -
+                xpath: ./*[local-name() = 'in-ipv6-frag-needs-reassembly']
+                variable-name:  $host.lwaftr.statistics.$key.in-ipv6-frag-needs-reassembly
+            -
+                xpath: ./*[local-name() = 'in-ipv6-frag-reassembled']
+                variable-name:  $host.lwaftr.statistics.$key.in-ipv6-frag-reassembled
+            -
+                xpath: ./*[local-name() = 'in-ipv6-frag-reassembly-unneeded']
+                variable-name:  $host.lwaftr.statistics.$key.in-ipv6-frag-reassembly-unneeded

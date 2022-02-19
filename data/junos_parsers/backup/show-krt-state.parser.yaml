@@ -1,0 +1,48 @@
+parser:
+    regex-command: show\s+krt\s+state\s+\|\s+display\s+xml
+    matches:
+    -
+        type: single-value
+        method: xpath
+        xpath: //krt-queue-state/krtq-high-mpls-adds
+        variable-name:  $host.mpls-adds.krtq-high-mpls-adds
+    -
+        type: single-value
+        method: xpath
+        xpath: //krt-queue-state/krtq-high-mpls-changes
+        variable-name:  $host.mpls-changes.krtq-high-mpls-changes
+    -
+        type: single-value
+        method: xpath
+        xpath: //krt-queue-state/krtq-high-priority-adds
+        variable-name:  $host.krtq-high-priority-adds
+    -
+        type: single-value
+        method: xpath
+        xpath: //krt-queue-state/krtq-normal-priority-adds
+        variable-name:  $host.krtq-normal-priority-adds
+    -
+        type: single-value
+        method: xpath
+        xpath: //krt-queue-state/krtq-high-priority-changes
+        variable-name:  $host.krtq-high-priority-changes
+    -
+        type: single-value
+        method: xpath
+        xpath: //krt-queue-state/krtq-high-priority-deletes
+        variable-name:  $host.krtq-high-priority-deletes
+    -
+        type: single-value
+        method: xpath
+        xpath: //krt-queue-state/krtq-normal-priority-deletes
+        variable-name:  $host.krtq-normal-priority-deletes
+    -
+        type: single-value
+        method: xpath
+        xpath: //krt-queue-state/krtq-normal-priority-changes
+        variable-name:  $host.krtq-normal-priority-changes
+    -
+        type: single-value
+        method: xpath
+        xpath: //krt-queue-state/krtq-operations-queued
+        variable-name:  $host.krtq-operations-queued

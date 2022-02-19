@@ -1,0 +1,25 @@
+parser:
+    regex-command: show\s+services\s+video-monitoring\s+mdi\s+flow\s+fpc-slot\s+1\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //vmon-mdi-flow-brief
+        loop:
+            flow_sno: ./mdi-flow-sno
+            src_ip: ./mdi-source-address
+            dst_ip: ./mdi-destination-address
+            sub-matches:
+            -
+                xpath: ./mdi-avg-mrv
+                variable-name:  $host.services.video-monitoring.mdi.$flow_sno.$src_ip-$dst_ip.mdi-avg-mrv
+            -
+                xpath: ./mdi-avg-df-mlr
+                regex: (\d+\.\d+):(\d+)
+                variables:
+                -
+                    variable-name:  $host.services.video-monitoring.mdi.$flow_sno.$src_ip-$dst_ip.mdi-avg-df
+                    variable-type:  float
+                -
+                    variable-name:  $host.services.video-monitoring.mdi.$flow_sno.$src_ip-$dst_ip.mdi-avg-mlr
+                    variable-type:  float

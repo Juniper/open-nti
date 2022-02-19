@@ -1,0 +1,34 @@
+parser:
+    regex-command: show\s+system\s+buffers
+    matches:
+    -
+        type: single-value
+        method: regex
+        regex: ^([0-9]+)/([0-9]+)/([0-9]+)\s+mbufs in use \(current/cache/total\)$
+        variables:
+        -
+            variable-name:  $host.re.system.buffers.in_use.current_mbuf
+            variable-type:  integer
+        -
+            variable-name:  $host.re.system.buffers.in_use.cache_mbuf
+            variable-type:  integer
+        -
+            variable-name:  $host.re.system.buffers.in_use.total_mbuf
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: ^([0-9]+)/([0-9]+)/([0-9]+)/([0-9]+)\s+mbuf clusters in use \(current/cache/total/max\)$
+        variables:
+        -
+            variable-name:  $host.re.system.buffers.clusters_in_use.current_mbuf_clusters
+            variable-type:  integer
+        -
+            variable-name:  $host.re.system.buffers.clusters_in_use.cache_mbuf_clusters
+            variable-type:  integer
+        -
+            variable-name:  $host.re.system.buffers.clusters_in_use.total_mbuf_clusters
+            variable-type:  integer
+        -
+            variable-name:  $host.re.system.buffers.clusters_in_use.max_mbuf_clusters
+            variable-type:  integer

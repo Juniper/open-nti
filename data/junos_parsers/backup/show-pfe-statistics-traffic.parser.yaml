@@ -1,0 +1,123 @@
+parser:
+    regex-command: show\s+pfe\s+statistics\s+traffic\s+\|\s+display\s+xml
+    matches:
+    -
+        type: single-value
+        method: xpath
+        xpath: //pfe-traffic-statistics/pfe-input-packets
+        variable-name:  $host.pfe-general-stats.aggregated.pfe-traffic-stats.pfe-input-packets
+    -
+        type: single-value
+        method: xpath
+        xpath: //pfe-traffic-statistics/input-pps
+        variable-name:  $host.pfe-general-stats.aggregated.pfe-traffic-stats.input-pps
+    -
+        type: single-value
+        method: xpath
+        xpath: //pfe-traffic-statistics/pfe-output-packets
+        variable-name:  $host.pfe-general-stats.aggregated.pfe-traffic-stats.pfe-output-packets
+    -
+        type: single-value
+        method: xpath
+        xpath: //pfe-traffic-statistics/output-pps
+        variable-name:  $host.pfe-general-stats.aggregated.pfe-traffic-stats.output-pps
+    -
+        type: single-value
+        method: xpath
+        xpath: //pfe-local-traffic-statistics/pfe-input-packets
+        variable-name:  $host.pfe-general-stats.aggregated.pfe-local-traffic-stats.pfe-input-packets
+    -
+        type: single-value
+        method: xpath
+        xpath: //pfe-local-traffic-statistics/pfe-output-packets
+        variable-name:  $host.pfe-general-stats.aggregated.pfe-local-traffic-stats.pfe-output-packets
+    -
+        type: single-value
+        method: xpath
+        xpath: //pfe-local-traffic-statistics/software-input-control-drops
+        variable-name:  $host.pfe-general-stats.aggregated.pfe-local-traffic-stats.software-input-control-drops
+    -
+        type: single-value
+        method: xpath
+        xpath: //pfe-local-traffic-statistics/software-input-high-drops
+        variable-name:  $host.pfe-general-stats.aggregated.pfe-local-traffic-stats.software-input-high-drops
+    -
+        type: single-value
+        method: xpath
+        xpath: //pfe-local-traffic-statistics/software-input-medium-drops
+        variable-name:  $host.pfe-general-stats.aggregated.pfe-local-traffic-stats.software-input-medium-drops
+    -
+        type: single-value
+        method: xpath
+        xpath: //pfe-local-traffic-statistics/software-input-low-drops
+        variable-name:  $host.pfe-general-stats.aggregated.pfe-local-traffic-stats.software-input-low-drops
+    -
+        type: single-value
+        method: xpath
+        xpath: //pfe-local-traffic-statistics/software-output-low-drops
+        variable-name:  $host.pfe-general-stats.aggregated.pfe-local-traffic-stats.software-output-low-drops
+    -
+        type: single-value
+        method: xpath
+        xpath: //pfe-local-traffic-statistics/hardware-input-drops
+        variable-name:  $host.pfe-general-stats.aggregated.pfe-local-traffic-stats.hardware-input-drops
+    -
+        type: single-value
+        method: xpath
+        xpath: //pfe-hardware-discard-statistics/timeout-discard
+        variable-name:  $host.pfe-general-stats.aggregated.pfe-hardware-discards-stats.timeout-discard 
+    -
+        type: single-value
+        method: xpath
+        xpath: //pfe-hardware-discard-statistics/truncated-key-discard
+        variable-name:  $host.pfe-general-stats.aggregated.pfe-hardware-discards-stats.truncated-key-discard
+    -
+        type: single-value
+        method: xpath
+        xpath: //pfe-hardware-discard-statistics/bits-to-test-discard
+        variable-name:  $host.pfe-general-stats.aggregated.pfe-hardware-discards-stats.bits-to-test-discard
+    -
+        type: single-value
+        method: xpath
+        xpath: //pfe-hardware-discard-statistics/bits-to-test-discard
+        variable-name:  $host.pfe-general-stats.aggregated.pfe-hardware-discards-stats.bits-to-test-discard
+    -
+        type: single-value
+        method: xpath
+        xpath: //pfe-hardware-discard-statistics/data-error-discard
+        variable-name:  $host.pfe-general-stats.aggregated.pfe-hardware-discards-stats.data-error-discard
+    -
+        type: single-value
+        method: xpath
+        xpath: //pfe-hardware-discard-statistics/stack-underflow-discard
+        variable-name:  $host.pfe-general-stats.aggregated.pfe-hardware-discards-stats.stack-underflow-discard
+    -
+        type: single-value
+        method: xpath
+        xpath: //pfe-hardware-discard-statistics/stack-overflow-discard
+        variable-name:  $host.pfe-general-stats.aggregated.pfe-hardware-discards-stats.stack-overflow-discard
+    -
+        type: single-value
+        method: xpath
+        xpath: //pfe-hardware-discard-statistics/bad-route-discard
+        variable-name:  $host.pfe-general-stats.aggregated.pfe-hardware-discards-stats.bad-route-discard
+    -
+        type: single-value
+        method: xpath
+        xpath: //pfe-hardware-discard-statistics/nexthop-discard
+        variable-name:  $host.pfe-general-stats.aggregated.pfe-hardware-discards-stats.nexthop-discard
+    -
+        type: single-value
+        method: xpath
+        xpath: //pfe-hardware-discard-statistics/invalid-iif-discard
+        variable-name:  $host.pfe-general-stats.aggregated.pfe-hardware-discards-stats.invalid-iif-discard
+    -
+        type: single-value
+        method: xpath
+        xpath: //pfe-hardware-discard-statistics/info-cell-discard
+        variable-name:  $host.pfe-general-stats.aggregated.pfe-hardware-discards-stats.info-cell-discard
+    -
+        type: single-value
+        method: xpath
+        xpath: //pfe-hardware-discard-statistics/fabric-discard
+        variable-name:  $host.pfe-general-stats.aggregated.pfe-hardware-discards-stats.fabric-discard

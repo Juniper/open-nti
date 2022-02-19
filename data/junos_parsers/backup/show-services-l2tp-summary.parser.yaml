@@ -1,0 +1,13 @@
+parser:
+    regex-command: show\s+services\s+l2tp\s+summary\s+\|\s+display\s+xml
+    matches:
+    -
+        type: single-value
+        method: xpath
+        xpath: //l2tp-summary-table/l2tp-tunnels
+        variable-name:  $host.bng.subscribers.summary.l2tp-tunnels
+    -
+        type: single-value
+        method: xpath
+        xpath: //l2tp-summary-table/l2tp-sessions
+        variable-name:  $host.bng.subscribers.summary.l2tp-sessions

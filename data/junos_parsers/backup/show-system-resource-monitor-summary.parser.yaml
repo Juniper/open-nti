@@ -1,0 +1,95 @@
+parser:
+    regex-command: show\s+system\s+resource-monitor\s+summary\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //resource-monitor-summary-information-summary
+        loop:
+            key: ./fpc-slot
+            sub-matches:
+            -
+                xpath: ./used-heap-mem-percent
+                variable-name:  $host.fpc.slot$key.resource.used-heap-mem-percent
+            -
+                xpath: ./pfe-num[text()="0"]/following-sibling::used-filter-counter-percent[1]
+                variable-name:  $host.fpc.slot$key.pfe0.resource.used-filter-counter-percent
+            -
+                xpath: ./pfe-num[text()="0"]/following-sibling::used-ifl-counter-percent[1]
+                variable-name:  $host.fpc.slot$key.pfe0.resource.used-ifl-counter-percent
+            -
+                xpath: ./pfe-num[text()="0"]/following-sibling::used-expansion-memory-percent[1]
+                variable-name:  $host.fpc.slot$key.pfe0.resource.used-expansion-memory-percent
+            -
+                xpath: ./pfe-num[text()="1"]/following-sibling::used-filter-counter-percent[1]
+                variable-name:  $host.fpc.slot$key.pfe1.resource.used-filter-counter-percent
+            -
+                xpath: ./pfe-num[text()="1"]/following-sibling::used-ifl-counter-percent[1]
+                variable-name:  $host.fpc.slot$key.pfe1.resource.used-ifl-counter-percent
+            -
+                xpath: ./pfe-num[text()="0"]/following-sibling::used-expansion-memory-percent[1]
+                variable-name:  $host.fpc.slot$key.pfe1.resource.used-expansion-memory-percent
+            -
+                xpath: ./pfe-num[text()="2"]/following-sibling::used-filter-counter-percent[1]
+                variable-name:  $host.fpc.slot$key.pfe2.resource.used-filter-counter-percent
+            -
+                xpath: ./pfe-num[text()="2"]/following-sibling::used-ifl-counter-percent[1]
+                variable-name:  $host.fpc.slot$key.pfe2.resource.used-ifl-counter-percent
+            -
+                xpath: ./pfe-num[text()="2"]/following-sibling::used-expansion-memory-percent[1]
+                variable-name:  $host.fpc.slot$key.pfe2.resource.used-expansion-memory-percent
+            -
+                xpath: ./pfe-num[text()="3"]/following-sibling::used-filter-counter-percent[1]
+                variable-name:  $host.fpc.slot$key.pfe3.resource.used-filter-counter-percent
+            -
+                xpath: ./pfe-num[text()="3"]/following-sibling::used-ifl-counter-percent[1]
+                variable-name:  $host.fpc.slot$key.pfe3.resource.used-ifl-counter-percent
+            -
+                xpath: ./pfe-num[text()="3"]/following-sibling::used-expansion-memory-percent[1]
+                variable-name:  $host.fpc.slot$key.pfe3.resource.used-expansion-memory-percent
+    -
+        type: multi-value
+        method: xpath
+        xpath: //resource-monitor-summary-fpc-information-summary
+        loop:
+            key: ./fpc-slot
+            sub-matches:
+            -
+                xpath: ./used-heap-mem-percent
+                variable-name:  $host.fpc.slot$key.resource.used-heap-mem-percent
+            -
+                xpath: ./resource-monitor-summary-pfe-information-summary[pfe-num="0"]/used-filter-counter-percent
+                variable-name:  $host.fpc.slot$key.pfe0.resource.used-filter-counter-percent
+            -
+                xpath: ./resource-monitor-summary-pfe-information-summary[pfe-num="0"]/used-ifl-counter-percent
+                variable-name:  $host.fpc.slot$key.pfe0.resource.used-ifl-counter-percent
+            -
+                xpath: ./resource-monitor-summary-pfe-information-summary[pfe-num="0"]/used-expansion-memory-percent
+                variable-name:  $host.fpc.slot$key.pfe0.resource.used-expansion-memory-percent
+            -
+                xpath: ./resource-monitor-summary-pfe-information-summary[pfe-num="1"]/used-filter-counter-percent
+                variable-name:  $host.fpc.slot$key.pfe1.resource.used-filter-counter-percent
+            -
+                xpath: ./resource-monitor-summary-pfe-information-summary[pfe-num="1"]/used-ifl-counter-percent
+                variable-name:  $host.fpc.slot$key.pfe1.resource.used-ifl-counter-percent
+            -
+                xpath: ./resource-monitor-summary-pfe-information-summary[pfe-num="1"]/used-expansion-memory-percent
+                variable-name:  $host.fpc.slot$key.pfe1.resource.used-expansion-memory-percent
+            -
+                xpath: ./resource-monitor-summary-pfe-information-summary[pfe-num="2"]/used-filter-counter-percent
+                variable-name:  $host.fpc.slot$key.pfe2.resource.used-filter-counter-percent
+            -
+                xpath: ./resource-monitor-summary-pfe-information-summary[pfe-num="2"]/used-ifl-counter-percent
+                variable-name:  $host.fpc.slot$key.pfe2.resource.used-ifl-counter-percent
+            -
+                xpath: ./resource-monitor-summary-pfe-information-summary[pfe-num="2"]/used-expansion-memory-percent
+                variable-name:  $host.fpc.slot$key.pfe2.resource.used-expansion-memory-percent
+            -
+                xpath: ./resource-monitor-summary-pfe-information-summary[pfe-num="3"]/used-filter-counter-percent
+                variable-name:  $host.fpc.slot$key.pfe3.resource.used-filter-counter-percent
+            -
+                xpath: ./resource-monitor-summary-pfe-information-summary[pfe-num="3"]/used-ifl-counter-percent
+                variable-name:  $host.fpc.slot$key.pfe3.resource.used-ifl-counter-percent
+            -
+                xpath: ./resource-monitor-summary-pfe-information-summary[pfe-num="3"]/used-expansion-memory-percent
+                variable-name:  $host.fpc.slot$key.pfe3.resource.used-expansion-memory-percent

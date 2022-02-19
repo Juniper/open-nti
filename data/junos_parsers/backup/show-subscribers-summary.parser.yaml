@@ -1,0 +1,63 @@
+parser:
+    regex-command: show\s+subscribers\s+summary\s+\|\s+display\s+xml
+    matches:
+    -
+        type: single-value
+        method: xpath
+        xpath: //session-state-init
+        variable-name:  $host.bng.subscribers.summary.session-state-init
+        default-if-missing: 0
+    -
+        type: single-value
+        method: xpath
+        xpath: //session-state-configured
+        variable-name:  $host.bng.subscribers.summary.session-state-configured
+        default-if-missing: 0
+    -
+        type: single-value
+        method: xpath
+        xpath: //session-state-active
+        variable-name:  $host.bng.subscribers.summary.session-state-active
+        default-if-missing: 0
+    -
+        type: single-value
+        method: xpath
+        xpath: //session-state-terminating
+        variable-name:  $host.bng.subscribers.summary.session-state-terminating
+        default-if-missing: 0
+    -
+        type: single-value
+        method: xpath
+        xpath: //session-state-terminated
+        variable-name:  $host.bng.subscribers.summary.session-state-terminated
+        default-if-missing: 0
+    -
+        type: single-value
+        method: xpath
+        xpath: //session-state-total
+        variable-name:  $host.bng.subscribers.summary.session-state-total
+        default-if-missing: 0
+    -
+        type: single-value
+        method: xpath
+        xpath: //session-type-vlan
+        variable-name:  $host.bng.subscribers.summary.session-type-vlan
+        default-if-missing: 0
+    -
+        type: single-value
+        method: xpath
+        xpath: //session-type-pppoe
+        variable-name:  $host.bng.subscribers.summary.session-type-pppoe
+        default-if-missing: 0
+    -
+        type: single-value
+        method: xpath
+        xpath: //session-type-ppp
+        variable-name:  $host.bng.subscribers.summary.session-type-ppp
+        default-if-missing: 0
+    -
+        type: single-value
+        method: xpath
+        xpath: //session-type-total
+        variable-name:  $host.bng.subscribers.summary.session-type-total
+        default-if-missing: 0

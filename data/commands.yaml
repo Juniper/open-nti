@@ -3,16 +3,55 @@
 #NOTE:  Commands will be executed & parsed as text/regex ONLY if there isn't any valid xml output for that command
 #       (so please check the output of the command with "| display xml" before building the parser or adding it in this file)
 
-generic_commands:
+routers_commands:
    commands: |
-      show isis statistics | display xml
       show chassis routing-engine | display xml
       show pfe statistics traffic | display xml
       show system processes extensive
-      show system buffers
-      show system statistics icmp | display xml
+      show system buffers | display xml
+      show system connections
       show route summary | display xml
-   tags: generic
+      show chassis fpc | display xml 
+      show mpls lsp terse | display xml 
+      show snmp mib walk jnxOperatingCPU.9 | display xml
+      show snmp mib walk jnxOperatingCPU.7 | display xml
+      show task memory | display xml
+      show version | display xml
+      show bgp summary | display xml
+      show isis statistics | display xml
+      show snmp statistics | display xml
+      show interfaces ixlv0 | display xml
+      show route summary table bgp.l3vpn.0 | display xml
+   tags: systest jtac
+
+evo_commands:
+   commands: |
+      show chassis routing-engine | display xml
+      show route summary | display xml
+      show pfe statistics traffic | display xml
+      show version | display xml
+      show chassis fpc | display xml
+      show mpls lsp terse | display xml
+      show task memory | display xml
+      show bgp summary | display xml
+      top -b -n 1 | shell re
+      top -bn 1 | shell fpc0
+   tags: evo
+
+generic_commands:
+   commands: |
+      show chassis routing-engine | display xml
+      show pfe statistics traffic | display xml
+      show system processes extensive
+      show system buffers | display xml
+      show route summary | display xml
+      show chassis fpc | display xml
+      show snmp mib walk jnxOperatingCPU.9 | display xml
+      show snmp mib walk jnxOperatingCPU.7 | display xml
+      show task memory | display xml
+      show version | display xml
+      show bgp summary | display xml
+   tags: pdt
 
 lab_commands:
    commands: |

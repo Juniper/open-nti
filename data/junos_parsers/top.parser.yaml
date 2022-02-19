@@ -1,0 +1,381 @@
+parser:
+    regex-command: top.*?shell\sre
+    matches:
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+rpd\r\n
+        variables:
+        -
+            variable-name:  $host.re.memory.rpd-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.rpd-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.rpd-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+fabspoked-fchip{fabspoked-fchip}\r\n
+        variables:
+        -
+            variable-name:  $host.re.memory.fabspokedfchip-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.fabspokedfchip-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.fabspokedfchip-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+snmpd\r\n
+        variables:
+        -
+            variable-name:  $host.re.memory.snmpd-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.snmpd-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.snmpd-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+mib2d
+        variables:
+        -
+            variable-name:  $host.re.memory.mib2d-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.mib2d-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.mib2d-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+dfwd-junos-rela{dfwd-junos-rela}\r\n
+        variables:
+        -
+            variable-name:  $host.re.memory.dfwd-junos-rela-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.dfwd-junos-rela-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.dfwd-junos-rela-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+cosd-ptx{cosd-ptx}\r\n
+        variables:
+        -
+            variable-name:  $host.re.memory.cosd-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.cosd-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.cosd-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+sysepochman{sysepochman}\r\n
+        variables:
+        -
+            variable-name:  $host.re.memory.sysepochman-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.sysepochman-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.sysepochman-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+jsd\r\n
+        variables:
+        -
+            variable-name:  $host.re.memory.jsd-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.jsd-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.jsd-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+na-grpcd\r\n
+        variables:
+        -
+            variable-name:  $host.re.memory.grpc-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.grpc-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.grpc-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+na-mqttd\r\n
+        variables:
+        -
+            variable-name:  $host.re.memory.mqtt-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.mqtt-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.mqtt-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+mgd-api\r\n
+        variables:
+        -
+            variable-name:  $host.re.memory.mgdapi-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.mgdapi-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.mgdapi-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+xmlproxyd\r\n
+        variables:
+        -
+            variable-name:  $host.re.memory.xmlproxyd-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.xmlproxyd-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.xmlproxyd-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+lacpd\r\n
+        variables:
+        -
+            variable-name:  $host.re.memory.lacpd-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.lacpd-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.lacpd-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+agentd\r\n
+        variables:
+        -
+            variable-name:  $host.re.memory.agentd-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.agentd-RES
+            variable-type:  integer
+        -                                           
+            variable-name:  $host.re.memory.agentd-CPU
+            variable-type:  integer
+    -    
+        type: single-value
+        method: regex                               
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+l2cpd\r\n
+        variables:
+        -
+            variable-name:  $host.re.memory.l2cpd-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.l2cpd-RES
+            variable-type:  integer
+        -                          
+            variable-name:  $host.re.memory.l2cpd-CPU
+            variable-type:  integer
+    -    
+        type: single-value
+        method: regex                               
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+rpd-agent\r\n
+        variables:
+        -
+            variable-name:  $host.re.memory.rpdagent-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.rpdagent-RES
+            variable-type:  integer
+        -                          
+            variable-name:  $host.re.memory.rpdagent-CPU
+            variable-type:  integer
+    -    
+        type: single-value
+        method: regex                               
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+ddosd\r\n
+        variables:
+        -
+            variable-name:  $host.re.memory.ddosd-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.ddosd-RES
+            variable-type:  integer
+        -                          
+            variable-name:  $host.re.memory.ddosd-CPU
+            variable-type:  integer
+    -    
+        type: single-value
+        method: regex                               
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+snmpd-subagent\r\n
+        variables:
+        -
+            variable-name:  $host.re.memory.snmpdsubagent-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.snmpdsubagent-RES
+            variable-type:  integer
+        -                          
+            variable-name:  $host.re.memory.snmpdsubagent-CPU
+            variable-type:  integer
+    -    
+        type: single-value
+        method: regex                               
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+ifstatsd\r\n
+        variables:
+        -
+            variable-name:  $host.re.memory.ifstatsd-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.ifstatsd-RES
+            variable-type:  integer
+        -                          
+            variable-name:  $host.re.memory.ifstatsd-CPU
+            variable-type:  integer
+    -    
+        type: single-value
+        method: regex                               
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+distribut
+        variables:
+        -
+            variable-name:  $host.re.memory.distributord-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.distributord-RES
+            variable-type:  integer
+        -                          
+            variable-name:  $host.re.memory.distributord-CPU
+            variable-type:  integer
+    -    
+        type: single-value
+        method: regex                               
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+objmon\r\n
+        variables:
+        -
+            variable-name:  $host.re.memory.objmon-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.objmon-RES
+            variable-type:  integer
+        -                          
+            variable-name:  $host.re.memory.objmon-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+EvoAftMan
+        variables:
+        -
+            variable-name:  $host.re.memory.EvoAftManBt-mai-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.EvoAftManBt-mai-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.EvoAftManBt-mai-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+fibtd\r\n
+        variables:
+        -
+            variable-name:  $host.re.memory.fibtd-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.fibtd-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.fibtd-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+fibd
+        variables:
+        -
+            variable-name:  $host.re.memory.fibd-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.fibd-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.fibd-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+msvcsd
+        variables:
+        -
+            variable-name:  $host.re.memory.msvcsd-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.msvcsd-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.msvcsd-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+fabtokend\r\n
+        variables:
+        -
+            variable-name:  $host.re.memory.fabtokend-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.fabtokend-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.fabtokend-CPU
+            variable-type:  integer
+    -
+        type: single-value
+        method: regex
+        regex: \s*[0-9]+\s+\w+\s+\d+\s+\d+\s+\d*\S*\s+(\d*\S*)\s+(\d*\S*)\s+\S+\s+(\S+)\s+\S+\s+\S+\s+l2ald-agent\r\n
+        variables:
+        -
+            variable-name:  $host.re.memory.l2ald-agent-SIZE
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.l2ald-agent-RES
+            variable-type:  integer
+        -
+            variable-name:  $host.re.memory.l2ald-agent-CPU
+            variable-type:  integer

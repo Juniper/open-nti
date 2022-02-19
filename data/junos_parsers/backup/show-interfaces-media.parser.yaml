@@ -1,0 +1,22 @@
+parser:
+    regex-command: show\s+interfaces\s+media\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //*[local-name() = 'physical-interface']
+        loop:
+            key: ./*[local-name() = 'name']
+            sub-matches:
+            -
+                xpath: ./*[local-name() = 'traffic-statistics']/*[local-name() = 'input-bps']
+                variable-name:  $host.interface.$key.input-bps
+            -
+                xpath: ./*[local-name() = 'traffic-statistics']/*[local-name() = 'input-pps']
+                variable-name:  $host.interface.$key.input-pps
+            -
+                xpath: ./*[local-name() = 'traffic-statistics']/*[local-name() = 'output-bps']
+                variable-name:  $host.interface.$key.output-bps
+            -
+                xpath: ./*[local-name() = 'traffic-statistics']/*[local-name() = 'output-pps']
+                variable-name:  $host.interface.$key.output-pps

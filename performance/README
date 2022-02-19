@@ -1,0 +1,9 @@
+Streaming Telemetry Performance Measurements
+- Payload Size
+- Packet Delay
+- Streaming wrap time
+- Internal Latency
+
+Support:
+- JUNOS and EVO
+- OC and gNMI

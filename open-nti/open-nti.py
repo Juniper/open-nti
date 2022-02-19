@@ -3,11 +3,18 @@
 # coding: utf-8
 # Authors: efrain@juniper.net psagrera@juniper.net
 # Version 2.0  20160124
+# root@ocst-2-geo:/opt/open-nti# make cron-show
+# docker exec -it opennti_con /usr/bin/python /opt/open-nti/startcron.py -a show  -c "/usr/bin/python /opt/open-nti/open-nti.py -s"
+# * * * * * /usr/bin/python /opt/open-nti/open-nti.py -s --tag evo
+
+# Version 2.1
+# add RE shell output support:
+# top -b -n 1 | shell
 
 from datetime import datetime # In order to retreive time and timespan
 from datetime import timedelta # In order to retreive time and timespan
 from influxdb import InfluxDBClient
-from pyez_mock import mocked_device, rpc_reply_dict
+#from pyez_mock import mocked_device, rpc_reply_dict
 from jnpr.junos import *
 from jnpr.junos import Device
 from jnpr.junos.exception import *
@@ -164,6 +171,23 @@ def execute_command(jdevice,command):
     elif re.search("\| count", command, re.IGNORECASE):
         format = "txt-filtered"
         command_tmp = command.split("|")[0]
+    elif re.search("\| shell re", command, re.IGNORECASE):
+        # This is the shell commmand supposed to run on RE Linux shell
+        ss = StartShell(jdevice)
+        ss.open()
+        command_tmp = command.split("|")[0]
+        command_result = ss.run(command_tmp)
+        return command_result[1]
+    elif re.search("\| shell fpc", command, re.IGNORECASE):
+        # This is the shell commmand supposed to run on FPC Linux shell
+        ss = StartShell(jdevice)
+        ss.open()
+        command_tmp = command.split("|")[0]
+        fpc_slot = command.split()[-1]
+        fpc_shell = 'chvrf iri ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@' + fpc_slot
+        command_result = ss.run(fpc_shell)
+        command_result = ss.run(command_tmp)
+        return command_result[1]
     try:
         # Remember... all rpc must have format=xml at execution time,
         command_result = jdevice.rpc.cli(command_tmp, format="xml")
@@ -234,6 +258,12 @@ def eval_variable_name(variable,**kwargs):
         for key in keys.keys():
             variable = variable.replace("$"+key,keys[key])
         variable = variable.replace("$host",kwargs['host'])
+
+        if 'fpc' in kwargs.keys():
+            variable = variable.replace("$fpc",kwargs['fpc'])
+
+        if 'pid' in kwargs.keys():
+            variable = variable.replace("$pid",kwargs['pid'])
         # the host replacement should be move it to other place
         return variable, variable
 
@@ -242,25 +272,49 @@ def eval_tag_name(variable,**kwargs):
         variable = variable.replace("$"+key,kwargs[key])
     return variable
 
+# Code added by Haofeng to deal with humman readable bytes, esp for Linux Based EVO system
+# on 5/7/2021
 def eval_variable_value(value,**kwargs):
-
+    #logger.info('Get value %s', value)
     if (kwargs["type"] == "integer"):
-        value =  re.sub('G','000000000',value)
-        value =  re.sub('M','000000',value)
-        value =  re.sub('K','000',value)
-        return(int(float(value)))
+        if value[-1] == "t":
+            temp = int(float(value[0:-1])*1099511627776)
+            return int(float(value[0:-1])*1099511627776)
+        elif value[-1] == "g":
+            temp = int(float(value[0:-1])*1073741824)
+            return int(float(value[0:-1])*1073741824)
+        elif value[-1] == "m":
+            return int(float(value[0:-1])*1048576)
+        elif value[-1] == "k":
+            return int(float(value[0:-1])*1024)
+        else:
+            return int(float(value))
     elif kwargs["type"] == "string":
         return value
     else:
         logger.error('An unkown variable-type found: %s', kwargs["type"])
         return value
 
+# This code won't work 
+# def eval_variable_value(value,**kwargs):
+
+#     if (kwargs["type"] == "integer"):
+#         value =  re.sub('G','000000000',value)
+#         value =  re.sub('M','000000',value)
+#         value =  re.sub('K','000',value)
+#         return(int(float(value)))
+#     elif kwargs["type"] == "string":
+#         return value
+#     else:
+#         logger.error('An unkown variable-type found: %s', kwargs["type"])
+#         return value
+
 def insert_datapoints(datapoints):
 
     dbclient = InfluxDBClient(db_server, db_port, db_admin, db_admin_password)
     dbclient.switch_database(db_name)
-    logger.info('Inserting into database the following datapoints:')
-    logger.info(pformat(datapoints))
+    # logger.info('Inserting into database the following datapoints:')
+    # logger.info(pformat(datapoints))
     response = dbclient.write_points(datapoints)
 
 def get_metadata_and_add_datapoint(datapoints,**kwargs):
@@ -293,7 +347,10 @@ def get_metadata_and_add_datapoint(datapoints,**kwargs):
 
     # Resolving the variable name
     value = convert_variable_type(value_tmp)
-    variable_name, kpi_tags['kpi'] = eval_variable_name(match["variable-name"],host=host,keys=keys)
+    if 'fpc' in kwargs.keys():
+        variable_name, kpi_tags['kpi'] = eval_variable_name(match["variable-name"],host=host,fpc=kwargs["fpc"],keys=keys)
+    else:
+        variable_name, kpi_tags['kpi'] = eval_variable_name(match["variable-name"],host=host,keys=keys)
 
     # Calculating delta values (only applies for numeric values)
     #delta = 0
@@ -362,10 +419,12 @@ def parse_result(host,target_command,result,datapoints,kpi_tags):
     parser_found = False
     for junos_parser in junos_parsers:
         regex_command = junos_parser["parser"]["regex-command"]
-        if re.search(regex_command, target_command, re.IGNORECASE):
+        regex_match = re.search(regex_command, target_command, re.IGNORECASE)
+        if regex_match:
             parser_found = True
             matches = junos_parser["parser"]["matches"]
             timestamp = str(int(datetime.today().strftime('%s')))
+
             for match in matches:
                 try:
                     if match["method"] == "xpath":
@@ -424,7 +483,12 @@ def parse_result(host,target_command,result,datapoints,kpi_tags):
                                                             if "variable-type" in sub_match["variables"][i]:
                                                                 value_tmp = eval_variable_value(value_tmp, type=sub_match["variables"][i]["variable-type"])
                                                             #get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match["variables"][i],value_tmp=value_tmp,host=host,latest_datapoints=latest_datapoints,kpi_tags=kpi_tags,keys=keys)
-                                                            get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match["variables"][i],value_tmp=value_tmp,host=host,kpi_tags=kpi_tags,keys=keys)
+                                                            # deal with top command output from FPC. Get the FPC slot from target_command
+                                                            if 'shell fpc' in target_command:
+                                                                fpc_slot = regex_match.group(1)
+                                                                get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match["variables"][i],value_tmp=value_tmp,host=host,fpc=fpc_slot,kpi_tags=kpi_tags,keys=keys)
+                                                            else:
+                                                                get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match["variables"][i],value_tmp=value_tmp,host=host,kpi_tags=kpi_tags,keys=keys)
                                                     else:
                                                         logger.error('[%s]: More matches found on regex than variables especified on parser: %s', host, regex_command)
                                                 else:
@@ -457,6 +521,8 @@ def parse_result(host,target_command,result,datapoints,kpi_tags):
                         else:
                             logger.error('[%s]: An unknown match-type found in parser with regex: %s', host, regex_command)
                     elif match["method"] == "regex": # we need to evaluate a text regex
+                    ## for show system process extensive commoand on evo, FPC and RE are nodes.
+                    ## we use single-value to deal with RE output
                         if match["type"] == "single-value":
                             regex = match["regex"]
                             text_matches = re.search(regex,result,re.MULTILINE)
@@ -471,11 +537,55 @@ def parse_result(host,target_command,result,datapoints,kpi_tags):
                                         if "variable-type" in match["variables"][i]:
                                             value_tmp = eval_variable_value(value_tmp, type=match["variables"][i]["variable-type"])
                                         #get_metadata_and_add_datapoint(datapoints=datapoints,match=match["variables"][i],value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
-                                        get_metadata_and_add_datapoint(datapoints=datapoints,match=match["variables"][i],value_tmp=value_tmp,host=host,kpi_tags=kpi_tags)
+                                        if 'shell fpc' in target_command:
+                                            fpc_slot = regex_match.group(1)
+                                            get_metadata_and_add_datapoint(datapoints=datapoints,match=match["variables"][i],value_tmp=value_tmp,host=host,fpc=fpc_slot,kpi_tags=kpi_tags)
+                                        else:
+                                            get_metadata_and_add_datapoint(datapoints=datapoints,match=match["variables"][i],value_tmp=value_tmp,host=host,kpi_tags=kpi_tags)
                                 else:
                                     logger.error('[%s]: More matches found on regex than variables especified on parser: %s', host, regex_command)
                             else:
-                                logger.debug('[%s]: No matches found for regex: %s', host, regex)
+                                logger.info('[%s]: No matches found for regex: %s', host, regex)
+                        ## for show system process extensive commoand on evo, FPC and RE are nodes. 
+                        ## we use multiple-value to deal with FPC output, and use PID to identify the daemons on different FPC
+                        # 17509 root     17509  20     0 9.806g 1.371g S 03:13:55 31.8  0.0 EvoAftManBt-mai{EvoAftManBt-mai}
+                        # 17509 root     17567  20     0 9.806g 1.371g S 03:13:55 31.8  0.0 EvoAftManBt-mai{EvoAftManBt-mai}
+                        # 17509 root     17568  20     0 9.806g 1.371g S 03:13:55 31.8  0.0 EvoAftManBt-mai{EvoAftManBt-mai}
+                        # 17509 root     17570  20     0 9.806g 1.371g S 03:13:55 31.8  0.0 EvoAftManBt-mai{EvoAftManBt-mai}
+                        # 17509 root     17592  20     0 9.806g 1.371g S 03:13:55 31.8  0.0 EvoAftManBt-mai{EvoAftManBt-mai}
+                        # 17509 root     17593  20     0 9.806g 1.371g S 03:13:55 31.8  0.0 EvoAftManBt-mai{EvoAftManBt-mai}
+                        # 17509 root     17594  20     0 9.806g 1.371g S 03:13:55 31.8  0.0 EvoAftManBt-mai{EvoAftManBt-mai}
+                        # 16532 root     16532  20     0 8.655g 1.346g S 03:36:57 28.1  0.0 EvoAftManBt-mai{EvoAftManBt-mai}
+                        # 16532 root     16650  20     0 8.655g 1.346g S 03:36:57 28.1  0.0 EvoAftManBt-mai{EvoAftManBt-mai}
+                        # regex has to be: \s*([0-9]+)\s+\w+\s+([0-9]+)\s+\S+\s+\d*\S*\s+(\d*\S*)\s+(\d+\S*)\s+\S+\s+\S+\s+\S+\s+(\S+)\s+EvoAftManBt-mai{EvoAftManBt-mai}$
+                        elif match["type"] == "multiple-value":
+                            regex = match["regex"]
+                            text_matches = re.findall(regex, result, re.MULTILINE) # tuples are returned
+
+                            if text_matches:
+                                text_matches_unique = []
+                                for i in text_matches:
+                                    # if the PID = TID, it's the main process. We just monitor this main process
+                                    i = list(i)
+                                    if i[0] == i[1]:
+                                        # remove PID and TID from list
+                                        pid = i.pop(0)
+                                        i.pop(0)
+                                        text_matches_unique.append(i)
+                            for text in text_matches_unique:
+                                # ['17509', '9.806g', '1.371g', '0.0']
+                                # ['16532', '8.655g', '1.346g', '0.0']
+                                # ['17244', '9.738g', '1.346g', '5.6']
+                                # ['17143', '9.928g', '1.384g', '5.9']
+                                for i in range(len(text)):
+                                    j=i+1
+                                    variable_name = eval_variable_name(match["variables"][i]["variable-name"],host=host,pid=pid)
+                                    value_tmp = text_matches.group(j).strip()
+                                    # Begin function  (pero pendiente de ver si variable-type existe y su valor)
+                                    if "variable-type" in match["variables"][i]:
+                                        value_tmp = eval_variable_value(value_tmp, type=match["variables"][i]["variable-type"])
+                                    #get_metadata_and_add_datapoint(datapoints=datapoints,match=match["variables"][i],value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
+                                    get_metadata_and_add_datapoint(datapoints=datapoints,match=match["variables"][i],value_tmp=value_tmp,host=host,kpi_tags=kpi_tags)
                         else:
                             logger.error('[%s]: An unkown match-type found in parser with regex: %s', host, regex_command)
                     else:
@@ -520,7 +630,7 @@ def collector(**kwargs):
                 _rpc_reply_dict = rpc_reply_dict()
                 _rpc_reply_dict['dir'] = BASE_DIR_INPUT
 
-                jdev = mocked_device(_rpc_reply_dict)
+                #jdev = mocked_device(_rpc_reply_dict)
                 # First collect all kpi in datapoints {} then at the end we insert them into DB (performance improvement)
                 connected = True
             else:
@@ -550,7 +660,9 @@ def collector(**kwargs):
                 # By default execute show version in order to get version and platform as default tags for all kpi related to this host
                 kpi_tags = {}
                 target_command = 'show version | display xml'
-                version_xpath = "//package-information/comment"
+                #version_xpath = "//package-information/comment"
+                #by Haofeng, this //junos-version will work for both JUNOS and EVO
+                version_xpath = "//junos-version"
                 product_model_xpath = "//product-model"
                 logger.info('[%s]: Executing command: %s', host, target_command)
                 result = execute_command(jdev,target_command)
@@ -662,8 +774,6 @@ def collector(**kwargs):
 
                 if datapoints:   # Only insert datapoints if there is any :)
                     insert_datapoints(datapoints)
-
-
 
 ################################################################################################
 ################################################################################################

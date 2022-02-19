@@ -1,0 +1,23 @@
+parser:
+    regex-command: show\s+network-access\s+aaa\s+statistics\s+address-assignment\s+pool\s+POOL-PPPoE\s+\|\s+display\s+xml
+    matches:
+    -
+        type: single-value
+        method: xpath
+        xpath: //aaa-module-address-assignment-pool-statistics[pool-name='(all pools in chain)']/out-of-addresses
+        variable-name:  $host.bng.aaa.stats.address-assignment.pool.out-of-addresses
+    -
+        type: single-value
+        method: xpath
+        xpath: //aaa-module-address-assignment-pool-statistics[pool-name='(all pools in chain)']/total-addresses
+        variable-name:  $host.bng.aaa.stats.address-assignment.pool.total-addresses
+    -
+        type: single-value
+        method: xpath
+        xpath: //aaa-module-address-assignment-pool-statistics[pool-name='(all pools in chain)']/used-addresses
+        variable-name:  $host.bng.aaa.stats.address-assignment.pool.used-addresses
+    -
+        type: single-value
+        method: xpath
+        xpath: //aaa-module-address-assignment-pool-statistics[pool-name='(all pools in chain)']/pool-usage
+        variable-name:  $host.bng.aaa.stats.address-assignment.pool.pool-usage

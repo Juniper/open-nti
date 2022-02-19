@@ -1,0 +1,19 @@
+parser:
+    regex-command: show\s+system\s+statistics\s+icmp
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //histogram
+        loop:
+            key: ./type-of-histogram
+            sub-matches:
+            -
+                xpath: ./icmp-echo-reply
+                variable-name:  $host.re.system.icmp.$key.icmp-echo-reply
+            -
+                xpath: ./destination-unreachable
+                variable-name:  $host.re.system.icmp.$key.destination-unreachable
+            -
+                xpath: ./time-exceeded
+                variable-name:  $host.re.system.icmp.$key.time-exceeded

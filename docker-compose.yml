@@ -1,98 +1,98 @@
-input-jti:
-  image: $INPUT_JTI_IMAGE_NAME:$IMAGE_TAG
-  container_name: $INPUT_JTI_CONTAINER_NAME
-  environment:
-   - "INFLUXDB_ADDR=opennti"
-   - "OUTPUT_INFLUXDB=true"
-   - "OUTPUT_STDOUT=false"
-  ports:
-   - "$LOCAL_PORT_JTI:50000/udp"
-   - "$LOCAL_PORT_ANALYTICSD:50020/udp"
-  volumes:
-   - /etc/localtime:/etc/localtime
-  links:
-    - opennti
+version: "2.0"
 
-input-syslog:
-  image: $INPUT_SYSLOG_IMAGE_NAME:$IMAGE_TAG
-  container_name: $INPUT_SYSLOG_CONTAINER_NAME
-  environment:
-   - "INFLUXDB_ADDR=opennti"
-   - "OUTPUT_INFLUXDB=true"
-   - "OUTPUT_STDOUT=false"
-  ports:
-   - "$LOCAL_PORT_EVENT:6000/udp"
-  volumes:
-   - /etc/localtime:/etc/localtime
-  links:
-    - opennti
-
-input-snmp:
-  #image: $INPUT_SNMP_IMAGE_NAME:$IMAGE_TAG
-  build: $INPUT_SNMP_DIR
-  container_name: $INPUT_SNMP_CONTAINER_NAME
-  ports:
-   - "$LOCAL_PORT_SNMP:162/udp"
-  volumes:
-   - /etc/localtime:/etc/localtime
-   - ./$INPUT_SNMP_DIR/templates/telegraf.tmpl:/data/templates/telegraf.tmpl
-  links:
-    - opennti
-
-input-oc:
-  #image: telegraf:1.5
-  build: $INPUT_OC_DIR
-  container_name: $INPUT_OC_CONTAINER_NAME
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
-    - ./$INPUT_OC_DIR/telegraf.tmpl:/source/telegraf.tmpl
-  ports:
-    - "$LOCAL_PORT_OC:50051/udp"
-  links:
-    - opennti
-
-kapacitor:
-    image: kapacitor:1.5.0
-    container_name: kapacitor
+services:
+  input-jti:
+    image: $INPUT_JTI_IMAGE_NAME:$IMAGE_TAG
+    container_name: $INPUT_JTI_CONTAINER_NAME
     environment:
-      KAPACITOR_HOSTNAME: $KAPACITOR_CONTAINER_NAME
-      KAPACITOR_INFLUXDB_0_URLS_0: http://opennti:8086/
+    - "INFLUXDB_ADDR=opennti"
+    - "OUTPUT_INFLUXDB=true"
+    - "OUTPUT_STDOUT=false"
     ports:
-      - "9092:9092"
+    - "$LOCAL_PORT_JTI:50000/udp"
+    - "$LOCAL_PORT_ANALYTICSD:50020/udp"
+    volumes:
+    - /etc/localtime:/etc/localtime
     links:
       - opennti
 
-chronograf:
-    image: quay.io/influxdb/chronograf:1.5.0.1
-    container_name: $CHRONOGRAF_CONTAINER_NAME
+  input-syslog:
+    image: $INPUT_SYSLOG_IMAGE_NAME:$IMAGE_TAG
+    container_name: $INPUT_SYSLOG_CONTAINER_NAME
     environment:
-      INFLUXDB_URL: http://opennti:8086/
-      KAPACITOR_URL: http://kapacitor:9092/
+    - "INFLUXDB_ADDR=opennti"
+    - "OUTPUT_INFLUXDB=true"
+    - "OUTPUT_STDOUT=false"
     ports:
-      - "8888:8888"
+    - "$LOCAL_PORT_EVENT:6000/udp"
+    volumes:
+    - /etc/localtime:/etc/localtime
     links:
       - opennti
 
-opennti:
-  image: $MAIN_IMAGE_NAME:$IMAGE_TAG
-  container_name: $MAIN_CONTAINER_NAME
-# Uncomment environment to allow anonymous grafana access
-# and disable user sign up
-  environment:
-    - "GF_PATHS_PROVISIONING=/src/provisioning"
-#   - "GF_USERS_ALLOW_SIGN_UP=false"
-#   - "GF_AUTH_ANONYMOUS_ENABLED=true"
-  volumes:
-   - ./$LOCAL_DIR_GF_PROVISIONING:/src/provisioning
-   - ./$LOCAL_DIR_DASHBOARD:/src/dashboards
-   - ./$LOCAL_DIR_DATA:/opt/open-nti/data
-   - /etc/localtime:/etc/localtime
-  ports:
-   - "$LOCAL_PORT_STATSD:8125/udp"
-   - "$LOCAL_PORT_NGINX:80"
-   - "$LOCAL_PORT_GRAFANA:3000"
-   - "$LOCAL_PORT_INFLUXDB:8083"
-   - "$LOCAL_PORT_INFLUXDB_API:8086"
+  input-snmp:
+    #image: $INPUT_SNMP_IMAGE_NAME:$IMAGE_TAG
+    build: $INPUT_SNMP_DIR
+    container_name: $INPUT_SNMP_CONTAINER_NAME
+    ports:
+    - "$LOCAL_PORT_SNMP:162/udp"
+    volumes:
+    - /etc/localtime:/etc/localtime
+    - ./$INPUT_SNMP_DIR/templates/telegraf.tmpl:/data/templates/telegraf.tmpl
+    links:
+      - opennti
 
+  input-oc:
+    #image: telegraf:1.5
+    build: $INPUT_OC_DIR
+    container_name: $INPUT_OC_CONTAINER_NAME
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./$INPUT_OC_DIR/telegraf.tmpl:/source/telegraf.tmpl
+    ports:
+      - "$LOCAL_PORT_OC:50051/udp"
+    links:
+      - opennti
 
+  kapacitor:
+      image: kapacitor:1.5.0
+      container_name: kapacitor
+      environment:
+        KAPACITOR_HOSTNAME: $KAPACITOR_CONTAINER_NAME
+        KAPACITOR_INFLUXDB_0_URLS_0: http://opennti:8086/
+      ports:
+        - "9092:9092"
+      links:
+        - opennti
 
+  chronograf:
+      image: quay.io/influxdb/chronograf:1.5.0.1
+      container_name: $CHRONOGRAF_CONTAINER_NAME
+      environment:
+        INFLUXDB_URL: http://opennti:8086/
+        KAPACITOR_URL: http://kapacitor:9092/
+      ports:
+        - "8888:8888"
+      links:
+        - opennti
+
+  opennti:
+    image: $MAIN_IMAGE_NAME:$IMAGE_TAG
+    container_name: $MAIN_CONTAINER_NAME
+  # Uncomment environment to allow anonymous grafana access
+  # and disable user sign up
+    environment:
+      - "GF_PATHS_PROVISIONING=/src/provisioning"
+      - "GF_USERS_ALLOW_SIGN_UP=false"
+      - "GF_AUTH_ANONYMOUS_ENABLED=true"
+    volumes:
+    - ./$LOCAL_DIR_GF_PROVISIONING:/src/provisioning
+    - ./$LOCAL_DIR_DASHBOARD:/src/dashboards
+    - ./$LOCAL_DIR_DATA:/opt/open-nti/data
+    - /etc/localtime:/etc/localtime
+    ports:
+    - "$LOCAL_PORT_STATSD:8125/udp"
+    - "$LOCAL_PORT_NGINX:80"
+    - "$LOCAL_PORT_GRAFANA:3000"
+    - "$LOCAL_PORT_INFLUXDB:8083"
+    - "$LOCAL_PORT_INFLUXDB_API:8086"

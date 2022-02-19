@@ -1,0 +1,12 @@
+parser:
+    regex-command: show\s+task\s+accounting
+    matches:
+    -
+        type: single-value
+        method: regex
+        regex: \s+SNMP\s+Subagent.*?(\d+)\s+.*?$
+        variables:
+        -
+            variable-name:  $host.re.task-accounting.snmp.started
+            variable-type:  integer
+

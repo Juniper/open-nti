@@ -1,0 +1,25 @@
+parser:
+    regex-command: show\s+route\s+summary\s+table\s+inet\.0\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //route-table[table-name='inet.0']
+        loop:
+            key: ./table-name
+            sub-matches:
+            -
+                xpath: ./destination-count
+                variable-name:  $host.route-table.summary.$key.destinations
+            -
+                xpath: ./total-route-count
+                variable-name:  $host.route-table.summary.$key.routes
+            -
+                xpath: ./active-route-count
+                variable-name:  $host.route-table.summary.$key.actives
+            -
+                xpath: ./holddown-route-count
+                variable-name:  $host.route-table.summary.$key.holddown
+            -
+                xpath: ./hidden-route-count
+                variable-name:  $host.route-table.summary.$key.hidden
