@@ -1,0 +1,99 @@
+parser:
+    regex-command: show\s+chassis\s+routing-engine\s+\|\s+display\s+xml
+    matches:
+    -
+        type: single-value
+        method: xpath
+        xpath: //route-engine/memory-system-total
+        variable-name:  $host.chassis.routing-engine.memory-system-total
+    -
+        type: single-value
+        method: xpath
+        xpath: //route-engine/memory-system-total-used
+        variable-name:  $host.chassis.routing-engine.memory-system-total-used
+    -
+        type: single-value
+        method: xpath
+        xpath: //route-engine/memory-system-total-util
+        variable-name:  $host.chassis.routing-engine.memory-system-total-util
+    -
+        type: single-value
+        method: xpath
+        xpath: //route-engine/memory-control-plane
+        variable-name:  $host.chassis.routing-engine.memory-control-plane
+    -
+        type: single-value
+        method: xpath
+        xpath: //route-engine/memory-control-plane-used
+        variable-name:  $host.chassis.routing-engine.memory-control-plane-used
+    -
+        type: single-value
+        method: xpath
+        xpath: //route-engine/memory-control-plane-util
+        variable-name:  $host.chassis.routing-engine.memory-control-plane-util
+    -
+        type: single-value
+        method: xpath
+        xpath: //route-engine/memory-data-plane
+        variable-name:  $host.chassis.routing-engine.memory-data-plane
+    -
+        type: single-value
+        method: xpath
+        xpath: //route-engine/memory-data-plane-used
+        variable-name:  $host.chassis.routing-engine.memory-data-plane-used
+    -
+        type: single-value
+        method: xpath
+        xpath: //route-engine/memory-data-plane-util
+        variable-name:  $host.chassis.routing-engine.memory-data-plane-util
+    -
+        type: single-value
+        method: xpath
+        xpath: //route-engine/up-time/@seconds
+        variable-name:  $host.chassis.routing-engine.up-time-sec
+    -
+        type: single-value
+        method: xpath
+        xpath: //route-engine/up-time
+        variable-name:  $host.chassis.routing-engine.up-time-date
+    -
+        type: single-value
+        method: xpath
+        xpath: //route-engine/cpu-user
+        variable-name:  $host.chassis.routing-engine.cpu-user
+    -
+        type: single-value
+        method: xpath
+        xpath: //route-engine/cpu-background
+        variable-name:  $host.chassis.routing-engine.cpu-background
+    -
+        type: single-value
+        method: xpath
+        xpath: //route-engine/cpu-system
+        variable-name:  $host.chassis.routing-engine.cpu-system
+    -
+        type: single-value
+        method: xpath
+        xpath: //route-engine/cpu-interrupt
+        variable-name:  $host.chassis.routing-engine.cpu-interrupt
+    -
+        type: single-value
+        method: xpath
+        xpath: //route-engine/cpu-idle
+        variable-name:  $host.chassis.routing-engine.cpu-idle
+    -
+        type: single-value
+        method: xpath
+        xpath: //route-engine/load-average-one
+        variable-name:  $host.chassis.routing-engine.load-average-one
+    -
+        type: single-value
+        method: xpath
+        xpath: //route-engine/load-average-five
+        variable-name:  $host.chassis.routing-engine.load-average-five
+    -
+        type: single-value
+        method: xpath
+        xpath: //route-engine/load-average-fifteen
+        variable-name:  $host.chassis.routing-engine.load-average-fifteen
+
