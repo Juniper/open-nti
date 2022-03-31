@@ -12,7 +12,7 @@ max_connection_retries: 5
 use_hostname: True
 # db_schema options, 1-  measurement per kpi per host, 2- one measurement for all kpi, 3- one measurement per kpi
 # NOTE: For option 2, all gathered values MUST be the same type.
-db_schema: 1
+db_schema: 3 
 db_server: localhost
 db_port: 8086
 db_name: juniper

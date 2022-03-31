@@ -6,7 +6,7 @@
 generic_commands:
    commands: |
       show isis statistics | display xml
-      show chassis routing-engine | display xml
+      show chassis routing-engine | no-more | display xml
       show pfe statistics traffic | display xml
       show system processes extensive
       show system buffers
@@ -27,6 +27,26 @@ lwaftr_commands:
       show lwaftr statisti s | display xml
       show lwaftr state | display xml
    tags: lwaftr
+
+# 20220316 JES
+# My own SRX Lab
+srx_commands:
+   commands: |
+      show chassis routing-engine | display xml
+      show chassis fpc | display xml
+      show interfaces detail | display xml
+      show system processes extensive
+      show system buffers
+      show system statistics icmp | display xml
+      show route summary | display xml
+   tags: rx
+
+test_commands:
+   commands: |
+      show chassis routing-engine | display xml
+      show task memory | display xml
+   tags: srx
+
 
 # Do not remove this three dashes (“---”) they are used to separate documents
 ---

@@ -6,6 +6,10 @@ INFLUX_HOST="localhost"
 INFLUX_API_PORT="8086"
 API_URL="http://${INFLUX_HOST}:${INFLUX_API_PORT}"
 
+# 20220316 JES
+# in v2 we must use a environment variable 
+#export INFLUXD_CONFIG_PATH="/config/config.toml"
+
 # Dynamically change the value of 'max-open-shards' to what 'ulimit -n' returns
 sed -i "s/^max-open-shards.*/max-open-shards = $(ulimit -n)/" ${CONFIG_FILE}
 
@@ -95,6 +99,7 @@ if [ -n "${JOIN}" ]; then
   exec influxd -config=${CONFIG_FILE} -join ${JOIN} &
 else
   exec influxd -config=${CONFIG_FILE} &
+
 fi
 
 

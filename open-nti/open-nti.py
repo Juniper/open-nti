@@ -25,12 +25,21 @@ import re # For regular expression usage
 import requests
 import string
 import string  # For split multiline script into multiple lines
-import StringIO   # Used for file read/write
+# 20220317 JES
+# python3 
+#import StringIO   # Used for file read/write
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 import sys  # For exec to work
 import threading
 import time
 import xmltodict
 import yaml
+# 20220317 JES
+# python3
+from yaml.loader import SafeLoader
 import copy
 
 logging.getLogger("paramiko").setLevel(logging.INFO)
@@ -371,23 +380,27 @@ def parse_result(host,target_command,result,datapoints,kpi_tags):
                     if match["method"] == "xpath":
                         # Load xml data
                         xml_data = etree.fromstring(result)
+                        #logger.info(result)
                         if match["type"] == "single-value":
                             try:
                                 logger.debug('[%s]: Looking for a match: %s', host, match["xpath"])
+                                logger.info('[%s]: Looking for a match: %s', host, match["xpath"])
                                 if xml_data.xpath(match["xpath"]):
                                     value_tmp = xml_data.xpath(match["xpath"])[0].text.strip()
                                     logger.debug('[%s]: Match found for (%s) with value (%s)', host, match["xpath"],value_tmp)
+                                    #logger.info('[%s]: Match found for (%s) with value (%s)', host, match["xpath"],value_tmp)
                                     #get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
                                     get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,host=host,kpi_tags=kpi_tags)
                                 else:
                                     logger.debug('[%s]: No match found: %s', host, match["xpath"])
+                                    #logger.info('[%s]: No match found: %s', host, match["xpath"])
                                     if 'default-if-missing' in match.keys():
                                         logger.debug('Inserting default-if-missing value: %s', match["default-if-missing"])
                                         value_tmp = match["default-if-missing"]
                                         #get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags)
                                         get_metadata_and_add_datapoint(datapoints=datapoints,match=match,value_tmp=value_tmp,host=host,kpi_tags=kpi_tags)
 
-                            except Exception, e:
+                            except Exception as e:
                                 logger.info('[%s]: Exception found.', host)
                                 logging.exception(e)
                                 pass  # Notify about the specific problem with the host BUT we need to continue with our list
@@ -450,7 +463,7 @@ def parse_result(host,target_command,result,datapoints,kpi_tags):
                                                 value_tmp = sub_match["default-if-missing"]
                                                 #get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags,keys=keys)
                                                 get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match,value_tmp=value_tmp,host=host,kpi_tags=kpi_tags,keys=keys)
-                                    except Exception, e:
+                                    except Exception as e:
                                         logger.info('[%s]: Exception found.', host)
                                         logging.exception(e)
                                         pass  # Notify about the specific problem with the host BUT we need to continue with our list
@@ -480,7 +493,7 @@ def parse_result(host,target_command,result,datapoints,kpi_tags):
                             logger.error('[%s]: An unkown match-type found in parser with regex: %s', host, regex_command)
                     else:
                         logger.error('[%s]: An unkown method found in parser with regex: %s', host, regex_command)
-                except Exception, e:
+                except Exception as e:
                     logger.info('[%s]: Exception found.', host)
                     logging.exception(e)
                     pass  # Notify about the specific problem with the host BUT we need to continue with our list
@@ -536,7 +549,7 @@ def collector(**kwargs):
                         jdev.timeout = default_junos_rpc_timeout
                         connected = True
                         break
-                    except Exception, e:
+                    except Exception as e:
                         if i < max_connection_retries:
                             logger.error('[%s]: Connection failed %s time(s), retrying....', host, i)
                             time.sleep(1)
@@ -609,8 +622,8 @@ def collector(**kwargs):
                 try:
                     jdev.close()
                     time.sleep(0.5)
-                except Exception, e:
-                    print "ERROR: Something wrong happens when closing the connection with the device"
+                except Exception as e:
+                    print("ERROR: Something wrong happens when closing the connection with the device")
                     logging.exception(e)
 
                 timestamp_tracking['collector_cli_ends'] = int(datetime.today().strftime('%s'))
@@ -706,8 +719,11 @@ default_variables = {}
 
 try:
     with open(default_variables_yaml_file) as f:
-        default_variables = yaml.load(f)
-except Exception, e:
+        # 20220317 JES 
+        # python3
+        #default_variables = yaml.load(f)
+        default_variables = yaml.load(f , Loader=SafeLoader)
+except Exception as e:
     logger.info('Error importing default variables file": %s', default_variables_yaml_file)
     logging.exception(e)
     sys.exit(0)
@@ -750,7 +766,10 @@ timestamp = time.strftime("%Y-%m-%d", time.localtime(time.time()))
 log_dir = BASE_DIR + "/" + default_variables['log_dir']
 logger = logging.getLogger("_open-nti_")
 if not os.path.exists(log_dir):
-    os.makedirs(log_dir, 0755)
+    # 20220317 JES
+    # python3 octal must use 0o prefix
+    #os.makedirs(log_dir, 0755)
+    os.makedirs(log_dir, 0o755)
 formatter = '%(asctime)s %(name)s %(levelname)s %(threadName)-10s:  %(message)s'
 logging.basicConfig(filename=log_dir + "/"+ timestamp + '_open-nti.log',level=logging_level,format=formatter, datefmt='%Y-%m-%d %H:%M:%S')
 
@@ -769,9 +788,13 @@ credentials = {}
 logger.debug('Importing credentials file: %s ',credentials_yaml_file)
 try:
     with open(credentials_yaml_file) as f:
-        credentials = yaml.load(f)
-except Exception, e:
+        # 20220317 JES 
+        # python3
+        #credentials = yaml.load(f)
+        credentials = yaml.load(f, Loader=SafeLoader)
+except Exception as e:
     logger.error('Error importing credentials file: %s', credentials_yaml_file)
+    logger.error(e)
  #   logging.exception(e)
     sys.exit(0)  
 #  LOAD all hosts with their tags in a dic
@@ -781,8 +804,12 @@ hosts = {}
 logger.debug('Importing host file: %s ',hosts_yaml_file)
 try:
     with open(hosts_yaml_file) as f:
-        hosts = yaml.load(f)
-except Exception, e:
+        # 20220317 JES 
+        # python3
+        #hosts = yaml.load(f)
+        hosts = yaml.load(f,Loader=SafeLoader)
+        logger.info(hosts)
+except Exception as e:
     logger.error('Error importing host file: %s', hosts_yaml_file)
     #logging.exception(e)
     sys.exit(0)        
@@ -795,9 +822,12 @@ commands = []
 logger.debug('Importing commands file: %s ',commands_yaml_file)
 with open(commands_yaml_file) as f:
     try:
-        for document in yaml.load_all(f):
+        # 20220317 JES 
+        # python3
+        #for document in yaml.load_all(f):
+        for document in yaml.load_all(f, Loader=SafeLoader):
             commands.append(document)
-    except Exception, e:
+    except Exception as e:
         logger.error('Error importing commands file: %s', commands_yaml_file)
 #        logging.exception(e)
         sys.exit(0)        
@@ -812,8 +842,11 @@ logger.debug('Importing junos parsers file: %s ',junos_parsers_yaml_files)
 for junos_parsers_yaml_file in junos_parsers_yaml_files:
     try:
         with open(BASE_DIR + "/" + default_variables['junos_parsers_dir'] + "/"  + junos_parsers_yaml_file) as f:
-            junos_parsers.append(yaml.load(f))
-    except Exception, e:
+            # 20220317 JES 
+            # python3
+            #junos_parsers.append(yaml.load(f))
+            junos_parsers.append(yaml.load(f, Loader=SafeLoader))
+    except Exception as e:
         logger.error('Error importing junos parser: %s', junos_parsers_yaml_file)
  #       logging.exception(e)
         pass
@@ -825,7 +858,7 @@ for pfe_parsers_yaml_file in pfe_parsers_yaml_files:
     try:
         with open(BASE_DIR + "/" + default_variables['pfe_parsers_dir'] + "/" + pfe_parsers_yaml_file) as f:
             pfe_parsers.append(yaml.load(f))
-    except Exception, e:
+    except Exception as e:
         logger.error('Error importing pfe parser: %s', pfe_parsers_yaml_file)
  #       logging.exception(e)
         pass
@@ -843,8 +876,19 @@ if __name__ == "__main__":
         # Create a list of jobs and then iterate through
         # the number of threads appending each thread to
         # the job list
-        target_hosts_lists = [target_hosts[x:x+len(target_hosts)/max_collector_threads+1] for x in range(0, len(target_hosts), len(target_hosts)/max_collector_threads+1)]
-
+        # 20220317 JES
+        # python3
+        #target_hosts_lists = [target_hosts[x:x+len(target_hosts)/max_collector_threads+1] \
+        #                      for x in range(0, len(target_hosts), len(target_hosts)/max_collector_threads+1)]
+        #target_hosts_lists = [target_hosts[x:x+ len(target_hosts)/max_collector_threads+1] \
+        #                      for x in range(0, len(target_hosts), int(len(target_hosts)/max_collector_threads) + 1) ]
+        logger.info("target_hosts: %s  len: %s" % ( target_hosts , len(target_hosts) ) )
+        logger.info("max_collector_threads: %s" % max_collector_threads)
+        my_target_hosts = list( target_hosts )
+        logger.info("my_target_hosts: %s  len: %s" % ( my_target_hosts , len(my_target_hosts) ) )
+        step = int(len(my_target_hosts)/max_collector_threads) + 1
+        target_hosts_lists = [my_target_hosts[x:x+ step] \
+                              for x in range(0, len(my_target_hosts), step ) ]
         jobs = []
         i=1
         for target_hosts_list in target_hosts_lists:

@@ -8,18 +8,30 @@ RUN apk add --no-cache ca-certificates && \
     update-ca-certificates
 RUN apk add --no-cache wget git
 
-ARG TELEGRAF_VERSION=1.2.1
+# 20220315 JES
+#ARG TELEGRAF_VERSION=1.2.1
+ARG TELEGRAF_VERSION=1.21.4
 
 #############################
 ## Install Telegraf
 #############################
-RUN wget -q https://dl.influxdata.com/telegraf/releases/telegraf-${TELEGRAF_VERSION}-static_linux_amd64.tar.gz && \
+# 20220315 JES
+#RUN wget -q https://dl.influxdata.com/telegraf/releases/telegraf-${TELEGRAF_VERSION}-static_linux_amd64.tar.gz && \
+#    mkdir -p /usr/src /etc/telegraf && \
+#    tar -C /usr/src -xzf telegraf-${TELEGRAF_VERSION}-static_linux_amd64.tar.gz && \
+#    mv /usr/src/telegraf*/telegraf.conf /etc/telegraf/ && \
+#    chmod +x /usr/src/telegraf*/* && \
+#    cp -a /usr/src/telegraf*/* /usr/bin/ && \
+#    rm -rf *.tar.gz* /usr/src /root/.gnupg
+# https://dl.influxdata.com/telegraf/releases/telegraf-1.21.4_static_linux_amd64.tar.gz
+RUN wget -q https://dl.influxdata.com/telegraf/releases/telegraf-${TELEGRAF_VERSION}_static_linux_amd64.tar.gz && \
     mkdir -p /usr/src /etc/telegraf && \
-    tar -C /usr/src -xzf telegraf-${TELEGRAF_VERSION}-static_linux_amd64.tar.gz && \
-    mv /usr/src/telegraf*/telegraf.conf /etc/telegraf/ && \
+    tar -C /usr/src -xzf telegraf-${TELEGRAF_VERSION}_static_linux_amd64.tar.gz && \
+    mv /usr/src/telegraf*/etc/telegraf/telegraf.conf /etc/telegraf/ && \
     chmod +x /usr/src/telegraf*/* && \
     cp -a /usr/src/telegraf*/* /usr/bin/ && \
     rm -rf *.tar.gz* /usr/src /root/.gnupg
+
 
 COPY start-input-internal.sh /source/start-input-internal.sh
 RUN chmod +x /source/start-input-internal.sh
