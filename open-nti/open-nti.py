@@ -254,9 +254,9 @@ def eval_tag_name(variable,**kwargs):
 def eval_variable_value(value,**kwargs):
 
     if (kwargs["type"] == "integer"):
-        value =  re.sub('G','000000000',value)
-        value =  re.sub('M','000000',value)
-        value =  re.sub('K','000',value)
+        value =  re.sub(b'G',b'000000000',value)
+        value =  re.sub(b'M',b'000000',value)
+        value =  re.sub(b'K',b'000',value)
         return(int(float(value)))
     elif kwargs["type"] == "string":
         return value
@@ -472,6 +472,7 @@ def parse_result(host,target_command,result,datapoints,kpi_tags):
                     elif match["method"] == "regex": # we need to evaluate a text regex
                         if match["type"] == "single-value":
                             regex = match["regex"]
+                            regex = bytes(regex,encoding='utf-8')
                             text_matches = re.search(regex,result,re.MULTILINE)
                             if text_matches:
                                 if text_matches.lastindex == len(match["variables"]):
