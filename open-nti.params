@@ -65,3 +65,7 @@ export LOCAL_DIR_GF_PROVISIONING=docker/grafana/provisioning
 export LOCAL_DIR_TESTS=tests
 export LOCAL_DIR_DASHBOARD=dashboards
 
+## Chronograf persistent directories 
+export LOCAL_DIR_CHRONOGRAF_STORAGE=data_chronograf/storage
+export LOCAL_CHRONOGRAF_HTPASSWD=data_chronograf/htpasswd
+

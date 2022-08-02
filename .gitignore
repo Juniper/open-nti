@@ -11,3 +11,6 @@ docs/_build/*
 .cache/v/cache/lastfailed
 dashboards/archive/*
 tests/.cache
+
+data_chronograf/*
+

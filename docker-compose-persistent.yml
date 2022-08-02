@@ -79,16 +79,29 @@ kapacitor:
     links:
       - opennti
 
+
+# 20220802 JES
+# - latest chronograf imate
+# - declare environment variable HTPASSWD to
+#   force chronograf ask for a password
+#   based on apache2 htpasswd file
 chronograf:
-    image: quay.io/influxdb/chronograf:1.5.0.1
+    #image: quay.io/influxdb/chronograf:1.5.0.1
+    #image: quay.io/influxdb/chronograf:1.9.4
+    image: chronograf:latest
     container_name: $CHRONOGRAF_CONTAINER_NAME
     environment:
       INFLUXDB_URL: http://opennti_con:8086/
       KAPACITOR_URL: http://kapacitor:9092/
+      HTPASSWD: /usr/share/chronograf/.htpasswd
     ports:
       - "8888:8888"
     links:
       - opennti
+    volumes:
+      - ./$LOCAL_DIR_CHRONOGRAF_STORAGE:/var/lib/chronograf
+      - ./$LOCAL_CHRONOGRAF_HTPASSWD:/usr/share/chronograf/.htpasswd
+
 
 opennti:
   image: $MAIN_IMAGE_NAME:$IMAGE_TAG
