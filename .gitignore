@@ -13,4 +13,4 @@ dashboards/archive/*
 tests/.cache
 
 data_chronograf/*
-
+data_grafana/*

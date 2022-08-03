@@ -83,6 +83,8 @@ start:
 	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE) up -d
 
 start-persistent:
+	# ensure right permissions in grafana volumes
+	chown -R www-data data_grafana
 	@echo "Use docker compose file: $(DOCKER_FILE_P)"
 	#$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE_P) up -d
 	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE_P) up -d --remove-orphans 

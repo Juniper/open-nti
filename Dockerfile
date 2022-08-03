@@ -184,6 +184,10 @@ ADD     docker/grafana/run.sh /etc/service/grafana/run
 RUN      mkdir /opt/grafana/data && \
          chown -R www-data /opt/grafana/data
 
+## Permissions in /var/lib/grafana
+RUN	chown -R www-data:www-data /var/lib/grafana
+RUN	chown -R www-data:www-data /opt/grafana/data
+
 ### Configure nginx ###
 ADD     docker/nginx/nginx.conf /etc/nginx/nginx.conf
 ADD     docker/nginx/run.sh /etc/service/nginx/run
