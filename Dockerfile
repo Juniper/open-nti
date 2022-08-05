@@ -176,6 +176,14 @@ ADD     docker/telegraf/telegraf.launcher.sh /etc/service/telegraf/run
 
 ### Configure Grafana ###
 ADD     docker/grafana/custom.ini /opt/grafana/conf/custom.ini
+# ---
+# 20220804 JES
+# if NO LDAP
+ADD     docker/grafana/defaults.ini /opt/grafana/conf/defaults.ini
+# if LDAP
+#ADD     docker/grafana/defaults.ini_LDAP /opt/grafana/conf/defaults.ini 
+ADD     docker/grafana/ldap.toml /opt/grafana/conf/ldap.toml
+# ---
 ADD     docker/grafana/run.sh /etc/service/grafana/run
 #ADD     docker/grafana/grafana.init.sh /etc/my_init.d/grafana.init.sh
 
