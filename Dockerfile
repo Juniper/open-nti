@@ -1,6 +1,10 @@
 #FROM phusion/baseimage:0.9.22
 # 20220313 JES
-FROM phusion/baseimage:focal-1.0.0
+#FROM phusion/baseimage:focal-1.0.0
+# 20220804 JES
+# falla el paquete de cryptography
+#FROM phusion/baseimage:jammy-1.0.0
+FROM phusion/baseimage:focal-1.2.0
 MAINTAINER Damien Garros <dgarros@gmail.com>
 
 RUN     apt-get -y update && \
@@ -23,7 +27,9 @@ RUN     /usr/sbin/enable_insecure_key
 #ENV INFLUXDB_VERSION 1.5.1
 #ENV TELEGRAF_VERSION 1.5.3-1
 # 20220313 JES
-ENV GRAFANA_VERSION 8.4.3
+#ENV GRAFANA_VERSION 8.4.3
+# 20220804 JES
+ENV GRAFANA_VERSION 9.0.6
 ENV INFLUXDB_VERSION 1.8.10
 ENV TELEGRAF_VERSION 1.21.4-1
 ENV INFLUXDB_CLI_VERSION 2.2.0
@@ -48,6 +54,8 @@ ENV INFLUXDB_CLI_VERSION 2.2.0
 #            libssl-dev && \
 #        apt-get clean   &&\
 #        rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# 20220804 JES
 RUN     apt-get -y update && \
         apt-get -y install \
             build-essential \
@@ -67,6 +75,29 @@ RUN     apt-get -y update && \
             libssl-dev && \
         apt-get clean   &&\
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# 20220804 JES
+# jammy-1.0.0
+# fails cryptography
+#RUN     apt-get -y update && \
+#        apt-get -y install \
+#            build-essential \
+#            python3-simplejson \
+#            python-dev-is-python3 \
+#            python3-yaml \
+#            python3-pip \
+#            python-dev-is-python3 \
+#            libxml2-dev \
+#            libxslt-dev \
+#            tcpdump \
+#            tree \
+#            nginx-light \
+#            snmp \
+#            zlib1g-dev \
+#            libffi-dev \
+#            libssl-dev && \
+#        apt-get clean   &&\
+#        rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 
 RUN     pip install --upgrade setuptools
