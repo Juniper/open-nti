@@ -254,6 +254,7 @@ def eval_tag_name(variable,**kwargs):
 def eval_variable_value(value,**kwargs):
 
     if (kwargs["type"] == "integer"):
+
         # 20220906 JES
         value =  re.sub(b'Gbps',b'000000000',value)
         value =  re.sub(b'Mbps',b'000000',value)
@@ -266,6 +267,7 @@ def eval_variable_value(value,**kwargs):
         value =  re.sub(b'G',b'000000000',value)
         value =  re.sub(b'M',b'000000',value)
         value =  re.sub(b'K',b'000',value)
+
         return(int(float(value)))
     elif kwargs["type"] == "string":
         return value
@@ -458,9 +460,27 @@ def parse_result(host,target_command,result,datapoints,kpi_tags):
                                                 value_tmp=""
                                                 if attributes_matches:
                                                     value_tmp = node.xpath(sub_match["xpath"])[0]
+
+                                                    # 20220906 JES
+                                                    value_tmp =  re.sub('gbps','000000000',value_tmp)
+                                                    value_tmp =  re.sub('mbps','000000',value_tmp)
+                                                    value_tmp =  re.sub('kbps','000',value_tmp)
+                                                    value_tmp =  re.sub('Gbps','000000000',value_tmp)
+                                                    value_tmp =  re.sub('Mbps','000000',value_tmp)
+                                                    value_tmp =  re.sub('Kbps','000',value_tmp)
+                                                     
                                                     logger.debug('[%s]: Submatch found for (%s) with value (%s)', host, sub_match["xpath"],value_tmp)
                                                 else:
                                                     value_tmp = node.xpath(sub_match["xpath"])[0].text.strip()
+
+                                                    # 20220906 JES
+                                                    value_tmp =  re.sub('gbps','000000000',value_tmp)
+                                                    value_tmp =  re.sub('mbps','000000',value_tmp)
+                                                    value_tmp =  re.sub('kbps','000',value_tmp)
+                                                    value_tmp =  re.sub('Gbps','000000000',value_tmp)
+                                                    value_tmp =  re.sub('Mbps','000000',value_tmp)
+                                                    value_tmp =  re.sub('Kbps','000',value_tmp)
+ 
                                                     logger.debug('[%s]: Submatch found for (%s) with value (%s)', host, sub_match["xpath"],value_tmp)
                                                 #get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match,value_tmp=value_tmp,latest_datapoints=latest_datapoints,host=host,kpi_tags=kpi_tags,keys=keys)
                                                 get_metadata_and_add_datapoint(datapoints=datapoints,match=sub_match,value_tmp=value_tmp,host=host,kpi_tags=kpi_tags,keys=keys)
