@@ -254,6 +254,11 @@ def eval_tag_name(variable,**kwargs):
 def eval_variable_value(value,**kwargs):
 
     if (kwargs["type"] == "integer"):
+        # 20220906 JES
+        value =  re.sub(b'Gbps',b'000000000',value)
+        value =  re.sub(b'Mbps',b'000000',value)
+        value =  re.sub(b'Kbps',b'000',value)
+        # 20220317 JES
         value =  re.sub(b'G',b'000000000',value)
         value =  re.sub(b'M',b'000000',value)
         value =  re.sub(b'K',b'000',value)
