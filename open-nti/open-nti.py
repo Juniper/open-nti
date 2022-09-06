@@ -258,6 +258,10 @@ def eval_variable_value(value,**kwargs):
         value =  re.sub(b'Gbps',b'000000000',value)
         value =  re.sub(b'Mbps',b'000000',value)
         value =  re.sub(b'Kbps',b'000',value)
+        # 20220906 JES
+        value =  re.sub(b'gbps',b'000000000',value)
+        value =  re.sub(b'mbps',b'000000',value)
+        value =  re.sub(b'kbps',b'000',value)
         # 20220317 JES
         value =  re.sub(b'G',b'000000000',value)
         value =  re.sub(b'M',b'000000',value)
