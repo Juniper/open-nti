@@ -68,8 +68,13 @@ input-oc:
     - "$LOCAL_PORT_OC:50051/udp"
   links:
     - opennti
+
+# 20220927 JES
+
+# - persistent volumes
 kapacitor:
-    image: kapacitor:1.5.0
+    #image: kapacitor:1.5.0
+    image: kapacitor:1.6.5
     container_name: kapacitor
     environment:
       KAPACITOR_HOSTNAME: $KAPACITOR_CONTAINER_NAME
@@ -78,7 +83,9 @@ kapacitor:
       - "9092:9092"
     links:
       - opennti
-
+    volumes:
+      - ./$LOCAL_DIR_KAPACITOR_STORAGE:/var/lib/kapacitor
+      - ./$LOCAL_DIR_KAPACITOR_CONF:/etc/kapacitor
 
 # 20220802 JES
 # - latest chronograf imate

@@ -35,11 +35,12 @@ srx_commands:
       show chassis routing-engine | display xml
       show chassis fpc | display xml
       show interfaces detail | display xml
+      show interfaces media | display xml
       show system processes extensive | display xml
       show system buffers
       show system statistics icmp | display xml
       show route summary | display xml
-   tags: rx
+   tags: srx
 
 test_commands:
    commands: |
