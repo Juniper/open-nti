@@ -6,6 +6,11 @@ docs/_build/*
 
 *.pyc
 
+*~
+
 .cache/v/cache/lastfailed
 dashboards/archive/*
 tests/.cache
+
+data_chronograf/*
+data_grafana/*

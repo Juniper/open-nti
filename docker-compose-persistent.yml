@@ -68,8 +68,13 @@ input-oc:
     - "$LOCAL_PORT_OC:50051/udp"
   links:
     - opennti
+
+# 20220927 JES
+
+# - persistent volumes
 kapacitor:
-    image: kapacitor:1.5.0
+    #image: kapacitor:1.5.0
+    image: kapacitor:1.6.5
     container_name: kapacitor
     environment:
       KAPACITOR_HOSTNAME: $KAPACITOR_CONTAINER_NAME
@@ -78,17 +83,32 @@ kapacitor:
       - "9092:9092"
     links:
       - opennti
+    volumes:
+      - ./$LOCAL_DIR_KAPACITOR_STORAGE:/var/lib/kapacitor
+      - ./$LOCAL_DIR_KAPACITOR_CONF:/etc/kapacitor
 
+# 20220802 JES
+# - latest chronograf imate
+# - declare environment variable HTPASSWD to
+#   force chronograf ask for a password
+#   based on apache2 htpasswd file
 chronograf:
-    image: quay.io/influxdb/chronograf:1.5.0.1
+    #image: quay.io/influxdb/chronograf:1.5.0.1
+    #image: quay.io/influxdb/chronograf:1.9.4
+    image: chronograf:latest
     container_name: $CHRONOGRAF_CONTAINER_NAME
     environment:
       INFLUXDB_URL: http://opennti_con:8086/
       KAPACITOR_URL: http://kapacitor:9092/
+      HTPASSWD: /usr/share/chronograf/.htpasswd
     ports:
       - "8888:8888"
     links:
       - opennti
+    volumes:
+      - ./$LOCAL_DIR_CHRONOGRAF_STORAGE:/var/lib/chronograf
+      - ./$LOCAL_CHRONOGRAF_HTPASSWD:/usr/share/chronograf/.htpasswd
+
 
 opennti:
   image: $MAIN_IMAGE_NAME:$IMAGE_TAG
@@ -99,6 +119,7 @@ opennti:
     - "GF_PATHS_PROVISIONING=/src/provisioning"
 #   - "GF_USERS_ALLOW_SIGN_UP=false"
 #   - "GF_AUTH_ANONYMOUS_ENABLED=true"
+    - "GF_PATHS_PLUGINS=/var/lib/grafana/plugins"
   restart: always
   volumes:
    - ./$LOCAL_DIR_GF_PROVISIONING:/src/provisioning
@@ -107,6 +128,8 @@ opennti:
    - ./$LOCAL_DIR_LOG:/opt/open-nti/logs
    - ./$LOCAL_DIR_DB_DATA:/data
    - ./$LOCAL_DIR_DB_VAR:/var/lib/influxdb
+   - ./$LOCAL_DIR_GRAFANA_DATA:/opt/grafana/data
+   - ./$LOCAL_DIR_GRAFANA_PLUGINS:/var/lib/grafana/plugins
    - /etc/localtime:/etc/localtime
   ports:
    - "$LOCAL_PORT_STATSD:8125/udp"

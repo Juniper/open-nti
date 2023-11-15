@@ -22,14 +22,16 @@ include $(VAR_FILE)
 # Define run options for Docker-compose
 RUN_OPTIONS = IMAGE_TAG=$(IMAGE_TAG)
 
-#build: build-main build-jti build-syslog build-snmp build-oc build-internal
-build: build-main build-jti build-syslog build-oc build-internal
+##build: build-main build-jti build-syslog build-snmp build-oc build-internal
+#build: build-main build-jti build-syslog build-oc build-internal
+build: build-main build-jti build-syslog build-oc build-internal build-chronograf
 
 build-main:
 	@echo "======================================================================"
 	@echo "Build Docker image - $(MAIN_IMAGE_NAME):$(IMAGE_TAG)"
 	@echo "======================================================================"
 	docker build -t $(MAIN_IMAGE_NAME):$(IMAGE_TAG) .
+
 
 build-jti:
 	@echo "======================================================================"
@@ -81,8 +83,11 @@ start:
 	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE) up -d
 
 start-persistent:
+	# ensure right permissions in grafana volumes
+	chown -R www-data data_grafana
 	@echo "Use docker compose file: $(DOCKER_FILE_P)"
-	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE_P) up -d
+	#$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE_P) up -d
+	$(RUN_OPTIONS) docker-compose -f $(DOCKER_FILE_P) up -d --remove-orphans 
 
 stop:
 	@echo "Use docker compose file: $(DOCKER_FILE)"

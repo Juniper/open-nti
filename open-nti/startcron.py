@@ -17,33 +17,33 @@ args = parser.parse_args()
 try:
     args.action
 except ActionNotDefined:
-    print "./startcron.py -a add/delete must be defined"
+    print("./startcron.py -a add/delete must be defined")
 
 if (args.action == "add"):
     try:
         args.time
     except TimeNotDefined:
-        print "./startcron.py -t 10m or 1h must be defined"
+        print("./startcron.py -t 10m or 1h must be defined")
 
     try:
         args.command
     except CommandNotDefined:
-        print "./startcron.py -c command must be defined"
+        print("./startcron.py -c command must be defined")
 
     time_min_regex = "(\d+)m"
     time_hours_regex = "(\d+)h"
     if (re.search(time_min_regex, args.time)):
         time = int(re.sub(r'\D', "", args.time))
         if (time < 1 or time > 59):
-            print "Incorrect -t value " + str(time) + " for minutes. Value must be between 1 and 59."
+            print("Incorrect -t value " + str(time) + " for minutes. Value must be between 1 and 59.")
             exit()
     elif (re.search(time_hours_regex, args.time)):
         time = int(re.sub(r'\D', "", args.time))
         if (time < 0 or time > 23):
-            print "Incorrect -t format for hours. Value must be between 1 and 23."
+            print("Incorrect -t format for hours. Value must be between 1 and 23.")
             exit()
     else:
-        print "Incorrect -t format " + str(args.time) + ". Format: -t 10m or 1h"
+        print("Incorrect -t format " + str(args.time) + ". Format: -t 10m or 1h")
         exit()
 
 cron = CronTab(user='root')
@@ -55,18 +55,18 @@ if (args.action == "add"):
     else:
         cron_job.every(time).hours()
     #writes content to crontab
-    print cron.render()
+    print(cron.render())
     cron.write()
 elif (args.action == "delete"):
     #cron.remove_all(command=args.command)
     for cron_job in cron.find_command(args.command):
-        print cron_job
+        print(cron_job)
         cron.remove(cron_job)
         cron.write()
 else:
     if (args.command == "all"):
         for job in cron:
-            print job
+            print(job)
     else:
         for cron_job in cron.find_command(args.command):
-            print cron_job
+            print(cron_job)

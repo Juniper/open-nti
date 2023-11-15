@@ -9,6 +9,9 @@ parser:
             key: ./*[local-name() = 'name']
             sub-matches:
             -
+                xpath: ./*[local-name() = 'speed']
+                variable-name:  $host.interface.$key.speed
+            -
                 xpath: ./*[local-name() = 'traffic-statistics']/*[local-name() = 'input-bps']
                 variable-name:  $host.interface.$key.input-bps
             -
