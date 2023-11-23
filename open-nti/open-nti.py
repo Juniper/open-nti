@@ -382,7 +382,7 @@ def parse_result(host,target_command,result,datapoints,kpi_tags):
     parser_found = False
     for junos_parser in junos_parsers:
         regex_command = junos_parser["parser"]["regex-command"]
-        if re.search(regex_command, target_command, re.IGNORECASE):
+        if re.search(regex_command + "$", target_command, re.IGNORECASE):
             parser_found = True
             matches = junos_parser["parser"]["matches"]
             timestamp = str(int(datetime.today().strftime('%s')))
