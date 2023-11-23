@@ -1,0 +1,23 @@
+parser:
+    regex-command: show\s+ddos-protection\s+protocols(?:\s+|\s+\S*\s+)statistics\s+brief\s+\|\s+display\s+xml
+    matches:
+    -
+        type: multi-value
+        method: xpath
+        xpath: //ddos-system-statistics
+        loop:
+            group: ./group-name
+            type: ./packet-type
+            sub-matches:
+            -
+                xpath: ./packet-received
+                variable-name:  $host.ddos-protection.$group.$type.packets-received
+            -
+                xpath: ./packet-dropped
+                variable-name:  $host.ddos-protection.$group.$type.packets-dropped
+            -
+                xpath: ./packet-arrival-rate
+                variable-name:  $host.ddos-protection.$group.$type.packet-rate
+            -
+                xpath: ./policer-violation-count
+                variable-name:  $host.ddos-protection.$group.$type.policer-violation-count
