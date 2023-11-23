@@ -33,7 +33,7 @@ OpenNTI is available on DockerCloud_ and this project provide scripts to easily 
 .. NOTE::
   - On Ubuntu, you'll have to add "sudo" before the last command
 
-  - In case of have internet access through a proxy, before executing 'make start', edit all Dockeriles (those in the main directory and in the plugins directory), and include the lines ENV http_proxy <http_proxy> and ENV https_proxy <https_proxy>
+  - In case of have internet access through a proxy, before executing 'make start', edit all Dockerfiles (those in the main directory and in the plugins directory), and include the lines ENV http_proxy <http_proxy> and ENV https_proxy <https_proxy>. Be sure to clear these environment settings at the Dockerfile but before the final CMD using: ENV http_proxy "" and ENV https_proxy "". The ENV settings are used for both build and execution: without clearing these, it will prevent connectivity between containers (172.17.0.0/16).
 
 By default it will start 3 containers and it's working in **non-persistent mode**, once you stop it all data are gone.
 It's possible to start the main container in **persistent mode** to save the database outside the container, b
